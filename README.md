@@ -1,4 +1,6 @@
-# Simple Drupal Development VM (Drupal 6, 7, 8, etc.)
+# Simple Drupal Development VM
+
+## For Drupal 6, 7, 8, etc.
 
 This project aims to make spinning up a simple local Drupal test/development environment incredibly quick and easy, and to introduce new developers to the wonderful world of Drupal development on local virtual machines (instead of crufty old MAMP/WAMP-based development).
 
@@ -39,7 +41,7 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
   1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM.
   2. Open your browser and access [http://www.drupaltest.dev/](http://www.drupaltest.dev/).
 
-## More Notes
+## Notes
 
   - To shut down the virtual machine, enter `vagrant halt` in the Terminal in the same folder that has the `Vagrantfile`. To destroy it completely (if you want to save a little disk space, or want to rebuild it from scratch with `vagrant up` again), type in `vagrant destroy`.
   - You can change the version of Drupal installed by editing the variables within `vars.yml`.
