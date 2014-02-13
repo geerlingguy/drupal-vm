@@ -113,7 +113,7 @@
   - name: "Install Drush dependencies with Composer."
     shell: >
       /usr/local/bin/composer install
-      chdir=/usr/local/share/drush
+      chdir=/opt/drush
       creates=/opt/drush/vendor/autoload.php
 
   - name: "Drush: Create drush bin symlink."
@@ -121,6 +121,8 @@
 
   - name: "Drush: Run drush to finish setting it up."
     command: drush
+    register: drush_result
+    changed_when: "'Execute a drush command' not in drush_result.stdout"
 
   # DRUPAL #####################################################################
   # Download Drupal using drush (--no-cache prevents checksum error).
