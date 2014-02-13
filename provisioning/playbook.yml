@@ -99,17 +99,28 @@
   - name: "MySQL: Create a database for Drupal."
     mysql_db: db={{ domain }} state=present
 
+  # COMPOSER ###################################################################
+  - name: "Composer: Install Composer into the current directory."
+    shell: curl -sS https://getcomposer.org/installer | php creates=/usr/local/bin/composer
+
+  - name: "Composer: Move Composer into globally-accessible location."
+    shell: mv composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+
   # DRUSH ######################################################################
   - name: "Drush: Check out drush master branch so it works with all Drupal versions."
     git: repo=https://github.com/drush-ops/drush.git dest=/opt/drush
+
+  - name: "Install Drush dependencies with Composer."
+    shell: >
+      /usr/local/bin/composer install
+      chdir=/usr/local/share/drush
+      creates=/opt/drush/vendor/autoload.php
 
   - name: "Drush: Create drush bin symlink."
     file: src=/opt/drush/drush dest=/usr/local/bin/drush state=link
 
   - name: "Drush: Run drush to finish setting it up."
-    command:
-      drush
-      creates=/opt/drush/lib/Console_Table-1.1.6/Table.php
+    command: drush
 
   # DRUPAL #####################################################################
   # Download Drupal using drush (--no-cache prevents checksum error).
