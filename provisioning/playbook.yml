@@ -89,7 +89,10 @@
 
   # PHP ########################################################################
   - name: "PHP: Enable upload progress via APC."
-    lineinfile: dest=/etc/php5/conf.d/20-apc.ini regexp="^apc\.rfc1867" line="apc.rfc1867 = 1"
+    lineinfile: >
+      dest=/etc/php5/conf.d/20-apc.ini
+      regexp="^apc\.rfc1867"
+      line="apc.rfc1867 = 1"
     notify: restart apache
 
   # MYSQL ######################################################################
@@ -118,11 +121,6 @@
 
   - name: "Drush: Create drush bin symlink."
     file: src=/opt/drush/drush dest=/usr/local/bin/drush state=link
-
-  - name: "Drush: Run drush to finish setting it up."
-    command: drush
-    register: drush_result
-    changed_when: "'Execute a drush command' not in drush_result.stdout"
 
   # DRUPAL #####################################################################
   # Download Drupal using drush (--no-cache prevents checksum error).
