@@ -2,8 +2,8 @@
 # The core version you want to use (e.g. 6.x, 7.x, 8.x).
 drupal_core_version: "8.x"
 
-# Your Drupal site name.
-drupal_site_name: "D8 Test"
-
 # The resulting domain will be [domain].dev (with .dev appended).
 domain: "drupaltest"
+
+# Your Drupal site name.
+drupal_site_name: "D8 Test"
