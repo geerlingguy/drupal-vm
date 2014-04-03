@@ -70,21 +70,32 @@
 
   # APACHE #####################################################################
   - name: "Apache: Enable mods required for Drupal."
-    file: src=/etc/apache2/mods-available/{{ item }} dest=/etc/apache2/mods-enabled/{{ item }} state=link
+    file: >
+      src=/etc/apache2/mods-available/{{ item }}
+      dest=/etc/apache2/mods-enabled/{{ item }}
+      state=link
     with_items:
     - rewrite.load
     notify: restart apache
 
   - name: "Apache: Add Apache virtualhost for Drupal 8 development."
-    template: src=templates/drupal.dev.conf.j2 dest=/etc/apache2/sites-available/{{ domain }}.dev.conf owner=root group=root mode=0644
+    template: >
+      src=templates/drupal.dev.conf.j2
+      dest=/etc/apache2/sites-available/{{ domain }}.dev.conf
+      owner=root group=root mode=0644
     notify: restart apache
 
   - name: "Apache: Symlink Drupal virtualhost to sites-enabled."
-    file: src=/etc/apache2/sites-available/{{ domain }}.dev.conf dest=/etc/apache2/sites-enabled/{{ domain }}.dev.conf state=link
+    file: >
+      src=/etc/apache2/sites-available/{{ domain }}.dev.conf
+      dest=/etc/apache2/sites-enabled/{{ domain }}.dev.conf
+      state=link
     notify: restart apache
 
   - name: "Apache: Remove default virtualhost file."
-    file: path=/etc/apache2/sites-enabled/000-default state=absent
+    file: >
+      path=/etc/apache2/sites-enabled/000-default
+      state=absent
     notify: restart apache
 
   # PHP ########################################################################
@@ -104,13 +115,17 @@
 
   # COMPOSER ###################################################################
   - name: "Composer: Install Composer into the current directory."
-    shell: curl -sS https://getcomposer.org/installer | php creates=/usr/local/bin/composer
+    shell: >
+      curl -sS https://getcomposer.org/installer | php
+      creates=/usr/local/bin/composer
 
   - name: "Composer: Move Composer into globally-accessible location."
-    shell: mv composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+    shell: >
+      mv composer.phar /usr/local/bin/composer
+      creates=/usr/local/bin/composer
 
   # DRUSH ######################################################################
-  - name: "Drush: Check out drush master branch so it works with all Drupal versions."
+  - name: "Drush: Check out drush master branch."
     git: repo=https://github.com/drush-ops/drush.git dest=/opt/drush
 
   - name: "Install Drush dependencies with Composer."
@@ -120,7 +135,10 @@
       creates=/opt/drush/vendor/autoload.php
 
   - name: "Drush: Create drush bin symlink."
-    file: src=/opt/drush/drush dest=/usr/local/bin/drush state=link
+    file: >
+      src=/opt/drush/drush
+      dest=/usr/local/bin/drush
+      state=link
 
   # DRUPAL #####################################################################
   # Download Drupal using drush (--no-cache prevents checksum error).
@@ -132,13 +150,13 @@
 
   # Download Drupal using Git.
   - name: "Drupal: Check out Drupal Core to the Apache docroot."
-    git:
+    git: >
       repo=http://git.drupal.org/project/drupal.git
       version={{ drupal_core_version }}
       dest=/var/www/drupal-{{ drupal_core_version }}-dev
 
   - name: "Drupal: Install Drupal."
-    command:
+    command: >
       drush si -y --site-name="{{ drupal_site_name }}" --account-name=admin --account-pass=admin --db-url=mysql://root@localhost/{{ domain }}
       chdir=/var/www/drupal-{{ drupal_core_version }}-dev
       creates=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/settings.php
@@ -146,7 +164,13 @@
 
   # SEE: https://drupal.org/node/2121849#comment-8413637
   - name: "Drupal: Set permissions properly on settings.php."
-    file: path=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/settings.php mode=0744
+    file: >
+      path=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/settings.php
+      mode=0744
 
   - name: "Drupal: Set permissions properly on files directory."
-    file: path=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/files mode=0777 state=directory recurse=yes
+    file: >
+      path=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/files
+      mode=0777
+      state=directory
+      recurse=yes
