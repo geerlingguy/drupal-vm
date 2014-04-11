@@ -82,7 +82,7 @@
     template: >
       src=templates/drupal.dev.conf.j2
       dest=/etc/apache2/sites-available/{{ domain }}.dev.conf
-      owner=root group=root mode=0644
+      owner=root group=root mode=644
     notify: restart apache
 
   - name: "Apache: Symlink Drupal virtualhost to sites-enabled."
