@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
 
   # Configure VirtualBox.
-  config.vm.provider :virtualbox do |vb|  
+  config.vm.provider :virtualbox do |vb|
     # Set the RAM for this VM to 512M.
     vb.customize ["modifyvm", :id, "--memory", "512"]
   end

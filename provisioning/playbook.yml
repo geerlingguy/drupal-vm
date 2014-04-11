@@ -145,7 +145,7 @@
   # - name: "Drupal: Download Drupal Core."
   #   command:
   #     drush dl drupal-{{ drupal_core_version }} --no-cache
-  #     creates=/var/www/drupal-{{ drupal_core_version }}-dev/index.php
+  #     creates={{ drupal_core_path }}/index.php
   #     chdir=/var/www
 
   # Download Drupal using Git.
@@ -153,24 +153,25 @@
     git: >
       repo=http://git.drupal.org/project/drupal.git
       version={{ drupal_core_version }}
-      dest=/var/www/drupal-{{ drupal_core_version }}-dev
+      dest={{ drupal_core_path }}
 
   - name: "Drupal: Install Drupal."
     command: >
-      drush si -y --site-name="{{ drupal_site_name }}" --account-name=admin --account-pass=admin --db-url=mysql://root@localhost/{{ domain }}
-      chdir=/var/www/drupal-{{ drupal_core_version }}-dev
-      creates=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/settings.php
+      drush si -y --site-name="{{ drupal_site_name }}" --account-name=admin
+      --account-pass=admin --db-url=mysql://root@localhost/{{ domain }}
+      chdir={{ drupal_core_path }}
+      creates={{ drupal_core_path }}/sites/default/settings.php
     notify: restart apache
 
   # SEE: https://drupal.org/node/2121849#comment-8413637
   - name: "Drupal: Set permissions properly on settings.php."
     file: >
-      path=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/settings.php
-      mode=0744
+      path={{ drupal_core_path }}/sites/default/settings.php
+      mode=744
 
   - name: "Drupal: Set permissions properly on files directory."
     file: >
-      path=/var/www/drupal-{{ drupal_core_version }}-dev/sites/default/files
-      mode=0777
+      path={{ drupal_core_path }}/sites/default/files
+      mode=777
       state=directory
       recurse=yes

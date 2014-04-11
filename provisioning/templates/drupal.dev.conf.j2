@@ -2,8 +2,8 @@
     ServerAdmin webmaster@localhost
     ServerName {{ domain }}.dev
     ServerAlias www.{{ domain }}.dev
-    DocumentRoot /var/www/drupal-{{ drupal_core_version }}-dev
-    <Directory "/var/www/drupal-{{ drupal_core_version }}-dev">
+    DocumentRoot {{ drupal_core_path }}
+    <Directory "{{ drupal_core_path }}">
         Options FollowSymLinks Indexes
         AllowOverride All
     </Directory>
