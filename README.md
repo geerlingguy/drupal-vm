@@ -9,7 +9,7 @@ It will install the following on an Ubuntu 12.04 linux VM:
   - Apache 2.2.x
   - PHP 5.4.x
   - MySQL 5.5.x
-  - Drush 6.x (latest stable release, configurable)
+  - Drush 7.x (latest stable release, configurable)
   - Drupal 6.x, 7.x, or 8.x (configurable)
 
 It should take 10-20 minutes to build or rebuild the VM from scratch on a decent broadband connection.
