@@ -1,4 +1,4 @@
-# Simple Drupal Development VM
+# Drupal Development VM
 
 **For Drupal 6, 7, 8, etc.**
 
@@ -9,10 +9,20 @@ It will install the following on an Ubuntu 12.04 linux VM:
   - Apache 2.2.x
   - PHP 5.4.x
   - MySQL 5.5.x
-  - Drush 7.x (latest dev release)
+  - Drush 6.x (latest stable release, configurable)
   - Drupal 6.x, 7.x, or 8.x (configurable)
 
-It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
+It should take 10-20 minutes to build or rebuild the VM from scratch on a decent broadband connection.
+
+## TODO
+
+I originally wrote this VM to demonstrate a very simple Ansible playbook for configuring a web server and installing Drupal. I'm now reformatting everything to use Ansible best practices, and to make the VM actually useful for a developer like myself. To that end, I'll be adding in some of the following soon:
+
+  - XDebug
+  - XHProf
+  - Other useful tools for IDE/debugging/testing integration
+  - An easy way to mirror your local SSH config into the VM for remote work
+  - etc.
 
 ## Quick Start Guide
 
@@ -20,13 +30,9 @@ It should take 5-10 minutes to build or rebuild the VM from scratch on a decent 
 
   1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
   2. Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
-  3. [Mac/Linux only] Install Ansible:
-    `sudo easy_install pip`
-    `sudo pip install ansible`
+  3. [Mac/Linux only] Install [Ansible](http://docs.ansible.com/intro_installation.html).
 
 Note for Windows users: *This guide assumes you're on a Mac or Linux host. Windows support may be added when I get a little more time; the main difference is Ansible needs to be bootstrapped from within the VM after it's created. See [JJG-Ansible-Windows](https://github.com/geerlingguy/JJG-Ansible-Windows) for more information.*
-
-Note for Mac users: *On Mac OS X, you may also need to install XCode (free on the App Store) to install some required dependencies. If you're having trouble installing Ansible, check out the [Installing Ansible docs](http://docs.ansible.com/intro_installation.html).*
 
 ### 2 - Build the Virtual Machine
 
@@ -44,8 +50,7 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 ## Notes
 
   - To shut down the virtual machine, enter `vagrant halt` in the Terminal in the same folder that has the `Vagrantfile`. To destroy it completely (if you want to save a little disk space, or want to rebuild it from scratch with `vagrant up` again), type in `vagrant destroy`.
-  - You can change the version of Drupal installed by editing the variables within `vars.yml`.
-  - You can either use Drush or Git to download Drupal (either way results in the same thing); see the commented-out Drush download method in `playbook.yml`.
+  - You can change the installed version of Drupal or drush, or any other configuration options, by editing the variables within `vars/main.yml`.
   - Find out more about local development with Vagrant + VirtualBox + Ansible in this presentation: [Local Development Environments - Vagrant, VirtualBox and Ansible](http://www.slideshare.net/geerlingguy/local-development-on-virtual-machines-vagrant-virtualbox-and-ansible).
   - Learn about how Ansible can accelerate your ability to innovate and manage your infrastructure by reading [Ansible for DevOps](https://leanpub.com/ansible-for-devops).
 
