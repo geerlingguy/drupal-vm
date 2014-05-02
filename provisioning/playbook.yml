@@ -43,6 +43,13 @@
   - name: Disable the firewall (since this is for local dev only).
     service: name=ufw state=stopped
 
+  - name: Create hosts entry for domain.
+    lineinfile: >
+      dest=/etc/hosts
+      regexp="^127.0.0.1    {{ domain }}.dev"
+      line="127.0.0.1    {{ domain }}.dev"
+      state=present
+
   - include: tasks/webserver-config.yml
   - include: tasks/database-config.yml
   - include: tasks/drupal.yml
