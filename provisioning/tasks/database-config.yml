@@ -1,5 +1,0 @@
----
-- name: Create a database for Drupal.
-  mysql_db: >
-    db={{ domain }}
-    state=present

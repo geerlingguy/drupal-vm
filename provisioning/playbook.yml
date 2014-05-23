@@ -1,8 +1,8 @@
 ---
-
 # Simple Drupal Development VM Playbook for Ubuntu 12.04
 #
-# TODO: Describe this playbook.
+# This playbook will install Drupal on an Ubuntu-based LAMP stack, along with
+# drush, composer, and other relevant utilities.
 #
 # @author Jeff Geerling, 2014
 
@@ -12,22 +12,7 @@
   - vars/main.yml
 
   pre_tasks:
-  - name: Update apt cache if needed.
-    apt: update_cache=yes cache_valid_time=3600
-
-  - name: Get software for Python-based control.
-    apt: "pkg={{ item }} state=installed"
-    with_items:
-    - curl
-    - python-apt
-    - python-pycurl
-
-  - name: Add ondrej repository for later versions of PHP.
-    # Note: Remove '-oldstable' for PHP 5.5.x.
-    apt_repository: repo='ppa:ondrej/php5-oldstable'
-
-  - name: Install postfix so Drupal can send emails.
-    apt: pkg=postfix state=installed
+  - include: tasks/init.yml
 
   roles:
     - geerlingguy.git
@@ -37,19 +22,4 @@
     - geerlingguy.php-mysql
     - geerlingguy.composer
     - geerlingguy.drush
-
-  tasks:
-  # GENERAL ####################################################################
-  - name: Disable the firewall (since this is for local dev only).
-    service: name=ufw state=stopped
-
-  - name: Create hosts entry for domain.
-    lineinfile: >
-      dest=/etc/hosts
-      regexp="^127.0.0.1    {{ domain }}.dev"
-      line="127.0.0.1    {{ domain }}.dev"
-      state=present
-
-  - include: tasks/webserver-config.yml
-  - include: tasks/database-config.yml
-  - include: tasks/drupal.yml
+    - geerlingguy.drupal
