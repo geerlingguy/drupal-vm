@@ -22,4 +22,7 @@
     - geerlingguy.php-mysql
     - geerlingguy.composer
     - geerlingguy.drush
-    - geerlingguy.drupal
+
+  tasks:
+    - include: tasks/www.yml
+    - include: tasks/drupal.yml

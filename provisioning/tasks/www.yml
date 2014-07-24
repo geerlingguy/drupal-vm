@@ -1,0 +1,16 @@
+---
+# Originally I tried adding to the www group, but because Ansible uses one SSH
+# connection, that broke the initial provisioning, since groups aren't refreshed
+# without a new session or log off/log on.
+- name: Ensure admin group exists.
+  group: name=admin state=present
+
+- name: Ensure vagrant user is in admin group.
+  user: name=vagrant append=yes groups=admin
+
+- name: Set permissions on /var/www.
+  file: >
+    path=/var/www
+    group=admin
+    mode=775
+    recurse=yes

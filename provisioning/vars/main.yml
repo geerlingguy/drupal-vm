@@ -1,13 +1,16 @@
 ---
-apache_create_vhosts: false
 mysql_root_password: ''
 drush_version: master
 
-# The core version you want to use (e.g. 6.x, 7.x, 8.x).
-drupal_core_version: "8.x"
-
 # The path where Drupal will be downloaded and installed.
-drupal_core_path: "/var/www/drupal-{{ drupal_core_version }}-dev"
+drupal_core_path: "/var/www/drupal"
 
 drupal_domain: "drupaltest.dev"
 drupal_site_name: "Drupal Test Site"
+
+drupal_mysql_user: root
+drupal_mysql_password: ''
+drupal_mysql_database: drupal
+
+apache_vhosts:
+  - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}

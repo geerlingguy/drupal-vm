@@ -1,0 +1,55 @@
+---
+- name: Create Drupal database.
+  mysql_db: >
+    db={{ drupal_mysql_database }}
+    state=present
+
+- name: Remove default virtualhost file.
+  file: >
+    path=/etc/apache2/sites-enabled/000-default
+    state=absent
+  notify: restart webserver
+
+- name: Check if Drupal is already set up.
+  stat: >
+    path={{ drupal_core_path }}
+  register: drupal_site
+
+- name: Generate Drupal site with drush makefile.
+  command: >
+    drush make -y /vagrant/drupal.make {{ drupal_core_path }}
+  when: drupal_site.stat.exists == false
+  sudo: no
+
+- name: Install Drupal (standard profile) with drush.
+  command: >
+    drush si -y
+    --site-name="{{ drupal_site_name }}"
+    --account-name=admin
+    --account-pass=admin
+    --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ drupal_mysql_database }}
+    chdir={{ drupal_core_path }}
+  notify: restart webserver
+  when: drupal_site.stat.exists == false
+  sudo: no
+
+- name: Install modules with drush.
+  command: >
+    drush en -y devel
+    chdir={{ drupal_core_path }}
+  when: drupal_site.stat.exists == false
+  sudo: no
+
+- name: Uninstall unused modules via drush.
+  command: >
+    drush dis -y overlay color comment dashboard rdf shortcut
+    chdir={{ drupal_core_path }}
+  when: drupal_site.stat.exists == false
+  sudo: no
+
+- name: Symlink custom modules directory into place.
+  file: >
+    src=/vagrant/custom_modules
+    dest={{ drupal_core_path }}/sites/all/modules/custom
+    state=link
+  sudo: no
