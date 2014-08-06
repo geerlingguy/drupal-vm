@@ -40,16 +40,19 @@
   when: drupal_site.stat.exists == false
   sudo: no
 
-- name: Uninstall unused modules via drush.
-  command: >
-    drush dis -y overlay color comment dashboard rdf shortcut
-    chdir={{ drupal_core_path }}
-  when: drupal_site.stat.exists == false
-  sudo: no
+- name: Set the custom module directory path for Drupal < 8.
+  set_fact:
+    drupal_custom_modules_path: "{{ drupal_core_path }}/sites/all/modules/custom"
+  when: drupal_major_version < 8
+
+- name: Set the custom module directory path for Drupal < 8.
+  set_fact:
+    drupal_custom_modules_path: "{{ drupal_core_path }}/modules/custom"
+  when: drupal_major_version <= 8
 
 - name: Symlink custom modules directory into place.
   file: >
     src=/vagrant/custom_modules
-    dest={{ drupal_core_path }}/sites/all/modules/custom
+    dest={{ drupal_custom_modules_path }}
     state=link
   sudo: no

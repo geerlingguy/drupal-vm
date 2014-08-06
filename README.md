@@ -9,7 +9,7 @@ It will install the following on an Ubuntu 12.04 linux VM:
   - Apache 2.2.x
   - PHP 5.4.x
   - MySQL 5.5.x
-  - Drush 7.x (configurable)
+  - Drush latest release (configurable)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
@@ -20,6 +20,11 @@ There are a couple places where you can customize the VM for your needs:
 
   - `provisioning/vars/main.yml`: Contains variables like the VM domain name (where you can access the Drupal site), MySQL configuration, etc.
   - `drupal.make`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (more about [Drush make files](https://www.drupal.org/node/1432374)).
+
+If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial install, do the following:
+
+  1. Update `projects[drupal][version]` and `core` inside the `drupal.make` file.
+  2. Update `drupal_major_version` inside `provisioning/vars/main.yml`.
 
 ## TODO
 

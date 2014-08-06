@@ -2,6 +2,10 @@
 mysql_root_password: ''
 drush_version: master
 
+# Major release of drupal in use (6, 7, 8, etc.). Be sure to update the core
+# version inside the drupal.make file if you change the major version here.
+drupal_major_version: 8
+
 # The path where Drupal will be downloaded and installed.
 drupal_core_path: "/var/www/drupal"
 
