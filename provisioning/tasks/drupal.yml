@@ -56,3 +56,11 @@
     dest={{ drupal_custom_modules_path }}
     state=link
   sudo: no
+
+- name: Update ownership of all files within drupal_core_path.
+  file: >
+    path={{ drupal_core_path }}
+    owner=vagrant
+    group=www-data
+    mode=775
+    recurse=yes
