@@ -1,0 +1,7 @@
+geerlingguy.git
+geerlingguy.apache
+geerlingguy.mysql
+geerlingguy.php
+geerlingguy.php-mysql
+geerlingguy.composer
+geerlingguy.drush
