@@ -8,6 +8,7 @@
   - curl
   - python-apt
   - python-pycurl
+  - build-essential
 
 - name: Disable the firewall (since this is for local dev only).
   service: name=ufw state=stopped
