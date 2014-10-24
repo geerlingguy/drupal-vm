@@ -30,7 +30,6 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 I originally wrote this VM to demonstrate a very simple Ansible playbook for configuring a web server and installing Drupal. I'm now reformatting everything to use Ansible best practices, and to make the VM actually useful for a developer like myself. To that end, I'll be adding in some of the following soon:
 
-  - XDebug
   - XHProf
   - Other useful tools for IDE/debugging/testing integration
   - An easy way to mirror your local SSH config into the VM for remote work

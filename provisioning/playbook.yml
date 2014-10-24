@@ -20,6 +20,7 @@
     - geerlingguy.mysql
     - geerlingguy.php
     - geerlingguy.php-mysql
+    - geerlingguy.php-xdebug
     - geerlingguy.composer
     - geerlingguy.drush
 
