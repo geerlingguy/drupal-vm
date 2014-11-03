@@ -1,11 +1,4 @@
 ---
-# Simple Drupal Development VM Playbook for Ubuntu 12.04
-#
-# This playbook will install Drupal on an Ubuntu-based LAMP stack, along with
-# drush, composer, and other relevant utilities.
-#
-# @author Jeff Geerling, 2014
-
 - hosts: all
 
   vars_files:
@@ -19,8 +12,10 @@
     - geerlingguy.apache
     - geerlingguy.mysql
     - geerlingguy.php
+    - geerlingguy.php-pecl
     - geerlingguy.php-mysql
     - geerlingguy.php-xdebug
+    - geerlingguy.php-xhprof
     - geerlingguy.composer
     - geerlingguy.drush
 

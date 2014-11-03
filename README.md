@@ -11,6 +11,8 @@ It will install the following on an Ubuntu 12.04 linux VM:
   - MySQL 5.5.x
   - Drush latest release (configurable)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
+  - XHProf, for profiling your code
+  - XDebug, for debugging your code
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
 
@@ -25,15 +27,6 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
   1. Update `projects[drupal][version]` and `core` inside the `drupal.make` file.
   2. Update `drupal_major_version` inside `provisioning/vars/main.yml`.
-
-## TODO
-
-I originally wrote this VM to demonstrate a very simple Ansible playbook for configuring a web server and installing Drupal. I'm now reformatting everything to use Ansible best practices, and to make the VM actually useful for a developer like myself. To that end, I'll be adding in some of the following soon:
-
-  - XHProf
-  - Other useful tools for IDE/debugging/testing integration
-  - An easy way to mirror your local SSH config into the VM for remote work
-  - etc.
 
 ## Quick Start Guide
 
@@ -58,6 +51,32 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
   1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM.
   2. Open your browser and access [http://drupaltest.dev/](http://drupaltest.dev/).
+
+## Connecting to MySQL
+
+By default, this VM is set up so you can manage mysql databases on your own. The default root MySQL user credentials are `root` for username+password, but you could change the password via `config.yml`. I use the MySQL GUI [Sequel Pro](http://www.sequelpro.com/) (Mac-only) to connect and manage databases, then Drush to sync databases (sometimes I'll just do a dump and import, but Drush is usually quicker, and is easier to do over and over again when you need it).
+
+### Connect using Sequel Pro (or a similar client):
+
+  1. Use the SSH connection type.
+  2. Set the following options:
+    - MySQL Host: `127.0.0.1`
+    - Username: `root`
+    - Password: `root` (or whatever password you chose in `config.yml`)
+    - SSH Host: `192.168.4.40` (or whatever IP you chose in `config.yml`)
+    - SSH User: `vagrant`
+    - SSH Key: (browse to your `~/.vagrant.d/` folder and choose `insecure_private_key`)
+
+You should be able to connect as the root user and add, manage, and remove databases and users.
+
+You can also install and use PHPMyAdmin (a simple web-based MySQL GUI) by adding the `geerlingguy.phpmyadmin` role to `provisioning/playbook.yml`, and installing the role with `$ ansible-galaxy install geerlingguy.phpmyadmin`.
+
+## Using XHProf to Profile Code
+
+The easiest way to use XHProf to profile your PHP code on a Drupal site is to install the Devel module, then in Devel's configuration, check the 'Enable profiling of all page views and drush requests' checkbox. In the settings that appear below, set the following values:
+
+  - **xhprof directory**: `/usr/share/php`
+  - **XHProf URL**: `http://local.xhprof.com/` (assuming you have this set in `apache_vhosts` in config.yml)
 
 ## Notes
 

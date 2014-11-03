@@ -2,7 +2,9 @@ geerlingguy.git
 geerlingguy.apache
 geerlingguy.mysql
 geerlingguy.php
+geerlingguy.php-pecl
 geerlingguy.php-mysql
 geerlingguy.php-xdebug
+geerlingguy.php-xhprof
 geerlingguy.composer
 geerlingguy.drush

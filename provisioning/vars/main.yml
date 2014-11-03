@@ -18,6 +18,7 @@ drupal_mysql_database: drupal
 
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
+  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
 
 php_memory_limit: "256M"
 
