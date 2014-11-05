@@ -43,12 +43,12 @@
 - name: Set the custom module directory path for Drupal < 8.
   set_fact:
     drupal_custom_modules_path: "{{ drupal_core_path }}/sites/all/modules/custom"
-  when: drupal_major_version < 8
+  when: drupal_major_version|int < 8
 
 - name: Set the custom module directory path for Drupal = 8.
   set_fact:
     drupal_custom_modules_path: "{{ drupal_core_path }}/modules/custom"
-  when: drupal_major_version = 8
+  when: drupal_major_version|int == 8
 
 - name: Symlink custom modules directory into place.
   file: >
