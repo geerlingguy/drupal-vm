@@ -1,7 +1,8 @@
 ---
 # Originally I tried adding to the www group, but because Ansible uses one SSH
 # connection, that broke the initial provisioning, since groups aren't refreshed
-# without a new session or log off/log on.
+# without a new session or log off/log on. In the cleanup task, we will set the
+# owner of /var/www back to root.
 - name: Ensure admin group exists.
   group: name=admin state=present
 
@@ -11,6 +12,8 @@
 - name: Set permissions on /var/www.
   file: >
     path=/var/www
+    state=directory
+    owner=vagrant
     group=admin
     mode=775
     recurse=yes
