@@ -1,0 +1,12 @@
+---
+# Now that vagrant has written to /var/www, set the owner back to root. The
+# next time vagrant logs in, it will have group admin and so will have write
+# access.
+- name: Reset owner on /var/www.
+  file: >
+    path=/var/www
+    state=directory
+    owner=root
+    group=admin
+    mode=775
+    recurse=no
