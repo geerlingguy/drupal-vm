@@ -11,6 +11,8 @@
 - name: Set permissions on /var/www.
   file: >
     path=/var/www
+    state=directory
+    owner=vagrant
     group=admin
     mode=775
     recurse=yes
