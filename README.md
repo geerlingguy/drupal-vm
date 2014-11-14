@@ -53,6 +53,20 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
   1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM.
   2. Open your browser and access [http://drupaltest.dev/](http://drupaltest.dev/).
 
+## Sharing folders
+
+You can share folders between your host computer and the VM in a variety of ways; the two most commonly-used methods are using an NFS share, or using Vagrant's rsync method to synchronize a folder from your host into the guest VM. The `example.config.yml` file contains an example `rsync` share that would sync the folder `~/Sites/drupal` on your host into a `/drupal` folder on the VM.
+
+If you want to use NFS for the share instead, you could simply change the share to:
+
+    vagrant_synced_folders:
+      - local_path: ~/Sites/drupal7
+        destination: /drupal
+        id: drupal
+        type: nfs
+
+You can add as many synced folders as you'd like, and you can configure any type of share you want; just add another item to the list of `vagrant_synced_folders`.
+
 ## Connecting to MySQL
 
 By default, this VM is set up so you can manage mysql databases on your own. The default root MySQL user credentials are `root` for username+password, but you could change the password via `config.yml`. I use the MySQL GUI [Sequel Pro](http://www.sequelpro.com/) (Mac-only) to connect and manage databases, then Drush to sync databases (sometimes I'll just do a dump and import, but Drush is usually quicker, and is easier to do over and over again when you need it).
