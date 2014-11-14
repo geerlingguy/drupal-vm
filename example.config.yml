@@ -1,5 +1,22 @@
 ---
-mysql_root_password: ''
+# Vagrant hostname and IP configuration.
+vagrant_hostname: drupaltest.dev
+vagrant_ip: 192.168.88.88
+
+# A list of synced folders, with the keys 'local_path', 'destination', and 'id'.
+vagrant_synced_folders:
+  - local_path: ~/Sites/drupal
+    destination: /drupal
+    excluded_paths: [".git/"]
+    id: drupal
+    type: rsync
+
+# Memory and CPU to use for this VM.
+vagrant_memory: 1024
+vagrant_cpus: 2
+
+# Other variables in this file will be used during Ansible provisioning.
+mysql_root_password: root
 drush_version: master
 
 # Major release of drupal in use (6, 7, 8, etc.). Be sure to update the core
@@ -13,7 +30,7 @@ drupal_domain: "drupaltest.dev"
 drupal_site_name: "Drupal Test Site"
 
 drupal_mysql_user: root
-drupal_mysql_password: ''
+drupal_mysql_password: root
 drupal_mysql_database: drupal
 
 apache_vhosts:

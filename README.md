@@ -20,13 +20,13 @@ It should take 5-10 minutes to build or rebuild the VM from scratch on a decent 
 
 There are a couple places where you can customize the VM for your needs:
 
-  - `provisioning/vars/main.yml`: Contains variables like the VM domain name (where you can access the Drupal site), MySQL configuration, etc.
+  - `config.yml`: Contains variables like the VM domain name and IP address, PHP and MySQL configuration, etc.
   - `drupal.make`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (more about [Drush make files](https://www.drupal.org/node/1432374)).
 
 If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial install, do the following:
 
   1. Update `projects[drupal][version]` and `core` inside the `drupal.make` file.
-  2. Update `drupal_major_version` inside `provisioning/vars/main.yml`.
+  2. Update `drupal_major_version` inside `config.yml`.
 
 ## Quick Start Guide
 
@@ -41,9 +41,10 @@ Note for Windows users: *This guide assumes you're on a Mac or Linux host. Windo
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.
-  2. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
-  3. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
-  4. Type in `vagrant up`, and let Vagrant do its magic.
+  2. Copy `example.config.yml` to `config.yml`, and modify it to use settings you like.
+  3. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
+  4. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
+  5. Type in `vagrant up`, and let Vagrant do its magic.
 
 Note: *If there are any errors during the course of running `vagrant up`, and it drops you back to your command prompt, just run `vagrant provision` to continue building the VM from where you left off. If there are still errors after doing this a few times, post an issue to this project's issue queue on GitHub with the error.*
 
@@ -63,7 +64,7 @@ By default, this VM is set up so you can manage mysql databases on your own. The
     - MySQL Host: `127.0.0.1`
     - Username: `root`
     - Password: `root` (or whatever password you chose in `config.yml`)
-    - SSH Host: `192.168.4.40` (or whatever IP you chose in `config.yml`)
+    - SSH Host: `192.168.88.88` (or whatever IP you chose in `config.yml`)
     - SSH User: `vagrant`
     - SSH Key: (browse to your `~/.vagrant.d/` folder and choose `insecure_private_key`)
 

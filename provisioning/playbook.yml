@@ -2,10 +2,10 @@
 - hosts: all
 
   vars_files:
-  - vars/main.yml
+    - ../config.yml
 
   pre_tasks:
-  - include: tasks/init.yml
+    - include: tasks/init.yml
 
   roles:
     - geerlingguy.git

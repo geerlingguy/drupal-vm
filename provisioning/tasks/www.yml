@@ -16,3 +16,9 @@
     group=admin
     mode=775
     recurse=yes
+
+- name: Remove 000-default.conf file.
+  file: >
+    path=/etc/apache2/sites-enabled/000-default.conf
+    state=absent
+  notify: restart webserver
