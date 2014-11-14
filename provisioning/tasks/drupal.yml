@@ -17,7 +17,7 @@
 
 - name: Generate Drupal site with drush makefile.
   command: >
-    drush make -y /vagrant/drupal.make {{ drupal_core_path }}
+    drush make -y /vagrant/drupal.make.yml {{ drupal_core_path }}
   when: drupal_site.stat.exists == false
   sudo: no
 
