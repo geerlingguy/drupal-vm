@@ -1,23 +1,19 @@
 ---
 - name: Create Drupal database.
-  mysql_db: >
-    db={{ drupal_mysql_database }}
-    state=present
+  mysql_db: "db={{ drupal_mysql_database }} state=present"
 
 - name: Remove default virtualhost file.
-  file: >
-    path=/etc/apache2/sites-enabled/000-default
-    state=absent
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
   notify: restart webserver
 
 - name: Check if Drupal is already set up.
-  stat: >
-    path={{ drupal_core_path }}
+  stat: "path={{ drupal_core_path }}"
   register: drupal_site
 
 - name: Generate Drupal site with drush makefile.
-  command: >
-    drush make -y /vagrant/drupal.make.yml {{ drupal_core_path }}
+  command: "drush make -y /vagrant/drupal.make.yml {{ drupal_core_path }}"
   when: drupal_site.stat.exists == false
   sudo: no
 
@@ -51,16 +47,16 @@
   when: drupal_major_version|int == 8
 
 - name: Symlink custom modules directory into place.
-  file: >
-    src=/vagrant/custom_modules
-    dest={{ drupal_custom_modules_path }}
-    state=link
+  file:
+    src: /vagrant/custom_modules
+    dest: "{{ drupal_custom_modules_path }}"
+    state: link
   sudo: no
 
 - name: Update ownership of all files within drupal_core_path.
-  file: >
-    path={{ drupal_core_path }}
-    owner=vagrant
-    group=www-data
-    mode=775
-    recurse=yes
+  file:
+    path: "{{ drupal_core_path }}"
+    owner: vagrant
+    group: www-data
+    mode: 0775
+    recurse: yes

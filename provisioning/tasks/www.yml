@@ -9,16 +9,10 @@
   user: name=vagrant append=yes groups=admin
 
 - name: Set permissions on /var/www.
-  file: >
-    path=/var/www
-    state=directory
-    owner=vagrant
-    group=admin
-    mode=775
-    recurse=yes
-
-- name: Remove 000-default.conf file.
-  file: >
-    path=/etc/apache2/sites-enabled/000-default.conf
-    state=absent
-  notify: restart webserver
+  file:
+    path: /var/www
+    state: directory
+    owner: vagrant
+    group: admin
+    mode: 0775
+    recurse: yes
