@@ -19,7 +19,7 @@
 
 - name: Install Drupal (standard profile) with drush.
   command: >
-    drush si -y
+    drush si {{ drupal_install_profile | default('standard') }} -y
     --site-name="{{ drupal_site_name }}"
     --account-name=admin
     --account-pass=admin

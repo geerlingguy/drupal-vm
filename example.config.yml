@@ -28,6 +28,7 @@ drupal_core_path: "/var/www/drupal"
 
 drupal_domain: "drupaltest.dev"
 drupal_site_name: "Drupal Test Site"
+drupal_install_profile: standard
 
 drupal_mysql_user: root
 drupal_mysql_password: root
