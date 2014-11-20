@@ -40,6 +40,7 @@ apache_vhosts:
 
 php_memory_limit: "256M"
 php_display_errors: "On"
+php_realpath_cache_size: "1024K"
 
 # Disable main XDebug components unless needed.
 php_xdebug_coverage_enable: 0
