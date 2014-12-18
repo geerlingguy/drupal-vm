@@ -94,7 +94,7 @@ The easiest way to use XHProf to profile your PHP code on a Drupal site is to in
   - **xhprof directory**: `/usr/share/php`
   - **XHProf URL**: `http://local.xhprof.com/` (assuming you have this set in `apache_vhosts` in config.yml)
 
-## Monitoring Email with MailHog
+## Catching/Debugging Email with MailHog
 
 By default, the VM is configured to redirect PHP's emails to MailHog (instead of sending them to the outside world). You can access the MailHog UI at `http://drupaltest.dev:8025/` (where `drupaltest.dev` is the domain you've configured for the VM).
 
