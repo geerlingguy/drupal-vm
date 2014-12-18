@@ -13,6 +13,7 @@ It will install the following on an Ubuntu 12.04 linux VM:
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - XHProf, for profiling your code
   - XDebug, for debugging your code
+  - MailHog, for catching and debugging email
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
 
@@ -92,6 +93,12 @@ The easiest way to use XHProf to profile your PHP code on a Drupal site is to in
 
   - **xhprof directory**: `/usr/share/php`
   - **XHProf URL**: `http://local.xhprof.com/` (assuming you have this set in `apache_vhosts` in config.yml)
+
+## Monitoring Email with MailHog
+
+By default, the VM is configured to redirect PHP's emails to MailHog (instead of sending them to the outside world). You can access the MailHog UI at `http://drupaltest.dev:8025/` (where `drupaltest.dev` is the domain you've configured for the VM).
+
+You can override the default behavior of redirecting email to MailHog by editing or removing the `php_sendmail_path` inside `config.yml`.
 
 ## Notes
 

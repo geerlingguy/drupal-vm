@@ -8,16 +8,19 @@
     - include: tasks/init.yml
 
   roles:
-    - geerlingguy.git
-    - geerlingguy.apache
-    - geerlingguy.mysql
-    - geerlingguy.php
-    - geerlingguy.php-pecl
-    - geerlingguy.php-mysql
-    - geerlingguy.php-xdebug
-    - geerlingguy.php-xhprof
-    - geerlingguy.composer
-    - geerlingguy.drush
+    - { role: geerlingguy.firewall, tags: ['firewall'] }
+    - { role: geerlingguy.git, tags: ['git'] }
+    - { role: geerlingguy.apache, tags: ['apache'] }
+    - { role: geerlingguy.mysql, tags: ['mysql'] }
+    - { role: geerlingguy.php, tags: ['php'] }
+    - { role: geerlingguy.php-pecl, tags: ['php'] }
+    - { role: geerlingguy.php-mysql, tags: ['php'] }
+    - { role: geerlingguy.php-xdebug, tags: ['php'] }
+    - { role: geerlingguy.php-xhprof, tags: ['php'] }
+    - { role: geerlingguy.composer, tags: ['composer'] }
+    - { role: geerlingguy.drush, tags: ['drush'] }
+    - { role: geerlingguy.daemonize, tags: ['mail'] }
+    - { role: geerlingguy.mailhog, tags: ['mail'] }
 
   tasks:
     - include: tasks/www.yml

@@ -1,3 +1,4 @@
+geerlingguy.firewall
 geerlingguy.git
 geerlingguy.apache
 geerlingguy.mysql
@@ -8,3 +9,5 @@ geerlingguy.php-xdebug
 geerlingguy.php-xhprof
 geerlingguy.composer
 geerlingguy.drush
+geerlingguy.daemonize
+geerlingguy.mailhog
