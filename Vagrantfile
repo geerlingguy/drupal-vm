@@ -2,11 +2,16 @@
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = "2"
 
+# Use config.yml for basic VM configuration.
 require 'yaml'
 if !File.exist?('./config.yml')
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
 vconfig = YAML::load_file("./config.yml")
+
+# Use rbconfig to determine if we're on a windows host or not.
+require 'rbconfig'
+is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = vconfig['vagrant_hostname']
@@ -23,9 +28,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       id: synced_folder['id']
   end
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/playbook.yml"
-    ansible.sudo = true
+  if is_windows
+    # Provisioning configuration for shell script (for Windows).
+    config.vm.provision "shell" do |sh|
+      sh.path = "provisioning/JJG-Ansible-Windows/windows.sh"
+      sh.args = "provisioning/playbook.yml"
+    end
+  else
+    # Provisioning configuration for Ansible (for Mac/Linux hosts).
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/playbook.yml"
+      ansible.sudo = true
+    end
   end
 
   # VirtualBox.
