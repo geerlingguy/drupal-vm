@@ -16,6 +16,7 @@ is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = vconfig['vagrant_hostname']
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
+  config.ssh.insert_key = false
 
   config.vm.box = "geerlingguy/ubuntu1204"
 
