@@ -42,7 +42,9 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.
-  2. Copy `example.config.yml` to `config.yml`, and modify it to use settings you like.
+  2. Make copies of both of the `example.*` files, and modify to your liking:
+    - Copy `example.drupal.make.yml` to `drupal.make.yml`.
+    - Copy `example.config.yml` to `config.yml`.
   3. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
   4. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
   5. Type in `vagrant up`, and let Vagrant do its magic.
