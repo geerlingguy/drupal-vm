@@ -28,7 +28,7 @@ There are a couple places where you can customize the VM for your needs:
 
 If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial install, do the following:
 
-  1. Update `projects[drupal][version]` and `core` inside the `drupal.make` file.
+  1. Update the Drupal `version` and `core` inside the `drupal.make.yml` file.
   2. Update `drupal_major_version` inside `config.yml`.
 
 ## Quick Start Guide
