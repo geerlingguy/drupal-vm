@@ -46,6 +46,9 @@ drupal_domain: "drupaltest.dev"
 drupal_site_name: "Drupal Test Site"
 drupal_install_profile: standard
 
+# TODO - REMOVE THIS VARIABLE AFTER ANSIBLE 1.8.3+
+drush_keep_updated: yes
+
 drupal_mysql_user: root
 drupal_mysql_password: root
 drupal_mysql_database: drupal
