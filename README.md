@@ -4,7 +4,7 @@
 
 This project aims to make spinning up a simple local Drupal test/development environment incredibly quick and easy, and to introduce new developers to the wonderful world of Drupal development on local virtual machines (instead of crufty old MAMP/WAMP-based development).
 
-It will install the following on an Ubuntu 12.04 linux VM:
+It will install the following on an Ubuntu 14.04 linux VM:
 
   - Apache 2.2.x
   - PHP 5.5.x (configurable)

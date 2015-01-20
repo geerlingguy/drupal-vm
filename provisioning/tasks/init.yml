@@ -13,7 +13,7 @@
 - name: Disable the firewall (since this is for local dev only).
   service: name=ufw state=stopped
 
-- name: Add repository for PHP 5.5 on Ubuntu 12.04.
+- name: Add repository for PHP 5.5 on Ubuntu 14.04.
   # Note: Add '-oldstable' for PHP 5.4, if desired.
   apt_repository: repo='ppa:ondrej/php5'
 

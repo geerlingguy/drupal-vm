@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
   config.ssh.insert_key = false
 
-  config.vm.box = "geerlingguy/ubuntu1204"
+  config.vm.box = "geerlingguy/ubuntu1404"
 
   for synced_folder in vconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
