@@ -6,14 +6,16 @@ This project aims to make spinning up a simple local Drupal test/development env
 
 It will install the following on an Ubuntu 14.04 linux VM:
 
-  - Apache 2.2.x
+  - Apache 2.4.x
   - PHP 5.5.x (configurable)
   - MySQL 5.5.x
   - Drush latest release (configurable)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
-  - XHProf, for profiling your code
-  - XDebug, for debugging your code
-  - MailHog, for catching and debugging email
+  - Optional (installed by default):
+    - XHProf, for profiling your code
+    - XDebug, for debugging your code
+    - PHPMyAdmin, for accessing databases directly
+    - MailHog, for catching and debugging email
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
 
