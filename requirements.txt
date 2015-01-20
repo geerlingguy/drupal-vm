@@ -7,6 +7,7 @@ geerlingguy.php-pecl
 geerlingguy.php-mysql
 geerlingguy.php-xdebug
 geerlingguy.php-xhprof
+geerlingguy.phpmyadmin
 geerlingguy.composer
 geerlingguy.drush
 geerlingguy.daemonize

@@ -15,12 +15,29 @@
     - { role: geerlingguy.php, tags: ['php'] }
     - { role: geerlingguy.php-pecl, tags: ['php'] }
     - { role: geerlingguy.php-mysql, tags: ['php'] }
-    - { role: geerlingguy.php-xdebug, tags: ['php'] }
-    - { role: geerlingguy.php-xhprof, tags: ['php'] }
     - { role: geerlingguy.composer, tags: ['composer'] }
     - { role: geerlingguy.drush, tags: ['drush'] }
-    - { role: geerlingguy.daemonize, tags: ['mail'] }
-    - { role: geerlingguy.mailhog, tags: ['mail'] }
+    # Roles to be installed conditionally.
+    - {
+      role: geerlingguy.php-xdebug,
+      when: '"xdebug" in installed_extras'
+    }
+    - {
+      role: geerlingguy.php-xhprof,
+      when: '"xhprof" in installed_extras'
+    }
+    - {
+      role: geerlingguy.phpmyadmin,
+      when: '"phpmyadmin" in installed_extras'
+    }
+    - {
+      role: geerlingguy.daemonize,
+      when: '"mailhog" in installed_extras'
+    }
+    - {
+      role: geerlingguy.mailhog,
+      when: '"mailhog" in installed_extras'
+    }
 
   tasks:
     - include: tasks/www.yml

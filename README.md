@@ -89,20 +89,38 @@ You should be able to connect as the root user and add, manage, and remove datab
 
 You can also install and use PHPMyAdmin (a simple web-based MySQL GUI) by adding the `geerlingguy.phpmyadmin` role to `provisioning/playbook.yml`, and installing the role with `$ ansible-galaxy install geerlingguy.phpmyadmin`.
 
-## Using XHProf to Profile Code
+## Extra utilities
+
+By default, this VM includes the utilities listed in the `config.yml` option `installed_extras`:
+
+    installed_extras:
+      - xdebug
+      - xhprof
+      - phpmyadmin
+      - mailhog
+
+If you don't want or need one or more of these utilities, just delete them or comment them from the list. This is helpful if you want to reduce PHP memory usage or otherwise conserve system resources.
+
+### Using XHProf to Profile Code
 
 The easiest way to use XHProf to profile your PHP code on a Drupal site is to install the Devel module, then in Devel's configuration, check the 'Enable profiling of all page views and drush requests' checkbox. In the settings that appear below, set the following values:
 
   - **xhprof directory**: `/usr/share/php`
   - **XHProf URL**: `http://local.xhprof.com/` (assuming you have this set in `apache_vhosts` in config.yml)
 
-## Catching/Debugging Email with MailHog
+Also be sure you have `xdebug` in the `installed_extras` list in `config.yml`.
+
+### Using XDebug to Debug Code
+
+XDebug can be a useful tool for debugging PHP applications, but it uses extra memory and CPU for every request, therefore it's disabled by default. To enable XDebug, change the `php_xdebug_default_enable` and `php_xdebug_coverage_enable` to `1` in your `config.yml`, and make sure `xdebug` is in the list of `installed_extras`.
+
+### Catching/Debugging Email with MailHog
 
 By default, the VM is configured to redirect PHP's emails to MailHog (instead of sending them to the outside world). You can access the MailHog UI at `http://drupaltest.dev:8025/` (where `drupaltest.dev` is the domain you've configured for the VM).
 
-You can override the default behavior of redirecting email to MailHog by editing or removing the `php_sendmail_path` inside `config.yml`.
+You can override the default behavior of redirecting email to MailHog by editing or removing the `php_sendmail_path` inside `config.yml`, and you can choose to not install MailHog at all by removing it from `installed_extras` in `config.yml`.
 
-## Notes
+## Other Notes
 
   - To shut down the virtual machine, enter `vagrant halt` in the Terminal in the same folder that has the `Vagrantfile`. To destroy it completely (if you want to save a little disk space, or want to rebuild it from scratch with `vagrant up` again), type in `vagrant destroy`.
   - You can change the installed version of Drupal or drush, or any other configuration options, by editing the variables within `vars/main.yml`.

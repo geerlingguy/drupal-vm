@@ -19,6 +19,13 @@ vagrant_cpus: 2
 mysql_root_password: root
 drush_version: master
 
+# Comment out any extra utilities you don't want to install.
+installed_extras:
+  - mailhog
+  - phpmyadmin
+  - xdebug
+  - xhprof
+
 firewall_allowed_tcp_ports:
   - "22"
   - "25"
