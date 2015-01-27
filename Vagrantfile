@@ -18,14 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
   config.ssh.insert_key = false
 
-  config.vm.box = "geerlingguy/ubuntu1404"
+  config.vm.box = "puphpet/ubuntu1404-x64"
 
   for synced_folder in vconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
-      rsync__auto: "true",
-      rsync__exclude: synced_folder['excluded_paths'],
-      rsync__args: ["--verbose", "--archive", "--delete", "-z", "--chmod=ugo=rwX"],
+      # nfs_export: false, # Uncomment this line once exports have been configured
       id: synced_folder['id']
   end
 
@@ -53,6 +51,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
-  config.vm.define :drupaldev do |drupaldev_config|
+  config.vm.define :ilrdev do |drupaldev_config|
   end
 end
