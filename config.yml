@@ -1,6 +1,6 @@
 ---
 # Vagrant hostname and IP configuration.
-vagrant_hostname: ilr.dev
+vagrant_hostname: ilr-website.dev
 vagrant_ip: 192.168.88.89
 
 # A list of synced folders, with the keys 'local_path', 'destination', and 'id'.
@@ -40,7 +40,7 @@ drupal_major_version: 7
 # The path where Drupal will be downloaded and installed.
 drupal_core_path: "/var/www/ilr-website/docroot"
 
-drupal_domain: "ilr.dev"
+drupal_domain: "ilr-website.dev"
 drupal_site_name: "ILR Dev Site"
 drupal_install_profile: ilr
 
