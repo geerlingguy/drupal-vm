@@ -40,9 +40,10 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
 ### 3 - Configure your host machine to access the VM.
 
-  1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.89  ilr.dev` so you can connect to the VM.
+  1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.89 www.ilr-website.dev` so you can connect to the VM.
   2. Assuming that your key has been added to Acquia, download the db from the ilr-website project via the sync-prod script ([more info](https://github.com/ilrWebServices/ilr-website/blob/master/bin/sync-prod)).
-  3. Open your browser and access [http://ilr.dev/](http://ilr.dev/).
+  3. Open your browser and access [http://www.ilr-website.dev/](http://www.ilr-website.dev/).
+  4. Follow the setup instructions in the [developer docs](https://github.com/ilrWebServices/ilr-website/blob/master/docs/installation.md) to complete the installation.
 
 ## Connecting to MySQL
 
@@ -55,7 +56,7 @@ By default, this VM is set up so you can manage mysql databases on your own. The
     - MySQL Host: `127.0.0.1`
     - Username: `root`
     - Password: `root` (or whatever password you chose in `config.yml`)
-    - SSH Host: `192.168.88.88` (or whatever IP you chose in `config.yml`)
+    - SSH Host: `192.168.88.89` (or whatever IP you chose in `config.yml`)
     - SSH User: `vagrant`
     - SSH Key: (browse to your `~/.vagrant.d/` folder and choose `insecure_private_key`)
 
