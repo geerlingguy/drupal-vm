@@ -29,6 +29,7 @@ firewall_allowed_tcp_ports:
   - "25"
   - "80"
   - "443"
+  - "3306"
   - "8025"
   - "8080"
   - "8443"
@@ -47,8 +48,8 @@ drupal_install_profile: ilr
 # TODO - REMOVE THIS VARIABLE AFTER ANSIBLE 1.8.3+
 drush_keep_updated: yes
 
-drupal_mysql_user: root
-drupal_mysql_password: root
+drupal_mysql_user: drupal
+drupal_mysql_password: drupal
 drupal_mysql_database: ilr
 
 apache_vhosts:

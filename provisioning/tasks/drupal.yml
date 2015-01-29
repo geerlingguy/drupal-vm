@@ -2,6 +2,13 @@
 - name: Create Drupal database.
   mysql_db: "db={{ drupal_mysql_database }} state=present"
 
+- name: Create a MySQL user for Drupal.
+  mysql_user: >
+    name={{ drupal_mysql_user }}
+    host='%'
+    priv={{ drupal_mysql_database }}.*:ALL
+    password={{ drupal_mysql_password }}
+
 - name: Remove default virtualhost file.
   file:
     path: /etc/apache2/sites-enabled/000-default.conf
