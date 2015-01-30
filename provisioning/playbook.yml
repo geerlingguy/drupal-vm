@@ -19,6 +19,14 @@
     - { role: geerlingguy.drush, tags: ['drush'] }
     # Roles to be installed conditionally.
     - {
+      role: geerlingguy.memcached,
+      when: '"memcached" in installed_extras'
+    }
+    - {
+      role: geerlingguy.php-memcached,
+      when: '"memcached" in installed_extras'
+    }
+    - {
       role: geerlingguy.php-xdebug,
       when: '"xdebug" in installed_extras'
     }

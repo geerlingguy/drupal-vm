@@ -12,6 +12,7 @@ It will install the following on an Ubuntu 14.04 linux VM:
   - Drush latest release (configurable)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - Optional (installed by default):
+    - Memcached
     - XHProf, for profiling your code
     - XDebug, for debugging your code
     - PHPMyAdmin, for accessing databases directly
@@ -91,17 +92,18 @@ You should be able to connect as the root user and add, manage, and remove datab
 
 You can also install and use PHPMyAdmin (a simple web-based MySQL GUI) by adding the `geerlingguy.phpmyadmin` role to `provisioning/playbook.yml`, and installing the role with `$ ansible-galaxy install geerlingguy.phpmyadmin`.
 
-## Extra utilities
+## Extra software/utilities
 
-By default, this VM includes the utilities listed in the `config.yml` option `installed_extras`:
+By default, this VM includes the extras listed in the `config.yml` option `installed_extras`:
 
     installed_extras:
+      - mailhog
+      - memcached
+      - phpmyadmin
       - xdebug
       - xhprof
-      - phpmyadmin
-      - mailhog
 
-If you don't want or need one or more of these utilities, just delete them or comment them from the list. This is helpful if you want to reduce PHP memory usage or otherwise conserve system resources.
+If you don't want or need one or more of these extras, just delete them or comment them from the list. This is helpful if you want to reduce PHP memory usage or otherwise conserve system resources.
 
 ### Using XHProf to Profile Code
 

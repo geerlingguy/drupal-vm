@@ -22,6 +22,7 @@ drush_version: master
 # Comment out any extra utilities you don't want to install.
 installed_extras:
   - mailhog
+  - memcached
   - phpmyadmin
   - xdebug
   - xhprof
