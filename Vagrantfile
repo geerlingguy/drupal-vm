@@ -45,10 +45,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
-    v.customize ["modifyvm", :id, "--name", vconfig['vagrant_hostname']]
+    v.name = vconfig['vagrant_hostname']
+    v.memory = vconfig['vagrant_memory']
+    v.cpus = vconfig['vagrant_cpus']
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    v.customize ["modifyvm", :id, "--memory", vconfig['vagrant_memory']]
-    v.customize ["modifyvm", :id, "--cpus", vconfig['vagrant_cpus']]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
