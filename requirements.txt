@@ -1,9 +1,11 @@
 geerlingguy.firewall
 geerlingguy.git
 geerlingguy.apache
+geerlingguy.memcached
 geerlingguy.mysql
 geerlingguy.php
 geerlingguy.php-pecl
+geerlingguy.php-memcached
 geerlingguy.php-mysql
 geerlingguy.php-xdebug
 geerlingguy.php-xhprof
