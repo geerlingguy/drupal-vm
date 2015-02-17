@@ -43,6 +43,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # VMWare Fusion.
+  config.vm.provider :vmware_fusion do |v|
+    # TODO: Use same box as other providers, once I Packerize vmware version.
+    config.vm.box = "chef/ubuntu-14.04"
+    v.gui = false
+    v.vmx["memsize"] = vconfig['vagrant_memory']
+    v.vmx["numvcpus"] = vconfig['vagrant_cpus']
+  end
+
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
     v.name = vconfig['vagrant_hostname']
