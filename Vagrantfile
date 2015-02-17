@@ -18,6 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
   config.ssh.insert_key = false
 
+  config.vm.box = "geerlingguy/ubuntu1404"
+
   for synced_folder in vconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
@@ -42,9 +44,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # VMWare Fusion.
-  config.vm.provider :vmware_fusion do |v|
+  config.vm.provider :vmware_fusion do |v, override|
     # TODO: Use same box as other providers, once I Packerize vmware version.
-    config.vm.box = "chef/ubuntu-14.04"
+    override.vm.box = "chef/ubuntu-14.04"
     v.gui = false
     v.vmx["memsize"] = vconfig['vagrant_memory']
     v.vmx["numvcpus"] = vconfig['vagrant_cpus']
@@ -52,7 +54,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
-    config.vm.box = "geerlingguy/ubuntu1404"
     v.name = vconfig['vagrant_hostname']
     v.memory = vconfig['vagrant_memory']
     v.cpus = vconfig['vagrant_cpus']
