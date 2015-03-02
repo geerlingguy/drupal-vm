@@ -124,6 +124,13 @@ By default, the VM is configured to redirect PHP's emails to MailHog (instead of
 
 You can override the default behavior of redirecting email to MailHog by editing or removing the `php_sendmail_path` inside `config.yml`, and you can choose to not install MailHog at all by removing it from `installed_extras` in `config.yml`.
 
+## Drupal 6 Notes
+
+If you'd like to use the included configuration and Drush make file to install a Drupal 6 site using an older version of Drush (< 7.x), you may need to make some changes, namely:
+
+  - Drush < 7.x does not support .yml makefiles; if using Drush 5.x or 6.x, you will need to create the make file in the INI-style format.
+  - In your customized `config.yml` file, you will need to use the `default` installation profile instead of `standard` (for the `drupal_install_profile` variable).
+
 ## Other Notes
 
   - To shut down the virtual machine, enter `vagrant halt` in the Terminal in the same folder that has the `Vagrantfile`. To destroy it completely (if you want to save a little disk space, or want to rebuild it from scratch with `vagrant up` again), type in `vagrant destroy`.
