@@ -5,12 +5,12 @@ api: 2
 # variable inside config.yml if you change the major version in this file.
 
 # Drupal core (major version, e.g. 6.x, 7.x, 8.x).
-core: 8.x
+core: "8.x"
 
 projects:
 
   drupal:
-    type: core
-    version: 8.0.x
+    type: "core"
+    version: "8.0.x"
 
-  devel: 1.x-dev
+  devel: "1.x-dev"
