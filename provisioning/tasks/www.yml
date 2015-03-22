@@ -6,13 +6,13 @@
   group: name=admin state=present
 
 - name: Ensure vagrant user is in admin group.
-  user: name=vagrant append=yes groups=admin
+  user: "name={{ vagrant_user }} append=yes groups=admin"
 
 - name: Set permissions on /var/www.
   file:
     path: /var/www
     state: directory
-    owner: vagrant
+    owner: "{{ vagrant_user }}"
     group: admin
     mode: 0775
     recurse: yes

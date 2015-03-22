@@ -2,6 +2,7 @@
 # Vagrant hostname and IP configuration.
 vagrant_hostname: drupaltest.dev
 vagrant_ip: 192.168.88.88
+vagrant_user: vagrant
 
 # A list of synced folders, with the keys 'local_path', 'destination', and 'id'.
 vagrant_synced_folders:
