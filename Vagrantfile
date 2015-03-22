@@ -43,10 +43,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # VMWare Fusion.
+  # VMware Fusion.
   config.vm.provider :vmware_fusion do |v, override|
-    # TODO: Use same box as other providers, once I Packerize vmware version.
-    override.vm.box = "chef/ubuntu-14.04"
+    # HGFS kernel module currently doesn't load correctly for native shares.
+    override.vm.synced_folder ".", "/vagrant", type: 'nfs'
+
     v.gui = false
     v.vmx["memsize"] = vconfig['vagrant_memory']
     v.vmx["numvcpus"] = vconfig['vagrant_cpus']

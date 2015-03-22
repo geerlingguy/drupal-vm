@@ -34,9 +34,9 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 ## Quick Start Guide
 
-### 1 - Install dependencies (VirtualBox, Vagrant, Ansible)
+### 1 - Install dependencies (VirtualBox/VMware, Vagrant, Ansible)
 
-  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMware](http://www.vmware.com/products/fusion).
   2. Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
   3. [Mac/Linux only] Install [Ansible](http://docs.ansible.com/intro_installation.html).
 
