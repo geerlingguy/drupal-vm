@@ -48,7 +48,7 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
   2. Make copies of both of the `example.*` files, and modify to your liking:
     - Copy `example.drupal.make.yml` to `drupal.make.yml`.
     - Copy `example.config.yml` to `config.yml`.
-  3. Create a local directory where Drupal will be installed (so you can work with the files locally or within the VM), and configure the path to that directory in `config.yml`.
+  3. Create a local directory where Drupal will be installed (so you can work with the files locally or within the VM), and configure the path to that directory in `config.yml` (inside `vagrant_synced_folders`, the `local_path`).
   4. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
   5. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
   6. Type in `vagrant up`, and let Vagrant do its magic.
@@ -62,15 +62,15 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
 ## Syncing folders
 
-You can share folders between your host computer and the VM in a variety of ways; the two most commonly-used methods are using an NFS share, or using Vagrant's rsync method to synchronize a folder from your host into the guest VM. The `example.config.yml` file contains an example `rsync` share that would sync the folder `~/Sites/drupal` on your host into a `/drupal` folder on the VM.
+You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. The `example.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/vagrant` on your host into the `/var/www` folder on the VM.
 
-If you want to use NFS for the share instead, you could simply change the share to:
+If you want to use a different synced folder method (e.g. `smb`), you can change `type` to:
 
     vagrant_synced_folders:
-      - local_path: ~/Sites/drupal
-        destination: /drupal
+      - local_path: ~/Sites/vagrant
+        destination: /var/www
         id: drupal
-        type: nfs
+        type: smb
 
 You can add as many synced folders as you'd like, and you can configure [any type of share](https://docs.vagrantup.com/v2/synced-folders/index.html) supported by Vagrant; just add another item to the list of `vagrant_synced_folders`.
 
