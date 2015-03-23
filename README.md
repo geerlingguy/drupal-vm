@@ -48,9 +48,10 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
   2. Make copies of both of the `example.*` files, and modify to your liking:
     - Copy `example.drupal.make.yml` to `drupal.make.yml`.
     - Copy `example.config.yml` to `config.yml`.
-  3. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
-  4. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
-  5. Type in `vagrant up`, and let Vagrant do its magic.
+  3. Create a local directory where Drupal will be installed (so you can work with the files locally or within the VM), and configure the path to that directory in `config.yml`.
+  4. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
+  5. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
+  6. Type in `vagrant up`, and let Vagrant do its magic.
 
 Note: *If there are any errors during the course of running `vagrant up`, and it drops you back to your command prompt, just run `vagrant provision` to continue building the VM from where you left off. If there are still errors after doing this a few times, post an issue to this project's issue queue on GitHub with the error.*
 
@@ -134,6 +135,7 @@ If you'd like to use the included configuration and Drush make file to install a
 ## Other Notes
 
   - To shut down the virtual machine, enter `vagrant halt` in the Terminal in the same folder that has the `Vagrantfile`. To destroy it completely (if you want to save a little disk space, or want to rebuild it from scratch with `vagrant up` again), type in `vagrant destroy`.
+  - When you rebuild the VM (e.g. `vagrant destroy` and then another `vagrant up`), make sure you clear out the contents of the `drupal` folder on your host machine, or Drupal will return some errors when the VM is rebuilt (it won't reinstall Drupal cleanly).
   - You can change the installed version of Drupal or drush, or any other configuration options, by editing the variables within `vars/main.yml`.
   - Find out more about local development with Vagrant + VirtualBox + Ansible in this presentation: [Local Development Environments - Vagrant, VirtualBox and Ansible](http://www.slideshare.net/geerlingguy/local-development-on-virtual-machines-vagrant-virtualbox-and-ansible).
   - Learn about how Ansible can accelerate your ability to innovate and manage your infrastructure by reading [Ansible for DevOps](https://leanpub.com/ansible-for-devops).

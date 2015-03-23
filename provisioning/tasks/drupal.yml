@@ -9,7 +9,7 @@
   notify: restart webserver
 
 - name: Check if Drupal is already set up.
-  stat: "path={{ drupal_core_path }}"
+  stat: "path={{ drupal_core_path }}/index.php"
   register: drupal_site
 
 - name: Generate Drupal site with drush makefile.
@@ -52,11 +52,3 @@
     dest: "{{ drupal_custom_modules_path }}"
     state: link
   sudo: no
-
-- name: Update ownership of all files within drupal_core_path.
-  file:
-    path: "{{ drupal_core_path }}"
-    owner: "{{ vagrant_user }}"
-    group: www-data
-    mode: 0775
-    recurse: yes

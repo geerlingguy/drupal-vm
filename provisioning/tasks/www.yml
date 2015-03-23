@@ -7,12 +7,3 @@
 
 - name: Ensure vagrant user is in admin group.
   user: "name={{ vagrant_user }} append=yes groups=admin"
-
-- name: Set permissions on /var/www.
-  file:
-    path: /var/www
-    state: directory
-    owner: "{{ vagrant_user }}"
-    group: admin
-    mode: 0775
-    recurse: yes
