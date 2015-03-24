@@ -51,7 +51,7 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
     - Copy `example.drupal.make.yml` to `drupal.make.yml`.
     - Copy `example.config.yml` to `config.yml`.
   3. Create a local directory where Drupal will be installed (so you can work with the files locally or within the VM), and configure the path to that directory in `config.yml` (inside `vagrant_synced_folders`, the `local_path`).
-  4. Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
+  4. [Mac/Linux only] Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
   5. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
   6. Type in `vagrant up`, and let Vagrant do its magic.
 
