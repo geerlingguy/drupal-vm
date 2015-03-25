@@ -1,13 +1,4 @@
 ---
-- name: Create Drupal database.
-  mysql_db: "db={{ drupal_mysql_database }} state=present"
-
-- name: Remove default virtualhost file.
-  file:
-    path: /etc/apache2/sites-enabled/000-default.conf
-    state: absent
-  notify: restart webserver
-
 - name: Check if Drupal is already set up.
   stat: "path={{ drupal_core_path }}/index.php"
   register: drupal_site
@@ -23,32 +14,15 @@
     --site-name="{{ drupal_site_name }}"
     --account-name=admin
     --account-pass=admin
-    --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ drupal_mysql_database }}
+    --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ mysql_databases[0].name }}
     chdir={{ drupal_core_path }}
   notify: restart webserver
   when: drupal_site.stat.exists == false
   sudo: no
 
-- name: Install modules with drush.
+- name: Install configured modules with drush.
   command: >
-    drush en -y devel
+    drush en -y {{ drupal_enable_modules | join(" ") }}
     chdir={{ drupal_core_path }}
   when: drupal_site.stat.exists == false
-  sudo: no
-
-- name: Set the custom module directory path for Drupal < 8.
-  set_fact:
-    drupal_custom_modules_path: "{{ drupal_core_path }}/sites/all/modules/custom"
-  when: drupal_major_version|int < 8
-
-- name: Set the custom module directory path for Drupal = 8.
-  set_fact:
-    drupal_custom_modules_path: "{{ drupal_core_path }}/modules/custom"
-  when: drupal_major_version|int == 8
-
-- name: Symlink custom modules directory into place.
-  file:
-    src: /vagrant/custom_modules
-    dest: "{{ drupal_custom_modules_path }}"
-    state: link
   sudo: no

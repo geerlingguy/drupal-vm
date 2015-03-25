@@ -7,3 +7,9 @@
 
 - name: Ensure vagrant user is in admin group.
   user: "name={{ vagrant_user }} append=yes groups=admin"
+
+- name: Remove default virtualhost file.
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify: restart webserver

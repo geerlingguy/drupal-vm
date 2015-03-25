@@ -7,7 +7,8 @@ vagrant_user: vagrant
 # A list of synced folders, with the keys 'local_path', 'destination', 'id', and
 # a 'type' of [nfs|rsync|smb] (leave empty for slow native shares).
 vagrant_synced_folders:
-  # This first folder will be used for the default Drupal installation.
+  # The first synced folder will be used for the default Drupal installation, if
+  # build_from_makefile is 'true'.
   - local_path: ~/Sites/vagrant
     destination: /var/www
     id: drupal
@@ -17,9 +18,39 @@ vagrant_synced_folders:
 vagrant_memory: 1024
 vagrant_cpus: 2
 
-# Other variables in this file will be used during Ansible provisioning.
-mysql_root_password: root
-drush_version: master
+# Set this to false if you are using a different site deployment strategy and
+# would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
+build_from_makefile: true
+
+# Settings for building a Drupal site from a makefile (if 'build_from_makefile'
+# is 'true').
+drupal_major_version: 8
+drupal_core_path: "/var/www/drupal"
+drupal_domain: "drupaltest.dev"
+drupal_site_name: "Drupal Test Site"
+drupal_install_profile: standard
+drupal_enable_modules: [ 'devel' ]
+drupal_mysql_user: drupal
+drupal_mysql_password: drupal
+
+# Apache VirtualHosts. Add one for each site you are running inside the VM. For
+# multisite deployments, you can point multiple servernames at one documentroot.
+apache_vhosts:
+  - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
+  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
+
+# MySQL Databases and users. If build_from_makefile is true, first database will
+# be used for the makefile-built site.
+mysql_databases:
+  - name: drupal
+    encoding: utf8
+    collation: utf8_general_ci
+
+mysql_users:
+  - name: drupal
+    host: "%"
+    password: drupal
+    priv: "drupal.*:ALL"
 
 # Comment out any extra utilities you don't want to install.
 installed_extras:
@@ -29,6 +60,10 @@ installed_extras:
   - xdebug
   - xhprof
 
+# You can configure almost anything else on the server in the rest of this file.
+mysql_root_password: root
+drush_version: master
+
 firewall_allowed_tcp_ports:
   - "22"
   - "25"
@@ -37,28 +72,6 @@ firewall_allowed_tcp_ports:
   - "8025"
   - "8080"
   - "8443"
-
-# Major release of drupal in use (6, 7, 8, etc.). Be sure to update the core
-# version inside the drupal.make file if you change the major version here.
-drupal_major_version: 8
-
-# The path where Drupal will be downloaded and installed.
-drupal_core_path: "/var/www/drupal"
-
-drupal_domain: "drupaltest.dev"
-drupal_site_name: "Drupal Test Site"
-drupal_install_profile: standard
-
-# TODO - REMOVE THIS VARIABLE AFTER ANSIBLE 1.8.3+
-drush_keep_updated: yes
-
-drupal_mysql_user: root
-drupal_mysql_password: root
-drupal_mysql_database: drupal
-
-apache_vhosts:
-  - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
 
 php_memory_limit: "256M"
 php_display_errors: "On"

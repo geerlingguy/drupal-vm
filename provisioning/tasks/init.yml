@@ -20,9 +20,10 @@
 - name: Install postfix so Drupal can send emails.
   apt: pkg=postfix state=installed
 
-- name: Add drupal_domain to the hosts file.
-  lineinfile:
-    dest: /etc/hosts
-    regexp: "^127.0.0.1  {{ drupal_domain }}$"
-    line: "127.0.0.1  {{ drupal_domain }}"
-    state: present
+# TODO: Is this necessary?
+# - name: Add drupal_domain to the hosts file.
+#   lineinfile:
+#     dest: /etc/hosts
+#     regexp: "^127.0.0.1  {{ drupal_domain }}$"
+#     line: "127.0.0.1  {{ drupal_domain }}"
+#     state: present
