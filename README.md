@@ -38,6 +38,8 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 ## Quick Start Guide
 
+This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using the included example Drush make file. You can also use the Drupal VM with a [Local Drupal codebase](https://github.com/geerlingguy/drupal-vm/wiki/Local-Drupal-codebase) or even a [Drupal multisite installation](https://github.com/geerlingguy/drupal-vm/wiki/Drupal-multisite).
+
 ### 1 - Install dependencies (VirtualBox, Vagrant, Ansible)
 
   1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
