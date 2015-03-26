@@ -22,6 +22,8 @@ It will install the following on an Ubuntu 14.04 linux VM:
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
 
+Please read through the rest of this README and the [Drupal VM Wiki](https://github.com/geerlingguy/drupal-vm/wiki) for help getting Drupal VM configured and integrated with your development workflow.
+
 ## Customizing the VM
 
 There are a couple places where you can customize the VM for your needs:
@@ -36,9 +38,9 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 ## Quick Start Guide
 
-### 1 - Install dependencies (VirtualBox/VMware, Vagrant, Ansible)
+### 1 - Install dependencies (VirtualBox, Vagrant, Ansible)
 
-  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMware](http://www.vmware.com/products/fusion).
+  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
   2. Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
   3. [Mac/Linux only] Install [Ansible](http://docs.ansible.com/intro_installation.html).
 
@@ -50,7 +52,7 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
   2. Make copies of both of the `example.*` files, and modify to your liking:
     - Copy `example.drupal.make.yml` to `drupal.make.yml`.
     - Copy `example.config.yml` to `config.yml`.
-  3. Create a local directory where Drupal will be installed (so you can work with the files locally or within the VM), and configure the path to that directory in `config.yml` (inside `vagrant_synced_folders`, the `local_path`).
+  3. Create a local directory where Drupal will be installed and configure the path to that directory in `config.yml` (`local_path`, inside `vagrant_synced_folders`).
   4. [Mac/Linux only] Install Ansible Galaxy roles required for this VM: `$ sudo ansible-galaxy install -r requirements.txt`
   5. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
   6. Type in `vagrant up`, and let Vagrant do its magic.
@@ -61,39 +63,6 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
   1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM.
   2. Open your browser and access [http://drupaltest.dev/](http://drupaltest.dev/).
-
-## Syncing folders
-
-You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. The `example.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/vagrant` on your host into the `/var/www` folder on the VM.
-
-If you want to use a different synced folder method (e.g. `smb`), you can change `type` to:
-
-    vagrant_synced_folders:
-      - local_path: ~/Sites/vagrant
-        destination: /var/www
-        id: drupal
-        type: smb
-
-You can add as many synced folders as you'd like, and you can configure [any type of share](https://docs.vagrantup.com/v2/synced-folders/index.html) supported by Vagrant; just add another item to the list of `vagrant_synced_folders`.
-
-## Connecting to MySQL
-
-By default, this VM is set up so you can manage mysql databases on your own. The default root MySQL user credentials are `root` for username+password, but you could change the password via `config.yml`. I use the MySQL GUI [Sequel Pro](http://www.sequelpro.com/) (Mac-only) to connect and manage databases, then Drush to sync databases (sometimes I'll just do a dump and import, but Drush is usually quicker, and is easier to do over and over again when you need it).
-
-### Connect using Sequel Pro (or a similar client):
-
-  1. Use the SSH connection type.
-  2. Set the following options:
-    - MySQL Host: `127.0.0.1`
-    - Username: `root`
-    - Password: `root` (or whatever password you chose in `config.yml`)
-    - SSH Host: `192.168.88.88` (or whatever IP you chose in `config.yml`)
-    - SSH User: `vagrant`
-    - SSH Key: (browse to your `~/.vagrant.d/` folder and choose `insecure_private_key`)
-
-You should be able to connect as the root user and add, manage, and remove databases and users.
-
-You can also install and use PHPMyAdmin (a simple web-based MySQL GUI) by adding the `geerlingguy.phpmyadmin` role to `provisioning/playbook.yml`, and installing the role with `$ ansible-galaxy install geerlingguy.phpmyadmin`.
 
 ## Extra software/utilities
 
@@ -108,31 +77,16 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
 
 If you don't want or need one or more of these extras, just delete them or comment them from the list. This is helpful if you want to reduce PHP memory usage or otherwise conserve system resources.
 
-### Using XHProf to Profile Code
+## Using Drupal VM
 
-The easiest way to use XHProf to profile your PHP code on a Drupal site is to install the Devel module, then in Devel's configuration, check the 'Enable profiling of all page views and drush requests' checkbox. In the settings that appear below, set the following values:
+Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM Wiki](https://github.com/geerlingguy/drupal-vm/wiki):
 
-  - **xhprof directory**: `/usr/share/php`
-  - **XHProf URL**: `http://local.xhprof.com/` (assuming you have this set in `apache_vhosts` in config.yml)
-
-Also be sure you have `xdebug` in the `installed_extras` list in `config.yml`.
-
-### Using XDebug to Debug Code
-
-XDebug can be a useful tool for debugging PHP applications, but it uses extra memory and CPU for every request, therefore it's disabled by default. To enable XDebug, change the `php_xdebug_default_enable` and `php_xdebug_coverage_enable` to `1` in your `config.yml`, and make sure `xdebug` is in the list of `installed_extras`.
-
-### Catching/Debugging Email with MailHog
-
-By default, the VM is configured to redirect PHP's emails to MailHog (instead of sending them to the outside world). You can access the MailHog UI at `http://drupaltest.dev:8025/` (where `drupaltest.dev` is the domain you've configured for the VM).
-
-You can override the default behavior of redirecting email to MailHog by editing or removing the `php_sendmail_path` inside `config.yml`, and you can choose to not install MailHog at all by removing it from `installed_extras` in `config.yml`.
-
-## Drupal 6 Notes
-
-If you'd like to use the included configuration and Drush make file to install a Drupal 6 site using an older version of Drush (< 7.x), you may need to make some changes, namely:
-
-  - Drush < 7.x does not support .yml makefiles; if using Drush 5.x or 6.x, you will need to create the make file in the INI-style format.
-  - In your customized `config.yml` file, you will need to use the `default` installation profile instead of `standard` (for the `drupal_install_profile` variable).
+  - [Syncing Folders](https://github.com/geerlingguy/drupal-vm/wiki/Syncing-Folders)
+  - [Connect to the MySQL Database](https://github.com/geerlingguy/drupal-vm/wiki/Connect-to-the-MySQL-Database)
+  - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
+  - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
+  - [Catch Emails with MailHog](https://github.com/geerlingguy/drupal-vm/wiki/Catch-Emails-with-MailHog)
+  - [Drupal 6 Notes](https://github.com/geerlingguy/drupal-vm/wiki/Drupal-6-Notes)
 
 ## Other Notes
 

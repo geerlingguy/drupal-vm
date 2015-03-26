@@ -9,7 +9,7 @@ vagrant_user: vagrant
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
   # build_from_makefile is 'true'.
-  - local_path: ~/Sites/vagrant
+  - local_path: ~/Sites/drupalvm
     destination: /var/www
     id: drupal
     type: nfs
