@@ -21,6 +21,7 @@ vagrant_cpus: 2
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_from_makefile: true
+drush_makefile_path: /vagrant/drupal.make.yml
 
 # Settings for building a Drupal site from a makefile (if 'build_from_makefile'
 # is 'true').
