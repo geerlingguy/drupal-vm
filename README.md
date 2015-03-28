@@ -88,6 +88,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
   - [Syncing Folders](https://github.com/geerlingguy/drupal-vm/wiki/Syncing-Folders)
   - [Connect to the MySQL Database](https://github.com/geerlingguy/drupal-vm/wiki/Connect-to-the-MySQL-Database)
   - [Use Apache Solr for Search](https://github.com/geerlingguy/drupal-vm/wiki/Use-Apache-Solr-for-Search)
+  - [Use Drush with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drush-with-Drupal-VM)
   - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
   - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
   - [Catch Emails with MailHog](https://github.com/geerlingguy/drupal-vm/wiki/Catch-Emails-with-MailHog)
