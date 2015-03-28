@@ -11,6 +11,10 @@ install:
   - pip install ansible
 
 script:
+  # Copy example files into place.
+  - cp example.config.yml config.yml
+  - cp example.drupal.make.yml drupal.make.yml
+
   # Check the role/playbook's syntax.
   - 'ansible-playbook -i "localhost," -c local provisioning/playbook.yml --syntax-check'
 
