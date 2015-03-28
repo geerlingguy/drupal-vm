@@ -66,6 +66,7 @@ installed_extras:
 # You can configure almost anything else on the server in the rest of this file.
 mysql_root_password: root
 drush_version: master
+drush_keep_updated: yes
 
 firewall_allowed_tcp_ports:
   - "22"
