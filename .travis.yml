@@ -10,6 +10,9 @@ install:
   # Install Ansible.
   - pip install ansible
 
+  # Add ansible.cfg to set local roles path.
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
 script:
   # Copy example files into place.
   - cp example.config.yml config.yml
