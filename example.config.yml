@@ -58,7 +58,7 @@ installed_extras:
   - mailhog
   - memcached
   - phpmyadmin
-  - solr
+  # - solr
   - xdebug
   - xhprof
 
