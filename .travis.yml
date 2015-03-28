@@ -18,7 +18,10 @@ script:
   - cp example.config.yml config.yml
   - cp example.drupal.make.yml drupal.make.yml
 
-  # Check the role/playbook's syntax.
+  # Make sure Ansible requirements install correctly.
+  - 'ansible-galaxy install -r requirements.txt'
+
+  # Run Ansible's syntax and playbook check on the main playbook.
   - 'ansible-playbook -i "localhost," -c local provisioning/playbook.yml --syntax-check'
 
   # Check the config file and drupal make file YAML syntax.
@@ -26,6 +29,3 @@ script:
     python -c "import yaml; yaml.load( open('example.config.yml', 'r'), Loader=yaml.CLoader  )"
   - >
     python -c "import yaml; yaml.load( open('example.drupal.make.yml', 'r'), Loader=yaml.CLoader  )"
-
-  # Make sure Ansible requirements install correctly.
-  - 'ansible-galaxy install -r requirements.txt'
