@@ -14,6 +14,7 @@ It will install the following on an Ubuntu 14.04 linux VM:
   - Drush latest release (configurable)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - Optional (installed by default):
+    - Apache Solr 4.10.x (configurable)
     - Memcached
     - XHProf, for profiling your code
     - XDebug, for debugging your code
@@ -74,6 +75,7 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
       - mailhog
       - memcached
       - phpmyadmin
+      - solr
       - xdebug
       - xhprof
 
@@ -85,6 +87,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
 
   - [Syncing Folders](https://github.com/geerlingguy/drupal-vm/wiki/Syncing-Folders)
   - [Connect to the MySQL Database](https://github.com/geerlingguy/drupal-vm/wiki/Connect-to-the-MySQL-Database)
+  - [Use Apache Solr for Search](https://github.com/geerlingguy/drupal-vm/wiki/Use-Apache-Solr-for-Search)
   - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
   - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
   - [Catch Emails with MailHog](https://github.com/geerlingguy/drupal-vm/wiki/Catch-Emails-with-MailHog)

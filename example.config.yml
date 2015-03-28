@@ -58,6 +58,7 @@ installed_extras:
   - mailhog
   - memcached
   - phpmyadmin
+  - solr
   - xdebug
   - xhprof
 
@@ -73,8 +74,9 @@ firewall_allowed_tcp_ports:
   - "8025"
   - "8080"
   - "8443"
+  - "8983"
 
-php_memory_limit: "256M"
+php_memory_limit: "192M"
 php_display_errors: "On"
 php_realpath_cache_size: "1024K"
 php_sendmail_path: "/usr/sbin/ssmtp -t"
@@ -82,3 +84,7 @@ php_sendmail_path: "/usr/sbin/ssmtp -t"
 # Disable main XDebug components unless needed.
 php_xdebug_coverage_enable: 0
 php_xdebug_default_enable: 0
+
+solr_version: "4.10.4"
+solr_xms: "64M"
+solr_xmx: "128M"
