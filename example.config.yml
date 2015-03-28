@@ -78,6 +78,8 @@ firewall_allowed_tcp_ports:
   - "8443"
   - "8983"
 
+# PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0 (experimental).
+php_version: "5.5"
 php_memory_limit: "192M"
 php_display_errors: "On"
 php_realpath_cache_size: "1024K"

@@ -13,17 +13,5 @@
 - name: Disable the firewall (since this is for local dev only).
   service: name=ufw state=stopped
 
-- name: Add repository for PHP 5.5 on Ubuntu 14.04.
-  # Note: Add '-oldstable' for PHP 5.4, if desired.
-  apt_repository: repo='ppa:ondrej/php5'
-
 - name: Install postfix so Drupal can send emails.
   apt: pkg=postfix state=installed
-
-# TODO: Is this necessary?
-# - name: Add drupal_domain to the hosts file.
-#   lineinfile:
-#     dest: /etc/hosts
-#     regexp: "^127.0.0.1  {{ drupal_domain }}$"
-#     line: "127.0.0.1  {{ drupal_domain }}"
-#     state: present

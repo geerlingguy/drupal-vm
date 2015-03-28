@@ -6,8 +6,10 @@
 
   pre_tasks:
     - include: tasks/init.yml
+    - include: tasks/php-versions.yml
 
   roles:
+    # Essential roles.
     - { role: geerlingguy.firewall, tags: ['firewall'] }
     - { role: geerlingguy.git, tags: ['git'] }
     - { role: geerlingguy.apache, tags: ['apache'] }
@@ -17,6 +19,7 @@
     - { role: geerlingguy.php-mysql, tags: ['php'] }
     - { role: geerlingguy.composer, tags: ['composer'] }
     - { role: geerlingguy.drush, tags: ['drush'] }
+
     # Roles to be installed conditionally.
     - {
       role: geerlingguy.memcached,
