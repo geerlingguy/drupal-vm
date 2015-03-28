@@ -2,6 +2,8 @@
 
 http://www.drupalvm.com/
 
+[![Build Status](https://travis-ci.org/geerlingguy/drupal-vm.svg?branch=master)](https://travis-ci.org/geerlingguy/drupal-vm)
+
 **For Drupal 6, 7, 8, etc.**
 
 This project aims to make spinning up a simple local Drupal test/development environment incredibly quick and easy, and to introduce new developers to the wonderful world of Drupal development on local virtual machines (instead of crufty old MAMP/WAMP-based development).
