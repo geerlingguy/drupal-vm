@@ -13,3 +13,12 @@ install:
 script:
   # Check the role/playbook's syntax.
   - 'ansible-playbook -i "localhost," -c local provisioning/playbook.yml --syntax-check'
+
+  # Check the config file and drupal make file YAML syntax.
+  - >
+    python -c "import yaml; yaml.load( open('example.config.yml', 'r'), Loader=yaml.CLoader  )"
+  - >
+    python -c "import yaml; yaml.load( open('example.drupal.make.yml', 'r'), Loader=yaml.CLoader  )"
+
+  # Make sure Ansible requirements install correctly.
+  - 'ansible-galaxy install -r requirements.txt'
