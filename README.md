@@ -68,6 +68,7 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
   1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM. (Alternatively, you can install a Vagrant plugin to automatically add and remove the entry from your hosts file; run `vagrant plugin install vagrant-hostsupdater`).
   2. Open your browser and access [http://drupaltest.dev/](http://drupaltest.dev/).
+  3. The default username/password combination should be "admin/admin" to login to your test site.
 
 ## Extra software/utilities
 
