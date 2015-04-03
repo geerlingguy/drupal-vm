@@ -12,8 +12,8 @@
   command: >
     drush si {{ drupal_install_profile | default('standard') }} -y
     --site-name="{{ drupal_site_name }}"
-    --account-name=admin
-    --account-pass=admin
+    --account-name={{ drupal_account_name }}
+    --account-pass={{ drupal_account_pass }}
     --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ mysql_databases[0].name }}
     chdir={{ drupal_core_path }}
   notify: restart webserver
