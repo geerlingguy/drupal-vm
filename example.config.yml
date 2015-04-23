@@ -5,7 +5,8 @@ vagrant_ip: 192.168.88.88
 vagrant_user: vagrant
 
 # A list of synced folders, with the keys 'local_path', 'destination', 'id', and
-# a 'type' of [nfs|rsync|smb] (leave empty for slow native shares).
+# a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
+# https://github.com/geerlingguy/drupal-vm/wiki/Synced-Folders for more info.
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
   # build_from_makefile is 'true'.
