@@ -36,6 +36,7 @@ drupal_account_name: admin
 drupal_account_pass: admin
 drupal_mysql_user: drupal
 drupal_mysql_password: drupal
+drupal_mysql_database: drupal
 
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
@@ -46,15 +47,15 @@ apache_vhosts:
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
 mysql_databases:
-  - name: drupal
+  - name: "{{ drupal_mysql_database }}"
     encoding: utf8
     collation: utf8_general_ci
 
 mysql_users:
-  - name: drupal
+  - name: "{{ drupal_mysql_user }}"
     host: "%"
-    password: drupal
-    priv: "drupal.*:ALL"
+    password: "{{ drupal_mysql_password }}"
+    priv: "{{ drupal_mysql_database }}.*:ALL"
 
 # Comment out any extra utilities you don't want to install.
 installed_extras:
