@@ -67,6 +67,9 @@ installed_extras:
   - xdebug
   - xhprof
 
+# Add any extra apt packages you'd like to install.
+extra_apt_packages: []
+
 # You can configure almost anything else on the server in the rest of this file.
 mysql_root_password: root
 drush_version: master

@@ -62,3 +62,4 @@
     - include: tasks/www.yml
     - include: tasks/drupal.yml
       when: build_from_makefile
+    - include: tasks/extras.yml

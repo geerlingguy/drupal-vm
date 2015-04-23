@@ -1,0 +1,5 @@
+---
+- name: Install extra apt packages (if any are configured).
+  apt: "name={{ item }} state=installed"
+  with_items: extra_apt_packages
+  when: extra_apt_packages | length
