@@ -20,43 +20,16 @@
     - { role: geerlingguy.composer, tags: ['composer'] }
     - { role: geerlingguy.drush, tags: ['drush'] }
 
-    # Roles to be installed conditionally.
-    - {
-      role: geerlingguy.memcached,
-      when: '"memcached" in installed_extras'
-    }
-    - {
-      role: geerlingguy.php-memcached,
-      when: '"memcached" in installed_extras'
-    }
-    - {
-      role: geerlingguy.php-xdebug,
-      when: '"xdebug" in installed_extras'
-    }
-    - {
-      role: geerlingguy.php-xhprof,
-      when: '"xhprof" in installed_extras'
-    }
-    - {
-      role: geerlingguy.phpmyadmin,
-      when: '"phpmyadmin" in installed_extras'
-    }
-    - {
-      role: geerlingguy.daemonize,
-      when: '"mailhog" in installed_extras'
-    }
-    - {
-      role: geerlingguy.mailhog,
-      when: '"mailhog" in installed_extras'
-    }
-    - {
-      role: geerlingguy.java,
-      when: '"solr" in installed_extras'
-    }
-    - {
-      role: geerlingguy.solr,
-      when: '"solr" in installed_extras'
-    }
+    # Conditionally-installed roles.
+    - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
+    - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
+    - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
+    - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }
+    - { role: geerlingguy.phpmyadmin, when: '"phpmyadmin" in installed_extras' }
+    - { role: geerlingguy.daemonize, when: '"mailhog" in installed_extras' }
+    - { role: geerlingguy.mailhog, when: '"mailhog" in installed_extras' }
+    - { role: geerlingguy.java, when: '"solr" in installed_extras' }
+    - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
 
   tasks:
     - include: tasks/www.yml
