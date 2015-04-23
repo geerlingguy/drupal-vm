@@ -10,6 +10,7 @@ geerlingguy.php-mysql
 geerlingguy.php-xdebug
 geerlingguy.php-xhprof
 geerlingguy.phpmyadmin
+geerlingguy.pimpmylog
 geerlingguy.composer
 geerlingguy.drush
 geerlingguy.daemonize
