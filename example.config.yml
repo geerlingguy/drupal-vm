@@ -91,8 +91,13 @@ firewall_allowed_tcp_ports:
 php_version: "5.5"
 php_memory_limit: "192M"
 php_display_errors: "On"
+php_display_startup_errors: "On"
 php_realpath_cache_size: "1024K"
 php_sendmail_path: "/usr/sbin/ssmtp -t"
+
+# MySQL Configuration.
+mysql_slow_query_log_enabled: yes
+mysql_slow_query_time: 2
 
 # Pimp my Log settings.
 pimpmylog_install_dir: /usr/share/php/pimpmylog
@@ -102,6 +107,7 @@ pimpmylog_grant_all_privs: yes
 php_xdebug_coverage_enable: 0
 php_xdebug_default_enable: 0
 
+# Solr Configuration (if enabled above).
 solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
