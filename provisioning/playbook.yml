@@ -37,4 +37,5 @@
     - include: tasks/mysql.yml
     - include: tasks/drupal.yml
       when: build_from_makefile
+    - include: tasks/drush-aliases.yml
     - include: tasks/extras.yml
