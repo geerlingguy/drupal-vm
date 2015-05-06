@@ -4,7 +4,9 @@
   register: drupal_site
 
 - name: Generate Drupal site with drush makefile.
-  command: "drush make -y {{ drush_makefile_path }} {{ drupal_core_path }}"
+  command: >
+    drush make -y {{ drush_makefile_path }}
+    chdir={{ drupal_core_path }}
   when: drupal_site.stat.exists == false
   sudo: no
 
