@@ -10,7 +10,7 @@
     - python-pycurl
     - build-essential
 
-- name: Disable the firewall (since this is for local dev only).
+- name: Disable the ufw firewall (since we use a simple iptables firewall).
   service: name=ufw state=stopped
 
 - name: Install postfix so Drupal can send emails.

@@ -32,6 +32,9 @@
     - { role: geerlingguy.java, when: '"solr" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
 
+    # Roles for security and stability on production.
+    - { role: geerlingguy.security, when: extra_security_enabled }
+
   tasks:
     - include: tasks/www.yml
     - include: tasks/mysql.yml

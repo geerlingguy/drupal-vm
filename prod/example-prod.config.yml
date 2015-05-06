@@ -1,25 +1,4 @@
 ---
-# Vagrant hostname and IP configuration.
-vagrant_hostname: drupaltest.dev
-vagrant_ip: 192.168.88.88
-vagrant_user: vagrant
-
-# A list of synced folders, with the keys 'local_path', 'destination', 'id', and
-# a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
-# https://github.com/geerlingguy/drupal-vm/wiki/Syncing-Folders for more info.
-vagrant_synced_folders:
-  # The first synced folder will be used for the default Drupal installation, if
-  # build_from_makefile is 'true'.
-  - local_path: ~/Sites/drupalvm
-    destination: /var/www
-    id: drupal
-    type: nfs
-    create: true
-
-# Memory and CPU to use for this VM.
-vagrant_memory: 1024
-vagrant_cpus: 2
-
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_from_makefile: true
@@ -43,12 +22,10 @@ drupal_mysql_database: drupal
 # this variable is 'true'.
 configure_local_drush_aliases: true
 
-# Apache VirtualHosts. Add one for each site you are running inside the VM. For
-# multisite deployments, you can point multiple servernames at one documentroot.
+# Apache VirtualHosts. Add one for each site you are running. For multisite
+# deployments, you can point multiple servernames at one documentroot.
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
-  - {servername: "local.pimpmylog.com", documentroot: "/usr/share/php/pimpmylog"}
 
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
@@ -65,13 +42,8 @@ mysql_users:
 
 # Comment out any extra utilities you don't want to install.
 installed_extras:
-  - mailhog
   - memcached
-  - phpmyadmin
-  - pimpmylog
   # - solr
-  - xdebug
-  - xhprof
 
 # Add any extra apt packages you'd like to install.
 extra_apt_packages: []
@@ -79,43 +51,26 @@ extra_apt_packages: []
 # You can configure almost anything else on the server in the rest of this file.
 mysql_root_password: root
 
-extra_security_enabled: false
+extra_security_enabled: true
 
 drush_version: master
 drush_keep_updated: true
 
 firewall_allowed_tcp_ports:
   - "22"
-  - "25"
   - "80"
   - "443"
-  - "8025"
-  - "8080"
-  - "8443"
   - "8983"
 
 # PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0 (experimental).
 php_version: "5.5"
 php_memory_limit: "192M"
-php_display_errors: "On"
-php_display_startup_errors: "On"
+php_display_errors: "Off"
+php_display_startup_errors: "Off"
 php_realpath_cache_size: "1024K"
-php_sendmail_path: "/usr/sbin/ssmtp -t"
 php_opcache_enabled_in_ini: true
 php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
-
-# MySQL Configuration.
-mysql_slow_query_log_enabled: true
-mysql_slow_query_time: 2
-
-# Pimp my Log settings.
-pimpmylog_install_dir: /usr/share/php/pimpmylog
-pimpmylog_grant_all_privs: true
-
-# Disable main XDebug components unless needed.
-php_xdebug_coverage_enable: 0
-php_xdebug_default_enable: 0
 
 # Solr Configuration (if enabled above).
 solr_version: "4.10.4"

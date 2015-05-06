@@ -1,0 +1,2 @@
+[drupalvm]
+45.55.241.48 ansible_ssh_user=root
