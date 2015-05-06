@@ -79,7 +79,7 @@ extra_apt_packages: []
 # You can configure almost anything else on the server in the rest of this file.
 mysql_root_password: root
 drush_version: master
-drush_keep_updated: yes
+drush_keep_updated: true
 
 firewall_allowed_tcp_ports:
   - "22"
@@ -103,12 +103,12 @@ php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
 
 # MySQL Configuration.
-mysql_slow_query_log_enabled: yes
+mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
 
 # Pimp my Log settings.
 pimpmylog_install_dir: /usr/share/php/pimpmylog
-pimpmylog_grant_all_privs: yes
+pimpmylog_grant_all_privs: true
 
 # Disable main XDebug components unless needed.
 php_xdebug_coverage_enable: 0
