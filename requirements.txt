@@ -12,6 +12,7 @@ geerlingguy.php-xhprof
 geerlingguy.phpmyadmin
 geerlingguy.pimpmylog
 geerlingguy.composer
+geerlingguy.drupal-console
 geerlingguy.drush
 geerlingguy.daemonize
 geerlingguy.mailhog

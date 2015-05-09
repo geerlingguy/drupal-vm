@@ -13,7 +13,8 @@ It will install the following on an Ubuntu 14.04 linux VM:
   - Apache 2.4.x
   - PHP 5.5.x (configurable)
   - MySQL 5.5.x
-  - Drush latest release (configurable)
+  - Drush (configurable)
+  - Drupal Console (if using Drupal 8+)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - Optional (installed by default):
     - Apache Solr 4.10.x (configurable)
