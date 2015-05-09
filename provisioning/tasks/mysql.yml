@@ -5,7 +5,7 @@
     src: /etc/apparmor.d/usr.sbin.mysqld
     state: link
   register: mysql_apparmor
-  when: not extra_security_enabled
+  when: mysql_slow_query_log_enabled
 
 - name: Restart AppArmor.
   service: name=apparmor state=restarted
