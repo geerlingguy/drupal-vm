@@ -13,7 +13,7 @@
 
 - name: Generate Drupal site with drush makefile.
   command: >
-    drush make -y {{ drush_makefile_path }}
+    drush make -y {{ drush_makefile_path }} --no-gitinfofile
     chdir={{ drupal_core_path }}
   when: drupal_site.stat.exists == false
   sudo: no

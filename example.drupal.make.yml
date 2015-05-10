@@ -12,5 +12,7 @@ projects:
   drupal:
     type: "core"
     version: "8.0.x"
+    download:
+      working-copy: true
 
   devel: "1.x-dev"
