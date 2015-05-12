@@ -70,7 +70,7 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
 ### 3 - Configure your host machine to access the VM.
 
-  1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM. (Alternatively, you can install a Vagrant plugin to automatically add and remove the entry from your hosts file; run `vagrant plugin install vagrant-hostsupdater`).
+  1. [Edit your hosts file](http://www.rackspace.com/knowledge_center/article/how-do-i-modify-my-hosts-file), adding the line `192.168.88.88  drupaltest.dev` so you can connect to the VM. Alternatively, you can install a Vagrant plugin to automatically add and remove the entry from your hosts file; run `vagrant plugin install vagrant-hostsupdater`. The plugin will also add in all other hosts defined via `apache_vhosts`.
   2. Open your browser and access [http://drupaltest.dev/](http://drupaltest.dev/). The default login for the admin account is `admin` for both the username and password.
 
 ## Extra software/utilities

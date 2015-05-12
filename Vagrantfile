@@ -20,6 +20,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "geerlingguy/ubuntu1404"
 
+  # If hostsupdater plugin is installed, add all servernames as aliases.
+  if Vagrant.has_plugin?("vagrant-hostsupdater")
+    config.hostsupdater.aliases = []
+    for host in vconfig['apache_vhosts']
+      # Add all the hosts that aren't defined as Ansible vars.
+      unless host['servername'].include? "{{"
+        config.hostsupdater.aliases.push(host['servername'])
+      end
+    end
+  end
+
   for synced_folder in vconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
