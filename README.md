@@ -47,7 +47,7 @@ This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal
 
 ### 1 - Install dependencies (VirtualBox, Vagrant, Ansible)
 
-  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
+  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with Parallels or VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
   2. Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
   3. [Mac/Linux only] Install [Ansible](http://docs.ansible.com/intro_installation.html).
 
