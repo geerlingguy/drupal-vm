@@ -18,8 +18,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
   config.ssh.insert_key = false
 
-  config.vm.box = "geerlingguy/ubuntu1404"
-
   # If hostsupdater plugin is installed, add all servernames as aliases.
   if Vagrant.has_plugin?("vagrant-hostsupdater")
     config.hostsupdater.aliases = []
@@ -63,6 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.gui = false
     v.vmx["memsize"] = vconfig['vagrant_memory']
     v.vmx["numvcpus"] = vconfig['vagrant_cpus']
+    v.vm.box = "geerlingguy/ubuntu1404"
   end
 
   # VirtualBox.
@@ -70,8 +69,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.name = vconfig['vagrant_hostname']
     v.memory = vconfig['vagrant_memory']
     v.cpus = vconfig['vagrant_cpus']
+    v.vm.box = "geerlingguy/ubuntu1404"
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
+  end
+
+  # Parallels
+  config.vm.provider :parallels do |p|
+    p.vm.box = 'parallels/ubuntu-12.04'
+    p.name = vconfig['vagrant_hostname']
+    p.memory = vconfig['vagrant_memory']
+    p.cpus = vconfig['vagrant_cpus']
   end
 
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
