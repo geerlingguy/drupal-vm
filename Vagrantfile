@@ -58,25 +58,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # HGFS kernel module currently doesn't load correctly for native shares.
     override.vm.synced_folder ".", "/vagrant", type: 'nfs'
 
+    v.vm.box = "geerlingguy/ubuntu1404"
     v.gui = false
     v.vmx["memsize"] = vconfig['vagrant_memory']
     v.vmx["numvcpus"] = vconfig['vagrant_cpus']
-    v.vm.box = "geerlingguy/ubuntu1404"
   end
 
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
+    v.vm.box = "geerlingguy/ubuntu1404"
     v.name = vconfig['vagrant_hostname']
     v.memory = vconfig['vagrant_memory']
     v.cpus = vconfig['vagrant_cpus']
-    v.vm.box = "geerlingguy/ubuntu1404"
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
-  # Parallels
+  # Parallels.
   config.vm.provider :parallels do |p|
-    p.vm.box = 'parallels/ubuntu-12.04'
+    p.vm.box = "parallels/ubuntu-14.04"
     p.name = vconfig['vagrant_hostname']
     p.memory = vconfig['vagrant_memory']
     p.cpus = vconfig['vagrant_cpus']
