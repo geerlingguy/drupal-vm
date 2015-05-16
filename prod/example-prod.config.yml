@@ -8,7 +8,7 @@ drush_makefile_path: /vagrant/drupal.make.yml
 # is 'true').
 drupal_major_version: 8
 drupal_core_path: "/var/www/drupal"
-drupal_domain: "drupaltest.dev"
+drupal_domain: "drupalvm.dev"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]

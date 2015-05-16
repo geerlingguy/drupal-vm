@@ -1,6 +1,6 @@
 ---
 # Vagrant hostname and IP configuration.
-vagrant_hostname: drupaltest.dev
+vagrant_hostname: drupalvm.dev
 vagrant_ip: 192.168.88.88
 vagrant_user: vagrant
 
@@ -29,7 +29,7 @@ drush_makefile_path: /vagrant/drupal.make.yml
 # is 'true').
 drupal_major_version: 8
 drupal_core_path: "/var/www/drupal"
-drupal_domain: "drupaltest.dev"
+drupal_domain: "drupalvm.dev"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
@@ -47,8 +47,8 @@ configure_local_drush_aliases: true
 # multisite deployments, you can point multiple servernames at one documentroot.
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
-  - {servername: "local.pimpmylog.com", documentroot: "/usr/share/php/pimpmylog"}
+  - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
+  - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
 
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
