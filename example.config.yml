@@ -93,6 +93,7 @@ firewall_allowed_tcp_ports:
   - "8080"
   - "8443"
   - "8983"
+firewall_log_dropped_packets: false
 
 # PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0 (experimental).
 php_version: "5.5"
