@@ -13,8 +13,8 @@
 ANSIBLE_PLAYBOOK="$1"
 
 # Detect package management system.
-YUM=$(which yum)
-APT_GET=$(which apt-get)
+YUM=$(which yum 2>/dev/null)
+APT_GET=$(which apt-get 2>/dev/null)
 
 # Make sure Ansible playbook exists.
 if [ ! -f "/vagrant/${ANSIBLE_PLAYBOOK}" ]; then

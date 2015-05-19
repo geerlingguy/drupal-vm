@@ -13,14 +13,14 @@
 
 - name: Generate Drupal site with drush makefile.
   command: >
-    drush make -y {{ drush_makefile_path }} --no-gitinfofile
+    {{ drush_path }} make -y {{ drush_makefile_path }} --no-gitinfofile
     chdir={{ drupal_core_path }}
   when: drupal_site.stat.exists == false
   sudo: no
 
 - name: Install Drupal (standard profile) with drush.
   command: >
-    drush si {{ drupal_install_profile | default('standard') }} -y
+    {{ drush_path }}  site-install {{ drupal_install_profile | default('standard') }} -y
     --site-name="{{ drupal_site_name }}"
     --account-name={{ drupal_account_name }}
     --account-pass={{ drupal_account_pass }}
@@ -32,7 +32,7 @@
 
 - name: Install configured modules with drush.
   command: >
-    drush en -y {{ drupal_enable_modules | join(" ") }}
+    {{ drush_path }} pm-enable -y {{ drupal_enable_modules | join(" ") }}
     chdir={{ drupal_core_path }}
   when: drupal_site.stat.exists == false
   sudo: no

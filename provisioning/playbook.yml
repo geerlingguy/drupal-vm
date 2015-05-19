@@ -5,8 +5,10 @@
     - ../config.yml
 
   pre_tasks:
-    - include: tasks/init.yml
-    - include: tasks/php-versions.yml
+    - include: tasks/init-debian.yml
+      when: ansible_os_family == 'Debian'
+    - include: tasks/init-redhat.yml
+      when: ansible_os_family == 'RedHat'
 
   roles:
     # Essential roles.
@@ -38,7 +40,8 @@
 
   tasks:
     - include: tasks/www.yml
-    - include: tasks/mysql.yml
+    - include: tasks/apparmor.yml
+      when: ansible_os_family == 'Debian'
     - include: tasks/drupal.yml
       when: build_from_makefile
     - include: tasks/drush-aliases.yml

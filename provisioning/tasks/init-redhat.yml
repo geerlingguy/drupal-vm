@@ -1,0 +1,26 @@
+---
+- name: Get software for Python-based control.
+  yum: "name={{ item }} state=installed"
+  with_items:
+    - "curl"
+    - "python-pycurl"
+    - "@development"
+
+- name: Install postfix so Drupal can send emails.
+  yum: name=postfix state=installed
+
+# Use remi yum repository for PHP.
+- name: Download Remi repo.
+  get_url: url=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm dest=/tmp/
+
+- name: Install Remi repo.
+  command: rpm -Uvh --force /tmp/remi-release-6.rpm creates=/etc/yum.repos.d/remi.repo
+
+- name: Add repository for PHP 5.5.
+  command:  yum-config-manager -q --enable remi remi-php55
+  when: php_version == "5.5"
+
+- name: Add repository for PHP 5.6.
+  command: yum-config-manager -q --enable remi remi-php56
+  when: php_version == "5.6"
+
