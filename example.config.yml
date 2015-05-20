@@ -1,4 +1,9 @@
 ---
+# Vagrant OS
+# Virtual machine operating system.
+# Currently supported values are: centos6, centos7, ubuntu12 or ubuntu14
+vagrant_os: ubuntu14
+
 # Vagrant hostname and IP configuration.
 vagrant_hostname: drupalvm.dev
 vagrant_ip: 192.168.88.88
