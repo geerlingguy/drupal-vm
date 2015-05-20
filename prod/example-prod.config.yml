@@ -1,4 +1,9 @@
 ---
+# Vagrant OS
+# Virtual machine operating system.
+# Currently supported values are: centos6 and ubuntu14
+vagrant_os: ubuntu14
+
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_from_makefile: true
