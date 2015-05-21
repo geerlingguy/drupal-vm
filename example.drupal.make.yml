@@ -9,16 +9,12 @@ core: "8.x"
 
 projects:
 
-  # Use the latest drupal release.
+  # Get a drupal copy to work on.
   drupal:
-    version: ~
-
-  # Get a module to work on.
-  honeypot:
-    type: "module"
+    type: "core"
     download:
+      branch: "8.0.x"
       working-copy: true
-      branch: "8.x-1.x"
 
-  # Add other modules.
+  # Add extra modules.
   devel: "1.x-dev"
