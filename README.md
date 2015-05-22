@@ -8,7 +8,7 @@ http://www.drupalvm.com/
 
 This project aims to make spinning up a simple local Drupal test/development environment incredibly quick and easy, and to introduce new developers to the wonderful world of Drupal development on local virtual machines (instead of crufty old MAMP/WAMP-based development).
 
-It will install the following on an Ubuntu 14.04 linux VM:
+It will install the following on an Ubuntu 14.04 or CentOS 6 linux VM:
 
   - Apache 2.4.x
   - PHP 5.5.x (configurable)
