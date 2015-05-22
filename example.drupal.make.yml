@@ -9,10 +9,12 @@ core: "8.x"
 
 projects:
 
+  # Get a drupal copy to work on.
   drupal:
     type: "core"
-    version: "8.0.x"
     download:
+      branch: "8.0.x"
       working-copy: true
 
+  # Add extra modules.
   devel: "1.x-dev"
