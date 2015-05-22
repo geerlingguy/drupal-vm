@@ -37,9 +37,20 @@
     - { role: geerlingguy.security, when: extra_security_enabled }
 
   tasks:
+    - name: Check if Drupal is already set up.
+      stat: "path={{ drupal_core_path }}/index.php"
+      register: drupal_site
+
     - include: tasks/www.yml
     - include: tasks/mysql.yml
-    - include: tasks/drupal.yml
-      when: build_from_makefile
+
+    # Build makefile if configured.
+    - include: tasks/build-makefile.yml
+      when: build_makefile
+
+    # Install site if configured.
+    - include: tasks/install-site.yml
+      when: install_site
+
     - include: tasks/drush-aliases.yml
     - include: tasks/extras.yml

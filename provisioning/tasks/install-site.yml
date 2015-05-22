@@ -1,23 +1,4 @@
 ---
-- name: Check if Drupal is already set up.
-  stat: "path={{ drupal_core_path }}/index.php"
-  register: drupal_site
-
-- name: Ensure drupal_core_path directory exists.
-  file:
-    path: "{{ drupal_core_path }}"
-    state: directory
-    mode: 0775
-  sudo: no
-  when: drupal_site.stat.exists == false
-
-- name: Generate Drupal site with drush makefile.
-  command: >
-    drush make -y {{ drush_makefile_path }} --no-gitinfofile
-    chdir={{ drupal_core_path }}
-  when: drupal_site.stat.exists == false
-  sudo: no
-
 - name: Install Drupal (standard profile) with drush.
   command: >
     drush si {{ drupal_install_profile | default('standard') }} -y
