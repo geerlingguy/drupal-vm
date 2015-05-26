@@ -32,6 +32,7 @@
     - { role: geerlingguy.mailhog, when: '"mailhog" in installed_extras' }
     - { role: geerlingguy.java, when: '"solr" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
+    - { role: tersmitten.adminer, when: '"adminer" in installed_extras' }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }

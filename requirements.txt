@@ -19,3 +19,4 @@ geerlingguy.mailhog
 geerlingguy.java
 geerlingguy.solr
 geerlingguy.security
+tersmitten.adminer
