@@ -3,7 +3,9 @@
   file:
     path: ~/.drush
     state: directory
+  delegate_to: 127.0.0.1
   sudo: no
+  when: configure_local_drush_aliases
 
 # Two notes:
 #   1. Doesn't work for Windows, since Ansible's running in the VM.
