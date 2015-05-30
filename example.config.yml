@@ -76,6 +76,7 @@ installed_extras:
   # - solr
   - xdebug
   - xhprof
+  # - adminer
 
 # Add any extra apt packages you'd like to install.
 extra_apt_packages: []
@@ -126,3 +127,6 @@ php_xdebug_default_enable: 0
 solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
+
+# Adminer settings
+adminer_install_dirs: ["/var/www"]
