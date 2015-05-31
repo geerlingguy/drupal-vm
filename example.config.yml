@@ -1,9 +1,8 @@
 ---
 # Vagrant OS
-# Virtual machine operating system.
-# Currently supported values are: centos6 and ubuntu14
-# Experimental values are: centos7 and ubuntu12
-vagrant_os: ubuntu14
+# Virtual machine box.
+# Examples: geerlingguy/ubuntu1404, geerlingguy/centos7, parallels/ubuntu-14.04
+vagrant_box: geerlingguy/ubuntu1404
 
 # Vagrant hostname and IP configuration.
 vagrant_hostname: drupalvm.dev
@@ -79,10 +78,8 @@ installed_extras:
   - xdebug
   - xhprof
 
-# APT: Add any extra apt packages you'd like to install.
-extra_apt_packages: []
-# YUM: Add any extra yum packages you'd like to install.
-extra_yum_packages: []
+# Add any extra packages you'd like to install.
+extra_packages: []
 
 # You can configure almost anything else on the server in the rest of this file.
 mysql_root_password: root

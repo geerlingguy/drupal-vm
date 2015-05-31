@@ -12,6 +12,7 @@
 
   roles:
     # Essential roles.
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
     - geerlingguy.firewall
     - geerlingguy.git
     - geerlingguy.apache

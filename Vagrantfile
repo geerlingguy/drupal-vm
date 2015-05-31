@@ -18,14 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
   config.ssh.insert_key = false
 
-  vconfig['vagrant_os'] ||= "ubuntu14"
-  config.vm.box = case vconfig['vagrant_os']
-    when "centos6" then "geerlingguy/centos6"
-    when "centos7" then "geerlingguy/centos7"
-    when "ubuntu12" then "geerlingguy/ubuntu1204"
-    when "ubuntu14" then "geerlingguy/ubuntu1404"
-    else raise 'Invalid value for vagrant_os in config.yml.'
-  end
+  config.vm.box = vconfig['vagrant_box']
 
   # If hostsupdater plugin is installed, add all servernames as aliases.
   if Vagrant.has_plugin?("vagrant-hostsupdater")
@@ -83,13 +76,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Parallels.
   config.vm.provider :parallels do |p, override|
-    override.vm.box = case vconfig['vagrant_os']
-      when "centos6" then "parallels/centos-6.6"
-      when "centos7" then "parallels/centos-7.0"
-      when "ubuntu12" then "parallels/ubuntu-12.04"
-      when "ubuntu14" then "parallels/ubuntu-14.04"
-      else raise 'Invalid value for vagrant_os in config.yml.'
-    end
+    override.vm.box = vconfig['vagrant_box']
     p.name = vconfig['vagrant_hostname']
     p.memory = vconfig['vagrant_memory']
     p.cpus = vconfig['vagrant_cpus']
