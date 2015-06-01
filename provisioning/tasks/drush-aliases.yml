@@ -1,11 +1,19 @@
 ---
-- name: Ensure Drush configuration folder exists.
+- name: Check if local Drush configuration folder exists.
+  stat:
+    path: ~/.drush
+  register: local_drush_config_folder
+  delegate_to: 127.0.0.1
+  sudo: no
+  when: configure_local_drush_aliases
+
+- name: Create Drush configuration folder if it doesn't exist.
   file:
     path: ~/.drush
     state: directory
   delegate_to: 127.0.0.1
   sudo: no
-  when: configure_local_drush_aliases
+  when: configure_local_drush_aliases and (local_drush_config_folder.stat.exists == false)
 
 # Two notes:
 #   1. Doesn't work for Windows, since Ansible's running in the VM.

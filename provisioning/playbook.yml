@@ -5,11 +5,14 @@
     - ../config.yml
 
   pre_tasks:
-    - include: tasks/init.yml
-    - include: tasks/php-versions.yml
+    - include: tasks/init-debian.yml
+      when: ansible_os_family == 'Debian'
+    - include: tasks/init-redhat.yml
+      when: ansible_os_family == 'RedHat'
 
   roles:
     # Essential roles.
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
     - geerlingguy.firewall
     - geerlingguy.git
     - geerlingguy.apache
@@ -42,7 +45,8 @@
       register: drupal_site
 
     - include: tasks/www.yml
-    - include: tasks/mysql.yml
+    - include: tasks/apparmor.yml
+      when: ansible_os_family == 'Debian'
 
     # Build makefile if configured.
     - include: tasks/build-makefile.yml

@@ -13,10 +13,11 @@
     path: /etc/apache2/sites-enabled/000-default.conf
     state: absent
   notify: restart webserver
+  when: ansible_os_family == 'Debian'
 
 - name: Set nicer permissions on Apache log directory.
   file:
-    path: /var/log/apache2
+    path: "/var/log/{{ apache_daemon }}"
     state: directory
     mode: 0755
     recurse: true

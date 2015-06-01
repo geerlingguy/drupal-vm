@@ -1,8 +1,16 @@
 ---
+# `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
+# geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
+vagrant_box: geerlingguy/ubuntu1404
+
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
-build_from_makefile: true
+build_makefile: true
 drush_makefile_path: /vagrant/drupal.make.yml
+
+# Set this to false if you don't need to install drupal (using the drupal_*
+# settings below), but instead copy down a database (e.g. using drush sql-sync).
+install_site: true
 
 # Settings for building a Drupal site from a makefile (if 'build_from_makefile'
 # is 'true').
