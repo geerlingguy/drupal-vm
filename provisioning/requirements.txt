@@ -1,3 +1,4 @@
+geerlingguy.adminer
 geerlingguy.apache
 geerlingguy.composer
 geerlingguy.daemonize
@@ -15,7 +16,6 @@ geerlingguy.php-mysql
 geerlingguy.php-pecl
 geerlingguy.php-xdebug
 geerlingguy.php-xhprof
-geerlingguy.phpmyadmin
 geerlingguy.pimpmylog
 geerlingguy.repo-remi
 geerlingguy.security

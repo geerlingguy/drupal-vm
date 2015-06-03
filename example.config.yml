@@ -72,9 +72,9 @@ mysql_users:
 
 # Comment out any extra utilities you don't want to install.
 installed_extras:
+  - adminer
   - mailhog
   - memcached
-  - phpmyadmin
   - pimpmylog
   # - solr
   - xdebug
@@ -116,6 +116,7 @@ php_opcache_max_accelerated_files: 4096
 # MySQL Configuration.
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
+adminer_add_apache_config: true
 
 # Pimp my Log settings.
 pimpmylog_install_dir: /usr/share/php/pimpmylog

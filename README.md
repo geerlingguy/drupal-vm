@@ -21,7 +21,7 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
     - Memcached
     - XHProf, for profiling your code
     - XDebug, for debugging your code
-    - PHPMyAdmin, for accessing databases directly
+    - Adminer, for accessing databases directly
     - Pimp my Log, for easy viewing of log files
     - MailHog, for catching and debugging email
 
@@ -78,9 +78,9 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 By default, this VM includes the extras listed in the `config.yml` option `installed_extras`:
 
     installed_extras:
+      - adminer
       - mailhog
       - memcached
-      - phpmyadmin
       - solr
       - xdebug
       - xhprof

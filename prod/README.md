@@ -31,7 +31,7 @@ Your DigitalOcean Droplet is booted and ready to have Drupal VM installed on it.
 
 Just like you would with the normal `example.config.yml`, you need to customize `example-prod.config.yml` for your site, and move the configuration file into the root directory of the project (in the same directory as the Vagrantfile).
 
-The main differences between the prod example `config.yml` and the normal example is that all development-environment tools (like Pimp My Log and PHPMyAdmin) are _not_ installed, and some extra security hardening configuration is added (via the `extra_security_enabled` variable).
+The main differences between the prod example `config.yml` and the normal example is that all development-environment tools (like Pimp My Log and Adminer) are _not_ installed, and some extra security hardening configuration is added (via the `extra_security_enabled` variable).
 
 The only other thing you need to change, after copying and configuring `example-prod.config.yml`, is the inventory file at `prod/inventory`. By default, it reads:
 
