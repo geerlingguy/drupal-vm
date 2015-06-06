@@ -4,10 +4,11 @@ VAGRANTFILE_API_VERSION = "2"
 
 # Use config.yml for basic VM configuration.
 require 'yaml'
-if !File.exist?('./config.yml')
+dir = File.dirname(File.expand_path(__FILE__))
+if !File.exist?("#{dir}/config.yml")
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
-vconfig = YAML::load_file("./config.yml")
+vconfig = YAML::load_file("#{dir}/config.yml")
 
 # Use rbconfig to determine if we're on a windows host or not.
 require 'rbconfig'
