@@ -1,5 +1,14 @@
 ---
-- name: Install Drupal (standard profile) with drush.
+- name: Check if site is already installed.
+  command: >
+    {{ drush_path }} status bootstrap
+    chdir={{ drupal_core_path }}
+  register: drupal_site_installed
+  failed_when: false
+  changed_when: false
+  sudo: no
+
+- name: Install Drupal with drush.
   command: >
     {{ drush_path }} site-install {{ drupal_install_profile | default('standard') }} -y
     --site-name="{{ drupal_site_name }}"
@@ -8,12 +17,12 @@
     --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ mysql_databases[0].name }}
     chdir={{ drupal_core_path }}
   notify: restart webserver
-  when: drupal_site.stat.exists == false
+  when: "'Successful' not in drupal_site_installed.stdout"
   sudo: no
 
 - name: Install configured modules with drush.
   command: >
     {{ drush_path }} pm-enable -y {{ drupal_enable_modules | join(" ") }}
     chdir={{ drupal_core_path }}
-  when: drupal_site.stat.exists == false
+  when: "'Successful' not in drupal_site_installed.stdout"
   sudo: no
