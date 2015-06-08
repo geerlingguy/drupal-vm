@@ -54,8 +54,8 @@ configure_local_drush_aliases: true
 # multisite deployments, you can point multiple servernames at one documentroot.
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-  - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
-  - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
+  - {servername: "xhprof.{{ vagrant_hostname }}", documentroot: "/usr/share/php/xhprof_html"}
+  - {servername: "pimpmylog.{{ vagrant_hostname }}", documentroot: "/usr/share/php/pimpmylog"}
 
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
