@@ -20,3 +20,4 @@ geerlingguy.pimpmylog
 geerlingguy.repo-remi
 geerlingguy.security
 geerlingguy.solr
+geerlingguy.varnish

@@ -77,6 +77,7 @@ installed_extras:
   - memcached
   - pimpmylog
   # - solr
+  - varnish
   - xdebug
   - xhprof
 
@@ -95,6 +96,7 @@ firewall_allowed_tcp_ports:
   - "22"
   - "25"
   - "80"
+  - "81"
   - "443"
   - "8025"
   - "8080"
@@ -117,6 +119,12 @@ php_opcache_max_accelerated_files: 4096
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
 adminer_add_apache_config: true
+
+# Varnish Configuration.
+varnish_listen_port: "81"
+varnish_default_vcl_template_path: provisioning/templates/drupalvm.vcl.j2
+varnish_default_backend_host: "127.0.0.1"
+varnish_default_backend_port: "80"
 
 # Pimp my Log settings.
 pimpmylog_install_dir: /usr/share/php/pimpmylog

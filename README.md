@@ -17,6 +17,7 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
   - Drupal Console (if using Drupal 8+)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - Optional (installed by default):
+    - Varnish 4.x
     - Apache Solr 4.10.x (configurable)
     - Memcached
     - XHProf, for profiling your code
@@ -82,6 +83,7 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
       - mailhog
       - memcached
       - solr
+      - varnish
       - xdebug
       - xhprof
 
@@ -96,6 +98,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
   - [Use Apache Solr for Search](https://github.com/geerlingguy/drupal-vm/wiki/Use-Apache-Solr-for-Search)
   - [Use Drush with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drush-with-Drupal-VM)
   - [Use Drupal Console with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drupal-Console-with-Drupal-VM)
+  - [Use Varnish with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Varnish-with-Drupal-VM)
   - [View Logs with Pimp my Log](https://github.com/geerlingguy/drupal-vm/wiki/View-Logs-with-Pimp-my-Log)
   - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
   - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
