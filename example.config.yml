@@ -114,6 +114,7 @@ php_sendmail_path: "/usr/sbin/ssmtp -t"
 php_opcache_enabled_in_ini: true
 php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
+php_max_input_vars: "4000"
 
 # MySQL Configuration.
 mysql_slow_query_log_enabled: true
