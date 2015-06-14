@@ -122,7 +122,7 @@ adminer_add_apache_config: true
 
 # Varnish Configuration.
 varnish_listen_port: "81"
-varnish_default_vcl_template_path: provisioning/templates/drupalvm.vcl.j2
+varnish_default_vcl_template_path: templates/drupalvm.vcl.j2
 varnish_default_backend_host: "127.0.0.1"
 varnish_default_backend_port: "80"
 
