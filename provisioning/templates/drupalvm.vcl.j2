@@ -9,8 +9,36 @@ backend default {
     .first_byte_timeout = 300s;
 }
 
+# Access control list for PURGE requests.
+acl purge {
+    "127.0.0.1";
+}
+
 # Respond to incoming requests.
 sub vcl_recv {
+    # Add an X-Forwarded-For header with the client IP address.
+    if (req.restarts == 0) {
+        if (req.http.X-Forwarded-For) {
+            set req.http.X-Forwarded-For = req.http.X-Forwarded-For + ", " + client.ip;
+        }
+        else {
+            set req.http.X-Forwarded-For = client.ip;
+        }
+    }
+
+    # Only allow PURGE requests from IP addresses in the 'purge' ACL.
+    if (req.method == "PURGE") {
+        if (!client.ip ~ purge) {
+            return (synth(405, "Not allowed."));
+        }
+        return (hash);
+    }
+
+    # Only cache GET and HEAD requests (pass through POST requests).
+    if (req.method != "GET" && req.method != "HEAD") {
+        return (pass);
+    }
+
     # Pass through any administrative or AJAX-related paths.
     if (req.url ~ "^/status\.php$" ||
         req.url ~ "^/update\.php$" ||
@@ -85,7 +113,6 @@ sub vcl_backend_response {
         unset beresp.http.set-cookie;
     }
 
-    # Allow items to remain in cache up to 2 hours past their cache expiration.
-    set beresp.grace = 2h;
+    # Allow items to remain in cache up to 6 hours past their cache expiration.
+    set beresp.grace = 6h;
 }
-
