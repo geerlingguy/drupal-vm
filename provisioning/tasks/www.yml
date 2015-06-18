@@ -2,11 +2,18 @@
 # Originally I tried adding to the www group, but because Ansible uses one SSH
 # connection, that broke the initial provisioning, since groups aren't refreshed
 # without a new session or log off/log on.
-- name: Ensure admin group exists.
-  group: name=admin state=present
+- name: Ensure necessary groups exist.
+  group: "name={{ item }} state=present"
+  with_items:
+    - admin
+    - dialout
 
 - name: Ensure vagrant user is in admin group.
   user: "name={{ vagrant_user }} append=yes groups=admin"
+
+- name: Ensure www-data user is in dialout group (Debian).
+  user: "name=www-data append=yes groups=dialout"
+  when: ansible_os_family == 'Debian'
 
 - name: Remove default virtualhost file.
   file:
