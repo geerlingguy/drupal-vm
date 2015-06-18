@@ -116,6 +116,9 @@ php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
 php_max_input_vars: "4000"
 
+# composer_global_packages:
+#   - { name: phpunit/phpunit, release: '@stable' }
+
 # MySQL Configuration.
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
