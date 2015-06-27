@@ -99,6 +99,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
   - [Use Drush with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drush-with-Drupal-VM)
   - [Use Drupal Console with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drupal-Console-with-Drupal-VM)
   - [Use Varnish with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Varnish-with-Drupal-VM)
+  - [Use MariaDB instead of MySQL](https://github.com/geerlingguy/drupal-vm/wiki/Use-MariaDB-instead-of-MySQL)
   - [View Logs with Pimp my Log](https://github.com/geerlingguy/drupal-vm/wiki/View-Logs-with-Pimp-my-Log)
   - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
   - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
