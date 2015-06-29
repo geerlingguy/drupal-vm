@@ -23,7 +23,7 @@ if [ ! -f "/vagrant/$ANSIBLE_PLAYBOOK" ]; then
 fi
 
 # Install Ansible and its dependencies if it's not installed already.
-if [ ! -f /usr/bin/ansible ]; then
+if ! command -v ansible >/dev/null; then
   echo "Installing Ansible dependencies and Git."
   if [[ ! -z ${YUM} ]]; then
     yum install -y git python python-devel
