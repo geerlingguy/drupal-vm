@@ -56,6 +56,8 @@ Note for Windows users: *Ansible will be installed inside the VM, and everything
 
 Note for Linux users: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
 
+Note on versions: *Please make sure you're running the latest stable version of Vagrant, VirtualBox, and Ansible, as the current version of Drupal VM is tested with the latest releases. As of June 2015: Vagrant 1.7.2, VirtualBox 4.3.26, and Ansible 1.9.2.*
+
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.
