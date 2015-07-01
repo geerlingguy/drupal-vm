@@ -79,7 +79,8 @@ mysql_users:
     password: "{{ drupal_mysql_password }}"
     priv: "{{ drupal_mysql_database }}.*:ALL"
 
-# Comment out any extra utilities you don't want to install.
+# Comment out any extra utilities you don't want to install. If you don't want
+# to install *any* extras, make set this value to an empty set, e.g. `[]`.
 installed_extras:
   - adminer
   - mailhog
