@@ -1,4 +1,4 @@
-# Deploy Drupal VM to the Cloud
+# Drupal VM Production Configuration Example
 
 This directory contains an example production configuration for Drupal VM which can be used to deploy Drupal VM to a production environment on a cloud provider like DigitalOcean, Linode, or AWS.
 
@@ -13,7 +13,7 @@ TODO: Add SSH key to your account...
 Click the 'Create Droplet' button on your Droplets page. For the Droplet, choose the following options:
 
   - **Hostname**: Choose a hostname for your site (e.g. `example.drupalvm.com`)
-  - **Size**: 1 GB / 1 CPU (currently $10/month)
+  - **Size**: 1 GB / 1 CPU (currently $10/month; you can choose a higher plan if needed)
   - **Region**: Choose whatever region is geographically nearest to you and your site visitors
   - **Settings**: (Nothing here affects how Drupal VM works, choose what you'd like)
   - **Image**: Choose `Ubuntu 14.04 x64`
@@ -29,11 +29,11 @@ Your DigitalOcean Droplet is booted and ready to have Drupal VM installed on it.
 
 ## Customizing `example-prod.config.yml` and `inventory` for production
 
-Just like you would with the normal `example.config.yml`, you need to customize `example-prod.config.yml` for your site, and move the configuration file into the root directory of the project (in the same directory as the Vagrantfile).
+Just like you would with the normal `example.config.yml`, you need to copy the file to `config.yml`, then go through `prod.config.yml` (in this directory), and make sure to update your `config.yml`, making sure all the variables are set to match `prod.config.yml`.
 
-The main differences between the prod example `config.yml` and the normal example is that all development-environment tools (like Pimp My Log and Adminer) are _not_ installed, and some extra security hardening configuration is added (via the `extra_security_enabled` variable).
+The changes outlined in `prod.config.yml` disable development-environment tools (like Pimp My Log and Adminer) and add extra security hardening configuration (via the `extra_security_enabled` variable).
 
-The only other thing you need to change, after copying and configuring `example-prod.config.yml`, is the inventory file at `prod/inventory`. By default, it reads:
+The only other thing you need to do is copy the inventory file `example.inventory` to `inventory` (so it is located at `prod/inventory`). By default, it reads:
 
     [drupalvm]
     1.2.3.4 ansible_ssh_user=root

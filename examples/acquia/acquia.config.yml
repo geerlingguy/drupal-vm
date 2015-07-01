@@ -1,0 +1,4 @@
+---
+vagrant_box: geerlingguy/ubuntu1204
+php_version: "5.5"
+solr_version: "4.5.1"

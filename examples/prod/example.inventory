@@ -1,0 +1,2 @@
+[drupalvm]
+1.2.3.4 ansible_ssh_user=root
