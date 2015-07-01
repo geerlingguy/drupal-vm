@@ -8,4 +8,4 @@ This directory contains example configuration changes for the default Drupal VM 
   - MySQL/Percona 5.5.24
   - Apache Solr 4.5.1
 
-To use these overrides, copy `example.config.yml` to `config.yml` as you would normally, but make sure the variables defined in `acquia.config.yml` are defined with the same values in your `config.yml` file.
+To use these overrides, copy `example.config.yml` to `config.yml` as you would normally, but make sure the variables defined in `acquia.overrides.yml` are defined with the same values in your `config.yml` file.
