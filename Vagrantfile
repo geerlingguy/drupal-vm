@@ -18,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = vconfig['vagrant_hostname']
   config.vm.network :private_network, ip: vconfig['vagrant_ip']
   config.ssh.insert_key = false
+  config.ssh.forward_agent = true
 
   config.vm.box = vconfig['vagrant_box']
 
