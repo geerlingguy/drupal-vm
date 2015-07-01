@@ -44,7 +44,7 @@ Change the host `1.2.3.4` to either the IP address or the hostname of your Digit
 
 Run the following command within this project's root directory (the folder containing the `Vagrantfile`):
 
-    ansible-playbook -i prod/inventory provisioning/playbook.yml --sudo
+    ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo
 
 After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configured to match your local development environment! You can visit your Droplet and access the fresh Drupal site just like you would locally (e.g. `http://example.drupalvm.com/`).
 
