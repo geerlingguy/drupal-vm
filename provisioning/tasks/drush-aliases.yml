@@ -15,13 +15,11 @@
   sudo: no
   when: configure_local_drush_aliases and (local_drush_config_folder.stat.exists == false)
 
-# Two notes:
-#   1. Doesn't work for Windows, since Ansible's running in the VM.
-#   2. The most-recently-provisioned Drupal VM instance will control this file.
+# Note that this doesn't work for Windows, since Ansible's running in the VM.
 - name: Configure host machine drush aliases.
   template:
     src: ../templates/drupalvm.aliases.drushrc.php.j2
-    dest: ~/.drush/drupalvm.aliases.drushrc.php
+    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   delegate_to: 127.0.0.1
   sudo: no
   when: configure_local_drush_aliases
