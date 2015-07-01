@@ -6,11 +6,11 @@ This README file contains instructions for how you can use this configuration fi
 
 ## Creating a DigitalOcean Droplet
 
-If you don't already have a DigitalOcean account, create one.
+If you don't already have a DigitalOcean account, create one (you can use geerlingguy's [affiliate link](https://www.digitalocean.com/?refcode=b9c57af84643) to sign up, otherwise, visit the normal [DigitalOcean Sign Up form](https://cloud.digitalocean.com/registrations/new).
 
-TODO: Add SSH key to your account...
+Make sure you have an SSH key you can use to connect to your DigitalOcean droplets, and if you don't already have one set up, or if you need to add your existing key to your account, follow the instructions in this guide: [How to use SSH keys with DigitalOcean Droplets](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets).
 
-Click the 'Create Droplet' button on your Droplets page. For the Droplet, choose the following options:
+Once you are logged into DigitalOcean and have added your SSH key, click the 'Create Droplet' button on your Droplets page. For the Droplet, choose the following options:
 
   - **Hostname**: Choose a hostname for your site (e.g. `example.drupalvm.com`)
   - **Size**: 1 GB / 1 CPU (currently $10/month; you can choose a higher plan if needed)
@@ -21,7 +21,9 @@ Click the 'Create Droplet' button on your Droplets page. For the Droplet, choose
 
 Click 'Create Droplet', and wait a minute or so while the Droplet is booted. Once it's booted, make sure you can log into it from your local computer:
 
-    ssh root@example.drupalvm.com
+    ssh root@[droplet-hostname]
+
+(Make sure you replace `[droplet-hostname]`) with the hostname or IP address of your Droplet!)
 
 If you get a warning like "the authenticity of the host can't be established", answer yes to the prompt and hit enter. You should now be logged into the Droplet. Log back out by typing `exit` at the prompt and hitting return.
 
@@ -50,4 +52,4 @@ After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configu
 
 ## Going Further
 
-TODO - Mention book, mention making the configuration more flexible, etc.
+You may want to customize your configuration further, to make sure Drupal VM is tuned for your specific Drupal site's needs, or you may want to change things and make the server configuration more flexible, etc. For all that, the book [Ansible for DevOps](http://ansiblefordevops.com/) will give you a great introduction to using Ansible to make Drupal VM and the included Ansible configuration do exactly what you need!
