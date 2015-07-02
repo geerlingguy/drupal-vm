@@ -106,6 +106,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
   - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
   - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
   - [Catch Emails with MailHog](https://github.com/geerlingguy/drupal-vm/wiki/Catch-Emails-with-MailHog)
+  - [PHP 7 on Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/PHP-7-on-Drupal-VM)
   - [Drupal 6 Notes](https://github.com/geerlingguy/drupal-vm/wiki/Drupal-6-Notes)
 
 ## Other Notes
