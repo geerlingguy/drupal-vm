@@ -45,6 +45,7 @@
       stat: "path={{ drupal_core_path }}/index.php"
       register: drupal_site
 
+    - include: tasks/extras.yml
     - include: tasks/www.yml
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian'
@@ -59,4 +60,3 @@
 
     - include: tasks/drush-aliases.yml
     - include: tasks/cron.yml
-    - include: tasks/extras.yml
