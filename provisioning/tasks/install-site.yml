@@ -15,6 +15,7 @@
     --account-name={{ drupal_account_name }}
     --account-pass={{ drupal_account_pass }}
     --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ mysql_databases[0].name }}
+    {{ drupal_site_install_extra_args | default([]) | join(" ") }}
     chdir={{ drupal_core_path }}
   notify: restart webserver
   when: "'Successful' not in drupal_site_installed.stdout"
