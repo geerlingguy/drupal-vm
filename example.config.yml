@@ -80,7 +80,8 @@ apache_vhosts:
 apache_mods_enabled:
   - expires.load
   - ssl.load
-apache_mods_disabled: []
+  - rewrite.load
+# apache_mods_disabled: []
 
 # Enable SSL Support on the Drupal site vhosts.
 # See https://github.com/geerlingguy/ansible-role-apache for additional options.
