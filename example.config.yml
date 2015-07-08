@@ -64,10 +64,36 @@ configure_local_drush_aliases: true
 
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
+# NOTE: We create separate vhosts for www and non-www URLs so that the
+#       hostsupdater plugin will create host file entries for both.
+# NOTE: We can't create a vhost with a servername of  "www.{{ drupal_domain }}"
+#       because the autohost plugin won't pick up names that have {{ in them.
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
+  - {servername: "www.drupalvm.dev", documentroot: "{{ drupal_core_path }}"}
   - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
   - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
+
+# Optionally, enable/disable additional apache modules.
+# By default, all modules required by Drupal are enabled, so only
+# Additional modules need to be listed here.
+apache_mods_enabled:
+  - expires.load
+  - ssl.load
+apache_mods_disabled: []
+
+# Enable SSL Support on the Drupal site vhosts.
+# See https://github.com/geerlingguy/ansible-role-apache for additional options.
+# Update the file paths below if you are using a custom SSL certificate.
+apache_vhosts_ssl:
+  - {
+    servername: "{{ drupal_domain }}",
+    serveralias: "www.{{ drupal_domain }}",
+    documentroot: "{{ drupal_core_path }}",
+    certificate_file: "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+    certificate_key_file: "/etc/ssl/private/ssl-cert-snakeoil.key",
+#    certificate_chain_file: "/path/to/certificate_chain.crt"
+  }
 
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
@@ -147,9 +173,17 @@ varnish_default_backend_port: "80"
 pimpmylog_install_dir: /usr/share/php/pimpmylog
 pimpmylog_grant_all_privs: true
 
-# Disable main XDebug components unless needed.
+# XDebug configuration for use with PHPStorm/Sublime on host.
+# These settings allow for using the debugger in PHPStorm or Sublime out of the
+# box with no additional configuration.
 php_xdebug_coverage_enable: 0
-php_xdebug_default_enable: 0
+php_xdebug_default_enable: 1
+php_xdebug_cli_enable: 0
+php_xdebug_remote_enable: 1
+php_xdebug_remote_connect_back: 1
+php_xdebug_idekey: PHPSTORM
+# php_xdebug_idekey: sublime.xdebug
+php_xdebug_max_nesting_level: 255
 
 # Solr Configuration (if enabled above).
 solr_version: "4.10.4"
