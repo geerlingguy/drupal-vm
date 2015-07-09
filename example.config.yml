@@ -69,6 +69,19 @@ apache_vhosts:
   - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
   - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
 
+# Enable SSL Support on the Drupal site vhosts.
+# See https://github.com/geerlingguy/ansible-role-apache for additional options.
+# Update the file paths below if you are using a custom SSL certificate.
+apache_vhosts_ssl:
+  - {
+    servername: "{{ drupal_domain }}",
+#    serveralias: "www.{{ drupal_domain }}",
+    documentroot: "{{ drupal_core_path }}",
+    certificate_file: "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+    certificate_key_file: "/etc/ssl/private/ssl-cert-snakeoil.key",
+#    certificate_chain_file: "/path/to/certificate_chain.crt"
+  }
+
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
 mysql_databases:
