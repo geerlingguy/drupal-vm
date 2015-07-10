@@ -70,31 +70,18 @@ configure_local_drush_aliases: true
 #       because the autohost plugin won't pick up names that have {{ in them.
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-  - {servername: "www.drupalvm.dev", documentroot: "{{ drupal_core_path }}"}
+#  - {servername: "www.drupalvm.dev", documentroot: "{{ drupal_core_path }}"}
   - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
   - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
 
 # Optionally, enable/disable additional apache modules.
-# By default, all modules required by Drupal are enabled, so only
-# Additional modules need to be listed here.
-apache_mods_enabled:
-  - expires.load
-  - ssl.load
-  - rewrite.load
-# apache_mods_disabled: []
-
-# Enable SSL Support on the Drupal site vhosts.
-# See https://github.com/geerlingguy/ansible-role-apache for additional options.
-# Update the file paths below if you are using a custom SSL certificate.
-apache_vhosts_ssl:
-  - {
-    servername: "{{ drupal_domain }}",
-    serveralias: "www.{{ drupal_domain }}",
-    documentroot: "{{ drupal_core_path }}",
-    certificate_file: "/etc/ssl/certs/ssl-cert-snakeoil.pem",
-    certificate_key_file: "/etc/ssl/private/ssl-cert-snakeoil.key",
-#    certificate_chain_file: "/path/to/certificate_chain.crt"
-  }
+# NOTE: Uncommenting this block overrides the default set of modules to be
+#       enabled.  So we need to make sure we include mod_ssl and mod_rewrite
+#       along with our additional module(s) such as expires.
+# apache_mods_enabled:
+#  - expires.load
+#  - ssl.load
+#  - rewrite.load
 
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
