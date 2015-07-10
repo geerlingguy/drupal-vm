@@ -156,10 +156,11 @@ solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
 
-# By default, linux sets the swappiness level to 60, this means that some swapping will occur.
-# Swapping will slow down any system, but in a virtual environment, when the guest stars
-# swapping, things will become even more slow than normal. As such, setting the swappiness
-# to 0 will cause the linux kernel to only swap to avoid out of memory situations, this will
-# prevent early swapping of application memory, which in turn will dramatically improve performance
-# of the virtual machine, even on lower powered hosts.
+# By default, linux sets the swappiness level to 60, this means that some
+# swapping will occur. Swapping will slow down any system, but in a virtual
+# environment, when the guest starts swapping, things will become even more
+# slow than normal. As such, setting the swappiness to 0 will cause the linux
+# kernel to only swap to avoid out of memory situations, this will prevent
+# early swapping of application memory, which in turn will dramatically
+# improve performance of the virtual machine, even on lower powered hosts.
 swappiness: "0"
