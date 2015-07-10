@@ -1,0 +1,12 @@
+---
+- name: Set swappiness value
+  command: >
+    sed -i '$a vm.swappiness = {{ swappiness }}' /etc/sysctl.conf 
+  when: 1
+  sudo: yes
+
+- name: Reload sysctl config
+  command: >
+    sysctl -p
+  when: 1
+  sudo: yes

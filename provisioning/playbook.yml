@@ -47,6 +47,7 @@
 
     - include: tasks/extras.yml
     - include: tasks/www.yml
+    - include: tasks/set-swappiness.yml
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian'
 
