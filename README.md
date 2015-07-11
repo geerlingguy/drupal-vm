@@ -16,9 +16,10 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
   - Drush (configurable)
   - Drupal Console (if using Drupal 8+)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
-  - Optional (installed by default):
+  - Optional:
     - Varnish 4.x
     - Apache Solr 4.10.x (configurable)
+    - Selenium, for testing your sites via Behat
     - Memcached
     - XHProf, for profiling your code
     - XDebug, for debugging your code
@@ -84,7 +85,9 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
       - adminer
       - mailhog
       - memcached
-      - solr
+      - pimpmylog
+      # - solr
+      # - selenium
       - varnish
       - xdebug
       - xhprof
@@ -106,6 +109,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
   - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
   - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
   - [Catch Emails with MailHog](https://github.com/geerlingguy/drupal-vm/wiki/Catch-Emails-with-MailHog)
+  - [Test with Behat and Selenium](https://github.com/geerlingguy/drupal-vm/wiki/Test-with-Behat-and-Selenium)
   - [PHP 7 on Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/PHP-7-on-Drupal-VM)
   - [Drupal 6 Notes](https://github.com/geerlingguy/drupal-vm/wiki/Drupal-6-Notes)
 

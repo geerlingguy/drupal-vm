@@ -89,11 +89,11 @@ installed_extras:
   - mailhog
   - memcached
   - pimpmylog
+  # - selenium
   # - solr
   - varnish
   - xdebug
   - xhprof
-  - selenium
 
 # Add any extra packages you'd like to install.
 extra_packages: []
