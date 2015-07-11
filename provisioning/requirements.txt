@@ -1,3 +1,4 @@
+arknoll.selenium
 geerlingguy.adminer
 geerlingguy.apache
 geerlingguy.composer

@@ -93,6 +93,7 @@ installed_extras:
   - varnish
   - xdebug
   - xhprof
+  - selenium
 
 # Add any extra packages you'd like to install.
 extra_packages: []
@@ -155,3 +156,6 @@ php_xdebug_default_enable: 0
 solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
+
+# Selenium configuration
+selenium_version: 2.46.0
