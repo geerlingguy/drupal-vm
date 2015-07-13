@@ -31,6 +31,9 @@ vagrant_cpus: 2
 build_makefile: true
 drush_makefile_path: /vagrant/drupal.make.yml
 
+# Set this to true if you want to overwrite an existing Drupal codebase.
+build_makefile_overwrite: false
+
 # Set this to false if you don't need to install drupal (using the drupal_*
 # settings below), but instead copy down a database (e.g. using drush sql-sync).
 install_site: true

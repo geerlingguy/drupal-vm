@@ -5,11 +5,11 @@
     state: directory
     mode: 0775
   sudo: no
-  when: drupal_site.stat.exists == false
+  when: build_makefile_overwrite or drupal_site.stat.exists == false
 
 - name: Generate Drupal site with drush makefile.
   command: >
     {{ drush_path }} make -y {{ drush_makefile_path }} --no-gitinfofile
     chdir={{ drupal_core_path }}
-  when: drupal_site.stat.exists == false
+  when: build_makefile_overwrite or drupal_site.stat.exists == false
   sudo: no
