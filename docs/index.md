@@ -1,0 +1,1 @@
+Welcome to the Drupal VM Wiki! Please visit one of the pages in the sidebar.
