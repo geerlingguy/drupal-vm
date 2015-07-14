@@ -13,7 +13,6 @@ To use XDebug with PHPStorm, change the `php_xdebug_idekey` variable as shown be
 
 ```yaml
 php_xdebug_idekey: PHPSTORM
-
 ```
 
 ## Sublime Text and XDebug with Drupal VM
