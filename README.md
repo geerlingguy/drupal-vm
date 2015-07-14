@@ -31,6 +31,10 @@ It should take 5-10 minutes to build or rebuild the VM from scratch on a decent 
 
 Please read through the rest of this README and the [Drupal VM Wiki](https://github.com/geerlingguy/drupal-vm/wiki) for help getting Drupal VM configured and integrated with your development workflow.
 
+## Documentation
+
+Full Drupal VM documentation is available at http://docs.drupalvm.com/
+
 ## Customizing the VM
 
 There are a couple places where you can customize the VM for your needs:
@@ -98,20 +102,20 @@ If you don't want or need one or more of these extras, just delete them or comme
 
 Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM Wiki](https://github.com/geerlingguy/drupal-vm/wiki):
 
-  - [Syncing Folders](https://github.com/geerlingguy/drupal-vm/wiki/Syncing-Folders)
-  - [Connect to the MySQL Database](https://github.com/geerlingguy/drupal-vm/wiki/Connect-to-the-MySQL-Database)
-  - [Use Apache Solr for Search](https://github.com/geerlingguy/drupal-vm/wiki/Use-Apache-Solr-for-Search)
-  - [Use Drush with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drush-with-Drupal-VM)
-  - [Use Drupal Console with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Drupal-Console-with-Drupal-VM)
-  - [Use Varnish with Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/Use-Varnish-with-Drupal-VM)
-  - [Use MariaDB instead of MySQL](https://github.com/geerlingguy/drupal-vm/wiki/Use-MariaDB-instead-of-MySQL)
-  - [View Logs with Pimp my Log](https://github.com/geerlingguy/drupal-vm/wiki/View-Logs-with-Pimp-my-Log)
-  - [Profile Code with XHProf](https://github.com/geerlingguy/drupal-vm/wiki/Profile-Code-with-XHProf)
-  - [Debug Code with XDebug](https://github.com/geerlingguy/drupal-vm/wiki/Debug-Code-with-XDebug)
-  - [Catch Emails with MailHog](https://github.com/geerlingguy/drupal-vm/wiki/Catch-Emails-with-MailHog)
-  - [Test with Behat and Selenium](https://github.com/geerlingguy/drupal-vm/wiki/Test-with-Behat-and-Selenium)
-  - [PHP 7 on Drupal VM](https://github.com/geerlingguy/drupal-vm/wiki/PHP-7-on-Drupal-VM)
-  - [Drupal 6 Notes](https://github.com/geerlingguy/drupal-vm/wiki/Drupal-6-Notes)
+  - [Syncing Folders](http://docs.drupalvm.com/en/latest/extras/syncing-folders/)
+  - [Connect to the MySQL Database](http://docs.drupalvm.com/en/latest/extras/mysql/)
+  - [Use Apache Solr for Search](http://docs.drupalvm.com/en/latest/extras/solr/)
+  - [Use Drush with Drupal VM](http://docs.drupalvm.com/en/latest/extras/drush/)
+  - [Use Drupal Console with Drupal VM](http://docs.drupalvm.com/en/latest/extras/drupal-console/)
+  - [Use Varnish with Drupal VM](http://docs.drupalvm.com/en/latest/extras/varnish/)
+  - [Use MariaDB instead of MySQL](http://docs.drupalvm.com/en/latest/extras/mariadb/)
+  - [View Logs with Pimp my Log](http://docs.drupalvm.com/en/latest/extras/pimpmylog/)
+  - [Profile Code with XHProf](http://docs.drupalvm.com/en/latest/extras/xhprof/)
+  - [Debug Code with XDebug](http://docs.drupalvm.com/en/latest/extras/xdebug/)
+  - [Catch Emails with MailHog](http://docs.drupalvm.com/en/latest/extras/mailhog/)
+  - [Test with Behat and Selenium](http://docs.drupalvm.com/en/latest/extras/behat/)
+  - [PHP 7 on Drupal VM](http://docs.drupalvm.com/en/latest/other/php-7/)
+  - [Drupal 6 Notes](http://docs.drupalvm.com/en/latest/other/drupal-6/)
 
 ## Other Notes
 
