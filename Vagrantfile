@@ -52,6 +52,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  if vconfig.include?('vagrant_forwarded_ports')
+    for forwarded_port in vconfig['vagrant_forwarded_ports']
+      config.vm.network "forwarded_port",
+        guest: forwarded_port['guest'],
+        host: forwarded_port['host'],
+        protocol: forwarded_port['protocol']
+    end
+  end
+
   for synced_folder in vconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
