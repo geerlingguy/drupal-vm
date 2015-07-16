@@ -1,4 +1,15 @@
 ---
+- name: Configure VM drush aliases for vagrant user.
+  template:
+    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
+    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+  sudo: no
+
+- name: Configure VM drush aliases for root user.
+  template:
+    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
+    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+
 - name: Check if local Drush configuration folder exists.
   stat:
     path: ~/.drush

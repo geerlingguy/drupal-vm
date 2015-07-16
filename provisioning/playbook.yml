@@ -33,7 +33,8 @@
     - { role: geerlingguy.pimpmylog, when: '"pimpmylog" in installed_extras' }
     - { role: geerlingguy.daemonize, when: '"mailhog" in installed_extras' }
     - { role: geerlingguy.mailhog, when: '"mailhog" in installed_extras' }
-    - { role: geerlingguy.java, when: '"solr" in installed_extras' }
+    - { role: geerlingguy.java, when: '"solr" or "selenium" in installed_extras' }
+    - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.varnish, when: '"varnish" in installed_extras' }
 

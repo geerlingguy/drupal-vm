@@ -1,0 +1,3 @@
+By default, Drupal VM redirects all PHP emails to [MailHog](https://github.com/mailhog/MailHog) (instead of sending them to the outside world). You can access the MailHog UI at `http://drupaltest.dev:8025/` (or whatever domain you have configured in `config.yml`).
+
+You can override the default behavior of redirecting email to MailHog by editing or removing the `php_sendmail_path` inside `config.yml`, and you can choose to not install MailHog at all by removing it from `installed_extras` in `config.yml`.

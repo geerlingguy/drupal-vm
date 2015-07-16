@@ -103,6 +103,7 @@ installed_extras:
   - mailhog
   - memcached
   - pimpmylog
+  # - selenium
   # - solr
   - varnish
   - xdebug
@@ -125,6 +126,7 @@ firewall_allowed_tcp_ports:
   - "80"
   - "81"
   - "443"
+  - "4444"
   - "8025"
   - "8080"
   - "8443"
@@ -132,7 +134,7 @@ firewall_allowed_tcp_ports:
 firewall_log_dropped_packets: false
 
 # PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0 (experimental).
-php_version: "5.5"
+php_version: "5.6"
 php_memory_limit: "192M"
 php_display_errors: "On"
 php_display_startup_errors: "On"
@@ -143,6 +145,8 @@ php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
 php_max_input_vars: "4000"
 
+composer_path: /usr/bin/composer
+composer_home_path: '/home/vagrant/.composer'
 # composer_global_packages:
 #   - { name: phpunit/phpunit, release: '@stable' }
 
@@ -161,19 +165,20 @@ varnish_default_backend_port: "80"
 pimpmylog_install_dir: /usr/share/php/pimpmylog
 pimpmylog_grant_all_privs: true
 
-# XDebug configuration for use with PHPStorm/Sublime on host.
-# These settings allow for using the debugger in PHPStorm or Sublime out of the
-# box with no additional configuration.
+# XDebug configuration. XDebug is disabled by default for better performance.
+php_xdebug_default_enable: 0
 php_xdebug_coverage_enable: 0
-php_xdebug_default_enable: 1
 php_xdebug_cli_enable: 0
 php_xdebug_remote_enable: 1
 php_xdebug_remote_connect_back: 1
+# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
 php_xdebug_idekey: PHPSTORM
-# php_xdebug_idekey: sublime.xdebug
 php_xdebug_max_nesting_level: 255
 
 # Solr Configuration (if enabled above).
 solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
+
+# Selenium configuration
+selenium_version: 2.46.0

@@ -1,0 +1,35 @@
+site_name: Drupal VM Documentation
+
+repo_url: https://github.com/geerlingguy/drupal-vm
+site_description: 'Drupal VM - A VM for local Drupal development, built with Vagrant + Ansible'
+theme: readthedocs
+
+markdown_extensions:
+  - toc:
+      permalink: True
+
+pages:
+  - Home: 'index.md'
+  - Drupal Deployment Strategies:
+    - 'Drush Make file': 'deployment/drush-make.md'
+    - 'Local Drupal codebase': 'deployment/local-codebase.md'
+    - 'Drupal multisite': 'deployment/multisite.md'
+  - Extra Software and Setup:
+    - 'Syncing Folders': 'extras/syncing-folders.md'
+    - 'Connect to the MySQL Database': 'extras/mysql.md'
+    - 'Use Apache Solr for Search': 'extras/solr.md'
+    - 'Use Drush with Drupal VM': 'extras/drush.md'
+    - 'Use Drupal Console with Drupal VM': 'extras/drupal-console.md'
+    - 'Use Varnish with Drupal VM': 'extras/varnish.md'
+    - 'Use MariaDB instead of MySQL': 'extras/mariadb.md'
+    - 'View Logs with Pimp my Log': 'extras/pimpmylog.md'
+    - 'Profile Code with XHProf': 'extras/xhprof.md'
+    - 'Debug Code with XDebug': 'extras/xdebug.md'
+    - 'Catch Emails with MailHog': 'extras/mailhog.md'
+    - 'Test with Behat and Selenium': 'extras/behat.md'
+  - Other Information:
+    - 'Using Different Base OSes': 'other/base-os.md'
+    - 'PHP 7 on Drupal VM': 'other/php-7.md'
+    - 'Drupal 6 Notes': 'other/drupal-6.md'
+    - 'Windows Notes': 'other/windows.md'
+    - 'Cloning Drupal VM with newd': 'other/cloning-with-newd.md'
