@@ -64,24 +64,19 @@ configure_local_drush_aliases: true
 
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
-# NOTE: We create separate vhosts for www and non-www URLs so that the
-#       hostsupdater plugin will create host file entries for both.
-# NOTE: We can't create a vhost with a servername of  "www.{{ drupal_domain }}"
-#       because the autohost plugin won't pick up names that have {{ in them.
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-#  - {servername: "www.drupalvm.dev", documentroot: "{{ drupal_core_path }}"}
   - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
   - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
 
-# Optionally, enable/disable additional apache modules.
-# NOTE: Uncommenting this block overrides the default set of modules to be
+# Enable apache modules needed for Drupal.
+# NOTE: This block overrides the default set of modules to be
 #       enabled.  So we need to make sure we include mod_ssl and mod_rewrite
 #       along with our additional module(s) such as expires.
-# apache_mods_enabled:
-#  - expires.load
-#  - ssl.load
-#  - rewrite.load
+apache_mods_enabled:
+  - expires.load
+  - ssl.load
+  - rewrite.load
 
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
