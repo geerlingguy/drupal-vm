@@ -69,6 +69,15 @@ apache_vhosts:
   - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
   - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
 
+# Enable apache modules needed for Drupal.
+# NOTE: This block overrides the default set of modules to be
+#       enabled.  So we need to make sure we include mod_ssl and mod_rewrite
+#       along with our additional module(s) such as expires.
+apache_mods_enabled:
+  - expires.load
+  - ssl.load
+  - rewrite.load
+
 # MySQL Databases and users. If build_from_makefile is true, first database will
 # be used for the makefile-built site.
 mysql_databases:
