@@ -1,4 +1,4 @@
-![Drupal VM](images/drupal-vm-logo.png)
+<p align="center"><img src="images/drupal-vm-logo.png" alt="Drupal VM Logo" /></p>
 
 [Drupal VM](http://www.drupalvm.com/) is A VM for local Drupal development, built with Vagrant + Ansible.
 
