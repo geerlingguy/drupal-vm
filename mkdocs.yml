@@ -33,3 +33,4 @@ pages:
     - 'Drupal 6 Notes': 'other/drupal-6.md'
     - 'Windows Notes': 'other/windows.md'
     - 'Cloning Drupal VM with newd': 'other/cloning-with-newd.md'
+    - 'Vagrant and VirtualBox Tips': 'other/vagrant-virtualbox.md'
