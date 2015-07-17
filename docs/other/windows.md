@@ -24,3 +24,11 @@ Creating long paths inside a shared folder will fail if the length exceeds 260 c
 ### NFS
 
 You can use the [vagrant-winnfsd](https://github.com/GM-Alex/vagrant-winnfsd) plugin to get NFS support on windows. Be aware that there are multiple issues logged against both the plugin and the winnfsd project, so no guarantees.
+
+### "Authentication failure" on vagrant up
+
+Some Windows users have reported running into an issue where an authentication failure is reported once the VM is booted (e.g. `drupalvm: Warning: Authentication failure. Retrying...` — see [#170](https://github.com/geerlingguy/drupal-vm/issues/170)). To fix this, do the following:
+
+  1. Delete `~/.vagrant.d/insecure_private_key`
+  2. Run `vagrant ssh-config`
+  3. Restart the VM with `vagrant reload`
