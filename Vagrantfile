@@ -40,7 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       rsync__exclude: synced_folder['excluded_paths'],
       rsync__args: ["--verbose", "--archive", "--delete", "-z", "--chmod=ugo=rwX"],
       id: synced_folder['id'],
-      create: synced_folder.include?('create') ? synced_folder['create'] : false
+      create: synced_folder.include?('create') ? synced_folder['create'] : false,
+      mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
   end
 
   if is_windows
