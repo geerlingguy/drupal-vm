@@ -15,13 +15,6 @@
   user: "name=www-data append=yes groups=dialout"
   when: ansible_os_family == 'Debian'
 
-- name: Remove default virtualhost file.
-  file:
-    path: /etc/apache2/sites-enabled/000-default.conf
-    state: absent
-  notify: restart webserver
-  when: ansible_os_family == 'Debian'
-
 - name: Set nicer permissions on Apache log directory.
   file:
     path: "/var/log/{{ apache_daemon }}"
