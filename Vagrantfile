@@ -16,7 +16,11 @@ is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = vconfig['vagrant_hostname']
-  config.vm.network :private_network, ip: vconfig['vagrant_ip']
+  if vconfig['vagrant_ip'] == "0.0.0.0" && Vagrant.has_plugin?("vagrant-auto_network")
+    config.vm.network :private_network, :ip => "0.0.0.0", :auto_network => true
+  else
+    config.vm.network :private_network, ip: vconfig['vagrant_ip']
+  end
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
 
