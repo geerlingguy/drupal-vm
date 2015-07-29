@@ -27,7 +27,7 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
 
-Please read through the rest of this README and the [Drupal VM Wiki](https://github.com/geerlingguy/drupal-vm/wiki) for help getting Drupal VM configured and integrated with your development workflow.
+Please read through the rest of this README and the [Drupal VM documentation](http://docs.drupalvm.com/) for help getting Drupal VM configured and integrated with your development workflow.
 
 ## Documentation
 
@@ -47,7 +47,7 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 ## Quick Start Guide
 
-This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using the included example Drush make file. You can also use the Drupal VM with a [Local Drupal codebase](https://github.com/geerlingguy/drupal-vm/wiki/Local-Drupal-codebase) or even a [Drupal multisite installation](https://github.com/geerlingguy/drupal-vm/wiki/Drupal-multisite).
+This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using the included example Drush make file. You can also use the Drupal VM with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/) or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
 
 ### 1 - Install dependencies (VirtualBox, Vagrant, Ansible)
 
@@ -98,7 +98,7 @@ If you don't want or need one or more of these extras, just delete them or comme
 
 ## Using Drupal VM
 
-Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM Wiki](https://github.com/geerlingguy/drupal-vm/wiki):
+Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM documentation site](http://docs.drupalvm.com):
 
   - [Syncing Folders](http://docs.drupalvm.com/en/latest/extras/syncing-folders/)
   - [Connect to the MySQL Database](http://docs.drupalvm.com/en/latest/extras/mysql/)
