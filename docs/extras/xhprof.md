@@ -11,4 +11,4 @@ The XHProf module doesn't yet include support for callgraphs, but there's an iss
 The Devel module also *used* to provide XHProf configuration, and setting the options below would allow Devel's XHProf integration to work correctly with Drupal VM's XHProf installation:
 
   - **xhprof directory**: `/usr/share/php`
-  - **XHProf URL**: `http://local.xhprof.com/` (assuming this domain is configured in `apache_vhosts` inside `config.yml`)
+  - **XHProf URL**: `http://xhprof.drupalvm.dev/` (assuming this domain is configured in `apache_vhosts` inside `config.yml`)
