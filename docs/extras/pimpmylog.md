@@ -10,7 +10,9 @@ Some log files you may be interested in monitoring:
   - `/var/log/apache2/error.log` (this log will show Apache and PHP notices/warnings/errors)
   - `/var/log/apache2/other_vhosts_access.log`
   - `/var/log/mysql.err` (MySQL error log)
-  - `/var/log/mysql-slow.log (MySQL slow query log)
+  - `/var/log/mysql-slow.log` (MySQL slow query log)
   - `/var/log/syslog` (enable the Drupal syslog module to route watchdog log entries to this file)
 
 For MySQL logs, you might want to read through the PML docs on [MySQL](http://support.pimpmylog.com/kb/softwares/mysql).
+
+It might be necessary to grant read permissions to the other group (e.g. `chmod o+r /var/log/mysql.err`) on some log files in order for Pimp My Log to be able to parse them.
