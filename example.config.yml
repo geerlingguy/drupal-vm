@@ -143,6 +143,7 @@ composer_home_path: '/home/vagrant/.composer'
 mysql_root_password: root
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
+mysql_wait_timeout: 300
 adminer_add_apache_config: true
 
 # Varnish Configuration.
