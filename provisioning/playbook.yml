@@ -46,6 +46,7 @@
       stat: "path={{ drupal_core_path }}/index.php"
       register: drupal_site
 
+    - include: tasks/sshd.yml
     - include: tasks/extras.yml
     - include: tasks/www.yml
     - include: tasks/apparmor.yml
