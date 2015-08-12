@@ -100,7 +100,9 @@ installed_extras:
   - xdebug
   - xhprof
 
-# Add any extra packages you'd like to install.
+# Add any extra apt or yum packages. Use the apt or yum package name to
+# indicate which package you'd like to install. E.g. the unzip apt package is
+# used by Drush to unzip libraries downloaded by Drush make files. 
 extra_packages: []
 
 # You can configure almost anything else on the server in the rest of this file.
