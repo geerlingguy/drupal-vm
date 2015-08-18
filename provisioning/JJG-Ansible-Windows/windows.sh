@@ -50,7 +50,7 @@ fi
 
 # Install requirements.
 echo "Installing Ansible roles from requirements file, if available."
-find "/vagrant/$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements.txt" \) -exec sudo ansible-galaxy install -r {} \;
+find "/vagrant/$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements.txt" \) -exec sudo ansible-galaxy install --ignore-errors -r {} \;
 
 # Run the playbook.
 echo "Running Ansible provisioner defined in Vagrantfile."
