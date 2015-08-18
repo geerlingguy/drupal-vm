@@ -1,0 +1,7 @@
+---
+- name: Do not accept locale environment variables passed over SSH.
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^AcceptEnv LANG"
+    state: absent
+    validate: "/usr/sbin/sshd -T -f %s"
