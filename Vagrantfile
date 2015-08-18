@@ -2,6 +2,18 @@
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = "2"
 
+# Cross-platform way of finding an executable in the $PATH.
+def which(cmd)
+  exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+  ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+    exts.each { |ext|
+      exe = File.join(path, "#{cmd}#{ext}")
+      return exe if File.executable?(exe) && !File.directory?(exe)
+    }
+  end
+  return nil
+end
+
 # Use config.yml for basic VM configuration.
 require 'yaml'
 dir = File.dirname(File.expand_path(__FILE__))
@@ -9,10 +21,6 @@ if !File.exist?("#{dir}/config.yml")
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
 vconfig = YAML::load_file("#{dir}/config.yml")
-
-# Use rbconfig to determine if we're on a windows host or not.
-require 'rbconfig'
-is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = vconfig['vagrant_hostname']
@@ -48,17 +56,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
   end
 
-  if is_windows
-    # Provisioning configuration for shell script (for Windows).
-    config.vm.provision "shell" do |sh|
-      sh.path = "#{dir}/provisioning/JJG-Ansible-Windows/windows.sh"
-      sh.args = "/provisioning/playbook.yml"
-    end
-  else
-    # Provisioning configuration for Ansible (for Mac/Linux hosts).
+  # Provision using Ansible provisioner if Ansible is installed on host.
+  if which('ansible-playbook')
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "#{dir}/provisioning/playbook.yml"
       ansible.sudo = true
+    end
+  # Provision using shell provisioner and JJG-Ansible-Windows otherwise.
+  else
+    config.vm.provision "shell" do |sh|
+      sh.path = "#{dir}/provisioning/JJG-Ansible-Windows/windows.sh"
+      sh.args = "/provisioning/playbook.yml"
     end
   end
 
