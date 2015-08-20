@@ -31,25 +31,25 @@ After configuring Drupal VM to [use a different base OS](https://github.com/geer
 
   1. Make the following changes to `config.yml`:
 
-      ```yaml
-      # Changes to make PHP 7 work in CentOS via Remi's repo.
-      php_executable: php70
-      php_packages:
-        - ImageMagick
-        - php70
-        - php70-php
-        - php70-fakepear
-        - php70-php-devel
-        - php70-php-gd
-        - php70-php-imap
-        - php70-php-ldap
-        - php70-php-mbstring
-        - php70-php-pdo
-        - php70-php-process
-        - php70-php-xml
-        - php70-php-xmlrpc
-      php_mysql_package: php70-php-mysqlnd
-      ```
+    ```yaml
+    # Changes to make PHP 7 work in CentOS via Remi's repo.
+    php_executable: php70
+    php_packages:
+      - ImageMagick
+      - php70
+      - php70-php
+      - php70-fakepear
+      - php70-php-devel
+      - php70-php-gd
+      - php70-php-imap
+      - php70-php-ldap
+      - php70-php-mbstring
+      - php70-php-pdo
+      - php70-php-process
+      - php70-php-xml
+      - php70-php-xmlrpc
+    php_mysql_package: php70-php-mysqlnd
+    ```
 
   2. At this time, automatic install of `xhprof` and `xdebug` are unsupported. Make sure these options are commented or removed from the `installed_extras` setting in `config.yml`.
 
