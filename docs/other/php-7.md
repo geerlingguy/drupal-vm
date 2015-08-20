@@ -43,7 +43,6 @@ After configuring Drupal VM to [use a different base OS](https://github.com/geer
 
 Note: Make sure you're running the latest version of all Ansible role dependencies by running `ansible-galaxy install -r provisioning/requirements.txt --force` inside the root Drupal VM project folder.
 
-    ```yaml
     # Changes to make PHP 7 work in CentOS via Remi's repo.
     php_executable: php70
     php_packages:
@@ -61,7 +60,6 @@ Note: Make sure you're running the latest version of all Ansible role dependenci
       - php70-php-xml
       - php70-php-xmlrpc
     php_mysql_package: php70-php-mysqlnd
-    ```
 
 ## Zend nightly PHP 7 builds
 
