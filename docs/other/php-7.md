@@ -29,7 +29,19 @@ However, there's currently a bug with the beta1 version of the package, which ca
 
 After configuring Drupal VM to [use a different base OS](https://github.com/geerlingguy/drupal-vm/wiki/Using-Different-Base-OSes) (in this case, CentOS 7), you need to do the following to get PHP 7 running inside the VM:
 
-  1. Make the following changes to `config.yml`:
+  1. Make the changes to `config.yml` defined in the code block at the end of these instructions ('Changes to make PHP 7 work...').
+
+  2. At this time, automatic install of `xhprof` and `xdebug` are unsupported. Make sure these options are commented or removed from the `installed_extras` setting in `config.yml`.
+
+  3. Run the normal `vagrant up` as you would with PHP 5.x, but when provisioning fails (usually on the Composer step), log into the VM with `vagrant ssh`, and run the following two commands:
+    ```
+    sudo ln -s /usr/bin/php70 /usr/bin/php
+    sudo systemctl restart httpd.service
+    ```
+
+  4. Log back out (type `exit` to exit the session in the VM) and run `vagrant provision`. This should pick back up where the provisioning left off earlier, and complete installation.
+
+Note: Make sure you're running the latest version of all Ansible role dependencies by running `ansible-galaxy install -r provisioning/requirements.txt --force` inside the root Drupal VM project folder.
 
     ```yaml
     # Changes to make PHP 7 work in CentOS via Remi's repo.
@@ -50,18 +62,6 @@ After configuring Drupal VM to [use a different base OS](https://github.com/geer
       - php70-php-xmlrpc
     php_mysql_package: php70-php-mysqlnd
     ```
-
-  2. At this time, automatic install of `xhprof` and `xdebug` are unsupported. Make sure these options are commented or removed from the `installed_extras` setting in `config.yml`.
-
-  3. Run the normal `vagrant up` as you would with PHP 5.x, but when provisioning fails (usually on the Composer step), log into the VM with `vagrant ssh`, and run the following two commands:
-    ```
-    sudo ln -s /usr/bin/php70 /usr/bin/php
-    sudo systemctl restart httpd.service
-    ```
-
-  4. Log back out (type `exit` to exit the session in the VM) and run `vagrant provision`. This should pick back up where the provisioning left off earlier, and complete installation.
-
-Note: Make sure you're running the latest version of all Ansible role dependencies by running `ansible-galaxy install -r provisioning/requirements.txt --force` inside the root Drupal VM project folder.
 
 ## Zend nightly PHP 7 builds
 
