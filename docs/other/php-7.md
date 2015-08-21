@@ -46,7 +46,6 @@ Note: Make sure you're running the latest version of all Ansible role dependenci
     # Changes to make PHP 7 work in CentOS via Remi's repo.
     php_executable: php70
     php_packages:
-      - ImageMagick
       - php70
       - php70-php
       - php70-fakepear
