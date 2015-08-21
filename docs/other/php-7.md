@@ -1,6 +1,6 @@
-Many users have requested the ability to easily install PHP 7.x in addition to the already easy-to-configure options of 5.3, 5.4, 5.5, and 5.6. This page will guide you through how to get PHP 7 running on Drupal VM by modifying a few configuration options and running a couple simple commands inside the VM.
+Many users have requested the ability to easily install PHP 7.x in addition to the already easy-to-configure options of 5.3, 5.4, 5.5, and 5.6. This page will guide you through how to get PHP 7 running on Drupal VM in a few different ways, depending on what type of installation you need.
 
-Note that, at this time (summer 2015), PHP 7 is still in pre-beta releases, and all support is experimental and prone to breaking things. Please don't try running PHP 7 on production machines yet!
+_At this time (summer 2015), PHP 7 is still in the release candidate stage, and all support is experimental and prone to breaking. Please don't try running PHP 7 on production environments yet!_
 
 ## Ubuntu 14.04
 
@@ -12,18 +12,15 @@ Otherwise, Ondřej Surý also has a PPA for PHP 7.0 that is included with Drupal
 php_version: "7.0"
 php_packages:
   - libapache2-mod-php7.0
-  - php7.0-mcrypt
   - php7.0-common
   - php7.0-cli
-  - php7.0-curl
   - php7.0-dev
   - php7.0-fpm
-  - php7.0-gd
   - libpcre3-dev
 php_mysql_package: php7.0-mysqlnd
 ```
 
-However, there's currently a bug with the beta1 version of the package, which causes installation to fail (see: https://github.com/oerdnj/deb.sury.org/issues/87). This section will be updated with more information once this packaging bug is fixed or a workaround is found.
+However, the PHP MySQL package is currently not available in the repo, so MySQL support is not active (see: https://github.com/oerdnj/deb.sury.org/issues/106). This section will be updated with more information once this problem is fixed or a workaround is found.
 
 ## RedHat/CentOS 7
 
