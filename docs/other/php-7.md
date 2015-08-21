@@ -4,9 +4,7 @@ _At this time (summer 2015), PHP 7 is still in the release candidate stage, and 
 
 ## Ubuntu 14.04
 
-Currently the most reliable way to get PHP 7 (any version) running on Ubuntu is to build from source. This is supported by Drupal VM and is not too difficult, but it requires a few manual steps to make sure Apache and PHP play nice together, so this process is not currently documented here.
-
-Otherwise, Ondřej Surý also has a PPA for PHP 7.0 that is included with Drupal VM, and you can make the following additions/changes to your `config.yml` to use it:
+Ondřej Surý's PPA for PHP 7.0 is included with Drupal VM, and you can make the following changes/additions to `config.yml` to use it:
 
 ```yaml
 php_version: "7.0"
@@ -17,10 +15,15 @@ php_packages:
   - php7.0-dev
   - php7.0-fpm
   - libpcre3-dev
-php_mysql_package: php7.0-mysqlnd
+  - php-gd
+  - php-curl
+  - php-imap
+  - php-json
+  - php-opcache
+php_mysql_package: php-mysql
 ```
 
-However, the PHP MySQL package is currently not available in the repo, so MySQL support is not active (see: https://github.com/oerdnj/deb.sury.org/issues/106). This section will be updated with more information once this problem is fixed or a workaround is found.
+Note that there can still be a few inconsistencies with this configuration, especially as PHP 7.0.0 is still in 'release candidate status'. You can also build from source using the same/included `geerlingguy.php` Ansible role, but that process is a bit more involved and for power users comfortable with the process.
 
 ## RedHat/CentOS 7
 
