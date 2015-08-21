@@ -49,12 +49,12 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using the included example Drush make file. You can also use the Drupal VM with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/) or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
 
-### 1 - Install dependencies (VirtualBox, Vagrant, Ansible)
+### 1 - Install dependencies (VirtualBox and Vagrant)
 
   1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with Parallels or VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
   2. Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
 
-Note for Faster Provisioning (Mac/Linux only): *For faster and more efficient provisioning, you should [install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
+Note for Faster Provisioning (Mac/Linux only): *[Install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
 
 Note for Linux users: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
 
@@ -70,7 +70,7 @@ Note on versions: *Please make sure you're running the latest stable version of 
   4. Open Terminal, cd to this directory (containing the `Vagrantfile` and this README file).
   5. Type in `vagrant up`, and let Vagrant do its magic.
 
-If you have Ansible installed on your host machine, run `$ sudo ansible-galaxy install -r provisioning/requirements.txt --force` prior to step 5 (`vagrant up`), otherwise Ansible will complain about missing roles.
+If you have Ansible installed on your host machine: Run `$ sudo ansible-galaxy install -r provisioning/requirements.txt --force` prior to step 5 (`vagrant up`), otherwise Ansible will complain about missing roles.
 
 Note: *If there are any errors during the course of running `vagrant up`, and it drops you back to your command prompt, just run `vagrant provision` to continue building the VM from where you left off. If there are still errors after doing this a few times, post an issue to this project's issue queue on GitHub with the error.*
 
