@@ -37,10 +37,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # If hostsupdater plugin is installed, add all servernames as aliases.
   if Vagrant.has_plugin?("vagrant-hostsupdater")
     config.hostsupdater.aliases = []
+
+    # Add in the drupal_domain if it is different from vagrant_hostname.
+    if vconfig['drupal_domain'] != config.vm.hostname
+      config.hostsupdater.aliases.push(vconfig['drupal_domain'])
+    end
+
+    # Add hosts for all server names and aliases that are not the same
+    # as vagrant_hostname.
     for host in vconfig['apache_vhosts']
-      # Add all the hosts that aren't defined as Ansible vars.
-      unless host['servername'].include? "{{"
-        config.hostsupdater.aliases.push(host['servername'])
+      # Vhost server name.
+      servername = host['servername'].sub('{{ drupal_domain }}', vconfig['drupal_domain'])
+      if servername != config.vm.hostname && !config.hostsupdater.aliases.index(servername)
+        config.hostsupdater.aliases.push(servername)
+      end
+
+      # Vhost server aliases.
+      # Can be a space deliminated list of host names, so we have to iterate over them.
+      if host['serveralias'] && !host['serveralias'].empty?
+        serveraliases = host['serveralias'].gsub('{{ drupal_domain }}', vconfig['drupal_domain'])
+        server_alias_array = serveraliases.split(' ')
+        for server_alias in server_alias_array
+          if server_alias != config.vm.hostname && !config.hostsupdater.aliases.index(server_alias)
+            config.hostsupdater.aliases.push(server_alias)
+          end          
+        end
       end
     end
   end

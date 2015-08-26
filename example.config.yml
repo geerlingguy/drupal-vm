@@ -64,10 +64,12 @@ configure_local_drush_aliases: true
 
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
+# You can also specify alternate aliases for each vhost by adding the serveralias
+#   ex: serveralias: "www.{{ drupal_domain }} forum.{{ drupal_domain }}"
 apache_vhosts:
   - {servername: "{{ drupal_domain }}", documentroot: "{{ drupal_core_path }}"}
-  - {servername: "xhprof.drupalvm.dev", documentroot: "/usr/share/php/xhprof_html"}
-  - {servername: "pimpmylog.drupalvm.dev", documentroot: "/usr/share/php/pimpmylog"}
+  - {servername: "xhprof.{{ drupal_domain }}", documentroot: "/usr/share/php/xhprof_html"}
+  - {servername: "pimpmylog.{{ drupal_domain }}", documentroot: "/usr/share/php/pimpmylog"}
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - expires.load
