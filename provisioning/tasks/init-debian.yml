@@ -13,9 +13,6 @@
 - name: Disable the ufw firewall (since we use a simple iptables firewall).
   service: name=ufw state=stopped
 
-- name: Install postfix so Drupal can send emails.
-  apt: name=postfix state=installed
-
 - name: Add repository for PHP 5.5.
   apt_repository: repo='ppa:ondrej/php5'
   when: php_version == "5.5"

@@ -6,9 +6,6 @@
     - "python-pycurl"
     - "@development"
 
-- name: Install postfix so Drupal can send emails.
-  yum: name=postfix state=installed
-
 - name: Enable remi repo for MySQL.
   set_fact: mysql_enablerepo="remi"
 

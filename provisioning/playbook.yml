@@ -15,6 +15,7 @@
     - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
     - geerlingguy.firewall
     - geerlingguy.git
+    - geerlingguy.postfix
     - geerlingguy.apache
     - geerlingguy.mysql
     - geerlingguy.php

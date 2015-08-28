@@ -18,6 +18,7 @@ geerlingguy.php-pecl
 geerlingguy.php-xdebug
 geerlingguy.php-xhprof
 geerlingguy.pimpmylog
+geerlingguy.postfix
 geerlingguy.repo-remi
 geerlingguy.security
 geerlingguy.solr
