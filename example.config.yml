@@ -26,6 +26,8 @@ vagrant_synced_folders:
 vagrant_memory: 1024
 vagrant_cpus: 2
 
+vagrant_vbox_gui: false
+
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_makefile: true
