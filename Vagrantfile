@@ -75,7 +75,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # HGFS kernel module currently doesn't load correctly for native shares.
     override.vm.synced_folder ".", "/vagrant", type: 'nfs'
 
-    v.gui = false
+    v.gui = vconfig['vagrant_vbox_gui']
     v.vmx["memsize"] = vconfig['vagrant_memory']
     v.vmx["numvcpus"] = vconfig['vagrant_cpus']
   end
