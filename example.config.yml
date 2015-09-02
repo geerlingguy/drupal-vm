@@ -110,6 +110,8 @@ extra_security_enabled: false
 drush_version: master
 drush_keep_updated: true
 drush_composer_cli_options: "--prefer-dist --no-interaction"
+drush_global_modules:
+  - registry_rebuild
 
 firewall_allowed_tcp_ports:
   - "22"
