@@ -1,12 +1,10 @@
 By default, this VM is set up so you can manage MySQL databases on your own. The default root MySQL user credentials are `root` for username and password, but you can change the password via `config.yml` (changing the `mysql_root_password` variable). I use the [Sequel Pro](http://www.sequelpro.com/) (Mac-only) to connect and manage databases, and Drush to sync databases (sometimes I'll just do a dump and import, but Drush is usually quicker, and is easier to do over and over again when you need it).
 
-## Connect using phpMyAdmin
+## Connect using Adminer
 
-If you have `phpmyadmin` listed as one of the `installed_extras` inside `config.yml`, you can use phpMyAdmin's web-based interface to interact with databases. With Drupal VM running, visit `http://drupaltest.dev/phpmyadmin/`, and log in with `root` as the username and the password you set in `config.yml` (`mysql_root_password`).
+If you have `adminer` listed as one of the `installed_extras` inside `config.yml`, you can use Adminer's web-based interface to interact with databases. With Drupal VM running, visit `http://drupalvm.dev/adminer/`, and log in with `root` as the username and the password you set in `config.yml` (`mysql_root_password`). Leave the "Server" field blank. The "Database" field is optional.
 
-More about how to use phpMyAdmin: [phpMyAdmin documentation](http://docs.phpmyadmin.net/).
-
-_Note_: If you get the error `#1146 - Table 'phpmyadmin.pma_table_uiprefs' doesn't exist` when browsing tables in phpMyAdmin, please log into the VM using `vagrant ssh`, then run the command `sudo dpkg-reconfigure phpmyadmin`, and follow the onscreen prompts. This error is caused by [a bug in phpMyAdmin's Ubuntu package installation](https://github.com/geerlingguy/ansible-role-phpmyadmin/issues/1#issuecomment-92461536).
+More about how to use Admier: [Adminer website](http://www.adminer.org/).
 
 ## Connect using Sequel Pro (or a similar client):
 
