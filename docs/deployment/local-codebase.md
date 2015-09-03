@@ -17,7 +17,7 @@ vagrant_synced_folders:
 Set `build_makefile` and `install_site` to `false`:
 
 ```yaml
-build_from_makefile: false
+build_makefile:: false
 ...
 install_site: false
 ```
