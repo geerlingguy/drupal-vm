@@ -15,7 +15,7 @@ vagrant_ip: 192.168.88.88
 # http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
-  # build_from_makefile is 'true'.
+  # build_makefile: is 'true'.
   - local_path: ~/Sites/drupalvm
     destination: /var/www
     id: drupal
@@ -35,7 +35,7 @@ drush_makefile_path: /vagrant/drupal.make.yml
 # settings below), but instead copy down a database (e.g. using drush sql-sync).
 install_site: true
 
-# Settings for building a Drupal site from a makefile (if 'build_from_makefile'
+# Settings for building a Drupal site from a makefile (if 'build_makefile:'
 # is 'true').
 drupal_major_version: 8
 drupal_core_path: "/var/www/drupal"
@@ -74,7 +74,7 @@ apache_mods_enabled:
   - ssl.load
   - rewrite.load
 
-# MySQL Databases and users. If build_from_makefile is true, first database will
+# MySQL Databases and users. If build_makefile: is true, first database will
 # be used for the makefile-built site.
 mysql_databases:
   - name: "{{ drupal_mysql_database }}"
