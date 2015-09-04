@@ -21,6 +21,7 @@ geerlingguy.php-xhprof
 geerlingguy.pimpmylog
 geerlingguy.postfix
 geerlingguy.repo-remi
+geerlingguy.ruby
 geerlingguy.security
 geerlingguy.solr
 geerlingguy.varnish

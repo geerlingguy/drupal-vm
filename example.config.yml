@@ -102,6 +102,7 @@ installed_extras:
   - memcached
   # - nodejs
   - pimpmylog
+  # - ruby
   # - selenium
   # - solr
   - varnish

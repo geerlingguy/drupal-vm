@@ -35,6 +35,7 @@
     - { role: geerlingguy.daemonize, when: '"mailhog" in installed_extras' }
     - { role: geerlingguy.mailhog, when: '"mailhog" in installed_extras' }
     - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
+    - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
     - { role: geerlingguy.java, when: '"solr" in installed_extras or "selenium" in installed_extras' }
     - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
