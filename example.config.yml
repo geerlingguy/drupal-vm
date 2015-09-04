@@ -113,6 +113,12 @@ installed_extras:
 extra_packages:
   - unzip
 
+# `nodejs` must be in installed_extras for this to work.
+nodejs_npm_global_packages: []
+
+# `ruby` must be in installed_extras for this to work.
+ruby_install_gems: []
+
 # You can configure almost anything else on the server in the rest of this file.
 extra_security_enabled: false
 
