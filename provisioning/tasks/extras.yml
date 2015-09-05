@@ -8,3 +8,9 @@
   yum: "name={{ item }} state=installed"
   with_items: extra_packages | list
   when: ansible_os_family == 'RedHat' and extra_packages | length
+
+- name: Install extra drush modules.
+  command: >
+    {{ drush_path }} dl {{item}}
+  with_items: drush_global_modules
+  sudo: no
