@@ -30,12 +30,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network :private_network, ip: vconfig['vagrant_ip']
   end
 
-  if vconfig['vagrant_enable_public_network']
-    if vconfig['vagrant_public_ip'] == "0.0.0.0"
-      config.vm.network :public_network
-    else
-      config.vm.network :public_network, ip: vconfig['vagrant_public_ip']
-    end
+  if !vconfig['vagrant_public_ip'].empty? && vconfig['vagrant_public_ip'] == "0.0.0.0"
+    config.vm.network :public_network
+  elsif !vconfig['vagrant_public_ip'].empty?
+    config.vm.network :public_network, ip: vconfig['vagrant_public_ip']
   end
 
   config.ssh.insert_key = false
