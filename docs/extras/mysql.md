@@ -4,7 +4,7 @@ By default, this VM is set up so you can manage MySQL databases on your own. The
 
 If you have `adminer` listed as one of the `installed_extras` inside `config.yml`, you can use Adminer's web-based interface to interact with databases. With Drupal VM running, visit `http://drupalvm.dev/adminer/`, and log in with `root` as the username and the password you set in `config.yml` (`mysql_root_password`). Leave the "Server" field blank. The "Database" field is optional.
 
-More about how to use Admier: [Adminer website](http://www.adminer.org/).
+More about how to use Adminer: [Adminer website](http://www.adminer.org/).
 
 ## Connect using Sequel Pro (or a similar client):
 
