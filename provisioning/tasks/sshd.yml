@@ -5,3 +5,18 @@
     regexp: "^AcceptEnv LANG"
     state: absent
     validate: "/usr/sbin/sshd -T -f %s"
+
+# Copy over known_hosts.
+- name: Check if known_hosts file is present.
+  stat: "path={{ known_hosts_path }}"
+  register: known_hosts
+  connection: local
+  sudo: no
+
+- name: Copy known_hosts file from host into Drupal VM.
+  copy:
+    src: "{{ known_hosts_path }}"
+    dest: ~/.ssh/known_hosts
+    mode: 0644
+  sudo: no
+  when: known_hosts.stat.exists

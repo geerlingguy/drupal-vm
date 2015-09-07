@@ -61,6 +61,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "#{dir}/provisioning/playbook.yml"
       ansible.sudo = true
+      ansible.extra_vars = {
+        known_hosts_path: vconfig['known_hosts_path']
+      }
     end
   # Provision using shell provisioner and JJG-Ansible-Windows otherwise.
   else
