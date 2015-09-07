@@ -29,6 +29,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   else
     config.vm.network :private_network, ip: vconfig['vagrant_ip']
   end
+
+  if !vconfig['vagrant_public_ip'].empty? && vconfig['vagrant_public_ip'] == "0.0.0.0"
+    config.vm.network :public_network
+  elsif !vconfig['vagrant_public_ip'].empty?
+    config.vm.network :public_network, ip: vconfig['vagrant_public_ip']
+  end
+
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
 
