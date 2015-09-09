@@ -23,7 +23,6 @@ vagrant_synced_folders:
   # build_makefile: is 'true'.
   - local_path: ~/Sites/drupalvm
     destination: /var/www
-    id: drupal
     type: nfs
     create: true
 
