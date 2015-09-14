@@ -64,7 +64,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Provision using Ansible provisioner if Ansible is installed on host.
-  if which('ansible-playbook')
+  if which('ansible-playbook') && !vconfig['ansbile_in_vm_preferred']
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "#{dir}/provisioning/playbook.yml"
       ansible.sudo = true
