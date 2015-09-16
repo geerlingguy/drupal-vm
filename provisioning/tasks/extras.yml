@@ -8,3 +8,30 @@
   yum: "name={{ item }} state=installed"
   with_items: extra_packages | list
   when: ansible_os_family == 'RedHat' and extra_packages | length
+
+- name: Set solr_conf_directory for apachesolr version 3.x.
+  set_fact:
+    solr_conf_directory: "{{ solr_home }}/conf/"
+  when: "'solr' in installed_extras and solr_version.split('.')[0] == '3'"
+
+- name: Set solr_conf_directory for apachesolr version 4.x.
+  set_fact:
+    solr_conf_directory: "{{ solr_home }}/collection1/conf/"
+  when: "'solr' in installed_extras and solr_version.split('.')[0] == '4'"
+
+- name: Ensure Drupal apachesolr configuration applied.
+  get_url: "url=http://cgit.drupalcode.org/apachesolr/plain/solr-conf/solr-{{ solr_version.split('.')[0] }}.x/{{ item }} dest={{ solr_conf_directory }} force=yes"
+  notify: restart solr
+  when: "'solr' in installed_extras"
+  with_items:
+    - elevate.xml
+    - mapping-ISOLatin1Accent.txt
+    - protwords.txt
+    - schema.xml
+    - schema_extra_fields.xml
+    - schema_extra_types.xml
+    - solrconfig.xml
+    - solrconfig_extra.xml
+    - solrcore.properties
+    - stopwords.txt
+    - synonyms.txt
