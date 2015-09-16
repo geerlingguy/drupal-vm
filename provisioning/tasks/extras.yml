@@ -21,6 +21,8 @@
 
 - name: Ensure Drupal apachesolr configuration applied.
   get_url: "url=http://cgit.drupalcode.org/apachesolr/plain/solr-conf/solr-{{ solr_version.split('.')[0] }}.x/{{ item }} dest={{ solr_conf_directory }} force=yes"
+  owner: "{{ solr_user }}"
+  group: "{{ solr_user }}"
   notify: restart solr
   when: "'solr' in installed_extras"
   with_items:
