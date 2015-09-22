@@ -17,7 +17,9 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
   - Optional:
     - Varnish 4.x
     - Apache Solr 4.10.x (configurable)
+    - Node.js
     - Selenium, for testing your sites via Behat
+    - Ruby
     - Memcached
     - XHProf, for profiling your code
     - XDebug, for debugging your code
