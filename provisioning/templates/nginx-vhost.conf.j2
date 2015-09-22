@@ -7,14 +7,14 @@ server {
 {% endif %}
 
 server {
-    listen {{ item.listen }};
+    listen {{ item.listen | default("80") }};
 
     server_name {{ item.server_name }};
     error_log /var/log/nginx/error.log info;
     root {{ item.root }};
     index index.php index.html index.htm;
 
-{% if item.is_drupal is defined and item.is_drupal %}
+{% if item.is_php is defined and item.is_php %}
     location / {
         # Don't touch PHP for static content.
         try_files $uri @rewrite;

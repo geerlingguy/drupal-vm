@@ -41,13 +41,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = vconfig['vagrant_box']
 
-  # If hostsupdater plugin is installed, add all servernames as aliases.
+  # If hostsupdater plugin is installed, add all server names as aliases.
   if Vagrant.has_plugin?("vagrant-hostsupdater")
     config.hostsupdater.aliases = []
-    for host in vconfig['apache_vhosts']
-      # Add all the hosts that aren't defined as Ansible vars.
-      unless host['servername'].include? "{{"
-        config.hostsupdater.aliases.push(host['servername'])
+    # Add all hosts that aren't defined as Ansible vars.
+    if vconfig['drupalvm_webserver'] == "apache"
+      for host in vconfig['apache_vhosts']
+        unless host['servername'].include? "{{"
+          config.hostsupdater.aliases.push(host['servername'])
+        end
+      end
+    else
+      for host in vconfig['nginx_hosts']
+        unless host['server_name'].include? "{{"
+          config.hostsupdater.aliases.push(host['server_name'])
+        end
       end
     end
   end

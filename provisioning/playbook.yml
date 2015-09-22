@@ -53,8 +53,6 @@
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
     - include: tasks/www.yml
-    - include: tasks/nginx.yml
-      when: drupalvm_webserver == 'nginx'
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian'
 
