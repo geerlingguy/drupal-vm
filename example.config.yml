@@ -79,6 +79,9 @@ apache_vhosts:
   - servername: "{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
 
+  - servername: "adminer.drupalvm.dev"
+    documentroot: "/opt/adminer"
+
   - servername: "xhprof.drupalvm.dev"
     documentroot: "/usr/share/php/xhprof_html"
 
@@ -97,6 +100,10 @@ apache_mods_enabled:
 nginx_hosts:
   - server_name: "{{ drupal_domain }}"
     root: "{{ drupal_core_path }}"
+    is_php: true
+
+  - server_name: "adminer.drupalvm.dev"
+    root: "/opt/adminer"
     is_php: true
 
   - server_name: "xhprof.drupalvm.dev"
@@ -190,7 +197,7 @@ mysql_root_password: root
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
 mysql_wait_timeout: 300
-adminer_add_apache_config: true
+adminer_install_filename: index.php
 
 # Varnish Configuration.
 varnish_listen_port: "81"
