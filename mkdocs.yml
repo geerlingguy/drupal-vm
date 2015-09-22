@@ -29,6 +29,7 @@ pages:
     - 'Test with Behat and Selenium': 'extras/behat.md'
   - Other Information:
     - 'Using Different Base OSes': 'other/base-os.md'
+    - 'Using Different Webservers': 'other/webservers.md'
     - 'PHP 7 on Drupal VM': 'other/php-7.md'
     - 'Networking Notes': 'other/networking.md'
     - 'Drupal 6 Notes': 'other/drupal-6.md'
