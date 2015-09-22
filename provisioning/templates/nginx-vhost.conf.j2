@@ -1,0 +1,93 @@
+{% if item.server_name_redirect is defined %}
+server {
+    listen       80;
+    server_name  {{ item.server_name_redirect }};
+    return       301 http://{{ item.server_name }}$request_uri;
+}
+{% endif %}
+
+server {
+    listen {{ item.listen }};
+
+    server_name {{ item.server_name }};
+    error_log /var/log/nginx/error.log info;
+    root {{ item.root }};
+    index index.php index.html index.htm;
+
+{% if item.is_drupal is defined and item.is_drupal %}
+    location / {
+        # Don't touch PHP for static content.
+        try_files $uri @rewrite;
+    }
+
+    # Use fastcgi for all php files.
+    location ~ \.php$ {
+        # Secure *.php files.
+        try_files $uri = 404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_read_timeout 120;
+        include fastcgi_params;
+    }
+
+    location @rewrite {
+        # For D7 and above:
+        rewrite ^ /index.php;
+
+        # For Drupal 6 and below:
+        #rewrite ^/(.*)$ /index.php?q=$1;
+    }
+
+    location ~ ^/sites/.*/files/styles/ {
+        try_files $uri @rewrite;
+    }
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+
+    location ~ (^|/)\. {
+        return 403;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+        expires max;
+        log_not_found off;
+    }
+{% endif %}
+
+    gzip on;
+    gzip_proxied any;
+    gzip_static on;
+    gzip_http_version 1.0;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/x-javascript
+        application/json
+        application/xml
+        application/xml+rss
+        application/xhtml+xml
+        application/x-font-ttf
+        application/x-font-opentype
+        image/svg+xml
+        image/x-icon;
+    gzip_buffers 16 8k;
+    gzip_min_length 512;
+}
