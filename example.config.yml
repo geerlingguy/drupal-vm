@@ -30,6 +30,9 @@ vagrant_synced_folders:
 vagrant_memory: 1024
 vagrant_cpus: 2
 
+# The web server software to use. Can be either 'apache' or 'nginx'.
+drupalvm_webserver: apache
+
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_makefile: true
@@ -87,6 +90,21 @@ apache_mods_enabled:
   - expires.load
   - ssl.load
   - rewrite.load
+
+# Nginx hosts. Each site will get a server entry using the configuration defined
+# here. Set the 'is_drupal' property to true to use a Drupal-optimized Nginx
+# virtual host configuration.
+nginx_hosts:
+  - listen: "80 default_server"
+    server_name: "{{ drupal_domain }}"
+    root: "{{ drupal_core_path }}"
+    is_drupal: true
+
+  - listen: "80"
+    server_name: "pimpmylog.drupalvm.dev"
+    root: "/usr/share/php/pimpmylog"
+
+nginx_remove_default_vhost: true
 
 # MySQL Databases and users. If build_makefile: is true, first database will
 # be used for the makefile-built site.

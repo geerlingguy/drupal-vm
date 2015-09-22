@@ -11,6 +11,7 @@ geerlingguy.java
 geerlingguy.mailhog
 geerlingguy.memcached
 geerlingguy.mysql
+geerlingguy.nginx
 geerlingguy.nodejs
 geerlingguy.php
 geerlingguy.php-memcached

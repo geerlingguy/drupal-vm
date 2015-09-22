@@ -1,0 +1,12 @@
+---
+# TODO - Make this work with CentOS / RHEL!
+- name: Copy Nginx vhosts into place.
+  template:
+    src: ../templates/nginx-vhost.conf.j2
+    dest: "/etc/nginx/sites-enabled/{{ item.server_name }}.conf"
+    force: yes
+    owner: root
+    group: root
+    mode: 0644
+  with_items: nginx_hosts
+  notify: restart nginx

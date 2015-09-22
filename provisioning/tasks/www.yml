@@ -21,3 +21,4 @@
     state: directory
     mode: 0755
     recurse: true
+  when: drupalvm_webserver == 'apache'

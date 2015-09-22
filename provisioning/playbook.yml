@@ -16,7 +16,8 @@
     - geerlingguy.firewall
     - geerlingguy.git
     - geerlingguy.postfix
-    - geerlingguy.apache
+    - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }
+    - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }
     - geerlingguy.mysql
     - geerlingguy.php
     - geerlingguy.php-pecl
@@ -52,6 +53,8 @@
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
     - include: tasks/www.yml
+    - include: tasks/nginx.yml
+      when: drupalvm_webserver == 'nginx'
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian'
 
