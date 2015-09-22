@@ -92,17 +92,20 @@ apache_mods_enabled:
   - rewrite.load
 
 # Nginx hosts. Each site will get a server entry using the configuration defined
-# here. Set the 'is_drupal' property to true to use a Drupal-optimized Nginx
-# virtual host configuration.
+# here. Set the 'is_php' property for document roots that contain PHP apps like
+# Drupal.
 nginx_hosts:
-  - listen: "80 default_server"
-    server_name: "{{ drupal_domain }}"
+  - server_name: "{{ drupal_domain }}"
     root: "{{ drupal_core_path }}"
-    is_drupal: true
+    is_php: true
 
-  - listen: "80"
-    server_name: "pimpmylog.drupalvm.dev"
+  - server_name: "xhprof.drupalvm.dev"
+    root: "/usr/share/php/xhprof_html"
+    is_php: true
+
+  - server_name: "pimpmylog.drupalvm.dev"
     root: "/usr/share/php/pimpmylog"
+    is_php: true
 
 nginx_remove_default_vhost: true
 
