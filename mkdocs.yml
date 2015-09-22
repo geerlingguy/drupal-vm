@@ -22,6 +22,7 @@ pages:
     - 'Use Drupal Console with Drupal VM': 'extras/drupal-console.md'
     - 'Use Varnish with Drupal VM': 'extras/varnish.md'
     - 'Use MariaDB instead of MySQL': 'extras/mariadb.md'
+    - 'Use Node.js and NPM': 'extras/nodejs.md'
     - 'View Logs with Pimp my Log': 'extras/pimpmylog.md'
     - 'Profile Code with XHProf': 'extras/xhprof.md'
     - 'Debug Code with XDebug': 'extras/xdebug.md'
