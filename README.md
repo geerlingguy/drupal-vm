@@ -62,6 +62,7 @@ Note for Linux users: *If NFS is not already installed on your host, you will ne
 
 Note on versions: *Please make sure you're running the latest stable version of Vagrant, VirtualBox, and Ansible, as the current version of Drupal VM is tested with the latest releases. As of August 2015: Vagrant 1.7.4, VirtualBox 5.0.2, and Ansible 1.9.2.*
 
+
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.

@@ -32,3 +32,6 @@ Some Windows users have reported running into an issue where an authentication f
   1. Delete `~/.vagrant.d/insecure_private_key`
   2. Run `vagrant ssh-config`
   3. Restart the VM with `vagrant reload`
+
+### Required PowerShell Version
+If you are running Windows 7 and vagrant up hangs, you may need to upgrade PowerShell. Windows 7 ships with PowerShell 2.0, but PowerShell 3.0 or higher is needed. For Windows 7, you can upgrade to PowerShell 4.0 which is part of the [Windows Management Framework](http://www.microsoft.com/en-us/download/details.aspx?id=40855).
