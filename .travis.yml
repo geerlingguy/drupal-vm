@@ -15,7 +15,7 @@ script:
   - cp example.drupal.make.yml drupal.make.yml
 
   # Make sure Ansible requirements install correctly.
-  - 'ansible-galaxy install -r provisioning/requirements.txt'
+  - 'ansible-galaxy install -r provisioning/requirements.yml'
 
   # Run Ansible's syntax and playbook check on the main playbook.
   - 'ansible-playbook -i "localhost," -c local provisioning/playbook.yml --syntax-check'
