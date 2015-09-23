@@ -13,9 +13,13 @@ There are two parts to this:
   1. VirtualBox does not allow gets VMs to create symlinks in synced folders by default.
   2. Windows does not allow the creation of symlinks unless your local policy allows it; see [TechNet article](https://technet.microsoft.com/en-us/library/dn221947%28v=ws.10%29.aspx). Even if local policy allows it, many users experience problems in the creation of symlinks.
 
-### GIT & Permissions
+### Git and File permissions
 
-Do not work with git inside the synced folder inside the VM. Always use git on the Windows side. Otherwise the difference in permissions systems will make git think all your files have always been modified. It will also set the wrong permissions on any file you commit from inside the VM.
+If you're using a synced folder for your project, you should choose to either work _only_ inside the VM, or _only_ on the host machine. Don't commit changes both inside the VM and on the host unless you know what you're doing and have Git configured properly for Unix vs. Windows line endings. File permissions and line endings can be changed in ways that can break your project if you're not careful!
+
+You should probably disable Git's `fileMode` option inside the VM and on your host machine if you're running Windows and making changes to a Git repository:
+
+    git config core.fileMode false
 
 ### Long Paths
 
@@ -33,5 +37,6 @@ Some Windows users have reported running into an issue where an authentication f
   2. Run `vagrant ssh-config`
   3. Restart the VM with `vagrant reload`
 
-### Required PowerShell Version
-If you are running Windows 7 and vagrant up hangs, you may need to upgrade PowerShell. Windows 7 ships with PowerShell 2.0, but PowerShell 3.0 or higher is needed. For Windows 7, you can upgrade to PowerShell 4.0 which is part of the [Windows Management Framework](http://www.microsoft.com/en-us/download/details.aspx?id=40855).
+### Windows 7 requires PowerShell upgrade
+
+If you are running Windows 7 and `vagrant up` hangs, you may need to upgrade PowerShell. Windows 7 ships with PowerShell 2.0, but PowerShell 3.0 or higher is required. For Windows 7, you can upgrade to PowerShell 4.0 which is part of the [Windows Management Framework](http://www.microsoft.com/en-us/download/details.aspx?id=40855).
