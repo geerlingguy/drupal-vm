@@ -12,7 +12,7 @@ $aliases['{{ vhost.servername }}'] = array(
   'root' => '{{ vhost.documentroot }}',
   'remote-host' => '{{ vhost.servername }}',
   'remote-user' => 'vagrant',
-  'ssh-options' => '-p {{ ansible_ssh_port }} -o PasswordAuthentication=no -i ~/.vagrant.d/insecure_private_key',
+  'ssh-options' => '-o PasswordAuthentication=no -i ~/.vagrant.d/insecure_private_key',
 );
 
 {% endfor %}
