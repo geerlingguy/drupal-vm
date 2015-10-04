@@ -21,7 +21,7 @@ server {
     }
 
     # Don't allow direct access to the vendor directory.
-    location ~ /vendor {
+    location ~ /vendor/.*\.php$ {
         deny all;
         return 404;
     }
