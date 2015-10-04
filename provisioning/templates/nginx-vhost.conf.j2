@@ -20,7 +20,7 @@ server {
         try_files $uri @rewrite;
     }
 
-    # Don't allow direct access to the vendor directory.
+    # Don't allow direct access to PHP files in the vendor directory.
     location ~ /vendor/.*\.php$ {
         deny all;
         return 404;
