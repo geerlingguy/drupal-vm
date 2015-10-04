@@ -20,6 +20,12 @@ server {
         try_files $uri @rewrite;
     }
 
+    # Don't allow direct access to the vendor directory.
+    location ~ /vendor {
+        deny all;
+        return 404;
+    }
+
     # Use fastcgi for all php files.
     location ~ \.php$ {
         # Secure *.php files.
