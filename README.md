@@ -9,15 +9,15 @@ This project aims to make spinning up a simple local Drupal test/development env
 It will install the following on an Ubuntu 14.04 (by default) linux VM:
 
   - Apache 2.4.x (or Nginx 1.x)
-  - PHP 5.5.x (configurable)
+  - PHP 5.6.x (configurable)
   - MySQL 5.5.x
   - Drush (configurable)
   - Drupal Console (if using Drupal 8+)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - Optional:
-    - Varnish 4.x
+    - Varnish 4.x (configurable)
     - Apache Solr 4.10.x (configurable)
-    - Node.js
+    - Node.js 0.12 (configurable)
     - Selenium, for testing your sites via Behat
     - Ruby
     - Memcached
