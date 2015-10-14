@@ -50,6 +50,7 @@ drupal_domain: "drupalvm.dev"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
+drupal_disable_modules: []
 drupal_account_name: admin
 drupal_account_pass: admin
 drupal_mysql_user: drupal

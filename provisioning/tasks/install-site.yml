@@ -27,3 +27,10 @@
     chdir={{ drupal_core_path }}
   when: "'Successful' not in drupal_site_installed.stdout"
   sudo: no
+
+- name: Disable pre-installed modules with drush.
+  command: >
+    {{ drush_path }} pm-disable -y {{ drupal_disable_modules | join(" ") }}
+    chdir={{ drupal_core_path }}
+  when: "'Successful' not in drupal_site_installed.stdout"
+  sudo: no
