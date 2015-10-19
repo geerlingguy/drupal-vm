@@ -13,6 +13,10 @@ vagrant_ip: 192.168.88.88
 # A list of synced folders, with the keys 'local_path', 'destination', 'id', and
 # a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
 # https://github.com/geerlingguy/drupal-vm/wiki/Syncing-Folders for more info.
+#
+# Some directories that you may want to exlude are the .git directory within
+# your project, the sites/default/files directory and anywhere else that may
+# contain user-uploaded assets, and anywhere where you have database exports
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
   # build_from_makefile is 'true'.
@@ -21,6 +25,7 @@ vagrant_synced_folders:
     id: drupal
     type: nfs
     create: true
+    excluded_paths: []
 
 # Memory and CPU to use for this VM.
 vagrant_memory: 1024
