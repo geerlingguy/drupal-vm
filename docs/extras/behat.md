@@ -34,33 +34,33 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupal`
 
   1. Create a `behat.yml` file inside the docroot of your site (e.g. create this file alongside the rest of the Drupal codebase at `/var/www/drupal/behat.yml`), with the following contents:
 
-    ```yaml
-    default:
-      suites:
-        web_features:
-          paths: [ %paths.base%/features/web ]
-          contexts:
-            - WebContext
-            - Drupal\DrupalExtension\Context\DrupalContext
-            - Drupal\DrupalExtension\Context\MinkContext
-            - Drupal\DrupalExtension\Context\MessageContext
-            - Drupal\DrupalExtension\Context\DrushContext
-      extensions:
-        Behat\MinkExtension:
-          goutte: ~
-          javascript_session: selenium2
-          selenium2:
-            wd_host: http://drupalvm.dev:4444/wd/hub
-          base_url: http://drupalvm.dev
-        Drupal\DrupalExtension:
-          blackbox: ~
-          api_driver: 'drupal'
-          drupal:
-            drupal_root: '/var/www/drupal'
-          region_map:
-            content: "#content"
-    ```
-  
+        ```yaml
+        default:
+          suites:
+            web_features:
+              paths: [ %paths.base%/features/web ]
+              contexts:
+                - WebContext
+                - Drupal\DrupalExtension\Context\DrupalContext
+                - Drupal\DrupalExtension\Context\MinkContext
+                - Drupal\DrupalExtension\Context\MessageContext
+                - Drupal\DrupalExtension\Context\DrushContext
+          extensions:
+            Behat\MinkExtension:
+              goutte: ~
+              javascript_session: selenium2
+              selenium2:
+                wd_host: http://drupalvm.dev:4444/wd/hub
+              base_url: http://drupalvm.dev
+            Drupal\DrupalExtension:
+              blackbox: ~
+              api_driver: 'drupal'
+              drupal:
+                drupal_root: '/var/www/drupal'
+              region_map:
+                content: "#content"
+        ```
+
   2. Log into Drupal VM with `vagrant ssh`, change directory to the Drupal site root (`cd /var/www/drupal`), then run `behat --init` to initialize the `features` folder where you will place test cases.
   3. From either inside the VM or on the host machine, open up the new `features/web` folder Behat just created. Inside _that_ folder, create `HomeContent.feature` with the following contents:
 
