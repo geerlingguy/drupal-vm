@@ -26,6 +26,23 @@ Generally speaking:
   - Rsync offers the best performance inside the VM, but sync is currently one-way-only (from host to VM), which can make certain development workflows burdensome
   - Native shared folders offer abysmal performance; only use this mechanism as a last resort!
 
+If you are using rsync, it is advised to exclude certain directories so that they aren't synced. These include version control directories, database exports and Drupal's files directory.
+
+```yaml
+vagrant_synced_folders:
+  - local_path: ~/Sites/drupalvm/drupal
+    destination: /var/www
+    id: drupal
+    type: rsync
+    excluded_paths:
+      - drupal/private
+      - drupal/public/.git
+      - drupal/public/sites/default/files
+      - drupal/tmp
+```
+
+This example assumes that you have Drupal in a directory called `drupal/public`.
+
 ## Synced Folder Troubleshooting
 
 There are a number of issues people encounter with synced folders from time to time. The most frequent issues are listed below with possible solutions:
