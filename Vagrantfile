@@ -61,6 +61,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   for synced_folder in vconfig['vagrant_synced_folders'];
+    case synced_folder['type']
+    when "nfs"
+      if Vagrant.has_plugin?("vagrant-bindfs")
+        config.bindfs.bind_folder "/var/nfs", synced_folder["destination"]
+        synced_folder['destination'] = "/var/nfs"
+      end
+      config.nfs.map_uid = Process.uid
+      config.nfs.map_gid = Process.gid
+    end
+
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
       rsync__auto: "true",
