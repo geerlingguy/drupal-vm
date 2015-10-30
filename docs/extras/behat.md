@@ -62,18 +62,15 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupal`
   2. Log into Drupal VM with `vagrant ssh`, change directory to the Drupal site root (`cd /var/www/drupal`), then run `behat --init` to initialize the `features` folder where you will place test cases.
   3. From either inside the VM or on the host machine, open up the new `features/web` folder Behat just created. Inside _that_ folder, create `HomeContent.feature` with the following contents:
 
-    ```gherkin
-    Feature: Test DrupalContext
-      In order to prove the Behat is working correctly in Drupal VM
-      As a developer
-      I need to run a simple interface test
+        Feature: Test DrupalContext
+          In order to prove the Behat is working correctly in Drupal VM
+          As a developer
+          I need to run a simple interface test
+        
+          Scenario: Viewing content in a region
+            Given I am on the homepage
+            Then I should see "No front page content has been created yet" in the "content"
 
-      Scenario: Viewing content in a region
-        Given I am on the homepage
-        Then I should see "No front page content has been created yet" in the "content"
-
-    ```
-  
   4. Now, inside Drupal VM, change directory to `/var/www/drupal` again, and run the command `behat` (which runs all the tests you've created—which should just be one so far).
 
 If everything was done correctly, you should see:
