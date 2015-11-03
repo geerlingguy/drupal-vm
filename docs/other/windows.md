@@ -4,6 +4,14 @@ There are a few caveats when using Drupal VM on Windows, and this page will try 
 
 Most issues have to do synced folders. These are the most common ones:
 
+### Performance
+
+By default, if you use the 'NFS' synced folder type, Vagrant will ignore this directive and use the native (usually slow) VirtualBox shared folder system instead. You can get higher performance by doing one of the following (all of these steps require a full VM reload (`vagrant reload`) to take effect):
+
+  1. **Install the `vagrant-winnfsd` plugin**. See the 'NFS' section later for more details and caveats.
+  2. **Use `smb` for the synced folder's type.**
+  2. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/).
+
 ### Symbolic Links
 
 Creating symbolic links in a shared folder will fail with a permission or protocol error.
