@@ -1,4 +1,6 @@
 .DS_Store
+.idea/
+.project/
 .vagrant/
 vagrant_ansible_inventory_default
 config.yml
