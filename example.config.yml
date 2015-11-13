@@ -180,6 +180,7 @@ php_version: "5.6"
 php_memory_limit: "192M"
 php_display_errors: "On"
 php_display_startup_errors: "On"
+php_enable_php_fpm: 1
 php_realpath_cache_size: "1024K"
 php_sendmail_path: "/usr/sbin/ssmtp -t"
 php_opcache_enabled_in_ini: true
