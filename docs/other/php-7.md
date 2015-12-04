@@ -1,6 +1,6 @@
 Many users have requested the ability to easily install PHP 7.x in addition to the already easy-to-configure options of 5.3, 5.4, 5.5, and 5.6. This page will guide you through how to get PHP 7 running on Drupal VM in a few different ways, depending on what type of installation you need.
 
-_At this time (summer 2015), PHP 7 is still in the release candidate stage, and all support is experimental and prone to breaking. Please don't try running PHP 7 on production environments yet!_
+_At this time (Winter 2015), PHP 7 has only recently been released, and all support is experimental and prone to breaking._
 
 ## Ubuntu 14.04
 
@@ -23,7 +23,7 @@ php_packages:
 php_mysql_package: php-mysql
 ```
 
-Note that there can still be a few inconsistencies with this configuration, especially as PHP 7.0.0 is still in 'release candidate status'. You can also build from source using the same/included `geerlingguy.php` Ansible role, but that process is a bit more involved and for power users comfortable with the process.
+Note that there can still be a few inconsistencies with this configuration, especially as PHP 7.0.0 has only recently been released. You can also build from source using the same/included `geerlingguy.php` Ansible role, but that process is a bit more involved and for power users comfortable with the process.
 
 ## RedHat/CentOS 7
 
