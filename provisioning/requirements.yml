@@ -27,3 +27,4 @@
 - src: geerlingguy.security
 - src: geerlingguy.solr
 - src: geerlingguy.varnish
+- src: hashbangcode.pantheon-cli

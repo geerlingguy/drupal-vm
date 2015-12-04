@@ -41,6 +41,7 @@
     - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.varnish, when: '"varnish" in installed_extras' }
+    - { role: hashbangcode.pantheon-cli, when: '"terminus" in installed_extras' }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }
