@@ -143,6 +143,7 @@ installed_extras:
   - varnish
   - xdebug
   - xhprof
+  # - pantheon-cli
 
 # Add any extra apt or yum packages you would like installed.
 extra_packages:
