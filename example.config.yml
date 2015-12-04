@@ -135,6 +135,7 @@ installed_extras:
   - adminer
   - mailhog
   - memcached
+  # - redis
   # - nodejs
   - pimpmylog
   # - ruby

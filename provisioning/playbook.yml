@@ -28,6 +28,7 @@
 
     # Conditionally-installed roles.
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
+    - { role: geerlingguy.redis, when: '"redis" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
     - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }

@@ -11,6 +11,7 @@
 - src: geerlingguy.java
 - src: geerlingguy.mailhog
 - src: geerlingguy.memcached
+- src: geerlingguy.redis
 - src: geerlingguy.mysql
 - src: geerlingguy.nginx
 - src: geerlingguy.nodejs
