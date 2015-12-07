@@ -21,6 +21,7 @@ php_packages:
   - php-json
   - php-opcache
 php_mysql_package: php-mysql
+php_fpm_daemon: php7.0-fpm
 ```
 
 Note that there can still be a few inconsistencies with this configuration, especially as PHP 7.0.0 has only recently been released. You can also build from source using the same/included `geerlingguy.php` Ansible role, but that process is a bit more involved and for power users comfortable with the process.
