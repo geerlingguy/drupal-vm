@@ -24,9 +24,9 @@
     - geerlingguy.php-mysql
     - geerlingguy.composer
     - geerlingguy.drush
-    - { role: geerlingguy.drupal-console, when: drupal_major_version > 7 }
 
     # Conditionally-installed roles.
+    - { role: geerlingguy.drupal-console, when: 'drupal_major_version > 7 and "drupalconsole" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }

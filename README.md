@@ -12,9 +12,9 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
   - PHP 5.6.x (configurable)
   - MySQL 5.5.x
   - Drush (configurable)
-  - Drupal Console (if using Drupal 8+)
   - Drupal 6.x, 7.x, or 8.x.x (configurable)
   - Optional:
+    - Drupal Console
     - Varnish 4.x (configurable)
     - Apache Solr 4.10.x (configurable)
     - Node.js 0.12 (configurable)
