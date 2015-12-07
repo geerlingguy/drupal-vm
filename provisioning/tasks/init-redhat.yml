@@ -18,5 +18,5 @@
   when: php_version == "5.6"
 
 - name: Enable remi repo for PHP 7.0.
-  set_fact: php_enablerepo="remi,remi-test"
+  set_fact: php_enablerepo="remi,remi-php70"
   when: php_version == "7.0"
