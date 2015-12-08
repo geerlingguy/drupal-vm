@@ -28,6 +28,7 @@
 
     # Conditionally-installed roles.
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
+    - { role: geerlingguy.redis, when: '"redis" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
     - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }
@@ -41,6 +42,7 @@
     - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.varnish, when: '"varnish" in installed_extras' }
+    - { role: hashbangcode.pantheon-cli, when: '"pantheon-cli" in installed_extras' }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }
