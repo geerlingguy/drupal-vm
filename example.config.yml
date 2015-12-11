@@ -194,6 +194,11 @@ composer_home_path: '/home/vagrant/.composer'
 # composer_global_packages:
 #   - { name: phpunit/phpunit, release: '@stable' }
 
+# Run specified scripts after VM is provisioned. Path is relative to the
+# `provisioning/playbook.yml` file.
+post_provision_scripts: []
+  # - "../examples/scripts/configure-solr.sh"
+
 # MySQL Configuration.
 mysql_root_password: root
 mysql_slow_query_log_enabled: true

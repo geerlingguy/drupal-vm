@@ -66,3 +66,7 @@
 
     - include: tasks/drush-aliases.yml
     - include: tasks/cron.yml
+
+    - name: Run configured post-provision shell scripts.
+      script: "{{ item }}"
+      with_items: post_provision_scripts

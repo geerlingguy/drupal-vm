@@ -28,6 +28,7 @@ pages:
     - 'Debug Code with XDebug': 'extras/xdebug.md'
     - 'Catch Emails with MailHog': 'extras/mailhog.md'
     - 'Test with Behat and Selenium': 'extras/behat.md'
+    - 'Add Post-Provision Scripts': 'extras/scripts.md'
   - Other Information:
     - 'Using Different Base OSes': 'other/base-os.md'
     - 'Using Different Webservers': 'other/webservers.md'
