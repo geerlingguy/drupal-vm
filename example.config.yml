@@ -34,6 +34,7 @@ aws_key_id: ""
 aws_secret_access_key: ""
 aws_key_pair_name: "KeyPairName_CaSeSeNsItIvE"
 aws_security_group: "Test-security-group-name"
+aws_ami: 'ami-7747d01e'
 aws_tags_name: "Test AWS Vagrant"
 override_ssh_username: "ubuntu"
 override_ssh_private_key_path: 'PATH_TO_YOUR_PEM_FILE'
