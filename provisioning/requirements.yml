@@ -18,10 +18,12 @@
 - src: geerlingguy.php-memcached
 - src: geerlingguy.php-mysql
 - src: geerlingguy.php-pecl
+- src: geerlingguy.php-redis
 - src: geerlingguy.php-xdebug
 - src: geerlingguy.php-xhprof
 - src: geerlingguy.pimpmylog
 - src: geerlingguy.postfix
+- src: geerlingguy.redis
 - src: geerlingguy.repo-remi
 - src: geerlingguy.ruby
 - src: geerlingguy.security

@@ -21,6 +21,7 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
     - Selenium, for testing your sites via Behat
     - Ruby
     - Memcached
+    - Redis
     - XHProf, for profiling your code
     - XDebug, for debugging your code
     - Adminer, for accessing databases directly
@@ -101,22 +102,7 @@ If you don't want or need one or more of these extras, just delete them or comme
 
 ## Using Drupal VM
 
-Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM documentation site](http://docs.drupalvm.com):
-
-  - [Syncing Folders](http://docs.drupalvm.com/en/latest/extras/syncing-folders/)
-  - [Connect to the MySQL Database](http://docs.drupalvm.com/en/latest/extras/mysql/)
-  - [Use Apache Solr for Search](http://docs.drupalvm.com/en/latest/extras/solr/)
-  - [Use Drush with Drupal VM](http://docs.drupalvm.com/en/latest/extras/drush/)
-  - [Use Drupal Console with Drupal VM](http://docs.drupalvm.com/en/latest/extras/drupal-console/)
-  - [Use Varnish with Drupal VM](http://docs.drupalvm.com/en/latest/extras/varnish/)
-  - [Use MariaDB instead of MySQL](http://docs.drupalvm.com/en/latest/extras/mariadb/)
-  - [View Logs with Pimp my Log](http://docs.drupalvm.com/en/latest/extras/pimpmylog/)
-  - [Profile Code with XHProf](http://docs.drupalvm.com/en/latest/extras/xhprof/)
-  - [Debug Code with XDebug](http://docs.drupalvm.com/en/latest/extras/xdebug/)
-  - [Catch Emails with MailHog](http://docs.drupalvm.com/en/latest/extras/mailhog/)
-  - [Test with Behat and Selenium](http://docs.drupalvm.com/en/latest/extras/behat/)
-  - [PHP 7 on Drupal VM](http://docs.drupalvm.com/en/latest/other/php-7/)
-  - [Drupal 6 Notes](http://docs.drupalvm.com/en/latest/other/drupal-6/)
+Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM documentation site](http://docs.drupalvm.com).
 
 ## Other Notes
 

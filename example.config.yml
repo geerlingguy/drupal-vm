@@ -138,6 +138,7 @@ installed_extras:
   - memcached
   # - nodejs
   - pimpmylog
+  # - redis
   # - ruby
   # - selenium
   # - solr
