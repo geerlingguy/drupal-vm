@@ -32,7 +32,11 @@ server {
         try_files $uri = 404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
 
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        {% if php_version == "7.0" and ansible_distribution == "Ubuntu" %}
+        fastcgi_pass unix:/var/run/php/{{ php_fpm_daemon }}.sock;
+        {% else %}
+        fastcgi_pass unix:/var/run/{{ php_fpm_daemon }}.sock;
+        {% endif %}
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_read_timeout 120;

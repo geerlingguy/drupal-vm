@@ -10,6 +10,11 @@
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
 
+    - name: Set the PHP webserver daemon correctly when nginx is in use.
+      set_fact:
+        php_webserver_daemon: nginx
+      when: drupalvm_webserver == 'nginx'
+
   roles:
     # Essential roles.
     - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }

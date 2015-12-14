@@ -21,7 +21,6 @@
   apt_repository: repo='ppa:ondrej/php5-5.6'
   when: php_version == "5.6"
 
-# Experimental.
 - name: Add repository for PHP 7.0.
   apt_repository: repo='ppa:ondrej/php-7.0'
   when: php_version == "7.0"
