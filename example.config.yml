@@ -177,7 +177,7 @@ firewall_allowed_tcp_ports:
   - "8983"
 firewall_log_dropped_packets: false
 
-# PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0 (experimental).
+# PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
 php_version: "5.6"
 php_memory_limit: "192M"
 php_display_errors: "On"
