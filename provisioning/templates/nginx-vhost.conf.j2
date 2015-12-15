@@ -34,6 +34,8 @@ server {
 
         {% if php_version == "7.0" and ansible_distribution == "Ubuntu" %}
         fastcgi_pass unix:/var/run/php/{{ php_fpm_daemon }}.sock;
+        {% elif php_version == "7.0" and ansible_distribution == "CentOS" %}
+        fastcgi_pass 127.0.0.1:9000;
         {% else %}
         fastcgi_pass unix:/var/run/{{ php_fpm_daemon }}.sock;
         {% endif %}
