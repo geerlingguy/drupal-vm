@@ -44,11 +44,7 @@ server {
     }
 
     location @rewrite {
-        # For D7 and above:
         rewrite ^ /index.php;
-
-        # For Drupal 6 and below:
-        #rewrite ^/(.*)$ /index.php?q=$1;
     }
 
     location ~ ^/sites/.*/files/styles/ {
