@@ -71,17 +71,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
   end
 
+  # Allow override of the default synced folder type.
+  config.vm.synced_folder ".", "/vagrant", type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_default_synced_folder_type'] : 'nfs'
+
   # Provision using Ansible provisioner if Ansible is installed on host.
   if which('ansible-playbook')
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "#{dir}/provisioning/playbook.yml"
       ansible.sudo = true
     end
-  # Provision using shell provisioner and JJG-Ansible-Windows otherwise.
+  # Provision using ansible_local provisioner otherwise.
   else
-    config.vm.provision "shell" do |sh|
-      sh.path = "#{dir}/provisioning/JJG-Ansible-Windows/windows.sh"
-      sh.args = "/provisioning/playbook.yml"
+    config.vm.provision "ansible_local" do |sh|
+      ansible.playbook = "provisioning/playbook.yml"
     end
   end
 
