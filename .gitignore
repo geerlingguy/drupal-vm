@@ -2,6 +2,7 @@
 .idea/
 .project/
 .vagrant/
+.bundle/
 vagrant_ansible_inventory_default
 config.yml
 drupal.make.yml
