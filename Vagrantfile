@@ -23,6 +23,8 @@ end
 vconfig = YAML::load_file("#{dir}/config.yml")
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  # Networking configuration.
   config.vm.hostname = vconfig['vagrant_hostname']
   if vconfig['vagrant_ip'] == "0.0.0.0" && Vagrant.has_plugin?("vagrant-auto_network")
     config.vm.network :private_network, :ip => vconfig['vagrant_ip'], :auto_network => true
@@ -36,9 +38,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network :public_network, ip: vconfig['vagrant_public_ip']
   end
 
+  # SSH options.
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
 
+  # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
 
   # If hostsupdater plugin is installed, add all server names as aliases.
@@ -60,6 +64,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Synced folders.
   for synced_folder in vconfig['vagrant_synced_folders'];
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'],
       type: synced_folder['type'],
@@ -74,16 +79,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Allow override of the default synced folder type.
   config.vm.synced_folder ".", "/vagrant", type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_default_synced_folder_type'] : 'nfs'
 
-  # Provision using Ansible provisioner if Ansible is installed on host.
+  # Provisioning. Use ansible if it's installed on host, ansible_local if not.
   if which('ansible-playbook')
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "#{dir}/provisioning/playbook.yml"
-      ansible.sudo = true
     end
-  # Provision using ansible_local provisioner otherwise.
   else
-    config.vm.provision "ansible_local" do |sh|
+    config.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "provisioning/playbook.yml"
+      ansible.galaxy_role_file = "provisioning/requirements.yml"
     end
   end
 

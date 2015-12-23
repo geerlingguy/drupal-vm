@@ -7,3 +7,4 @@ config.yml
 drupal.make.yml
 examples/prod/inventory
 scripts/
+roles/
