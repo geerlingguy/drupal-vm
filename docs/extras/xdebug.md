@@ -25,11 +25,8 @@ php_xdebug_idekey: sublime.xdebug
 
 ## NetBeans and XDebug with Drupal VM
 
-To use XDebug with NetBeans, change the variables below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
-
-NOTE: php_xdebug_remote_port: 9000 will need to be added to your `config.yml` below the idekey.
+To use XDebug with NetBeans, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
 
 ```yaml
 php_xdebug_idekey: netbeans-xdebug
-php_xdebug_remote_port: 9000
 ```
