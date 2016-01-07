@@ -19,3 +19,8 @@ projects:
 
   # Other modules.
   devel: "1.x-dev"
+  migrate_api: "1.0"
+  migrate_plus: "1.0-beta1"
+  migrate_tools: "1.0-beta1"
+  migrate_ui: "1.0"
+
