@@ -26,8 +26,10 @@ vagrant_synced_folders:
     destination: /var/www/elis_migrate_playground
     type: nfs
     create: true
+    mount_options: [nolock,vers=3,udp,noatime,actimeo=1]
 
 # Memory and CPU to use for this VM.
+ptions: [nolock,vers=3,udp,noatime,actimeo=1]
 vagrant_memory: 1024
 vagrant_cpus: 2
 
