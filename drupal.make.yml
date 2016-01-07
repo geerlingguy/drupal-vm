@@ -1,0 +1,21 @@
+---
+api: 2
+
+# Basic Drush Make file for Drupal. Be sure to update the drupal_major_version
+# variable inside config.yml if you change the major version in this file.
+
+# Drupal core (major version, e.g. 6.x, 7.x, 8.x).
+core: "8.x"
+
+projects:
+
+  # Core.
+  drupal:
+    type: "core"
+    download:
+      # Drupal core branch (e.g. "6.x", "7.x", "8.0.x").
+      branch: "8.0.x"
+      working-copy: true
+
+  # Other modules.
+  devel: "1.x-dev"
