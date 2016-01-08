@@ -1,0 +1,242 @@
+---
+# `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
+# geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
+vagrant_box: geerlingguy/ubuntu1404
+vagrant_user: vagrant
+vagrant_synced_folder_default_type: nfs
+
+# If you need to run multiple instances of Drupal VM, set a unique hostname,
+# machine name, and IP address for each instance.
+vagrant_hostname: elis-migrate-playground.dev
+vagrant_machine_name: elis_migrate_playground
+vagrant_ip: 192.168.88.199
+
+# Allow Drupal VM to be accessed via a public network interface on your host.
+# Vagrant boxes are insecure by default, so be careful. You've been warned!
+# See: https://docs.vagrantup.com/v2/networking/public_network.html
+vagrant_public_ip: ""
+
+# A list of synced folders, with the keys 'local_path', 'destination', and
+# a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
+# http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
+vagrant_synced_folders:
+  # The first synced folder will be used for the default Drupal installation, if
+  # build_makefile: is 'true'.
+  - local_path: ~/Sites/elis_migrate_playground
+    destination: /var/www/elis_migrate_playground
+    type: nfs
+    create: true
+    mount_options: [nolock,vers=3,udp,noatime,actimeo=1]
+
+# Memory and CPU to use for this VM.
+ptions: [nolock,vers=3,udp,noatime,actimeo=1]
+vagrant_memory: 1024
+vagrant_cpus: 2
+
+# The web server software to use. Can be either 'apache' or 'nginx'.
+drupalvm_webserver: apache
+
+# Set this to false if you are using a different site deployment strategy and
+# would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
+build_makefile: true
+drush_makefile_path: /vagrant/drupal.make.yml
+
+# Set this to false if you don't need to install drupal (using the drupal_*
+# settings below), but instead copy down a database (e.g. using drush sql-sync).
+install_site: true
+
+# Settings for building a Drupal site from a makefile (if 'build_makefile:'
+# is 'true').
+drupal_major_version: 8
+drupal_core_path: "/var/www/elis_migrate_playground/drupal"
+drupal_domain: "elis-migrate-playground.dev"
+drupal_site_name: "Drupal"
+drupal_install_profile: standard
+drupal_enable_modules: [ 'devel' ]
+drupal_account_name: admin
+drupal_account_pass: admin
+drupal_mysql_user: drupal
+drupal_mysql_password: drupal
+drupal_mysql_database: drupal
+
+# Additional arguments or options to pass to `drush site-install`.
+drupal_site_install_extra_args: []
+
+# Cron jobs are added to the root user's crontab. Keys include name (required),
+# minute, hour, day, weekday, month, job (required), and state.
+drupalvm_cron_jobs: []
+  # - {
+  #   name: "Drupal Cron",
+  #   minute: "*/30",
+  #   job: "drush -r {{ drupal_core_path }} core-cron"
+  # }
+
+# Drupal VM automatically creates a drush alias file in your ~/.drush folder if
+# this variable is 'true'.
+configure_local_drush_aliases: true
+
+# Apache VirtualHosts. Add one for each site you are running inside the VM. For
+# multisite deployments, you can point multiple servernames at one documentroot.
+# View the geerlingguy.apache Ansible Role README for more options.
+apache_vhosts:
+  - servername: "{{ drupal_domain }}"
+    documentroot: "{{ drupal_core_path }}"
+
+  - servername: "adminer.drupalvm.dev"
+    documentroot: "/opt/adminer"
+
+  - servername: "xhprof.drupalvm.dev"
+    documentroot: "/usr/share/php/xhprof_html"
+
+  - servername: "pimpmylog.drupalvm.dev"
+    documentroot: "/usr/share/php/pimpmylog"
+
+apache_remove_default_vhost: true
+apache_mods_enabled:
+  - expires.load
+  - ssl.load
+  - rewrite.load
+
+# Nginx hosts. Each site will get a server entry using the configuration defined
+# here. Set the 'is_php' property for document roots that contain PHP apps like
+# Drupal.
+nginx_hosts:
+  - server_name: "{{ drupal_domain }}"
+    root: "{{ drupal_core_path }}"
+    is_php: true
+
+  - server_name: "adminer.elis-migrate-playground.dev"
+    root: "/opt/adminer"
+    is_php: true
+
+  - server_name: "xhprof.elis-migrate-playground.dev"
+    root: "/usr/share/php/xhprof_html"
+    is_php: true
+
+  - server_name: "pimpmylog.elis-migrate-playground.dev"
+    root: "/usr/share/php/pimpmylog"
+    is_php: true
+
+nginx_remove_default_vhost: true
+
+# MySQL Databases and users. If build_makefile: is true, first database will
+# be used for the makefile-built site.
+mysql_databases:
+  - name: "{{ drupal_mysql_database }}"
+    encoding: utf8
+    collation: utf8_general_ci
+
+mysql_users:
+  - name: "{{ drupal_mysql_user }}"
+    host: "%"
+    password: "{{ drupal_mysql_password }}"
+    priv: "{{ drupal_mysql_database }}.*:ALL"
+
+# Comment out any extra utilities you don't want to install. If you don't want
+# to install *any* extras, make set this value to an empty set, e.g. `[]`.
+installed_extras:
+  - adminer
+  - drupalconsole
+  - mailhog
+  - memcached
+  # - nodejs
+  - pimpmylog
+  # - redis
+  # - ruby
+  # - selenium
+  # - solr
+  - varnish
+  - xdebug
+  - xhprof
+
+# Add any extra apt or yum packages you would like installed.
+extra_packages:
+  - unzip
+
+# `nodejs` must be in installed_extras for this to work.
+nodejs_version: "0.12"
+nodejs_npm_global_packages: []
+
+# `ruby` must be in installed_extras for this to work.
+ruby_install_gems: []
+
+# You can configure almost anything else on the server in the rest of this file.
+extra_security_enabled: false
+
+drush_version: master
+drush_keep_updated: true
+drush_composer_cli_options: "--prefer-dist --no-interaction"
+
+firewall_allowed_tcp_ports:
+  - "22"
+  - "25"
+  - "80"
+  - "81"
+  - "443"
+  - "4444"
+  - "8025"
+  - "8080"
+  - "8443"
+  - "8983"
+firewall_log_dropped_packets: false
+
+# PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
+php_version: "5.6"
+php_memory_limit: "192M"
+php_display_errors: "On"
+php_display_startup_errors: "On"
+php_enable_php_fpm: true
+php_realpath_cache_size: "1024K"
+php_sendmail_path: "/usr/sbin/ssmtp -t"
+php_opcache_enabled_in_ini: true
+php_opcache_memory_consumption: "192"
+php_opcache_max_accelerated_files: 4096
+php_max_input_vars: "4000"
+
+composer_path: /usr/bin/composer
+composer_home_path: '/home/vagrant/.composer'
+# composer_global_packages:
+#   - { name: phpunit/phpunit, release: '@stable' }
+
+# Run specified scripts after VM is provisioned. Path is relative to the
+# `provisioning/playbook.yml` file.
+post_provision_scripts: []
+  # - "../examples/scripts/configure-solr.sh"
+
+# MySQL Configuration.
+mysql_root_password: root
+mysql_slow_query_log_enabled: true
+mysql_slow_query_time: 2
+mysql_wait_timeout: 300
+adminer_install_filename: index.php
+
+# Varnish Configuration.
+varnish_listen_port: "81"
+varnish_default_vcl_template_path: templates/drupalvm.vcl.j2
+varnish_default_backend_host: "127.0.0.1"
+varnish_default_backend_port: "80"
+
+# Pimp my Log settings.
+pimpmylog_install_dir: /usr/share/php/pimpmylog
+pimpmylog_grant_all_privs: true
+
+# XDebug configuration. XDebug is disabled by default for better performance.
+php_xdebug_default_enable: 0
+php_xdebug_coverage_enable: 0
+php_xdebug_cli_enable: 1
+php_xdebug_remote_enable: 1
+php_xdebug_remote_connect_back: 1
+# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
+php_xdebug_idekey: PHPSTORM
+php_xdebug_max_nesting_level: 256
+
+# Solr Configuration (if enabled above).
+solr_version: "4.10.4"
+solr_xms: "64M"
+solr_xmx: "128M"
+
+# Selenium configuration.
+selenium_version: 2.46.0
+
+# Other configuration.
+known_hosts_path: ~/.ssh/known_hosts
