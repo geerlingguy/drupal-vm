@@ -1,31 +1,30 @@
----
-- src: arknoll.selenium
-- src: geerlingguy.adminer
-- src: geerlingguy.apache
-- src: geerlingguy.composer
-- src: geerlingguy.daemonize
-- src: geerlingguy.drupal-console
-- src: geerlingguy.drush
-- src: geerlingguy.firewall
-- src: geerlingguy.git
-- src: geerlingguy.java
-- src: geerlingguy.mailhog
-- src: geerlingguy.memcached
-- src: geerlingguy.mysql
-- src: geerlingguy.nginx
-- src: geerlingguy.nodejs
-- src: geerlingguy.php
-- src: geerlingguy.php-memcached
-- src: geerlingguy.php-mysql
-- src: geerlingguy.php-pecl
-- src: geerlingguy.php-redis
-- src: geerlingguy.php-xdebug
-- src: geerlingguy.php-xhprof
-- src: geerlingguy.pimpmylog
-- src: geerlingguy.postfix
-- src: geerlingguy.redis
-- src: geerlingguy.repo-remi
-- src: geerlingguy.ruby
-- src: geerlingguy.security
-- src: geerlingguy.solr
-- src: geerlingguy.varnish
+arknoll.selenium
+geerlingguy.adminer
+geerlingguy.apache
+geerlingguy.composer
+geerlingguy.daemonize
+geerlingguy.drupal-console
+geerlingguy.drush
+geerlingguy.firewall
+geerlingguy.git
+geerlingguy.java
+geerlingguy.mailhog
+geerlingguy.memcached
+geerlingguy.mysql
+geerlingguy.nginx
+geerlingguy.nodejs
+geerlingguy.php
+geerlingguy.php-memcached
+geerlingguy.php-mysql
+geerlingguy.php-pecl
+geerlingguy.php-redis
+geerlingguy.php-xdebug
+geerlingguy.php-xhprof
+geerlingguy.pimpmylog
+geerlingguy.postfix
+geerlingguy.redis
+geerlingguy.repo-remi
+geerlingguy.ruby
+geerlingguy.security
+geerlingguy.solr
+geerlingguy.varnish
