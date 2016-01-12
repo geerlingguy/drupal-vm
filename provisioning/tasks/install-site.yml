@@ -6,7 +6,7 @@
   register: drupal_site_installed
   failed_when: false
   changed_when: false
-  sudo: no
+  become: no
 
 - name: Install Drupal with drush.
   command: >
@@ -19,11 +19,11 @@
     chdir={{ drupal_core_path }}
   notify: restart webserver
   when: "'Successful' not in drupal_site_installed.stdout"
-  sudo: no
+  become: no
 
 - name: Install configured modules with drush.
   command: >
     {{ drush_path }} pm-enable -y {{ drupal_enable_modules | join(" ") }}
     chdir={{ drupal_core_path }}
   when: "'Successful' not in drupal_site_installed.stdout"
-  sudo: no
+  become: no

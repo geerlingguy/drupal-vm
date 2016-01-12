@@ -10,12 +10,12 @@
   stat: "path={{ known_hosts_path | default('~/.ssh/known_hosts') }}"
   register: known_hosts_file
   connection: local
-  sudo: no
+  become: no
 
 - name: Copy known_hosts file from host into Drupal VM.
   copy:
     src: "{{ known_hosts_path | default('~/.ssh/known_hosts') }}"
     dest: ~/.ssh/known_hosts
     mode: 0644
-  sudo: no
+  become: no
   when: known_hosts_file.stat.exists
