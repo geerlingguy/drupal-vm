@@ -22,6 +22,9 @@ if [ ! -e "$SOLR_SETUP_COMPLETE_FILE" ]; then
   # Copy the Solr configuration into place over the default `collection1` core.
   sudo cp -a $SOLR_DOWNLOAD_DIR/$SOLR_MODULE_NAME/solr-conf/4.x/. /var/solr/collection1/conf/
 
+  # Adjust the autoCommit time so index changes are committed in 1s.
+  sudo sed -i 's/\(<maxTime>\)\([^<]*\)\(<[^>]*\)/\11000\3/g' /var/solr/collection1/conf/solrconfig.xml
+
   # Fix file permissions.
   sudo chown -R solr:solr /var/solr/collection1/conf
 
