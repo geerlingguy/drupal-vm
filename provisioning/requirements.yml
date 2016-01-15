@@ -2,6 +2,7 @@
 - src: arknoll.selenium
 - src: geerlingguy.adminer
 - src: geerlingguy.apache
+- src: geerlingguy.apache-php-fpm
 - src: geerlingguy.composer
 - src: geerlingguy.daemonize
 - src: geerlingguy.drupal-console

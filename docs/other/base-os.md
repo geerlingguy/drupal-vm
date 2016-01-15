@@ -31,6 +31,8 @@ mysql_pid_file: /var/run/mariadb/mariadb.pid
 
 ## RedHat Enterprise Linux / CentOS 6
 
+**Apache without FastCGI**: If you want to use Apache with CentOS 6 on Drupal VM, you will need to modify the syntax of your `apache_vhosts` and remove the `ProxyPassMatch` parameters from each one. Alternatively, you can use Nginx with the default configuration by setting `drupalvm_webserver: nginx` inside `config.yml`.
+
 **PHP OpCache**: PHP's OpCache (if you're using PHP > 5.5) requires the following setting to be configured in `config.yml` (see upstream bug: [CentOS (6) needs additional php-opcache package](https://github.com/geerlingguy/ansible-role-php/issues/39)):
 
 ```yaml

@@ -79,6 +79,8 @@ configure_local_drush_aliases: true
 apache_vhosts:
   - servername: "{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 
   - servername: "adminer.drupalvm.dev"
     documentroot: "/opt/adminer"

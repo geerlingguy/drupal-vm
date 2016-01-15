@@ -23,6 +23,7 @@
     - geerlingguy.git
     - geerlingguy.postfix
     - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }
+    - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache' }
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }
     - geerlingguy.mysql
     - geerlingguy.php
