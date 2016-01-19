@@ -47,7 +47,7 @@ server {
         #rewrite ^/(.*)$ /index.php?q=$1;
     }
 
-    location ~ ^/sites/.*/files/styles/ {
+    location ~ (^/s3/files/styles/|^/sites/.*/files/imagecache/|^/sites/default/themes/.*/includes/fonts/|^/sites/.*/files/styles/) {
         try_files $uri @rewrite;
     }
 

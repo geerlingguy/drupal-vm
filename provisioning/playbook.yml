@@ -68,3 +68,9 @@
 
     - include: tasks/drush-aliases.yml
     - include: tasks/cron.yml
+
+    - stat: path=tasks/misc.yml
+      register: misc_tasks_file
+
+    - include: tasks/misc.yml
+      when: misc_tasks_file.stat.exists == True and misc_tasks
