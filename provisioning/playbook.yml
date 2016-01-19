@@ -72,5 +72,6 @@
     - stat: path=tasks/misc.yml
       register: misc_tasks_file
 
+    # Add in additional, optional tasks into a misc.yml file
     - include: tasks/misc.yml
       when: misc_tasks_file.stat.exists == True and misc_tasks
