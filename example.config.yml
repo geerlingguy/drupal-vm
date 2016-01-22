@@ -75,7 +75,9 @@ configure_local_drush_aliases: true
 
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
-# View the geerlingguy.apache Ansible Role README for more options.
+# Note that Apache VirtualHosts requiring PHP must include extra_parameters
+# including ProxyPassMatch as shown below. View the geerlingguy.apache Ansible
+# Role README for more options.
 apache_vhosts:
   - servername: "{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
@@ -84,12 +86,18 @@ apache_vhosts:
 
   - servername: "adminer.drupalvm.dev"
     documentroot: "/opt/adminer"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/opt/adminer"
 
   - servername: "xhprof.drupalvm.dev"
     documentroot: "/usr/share/php/xhprof_html"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
 
   - servername: "pimpmylog.drupalvm.dev"
     documentroot: "/usr/share/php/pimpmylog"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
