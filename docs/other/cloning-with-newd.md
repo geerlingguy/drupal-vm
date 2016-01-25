@@ -1,4 +1,4 @@
-@rgoodie created a function called `newd` that clones this repo, uses `sed` to change configuration to Drupal 7 if desired, renames the VM to something other than drupaltest.dev, and kicks off `vagrant up`.
+[@rgoodie](https://github.com/rgoodie) created a function called `newd` that clones this repo, uses `sed` to change configuration to Drupal 7 if desired, renames the VM to something other than drupalvm.dev, and kicks off `vagrant up`.
 
 Example:
 

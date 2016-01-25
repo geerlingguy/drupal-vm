@@ -8,7 +8,6 @@ Update the `vagrant_synced_folders` configuration to sync your local Drupal code
 vagrant_synced_folders:
   - local_path: ~/Sites/my-drupal-site
     destination: /var/www/my-drupal-site
-    id: drupal
     type: nfs
 ```
 
