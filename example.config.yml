@@ -84,12 +84,18 @@ apache_vhosts:
 
   - servername: "adminer.drupalvm.dev"
     documentroot: "/opt/adminer"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/opt/adminer"
 
   - servername: "xhprof.drupalvm.dev"
     documentroot: "/usr/share/php/xhprof_html"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
 
   - servername: "pimpmylog.drupalvm.dev"
     documentroot: "/usr/share/php/pimpmylog"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
@@ -197,6 +203,7 @@ php_max_input_vars: "4000"
 # to instead use Apache + mod_php with an Ubuntu base box, make sure you add
 # libapache2-mod-php5 to `extra_packages` elsewhere in this config file.
 php_enable_php_fpm: true
+php_fpm_listen: "127.0.0.1:9000"
 
 composer_path: /usr/bin/composer
 composer_home_path: '/home/vagrant/.composer'
