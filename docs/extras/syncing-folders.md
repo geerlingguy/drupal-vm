@@ -1,16 +1,15 @@
-You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `example.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/drupalvm` on your host into the `/var/www` folder on Drupal VM.
+You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `example.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/drupalvm` on your host into the `/var/www/drupalvm` folder on Drupal VM.
 
 If you want to use a different synced folder method (e.g. `smb`), you can change `type` to:
 
 ```yaml
 vagrant_synced_folders:
   - local_path: ~/Sites/drupalvm
-    destination: /var/www
-    id: drupal
+    destination: /var/www/drupalvm
     type: smb
 ```
 
-You can add as many synced folders as you'd like, and you can configure [any type of share](https://docs.vagrantup.com/v2/synced-folders/index.html) supported by Vagrant; just add another item to the list of `vagrant_synced_folders`.
+You can add as many synced folders as you'd like, and you can configure [any type of share](https://www.vagrantup.com/docs/synced-folders/index.html) supported by Vagrant; just add another item to the list of `vagrant_synced_folders`.
 
 ## Options
 
@@ -41,7 +40,7 @@ options_override:
 Using different synced folder mechanisms can have a dramatic impact on your Drupal site's performance. Please read through the following blog posts for a thorough overview of synced folder performance:
 
   - [Comparing filesystem performance in Virtual Machines](http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines)
-  - [NFS, rsync, and shared folder performance in Vagrant VMs](http://www.midwesternmac.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder)
+  - [NFS, rsync, and shared folder performance in Vagrant VMs](http://www.jeffgeerling.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder)
 
 Generally speaking:
 
@@ -55,8 +54,7 @@ If you are using rsync, it is advised to exclude certain directories so that the
 ```yaml
 vagrant_synced_folders:
   - local_path: ~/Sites/drupalvm/drupal
-    destination: /var/www
-    id: drupal
+    destination: /var/www/drupalvm
     type: rsync
     excluded_paths:
       - drupal/private
@@ -79,7 +77,6 @@ You can use a native synced folder, which should work pretty flawlessly on any p
 vagrant_synced_folders:
   - local_path: docroot
     destination: /var/www/docroot
-    id: drupal
     type: ""
     create: true
 ```
@@ -103,12 +100,6 @@ mount_options: ["dmode=775,fmode=664"]
 ```
 
 See [this issue](https://github.com/geerlingguy/drupal-vm/issues/66) for more details.
-
-### VirtualBox Symbolic Links
-
-When using native VirtualBox shares, VirtualBox does not allow guest VMs to create symbolic links on synced folders for security reasons. On CentOS this prevents apache from installing since it will try to make a symlink inside `/var/www/` You can change the Drupal synced_folder to `/var/www/drupal` and the `drupal_core_path` to `/var/www/drupal/docroot` to work around this.
-
-There are many other potential [solutions](https://www.google.com/search?q=SharedFoldersEnableSymlinksCreate) available on the Internet.
 
 ### Other NFS-related errors
 

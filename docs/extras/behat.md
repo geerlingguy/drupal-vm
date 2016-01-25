@@ -30,9 +30,9 @@ _You can also include the `behat/*` and `drupal/drupal-extension` directly in yo
 
 ## Setting up Behat for your project
 
-Using the default Drupal site as an example (it's installed in `/var/www/drupal` by default, and is shared to `~/Sites/drupalvm/drupal` on your host machine), the following steps will help you get your first Behat tests up and running!
+Using the default Drupal site as an example (it's installed in `/var/www/drupalvm/drupal` by default, and is shared to `~/Sites/drupalvm/drupal` on your host machine), the following steps will help you get your first Behat tests up and running!
 
-  1. Create a `behat.yml` file inside the docroot of your site (e.g. create this file alongside the rest of the Drupal codebase at `/var/www/drupal/behat.yml`), with the following contents:
+  1. Create a `behat.yml` file inside the docroot of your site (e.g. create this file alongside the rest of the Drupal codebase at `/var/www/drupalvm/drupal/behat.yml`), with the following contents:
 
         default:
           suites:
@@ -55,23 +55,23 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupal`
               blackbox: ~
               api_driver: 'drupal'
               drupal:
-                drupal_root: '/var/www/drupal'
+                drupal_root: '/var/www/drupalvm/drupal'
               region_map:
                 content: "#content"
 
-  2. Log into Drupal VM with `vagrant ssh`, change directory to the Drupal site root (`cd /var/www/drupal`), then run `behat --init` to initialize the `features` folder where you will place test cases.
+  2. Log into Drupal VM with `vagrant ssh`, change directory to the Drupal site root (`cd /var/www/drupalvm/drupal`), then run `behat --init` to initialize the `features` folder where you will place test cases.
   3. From either inside the VM or on the host machine, open up the new `features/web` folder Behat just created. Inside _that_ folder, create `HomeContent.feature` with the following contents:
 
         Feature: Test DrupalContext
           In order to prove the Behat is working correctly in Drupal VM
           As a developer
           I need to run a simple interface test
-        
+
           Scenario: Viewing content in a region
             Given I am on the homepage
             Then I should see "No front page content has been created yet" in the "content"
 
-  4. Now, inside Drupal VM, change directory to `/var/www/drupal` again, and run the command `behat` (which runs all the tests you've created—which should just be one so far).
+  4. Now, inside Drupal VM, change directory to `/var/www/drupalvm/drupal` again, and run the command `behat` (which runs all the tests you've created—which should just be one so far).
 
 If everything was done correctly, you should see:
 

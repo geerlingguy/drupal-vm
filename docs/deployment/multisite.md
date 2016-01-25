@@ -1,11 +1,19 @@
-For multisite installations, make the changes outlined in the [Local Drupal codebase](https://github.com/geerlingguy/drupal-vm/wiki/Local-Drupal-codebase) guide, but, using the `apache_vhosts` variable, configure as many domains pointing to the same docroot as you need:
+For multisite installations, make the changes outlined in the [Local Drupal codebase](local-codebase.md) guide, but, using the `apache_vhosts` variable, configure as many domains pointing to the same docroot as you need:
 
 ```yaml
 apache_vhosts:
-  - {servername: "local.my-drupal-site.com", documentroot: "/var/www/my-drupal-site"}
-  - {servername: "local.second-drupal-site.com", documentroot: "/var/www/my-drupal-site"}
-  - {servername: "local.third-drupal-site.com", documentroot: "/var/www/my-drupal-site"}
-  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
+  - servername: "local.my-drupal-site.com"
+    documentroot: "/var/www/my-drupal-site"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+  - servername: "local.second-drupal-site.com"
+    documentroot: "/var/www/my-drupal-site"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+  - servername: "local.third-drupal-site.com"
+    documentroot: "/var/www/my-drupal-site"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 ```
 
 If you need additional databases and database users, add them to the list of `mysql_databases` and `mysql_users`:

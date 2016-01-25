@@ -6,11 +6,16 @@ The URL to connect to the local solr server (assuming you're using the default `
 
     http://localhost:8983/solr/collection1
 
-This will connect to the default search core (`collection1`) set up by Solr. If you are using a multisite installation and want to have a search core per Drupal site, you can add more cores through Apache Solr's admin interface (visit `http://drupaltest.dev:8983/solr/`), then connect to each core by adding the core name to the end of the above URL (e.g. `core2` would be `http://localhost:8983/solr/core2`).
+This will connect to the default search core (`collection1`) set up by Solr. If you are using a multisite installation and want to have a search core per Drupal site, you can add more cores through Apache Solr's admin interface (visit `http://drupalvm.dev:8983/solr/`), then connect to each core by adding the core name to the end of the above URL (e.g. `core2` would be `http://localhost:8983/solr/core2`).
 
 ## Configuring the Solr search core for Drupal
 
-Before Drupal content can be indexed correctly into Apache Solr, you will need to copy the Drupal Apache Solr Search or Search API Apache Solr configuration into place, and restart Apache Solr. This process will soon be automated, but for now, please perform the steps outlined in step 5 in this blog post (which should work with Drupal VM): [Solr for Drupal Developers, Part 3: Testing Solr locally](http://www.midwesternmac.com/blogs/jeff-geerling/solr-drupal-developers-part-3).
+Before Drupal content can be indexed correctly into Apache Solr, you will need to copy the Drupal Apache Solr Search or Search API Apache Solr configuration into place, and restart Apache Solr. Drupal VM comes with an example post provision script for automating this. Simply add it to `post_provision_scripts`:
+
+```yaml
+post_provision_scripts:
+ - "../examples/scripts/configure-solr.sh"
+```
 
 ## Extra Solr configuration
 

@@ -29,10 +29,6 @@ You should probably disable Git's `fileMode` option inside the VM and on your ho
 
     git config core.fileMode false
 
-### Long Paths
-
-Creating long paths inside a shared folder will fail if the length exceeds 260 characters. This usually happens when using npm. This should be solved in Vagrant 1.7.3, but if you're running an older version, you can manually make the changes here: https://github.com/mitchellh/vagrant/pull/5495/files
-
 ### NFS
 
 You can use the [vagrant-winnfsd](https://github.com/GM-Alex/vagrant-winnfsd) plugin to get NFS support on windows. Be aware that there are multiple issues logged against both the plugin and the winnfsd project, so no guarantees.

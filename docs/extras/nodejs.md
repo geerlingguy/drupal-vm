@@ -4,7 +4,7 @@ Drupal VM includes built-in support for Node.js—all you need to do is make sur
 
 ## Choosing a version of Node.js
 
-You can choose a version of Node.js to install using the `nodejs_version` variable in `config.yml`. See the `geerlingguy.nodejs` role documentation for all the currently-available versions for your OS.
+You can choose a version of Node.js to install using the `nodejs_version` variable in `config.yml`. See the [`geerlingguy.nodejs` Ansible role's README](https://github.com/geerlingguy/ansible-role-nodejs#readme) for all the currently-available versions for your OS.
 
 ```yaml
 nodejs_version: "0.12"

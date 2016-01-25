@@ -8,7 +8,6 @@ Update the `vagrant_synced_folders` configuration to sync your local Drupal code
 vagrant_synced_folders:
   - local_path: ~/Sites/my-drupal-site
     destination: /var/www/my-drupal-site
-    id: drupal
     type: nfs
 ```
 
@@ -22,7 +21,7 @@ build_makefile:: false
 install_site: false
 ```
 
-_If you aren't copying back a database, and want to have Drupal VM run `drush si` for your Drupal site, you can leave `install_site` set to `true` and it will run a site install on your Drupal codebase using the `drupal_*` config variables.
+If you aren't copying back a database, and want to have Drupal VM run `drush si` for your Drupal site, you can leave `install_site` set to `true` and it will run a site install on your Drupal codebase using the `drupal_*` config variables.
 
 ## Update `apache_vhosts`
 
@@ -30,8 +29,10 @@ Add your site to `apache_vhosts`, setting the `documentroot` to the same value a
 
 ```yaml
 apache_vhosts:
-  - {servername: "local.my-drupal-site.com", documentroot: "/var/www/my-drupal-site"}
-  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
+  - servername: "local.my-drupal-site.com"
+    documentroot: "/var/www/my-drupal-site"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 ```
 
 ## Update MySQL info
@@ -40,4 +41,4 @@ If you have your Drupal site configured to use a special database and/or user/pa
 
 ## Build the VM, import your database
 
-Run `vagrant up` to build the VM with your codebase synced into the proper location. Once the VM is created, you can connect to the MySQL database (see the sidebar topic "MySQL - Connecting to the DB") and import your site's database to the Drupal VM, or use a command like `drush sql-sync` to copy a database from another server.
+Run `vagrant up` to build the VM with your codebase synced into the proper location. Once the VM is created, you can [connect to the MySQL database](../extras/mysql.md) and import your site's database to the Drupal VM, or use a command like `drush sql-sync` to copy a database from another server.
