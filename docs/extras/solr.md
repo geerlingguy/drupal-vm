@@ -10,7 +10,12 @@ This will connect to the default search core (`collection1`) set up by Solr. If 
 
 ## Configuring the Solr search core for Drupal
 
-Before Drupal content can be indexed correctly into Apache Solr, you will need to copy the Drupal Apache Solr Search or Search API Apache Solr configuration into place, and restart Apache Solr. This process will soon be automated, but for now, please perform the steps outlined in step 5 in this blog post (which should work with Drupal VM): [Solr for Drupal Developers, Part 3: Testing Solr locally](http://www.midwesternmac.com/blogs/jeff-geerling/solr-drupal-developers-part-3).
+Before Drupal content can be indexed correctly into Apache Solr, you will need to copy the Drupal Apache Solr Search or Search API Apache Solr configuration into place, and restart Apache Solr. Drupal VM comes with an example post provision script for automating this. Simply add it to `post_provision_scripts`:
+
+```yaml
+post_provision_scripts:
+ - "../examples/scripts/configure-solr.sh"
+```
 
 ## Extra Solr configuration
 
