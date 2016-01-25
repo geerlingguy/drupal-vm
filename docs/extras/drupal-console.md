@@ -1,4 +1,4 @@
-[Drupal Console](http://drupalconsole.com/) is a modern CLI for interacting with Drupal and scaffolding a site. It works only with Drupal 8+, and is built on top of the Symfony Console component.
+[Drupal Console](https://drupalconsole.com/) is a modern CLI for interacting with Drupal and scaffolding a site. It works only with Drupal 8+, and is built on top of the Symfony Console component.
 
 Drupal VM will automatically install Drupal Console if you install Drupal 8 or later in your VM (this is based on the value of the `drupal_major_version` variable inside `config.yml`.
 

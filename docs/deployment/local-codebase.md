@@ -41,4 +41,4 @@ If you have your Drupal site configured to use a special database and/or user/pa
 
 ## Build the VM, import your database
 
-Run `vagrant up` to build the VM with your codebase synced into the proper location. Once the VM is created, you can connect to the MySQL database (see the sidebar topic "MySQL - Connecting to the DB") and import your site's database to the Drupal VM, or use a command like `drush sql-sync` to copy a database from another server.
+Run `vagrant up` to build the VM with your codebase synced into the proper location. Once the VM is created, you can [connect to the MySQL database](../extras/mysql.md) and import your site's database to the Drupal VM, or use a command like `drush sql-sync` to copy a database from another server.

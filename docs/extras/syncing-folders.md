@@ -40,7 +40,7 @@ options_override:
 Using different synced folder mechanisms can have a dramatic impact on your Drupal site's performance. Please read through the following blog posts for a thorough overview of synced folder performance:
 
   - [Comparing filesystem performance in Virtual Machines](http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines)
-  - [NFS, rsync, and shared folder performance in Vagrant VMs](http://www.midwesternmac.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder)
+  - [NFS, rsync, and shared folder performance in Vagrant VMs](http://www.jeffgeerling.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder)
 
 Generally speaking:
 

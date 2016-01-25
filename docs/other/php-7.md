@@ -34,6 +34,6 @@ You can also build from source using the same/included `geerlingguy.php` Ansible
 
 Remi's RPM repository is included with Drupal VM, and you can make the following changes to use it to install PHP 7:
 
-  1. Make sure you've followed the directions for switching to CentOS 7 in the [use a different base OS](https://github.com/geerlingguy/drupal-vm/wiki/Using-Different-Base-OSes) guide.
+  1. Make sure you've followed the directions for switching to CentOS 7 in the [use a different base OS](base-os.md) guide.
   2. Change `php_version` inside `config.yml` to `"7.0"`.
   3. Comment out `xhprof`, `xdebug`, `redis` and `memcached` from the `installed_extras` list, as these extensions are not yet supported for PHP 7 (as of late 2015).
