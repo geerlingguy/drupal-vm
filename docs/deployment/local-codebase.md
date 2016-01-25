@@ -29,8 +29,10 @@ Add your site to `apache_vhosts`, setting the `documentroot` to the same value a
 
 ```yaml
 apache_vhosts:
-  - {servername: "local.my-drupal-site.com", documentroot: "/var/www/my-drupal-site"}
-  - {servername: "local.xhprof.com", documentroot: "/usr/share/php/xhprof_html"}
+  - servername: "local.my-drupal-site.com"
+    documentroot: "/var/www/my-drupal-site"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 ```
 
 ## Update MySQL info
