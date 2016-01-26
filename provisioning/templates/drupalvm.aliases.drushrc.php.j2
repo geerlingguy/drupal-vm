@@ -6,7 +6,7 @@
  * @see example.aliases.drushrc.php.
  */
 
-{% set devtool_docroots = [adminer_install_dir, pimpmylog_install_dir, php_xhprof_html_dir] %}
+{% set devtool_docroots = [adminer_install_dir, pimpmylog_install_dir, php_xhprof_html_dir, dashboard_install_dir] %}
 
 {% macro alias(host, root) %}
 $aliases['{{ host }}'] = array(
