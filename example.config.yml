@@ -85,17 +85,17 @@ apache_vhosts:
   - servername: "adminer.drupalvm.dev"
     documentroot: "/opt/adminer"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/opt/adminer"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/opt/adminer"
 
   - servername: "xhprof.drupalvm.dev"
     documentroot: "/usr/share/php/xhprof_html"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
 
   - servername: "pimpmylog.drupalvm.dev"
     documentroot: "/usr/share/php/pimpmylog"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
