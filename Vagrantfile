@@ -126,4 +126,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
   config.vm.define vconfig['vagrant_machine_name'] do |d|
   end
+
+  # Allow an untracked Vagrantfile to modify the configurations
+  if File.exist?('Vagrantfile.local')
+    eval File.read 'Vagrantfile.local'
+  end
 end

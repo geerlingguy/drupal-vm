@@ -6,6 +6,7 @@
 vagrant_ansible_inventory_default
 config.yml
 drupal.make.yml
+Vagrantfile.local
 examples/prod/inventory
 scripts/
 roles/
