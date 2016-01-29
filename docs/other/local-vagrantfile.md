@@ -18,3 +18,38 @@ config.vm.provider :virtualbox do |v|
   v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
 end
 ```
+
+## Example: Using the `vagrant-aws` provider
+
+Add the following variables to your `config.yml`.
+
+```yaml
+aws_keypair_name: 'keypair'
+aws_ami: 'ami-7747d01e'
+aws_tags_name: 'Drupal VM'
+aws_ssh_username: 'ubuntu'
+aws_ssh_private_key: '~/.ssh/aws.pem'
+```
+
+Create a `Vagrantfile.local` in the root directory of your project.
+
+```ruby
+config.vm.provider :aws do |aws, override|
+  override.nfs.functional = false
+
+  aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
+  aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
+  aws.keypair_name = vconfig['aws_keypair_name']
+  aws.tags['Name'] = vconfig['aws_tags_name']
+  aws.ami = vconfig['aws_ami']
+
+  override.ssh.username = vconfig['aws_ssh_username']
+  override.ssh.private_key_path = vconfig['aws_ssh_private_key']
+end
+```
+
+Add the `AWS_ACCESS_KEY_ID` and the `AWS_SECRET_ACCESS_KEY` environment variables to your shell.
+
+Then run `vagrant up --provider=aws` to provision the instance.
+
+_For additional configuring options read the [Vagrant AWS Provider's README](https://github.com/mitchellh/vagrant-aws#readme)_
