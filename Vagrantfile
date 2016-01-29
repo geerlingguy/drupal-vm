@@ -96,6 +96,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Amazon Web Services Server
+  if !vconfig['aws_key_id'].empty?
+    config.vm.provider :aws do |aws, override|
+      override.nfs.functional = false
+      aws.access_key_id = vconfig['aws_key_id']
+      aws.secret_access_key = vconfig['aws_secret_access_key']
+      aws.keypair_name = vconfig['aws_key_pair_name']
+      aws.security_groups = vconfig['aws_security_group']
+      aws.ami = vconfig['aws_ami']
+      aws.tags['Name'] = vconfig['aws_tags_name']
+      override.ssh.username = vconfig['override_ssh_username']
+      override.ssh.private_key_path = vconfig['override_ssh_private_key_path']
+    end
+  end
+
   # VMware Fusion.
   config.vm.provider :vmware_fusion do |v, override|
     # HGFS kernel module currently doesn't load correctly for native shares.

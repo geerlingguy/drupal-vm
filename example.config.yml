@@ -16,6 +16,30 @@ vagrant_ip: 192.168.88.88
 # See: https://docs.vagrantup.com/v2/networking/public_network.html
 vagrant_public_ip: ""
 
+# If you want to use a Amazon Web Services Server
+# This will remain off unless aws_key_id != ''
+# If you turn this setting on, you must make a 
+# .pem file that points to the path you specify
+# containing the private key of the Amazon Instance.
+# aws_key_id: Retrieved from the users section of AWS
+# aws_secret_access_key: Also retrieved from users sections of AWS
+# aws_key_pair_name: The name of the KeyPair you generated on AWS
+#                    MUST BE EXACT spelling (Caps, Etc).
+# aws_security_group: The group name you want the security to use.
+# aws_tags_name: What you want the AWS tag name to show up as.
+# override_ssh_username: The SSH username. Should be ubuntun 90% of the time.
+# override_ssh_private_key_path: The path to the private key for the keypair
+#                                you created.
+# The ssh username is default to ubuntu
+aws_key_id: ""
+aws_secret_access_key: ""
+aws_key_pair_name: "KeyPairName_CaSeSeNsItIvE"
+aws_security_group: "Test-security-group-name"
+aws_ami: 'ami-7747d01e'
+aws_tags_name: "Test AWS Vagrant"
+override_ssh_username: "ubuntu"
+override_ssh_private_key_path: 'PATH_TO_YOUR_PEM_FILE'
+
 # A list of synced folders, with the keys 'local_path', 'destination', and
 # a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
 # http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
