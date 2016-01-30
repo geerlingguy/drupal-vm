@@ -6,10 +6,20 @@
  * @see example.aliases.drushrc.php.
  */
 
-{% for vhost in apache_vhosts %}
-$aliases['{{ vhost.servername }}'] = array(
-  'uri' => '{{ vhost.servername }}',
-  'root' => '{{ vhost.documentroot }}',
+{% macro alias(host, root) %}
+$aliases['{{ host }}'] = array(
+  'uri' => '{{ host }}',
+  'root' => '{{ root }}',
 );
 
-{% endfor %}
+{% endmacro %}
+
+{%- if drupalvm_webserver == 'apache' -%}
+  {%- for vhost in apache_vhosts -%}
+   {{ alias(vhost.servername, vhost.documentroot) }}
+  {%- endfor -%}
+{%- elif drupalvm_webserver == 'nginx' -%}
+  {%- for host in nginx_hosts -%}
+    {{ alias(host.server_name, host.root) }}
+  {%- endfor -%}
+{%- endif -%}

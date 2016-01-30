@@ -5,14 +5,23 @@
  *
  * @see example.aliases.drushrc.php.
  */
-
-{% for vhost in apache_vhosts %}
-$aliases['{{ vhost.servername }}'] = array(
-  'uri' => '{{ vhost.servername }}',
-  'root' => '{{ vhost.documentroot }}',
-  'remote-host' => '{{ vhost.servername }}',
+{% macro alias(host, root) %}
+$aliases['{{ host }}'] = array(
+  'uri' => '{{ host }}',
+  'root' => '{{ root }}',
+  'remote-host' => '{{ host }}',
   'remote-user' => 'vagrant',
   'ssh-options' => '-o PasswordAuthentication=no -i ~/.vagrant.d/insecure_private_key',
 );
 
-{% endfor %}
+{% endmacro %}
+
+{%- if drupalvm_webserver == 'apache' -%}
+  {%- for vhost in apache_vhosts -%}
+   {{ alias(vhost.servername, vhost.documentroot) }}
+  {%- endfor -%}
+{%- elif drupalvm_webserver == 'nginx' -%}
+  {%- for host in nginx_hosts -%}
+    {{ alias(host.server_name, host.root) }}
+  {%- endfor -%}
+{%- endif -%}
