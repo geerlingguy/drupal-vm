@@ -72,6 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         unless blacklist.include?(host['servername'])
           aliases.push(host['servername'])
         end
+        aliases.concat(host['serveralias'].split()) if host['serveralias']
       end
     else
       vconfig['nginx_hosts'].each do |host|
