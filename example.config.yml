@@ -47,7 +47,7 @@ install_site: true
 # is 'true').
 drupal_major_version: 8
 drupal_core_path: "/var/www/drupalvm/drupal"
-drupal_domain: "drupalvm.dev"
+drupal_domain: "{{ vagrant_machine_name }}"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
@@ -82,17 +82,17 @@ apache_vhosts:
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 
-  - servername: "adminer.drupalvm.dev"
+  - servername: "adminer.{{ vagrant_machine_name }}"
     documentroot: "/opt/adminer"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/opt/adminer"
 
-  - servername: "xhprof.drupalvm.dev"
+  - servername: "xhprof.{{ vagrant_machine_name }}"
     documentroot: "/usr/share/php/xhprof_html"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
 
-  - servername: "pimpmylog.drupalvm.dev"
+  - servername: "pimpmylog.{{ vagrant_machine_name }}"
     documentroot: "/usr/share/php/pimpmylog"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
@@ -113,15 +113,15 @@ nginx_hosts:
     root: "{{ drupal_core_path }}"
     is_php: true
 
-  - server_name: "adminer.drupalvm.dev"
+  - server_name: "adminer.{{ vagrant_machine_name }}"
     root: "/opt/adminer"
     is_php: true
 
-  - server_name: "xhprof.drupalvm.dev"
+  - server_name: "xhprof.{{ vagrant_machine_name }}"
     root: "/usr/share/php/xhprof_html"
     is_php: true
 
-  - server_name: "pimpmylog.drupalvm.dev"
+  - server_name: "pimpmylog.{{ vagrant_machine_name }}"
     root: "/usr/share/php/pimpmylog"
     is_php: true
 
