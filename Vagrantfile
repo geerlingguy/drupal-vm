@@ -14,6 +14,16 @@ def which(cmd)
   return nil
 end
 
+def walk(obj, &fn)
+  if obj.is_a?(Array)
+    obj.map { |value| walk(value, &fn) }
+  elsif obj.is_a?(Hash)
+    obj.each_pair { |key, value| obj[key] = walk(value, &fn) }
+  else
+    obj = fn.call(obj)
+  end
+end
+
 # Use config.yml for basic VM configuration.
 require 'yaml'
 dir = File.dirname(File.expand_path(__FILE__))
@@ -21,6 +31,14 @@ if !File.exist?("#{dir}/config.yml")
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
 vconfig = YAML::load_file("#{dir}/config.yml")
+
+# Replace jinja variables in config.
+vconfig = walk(vconfig) do |value|
+  while value.is_a?(String) && value.match(/{{ .* }}/)
+    value = value.gsub(/{{ (.*?) }}/) { |match| match = vconfig[$1] }
+  end
+  value
+end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -47,21 +65,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # If hostsupdater plugin is installed, add all server names as aliases.
   if Vagrant.has_plugin?("vagrant-hostsupdater")
-    config.hostsupdater.aliases = []
-    # Add all hosts that aren't defined as Ansible vars.
+    aliases = []
+    blacklist = [config.vm.hostname, vconfig['vagrant_ip']]
     if vconfig['drupalvm_webserver'] == "apache"
-      for host in vconfig['apache_vhosts']
-        unless host['servername'].include? "{{"
-          config.hostsupdater.aliases.push(host['servername'])
+      vconfig['apache_vhosts'].each do |host|
+        unless blacklist.include?(host['servername'])
+          aliases.push(host['servername'])
         end
+        aliases.concat(host['serveralias'].split()) if host['serveralias']
       end
     else
-      for host in vconfig['nginx_hosts']
-        unless host['server_name'].include? "{{"
-          config.hostsupdater.aliases.push(host['server_name'])
+      vconfig['nginx_hosts'].each do |host|
+        unless blacklist.include?(host['server_name'])
+          aliases.push(host['server_name'])
         end
       end
     end
+    config.hostsupdater.aliases = aliases.uniq
   end
 
   # Synced folders.

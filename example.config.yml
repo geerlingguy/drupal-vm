@@ -47,7 +47,7 @@ install_site: true
 # is 'true').
 drupal_major_version: 8
 drupal_core_path: "/var/www/drupalvm/drupal"
-drupal_domain: "drupalvm.dev"
+drupal_domain: "{{ vagrant_machine_name }}"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
@@ -82,20 +82,20 @@ apache_vhosts:
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 
-  - servername: "adminer.drupalvm.dev"
-    documentroot: "/opt/adminer"
+  - servername: "adminer.{{ vagrant_machine_name }}"
+    documentroot: "{{ adminer_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/opt/adminer"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ adminer_install_dir }}"
 
-  - servername: "xhprof.drupalvm.dev"
-    documentroot: "/usr/share/php/xhprof_html"
+  - servername: "xhprof.{{ vagrant_machine_name }}"
+    documentroot: "{{ php_xhprof_html_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ php_xhprof_html_dir }}"
 
-  - servername: "pimpmylog.drupalvm.dev"
-    documentroot: "/usr/share/php/pimpmylog"
+  - servername: "pimpmylog.{{ vagrant_machine_name }}"
+    documentroot: "{{ pimpmylog_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
@@ -113,16 +113,16 @@ nginx_hosts:
     root: "{{ drupal_core_path }}"
     is_php: true
 
-  - server_name: "adminer.drupalvm.dev"
-    root: "/opt/adminer"
+  - server_name: "adminer.{{ vagrant_machine_name }}"
+    root: "{{ adminer_install_dir }}"
     is_php: true
 
-  - server_name: "xhprof.drupalvm.dev"
-    root: "/usr/share/php/xhprof_html"
+  - server_name: "xhprof.{{ vagrant_machine_name }}"
+    root: "{{ php_xhprof_html_dir }}"
     is_php: true
 
-  - server_name: "pimpmylog.drupalvm.dev"
-    root: "/usr/share/php/pimpmylog"
+  - server_name: "pimpmylog.{{ vagrant_machine_name }}"
+    root: "{{ pimpmylog_install_dir }}"
     is_php: true
 
 nginx_remove_default_vhost: true
