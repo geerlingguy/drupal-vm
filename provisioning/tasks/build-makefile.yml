@@ -1,4 +1,10 @@
 ---
+- name: Copy drush makefile into place.
+  copy:
+    src: "{{ drush_makefile_path }}"
+    dest: /tmp/drupal.make.yml
+  when: drupal_site.stat.exists == false
+
 - name: Ensure drupal_core_path directory exists.
   file:
     path: "{{ drupal_core_path }}"
@@ -9,7 +15,7 @@
 
 - name: Generate Drupal site with drush makefile.
   command: >
-    {{ drush_path }} make -y {{ drush_makefile_path }} --no-gitinfofile
+    {{ drush_path }} make -y /tmp/drupal.make.yml --no-gitinfofile
     chdir={{ drupal_core_path }}
   when: drupal_site.stat.exists == false
   become: no
