@@ -24,3 +24,8 @@
 - name: Add repository for PHP 7.0.
   apt_repository: repo='ppa:ondrej/php-7.0'
   when: php_version == "7.0"
+
+- name: Define php_xhprof_html_dir.
+  set_fact:
+    php_xhprof_html_dir: "/usr/share/php/xhprof_html"
+  when: php_xhprof_html_dir is not defined

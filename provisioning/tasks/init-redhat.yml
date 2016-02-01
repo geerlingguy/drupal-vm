@@ -20,3 +20,8 @@
 - name: Enable remi repo for PHP 7.0.
   set_fact: php_enablerepo="remi,remi-php70"
   when: php_version == "7.0"
+
+- name: Define php_xhprof_html_dir.
+  set_fact:
+    php_xhprof_html_dir: "/usr/share/pear/xhprof_html"
+  when: php_xhprof_html_dir is not defined

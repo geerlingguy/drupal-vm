@@ -27,8 +27,6 @@ mysql_syslog_tag: mariadb
 mysql_pid_file: /var/run/mariadb/mariadb.pid
 ```
 
-**XHProf**: XHProf is installed in a different directory for RedHat/CentOS (as opposed to Debian/Ubuntu), you will need to update the `"xhprof.drupalvm.dev"` vhost to point to the `documentroot` `"/usr/share/pear/xhprof_html"`.
-
 ## RedHat Enterprise Linux / CentOS 6
 
 **Apache without FastCGI**: If you want to use Apache with CentOS 6 on Drupal VM, you will need to modify the syntax of your `apache_vhosts` and remove the `ProxyPassMatch` parameters from each one. Alternatively, you can use Nginx with the default configuration by setting `drupalvm_webserver: nginx` inside `config.yml`.
@@ -38,5 +36,3 @@ mysql_pid_file: /var/run/mariadb/mariadb.pid
 ```yaml
 php_opcache_enabled_in_ini: false
 ```
-
-**XHProf**: XHProf is installed in a different directory for RedHat/CentOS (as opposed to Debian/Ubuntu), you will need to update the `"xhprof.drupalvm.dev"` vhost to point to the `documentroot` `"/usr/share/pear/xhprof_html"`.

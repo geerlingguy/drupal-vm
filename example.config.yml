@@ -83,19 +83,19 @@ apache_vhosts:
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 
   - servername: "adminer.{{ vagrant_machine_name }}"
-    documentroot: "/opt/adminer"
+    documentroot: "{{ adminer_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/opt/adminer"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ adminer_install_dir }}"
 
   - servername: "xhprof.{{ vagrant_machine_name }}"
-    documentroot: "/usr/share/php/xhprof_html"
+    documentroot: "{{ php_xhprof_html_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ php_xhprof_html_dir }}"
 
   - servername: "pimpmylog.{{ vagrant_machine_name }}"
-    documentroot: "/usr/share/php/pimpmylog"
+    documentroot: "{{ pimpmylog_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
@@ -114,15 +114,15 @@ nginx_hosts:
     is_php: true
 
   - server_name: "adminer.{{ vagrant_machine_name }}"
-    root: "/opt/adminer"
+    root: "{{ adminer_install_dir }}"
     is_php: true
 
   - server_name: "xhprof.{{ vagrant_machine_name }}"
-    root: "/usr/share/php/xhprof_html"
+    root: "{{ php_xhprof_html_dir }}"
     is_php: true
 
   - server_name: "pimpmylog.{{ vagrant_machine_name }}"
-    root: "/usr/share/php/pimpmylog"
+    root: "{{ pimpmylog_install_dir }}"
     is_php: true
 
 nginx_remove_default_vhost: true
