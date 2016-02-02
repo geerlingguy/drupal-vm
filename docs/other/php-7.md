@@ -22,6 +22,7 @@ php_packages:
   - php7.0-opcache
 php_mysql_package: php7.0-mysql
 php_fpm_daemon: php7.0-fpm
+php_fpm_pool_conf_path: "/etc/php/7.0/fpm/pool.d/www.conf"
 ```
 
 Also, comment out `xhprof`, `xdebug`, `redis` and `memcached` from the `installed_extras` list, as these extensions are not yet supported for PHP 7 (as of late 2015).
