@@ -11,6 +11,7 @@ env:
       version: 6
       init: /sbin/init
       run_opts: "--privileged"
+      additional_vars: "centos-6-vars.yml"
     - distribution: centos
       version: 7
       init: /usr/lib/systemd/systemd
@@ -54,7 +55,7 @@ script:
   - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$MAKEFILE /var/www/drupalvm/drupal.make.yml'
 
   # Append additional variables if set.
-  - '[[ $additional_vars ]] && sudo docker exec "$(cat ${container_id})" bash -c "cat /var/www/drupalvm/tests/${additional_vars} >> /var/www/drupalvm/config.yml"'
+  - '[[ $additional_vars ]] && sudo docker exec "$(cat ${container_id})" bash -c "cat /var/www/drupalvm/tests/${additional_vars} >> /var/www/drupalvm/config.yml" || true'
 
   # Ansible syntax check.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /var/www/drupalvm/provisioning/playbook.yml --syntax-check'
