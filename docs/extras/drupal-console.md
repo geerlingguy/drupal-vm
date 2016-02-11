@@ -6,12 +6,12 @@ To use Drupal Console with a Drupal 8 site (in this case, using the default conf
 
   1. Log into the VM with `vagrant ssh`.
   2. Change directory to the Drupal site's document root: `cd /var/www/drupalvm/drupal`.
-  3. Use Drupal console (e.g. `drupal cache:rebuild --cache=all`).
+  3. Use Drupal console (e.g. `drupal cache:rebuild all`).
 
 You should see an output like:
 
 ```
-vagrant@drupalvm:/var/www/drupalvm/drupal$ drupal cache:rebuild --cache=all
+vagrant@drupalvm:/var/www/drupalvm/drupal$ drupal cache:rebuild all
 
 [+] Rebuilding cache(s), wait a moment please.
 [+] Done clearing cache(s).
