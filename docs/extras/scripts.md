@@ -12,3 +12,6 @@ The above example results in a `post-provision.sh` script running after the main
 You can define as many scripts as you would like, and any arguments after the path will be passed to the shell script itself (e.g. `"- "../scripts/setup-paths.sh --option"`).
 
 Place your post-provision scripts inside a `scripts` directory in the root of your Drupal VM project directory; this directory is gitignored, so you can continue to update Drupal VM without overwriting your scripts.
+
+You can also run just these scripts without having go through the entire provision by running 
+`vagrant provision --provision-with post_provision_scripts`
