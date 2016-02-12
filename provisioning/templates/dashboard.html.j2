@@ -107,63 +107,63 @@
     {%- macro sectionDevelopmentTools() -%}
       <table class="table">
         {% if 'adminer' in installed_extras -%}
-          {% set servername %}{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}{% endset %}
-          {%- if servername != "/{{ adminer_install_filename }}" -%}
+          {% macro servername() %}{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}{% endmacro %}
+          {%- if servername() != "/{{ adminer_install_filename }}" -%}
             <tr>
               <th>Adminer</th>
-              <td><a href="http://{{ servername }}">{{ servername }}</a></td>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
               <td class="text-right">
-                <a href="http://{{ servername }}" class="btn btn-success btn-xs" role="button">Open</a>
+                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/mysql/#connect-using-adminer" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
           {%- endif -%}
         {%- endif %}
         {% if 'mailhog' in installed_extras -%}
-          {% set servername %}{{ vagrant_hostname }}:8025{% endset %}
-          {%- if servername != ":8025" -%}
+          {% macro servername() %}{{ vagrant_hostname }}:8025{% endmacro %}
+          {%- if servername() != ":8025" -%}
             <tr>
               <th>MailHog</th>
-              <td><a href="http://{{ servername }}">{{ servername }}</a></td>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
               <td class="text-right">
-                <a href="http://{{ servername }}" class="btn btn-success btn-xs" role="button">Open</a>
+                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/mailhog/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
           {%- endif -%}
         {%- endif %}
         {% if 'pimpmylog' in installed_extras -%}
-          {% set servername = getServernameFromDocroot(pimpmylog_install_dir) %}
-          {%- if servername -%}
+          {% macro servername() %}{{ getServernameFromDocroot(pimpmylog_install_dir) }}{% endmacro %}
+          {%- if servername() -%}
             <tr>
               <th>PimpMyLog</th>
-              <td><a href="http://{{ servername }}">{{ servername }}</a></td>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
               <td class="text-right">
-                <a href="http://{{ servername }}" class="btn btn-success btn-xs" role="button">Open</a>
+                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/pimpmylog/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
           {%- endif -%}
         {%- endif %}
         {% if 'solr' in installed_extras -%}
-          {% set servername %}{{ vagrant_hostname }}:{{ solr_port }}/solr/{% endset %}
+          {% macro servername() %}{{ vagrant_hostname }}:{{ solr_port }}/solr/{% endmacro %}
           <tr>
             <th>Solr</th>
-            <td><a href="http://{{ servername }}">{{ servername }}</a></td>
+            <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
             <td class="text-right">
-              <a href="http://{{ servername }}" class="btn btn-success btn-xs" role="button">Open</a>
+              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
               <a href="http://docs.drupalvm.com/en/latest/extras/solr/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
             </td>
           </tr>
         {%- endif %}
         {% if 'xhprof' in installed_extras -%}
-          {% set servername = getServernameFromDocroot(php_xhprof_html_dir) %}
-          {%- if servername -%}
+          {% macro servername() %}{{ getServernameFromDocroot(php_xhprof_html_dir) }}{% endmacro %}
+          {%- if servername() -%}
             <tr>
               <th>XHProf</th>
-              <td><a href="http://{{ servername }}">{{ servername }}</a></td>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
               <td class="text-right">
-                <a href="http://{{ servername }}" class="btn btn-success btn-xs" role="button">Open</a>
+                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/xhprof/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
