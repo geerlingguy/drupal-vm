@@ -1,22 +1,4 @@
 ---
-- name: Ensure drush directory exists for vagrant user inside VM.
-  file: 'path="~/.drush" state=directory'
-  become: no
-
-- name: Configure drush aliases for vagrant user inside VM.
-  template:
-    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
-    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
-  become: no
-
-- name: Ensure drush directory exists for root user inside VM.
-  file: 'path="~/.drush" state=directory'
-
-- name: Configure drush aliases for root user inside VM.
-  template:
-    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
-    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
-
 - name: Check if local Drush configuration folder exists.
   stat:
     path: ~/.drush
@@ -41,3 +23,21 @@
   delegate_to: 127.0.0.1
   become: no
   when: configure_local_drush_aliases
+
+- name: Ensure drush directory exists for vagrant user inside VM.
+  file: 'path="~/.drush" state=directory'
+  become: no
+
+- name: Configure drush aliases for vagrant user inside VM.
+  template:
+    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
+    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+  become: no
+
+- name: Ensure drush directory exists for root user inside VM.
+  file: 'path="~/.drush" state=directory'
+
+- name: Configure drush aliases for root user inside VM.
+  template:
+    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
+    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"

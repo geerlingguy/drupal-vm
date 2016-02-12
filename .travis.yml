@@ -1,27 +1,104 @@
----
-language: python
-python: "2.7"
+sudo: required
 
-install:
-  # Install Ansible.
-  - pip install ansible
+env:
+  global:
+    - CONFIG: example.config.yml
+      MAKEFILE: example.drupal.make.yml
+      HOSTNAME: drupalvm.dev
+      MACHINE_NAME: drupalvm
+  matrix:
+    - distribution: centos
+      version: 6
+      init: /sbin/init
+      run_opts: "--privileged"
+      additional_vars: "centos-6-vars.yml"
+    - distribution: centos
+      version: 7
+      init: /usr/lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      additional_vars: "centos-7-vars.yml"
+  # - distribution: ubuntu
+  #   version: 14.04
+  #   init: /sbin/init
+  #   run_opts: "--privileged"
+  # - distribution: ubuntu
+  #   version: 12.04
+  #   init: /sbin/init
+  #   run_opts: "--privileged"
 
-  # Add ansible.cfg to set local roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+services:
+  - docker
+
+before_install:
+  # Pull container
+  - 'sudo docker pull ${distribution}:${version}'
+  # Customize container
+  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 
 script:
-  # Copy example files into place.
-  - cp example.config.yml config.yml
-  - cp example.drupal.make.yml drupal.make.yml
+  - container_id=$(mktemp)
 
-  # Make sure Ansible requirements install correctly.
-  - 'ansible-galaxy install -r provisioning/requirements.yml'
+  # Run container in detached state
+  - 'sudo docker run --detach --volume="${PWD}":/var/www/drupalvm/:rw ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
-  # Run Ansible's syntax and playbook check on the main playbook.
-  - 'ansible-playbook -i "localhost," -c local provisioning/playbook.yml --syntax-check'
+  # Set hostname.
+  - 'sudo docker exec "$(cat ${container_id})" hostname ${HOSTNAME}'
 
-  # Check the config file and drupal make file YAML syntax.
+  # Setup directories.
+  - 'sudo docker exec "$(cat ${container_id})" mkdir -p /var/www/drupalvm/drupal'
+
+  # Install dependencies.
+  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r /var/www/drupalvm/provisioning/requirements.yml'
+
+  # Copy configuration files into place.
+  - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$CONFIG /var/www/drupalvm/config.yml'
+  - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$MAKEFILE /var/www/drupalvm/drupal.make.yml'
+
+  # Append additional variables if set.
+  - '[[ $additional_vars ]] && sudo docker exec "$(cat ${container_id})" bash -c "cat /var/www/drupalvm/tests/${additional_vars} >> /var/www/drupalvm/config.yml" || true'
+
+  # Ansible syntax check.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /var/www/drupalvm/provisioning/playbook.yml --syntax-check'
+
+  # Run the playbook with ansible-playbook.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /var/www/drupalvm/provisioning/playbook.yml'
+
+  # Run the integration tests
   - >
-    python -c "import yaml; yaml.load( open('example.config.yml', 'r'), Loader=yaml.CLoader  )"
+    sudo docker exec "$(cat ${container_id})" curl -s --header Host:${HOSTNAME} localhost
+    | grep -q '<title>Welcome to Drupal'
+    && (echo 'Drupal install pass' && exit 0)
+    || (echo 'Drupal install fail' && exit 1)
+
   - >
-    python -c "import yaml; yaml.load( open('example.drupal.make.yml', 'r'), Loader=yaml.CLoader  )"
+    sudo docker exec "$(cat ${container_id})" curl -s --header Host:adminer.${HOSTNAME} localhost
+    | grep -q '<title>Login - Adminer'
+    && (echo 'Admin install pass' && exit 0)
+    || (echo 'Adminer install fail' && exit 1)
+
+  - >
+    sudo docker exec "$(cat ${container_id})" curl -s --header Host:pimpmylog.${HOSTNAME} localhost
+    | grep -q '<title>Pimp my Log'
+    && (echo 'Pimp my Log install pass' && exit 0)
+    || (echo 'Pimp my Log install fail' && exit 1)
+
+  - >
+    sudo docker exec "$(cat ${container_id})" curl -s --header Host:xhprof.${HOSTNAME} localhost
+    | grep -q '<title>XHProf'
+    && (echo 'XHProf install pass' && exit 0)
+    || (echo 'XHProf install fail' && exit 1)
+
+  - >
+    sudo docker exec "$(cat ${container_id})" curl -s localhost:8025
+    | grep -q '<title>MailHog'
+    && (echo 'MailHog install pass' && exit 0)
+    || (echo 'MailHog install fail' && exit 1)
+
+  - >
+    sudo docker exec "$(cat ${container_id})" drush @${MACHINE_NAME}.${HOSTNAME} status
+    | grep -q 'Drupal bootstrap.*Successful'
+    && (echo 'Drush install pass' && exit 0)
+    || (echo 'Drush install fail' && exit 1)
+
+  # Clean up
+  - 'sudo docker stop "$(cat ${container_id})"'

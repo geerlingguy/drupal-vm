@@ -37,7 +37,7 @@ drupalvm_webserver: apache
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_makefile: true
-drush_makefile_path: /vagrant/drupal.make.yml
+drush_makefile_path: ../../drupal.make.yml
 
 # Set this to false if you don't need to install drupal (using the drupal_*
 # settings below), but instead copy down a database (e.g. using drush sql-sync).
