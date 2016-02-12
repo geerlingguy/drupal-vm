@@ -30,6 +30,14 @@ services:
   - docker
 
 before_install:
+  - >
+    [[ "${distribution}-${version}" == "centos-6" ]]
+    && sudo service docker stop
+    && sudo rm -rf /var/lib/docker
+    && sudo sh -c 'echo "DOCKER_STORAGE_OPTIONS= -s overlay" >> /etc/sysconfig/docker-storage'
+    && sudo service docker start
+    || true
+
   # Pull container
   - 'sudo docker pull ${distribution}:${version}'
   # Customize container
