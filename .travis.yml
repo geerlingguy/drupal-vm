@@ -1,3 +1,5 @@
+language: python
+python: "2.7"
 sudo: required
 
 env:
@@ -30,6 +32,15 @@ services:
   - docker
 
 before_install:
+  # Debug
+  - lsmod | grep overlay
+
+  # Use OverlayFS instead of devicemapper
+  - 'sudo service docker stop && (docker daemon --storage-driver=overlay &) || true'
+
+  # Debug
+  - 'sudo docker info'
+
   # Pull container
   - 'sudo docker pull ${distribution}:${version}'
   # Customize container
