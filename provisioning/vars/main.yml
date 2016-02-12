@@ -1,0 +1,6 @@
+---
+_devtool_docroots:
+  - "{{ adminer_install_dir }}"
+  - "{{ pimpmylog_install_dir }}"
+  - "{{ php_xhprof_html_dir }}"
+  - "{{ dashboard_install_dir|default('') }}"

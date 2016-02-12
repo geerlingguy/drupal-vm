@@ -19,15 +19,6 @@
     </style>
   </head>
   <body>
-    {%
-      set devtool_docroots = [
-        adminer_install_dir if 'adminer' in installed_extras else '',
-        php_xhprof_html_dir if 'xhprof' in installed_extras else '',
-        pimpmylog_install_dir if 'pimpmylog' in installed_extras else '',
-        dashboard_install_dir
-      ]
-    %}
-
     {# Returns the hosts server name based on the document root #}
     {%- macro getServernameFromDocroot(path) -%}
       {%- if drupalvm_webserver == 'apache' -%}
@@ -46,7 +37,7 @@
     {%- endmacro -%}
 
     {%- macro printSite(servername, docroot) -%}
-      {%- if docroot not in devtool_docroots -%}
+      {%- if docroot not in _devtool_docroots -%}
         <tr>
           <td><a href="http://{{ servername }}">{{ servername }}</a></td>
           <td><code>{{ docroot }}</code></td>
