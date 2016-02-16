@@ -23,6 +23,7 @@ pages:
     - 'Use Varnish with Drupal VM': 'extras/varnish.md'
     - 'Use MariaDB instead of MySQL': 'extras/mariadb.md'
     - 'Use Node.js and NPM': 'extras/nodejs.md'
+    - 'Use SSL vhosts with Apache': 'extras/ssl.md'
     - 'View Logs with Pimp my Log': 'extras/pimpmylog.md'
     - 'Profile Code with XHProf': 'extras/xhprof.md'
     - 'Debug Code with XDebug': 'extras/xdebug.md'
