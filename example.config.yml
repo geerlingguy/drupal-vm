@@ -161,11 +161,8 @@ installed_extras:
 extra_packages:
   - unzip
 
-# `nodejs` must be in installed_extras for this to work. This currently only 
-# runs on the initial provision. If the version needs to chanage 'nvm' will need
-# to be installed and configured manually.
-# The nodejs role uses the Nodesource binary sources 
-# 4.x, 5.x, 0.12, or 0.10 are acceptable versions.
+# `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
+# "0.12", "4.x", "5.x".
 nodejs_version: "0.12"
 nodejs_npm_global_packages: []
 
