@@ -52,16 +52,16 @@ If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial in
 
 This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using the included example Drush make file. You can also use the Drupal VM with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/) or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
 
-### 1 - Install dependencies (VirtualBox and Vagrant)
+### 1 - Install dependencies (Vagrant)
 
-  1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Drupal VM also works with Parallels or VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
-  2. Download and install [Vagrant](http://www.vagrantup.com/downloads.html).
+Download and install [Vagrant](https://www.vagrantup.com/downloads.html).
+- Vagrant will automatically install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) if no providers are available (Drupal VM also works with Parallels or VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
 
 Note for Faster Provisioning (Mac/Linux only): *[Install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
 
 Note for Linux users: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
 
-Note on versions: *Please make sure you're running the latest stable version of Vagrant, VirtualBox, and Ansible, as the current version of Drupal VM is tested with the latest releases. As of August 2015: Vagrant 1.8.0, VirtualBox 5.0.12, and Ansible 2.0.0.*
+Note on versions: *Please make sure you're running the latest stable version of Vagrant, VirtualBox, and Ansible, as the current version of Drupal VM is tested with the latest releases. As of February 2016: Vagrant 1.8.2, VirtualBox 5.0.14, and Ansible 2.0.0.*
 
 ### 2 - Build the Virtual Machine
 
@@ -89,11 +89,15 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
 
     installed_extras:
       - adminer
+      - drupalconsole
       - mailhog
       - memcached
+      # - nodejs
       - pimpmylog
-      # - solr
+      # - redis
+      # - ruby
       # - selenium
+      # - solr
       - varnish
       - xdebug
       - xhprof
@@ -118,4 +122,4 @@ This project is licensed under the MIT open source license.
 
 ## About the Author
 
-[Jeff Geerling](http://jeffgeerling.com/), owner of [Midwestern Mac, LLC](http://www.midwesternmac.com/), created this project in 2014 so he could accelerate his Drupal core and contrib development workflow. This project, and others like it, are also featured as examples in Jeff's book, [Ansible for DevOps](http://www.ansiblefordevops.com/).
+[Jeff Geerling](http://www.jeffgeerling.com/), owner of [Midwestern Mac, LLC](http://www.midwesternmac.com/), created this project in 2014 so he could accelerate his Drupal core and contrib development workflow. This project, and others like it, are also featured as examples in Jeff's book, [Ansible for DevOps](http://www.ansiblefordevops.com/).
