@@ -97,6 +97,9 @@ apache_vhosts:
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"
 
+  - servername: "{{ vagrant_ip }}"
+    documentroot: "{{ dashboard_install_dir }}"
+
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - expires.load
@@ -124,6 +127,9 @@ nginx_hosts:
   - server_name: "pimpmylog.{{ vagrant_hostname }}"
     root: "{{ pimpmylog_install_dir }}"
     is_php: true
+
+  - server_name: "{{ vagrant_ip }}"
+    root: "{{ dashboard_install_dir }}"
 
 nginx_remove_default_vhost: true
 
@@ -253,4 +259,5 @@ solr_xmx: "128M"
 selenium_version: 2.46.0
 
 # Other configuration.
+dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts

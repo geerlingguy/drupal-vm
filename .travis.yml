@@ -6,6 +6,7 @@ env:
       MAKEFILE: example.drupal.make.yml
       HOSTNAME: drupalvm.dev
       MACHINE_NAME: drupalvm
+      IP: 192.168.88.88
   matrix:
     - distribution: centos
       version: 6
@@ -93,6 +94,12 @@ script:
     | grep -q '<title>MailHog'
     && (echo 'MailHog install pass' && exit 0)
     || (echo 'MailHog install fail' && exit 1)
+
+  - >
+    sudo docker exec "$(cat ${container_id})" curl -s --header Host:${IP} localhost
+    | grep -q "<li>${HOSTNAME} ${IP}</li>"
+    && (echo 'Dashboard install pass' && exit 0)
+    || (echo 'Dashboard install fail' && exit 1)
 
   - >
     sudo docker exec "$(cat ${container_id})" drush @${MACHINE_NAME}.${HOSTNAME} status

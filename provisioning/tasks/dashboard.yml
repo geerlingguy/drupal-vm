@@ -1,0 +1,11 @@
+- name: Ensure the dashboard directory exists
+  file:
+    path: "{{ dashboard_install_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Copy dashboard page into place.
+  template:
+    src: ../templates/dashboard.html.j2
+    dest: "{{ dashboard_install_dir }}/index.html"
+    mode: 0644
