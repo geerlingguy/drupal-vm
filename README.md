@@ -108,6 +108,16 @@ If you don't want or need one or more of these extras, just delete them or comme
 
 Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM documentation site](http://docs.drupalvm.com).
 
+## System Requirements
+
+Drupal VM runs on almost any modern computer that can run VirtualBox and Vagrant, however for the best out-of-the-box experience, it's recommended you have a computer with at least:
+
+  - Intel Core i5, i7 or better processor
+  - At least 4 GB RAM (higher is better)
+  - An SSD (for greater speed with synced folders)
+
+If you have an older processor or a processor without VT-x virtualization support (e.g. the i3), you can still use Drupal VM, but you will need to switch the `vagrant_box` in `config.yml` to use a 3rd party 32-bit box, like `ubuntu/trusty32` or `hashicorp/precise32`.
+
 ## Other Notes
 
   - To shut down the virtual machine, enter `vagrant halt` in the Terminal in the same folder that has the `Vagrantfile`. To destroy it completely (if you want to save a little disk space, or want to rebuild it from scratch with `vagrant up` again), type in `vagrant destroy`.
