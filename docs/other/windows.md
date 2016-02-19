@@ -1,5 +1,12 @@
 There are a few caveats when using Drupal VM on Windows, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Windows host.
 
+## Command line environment
+
+You can use PowerShell, Git Bash, Git Shell, or other PowerShell-based environments with Drupal VM and Vagrant; however you might want to consider using a more POSIX-like environment so you can more easily work with Drupal VM:
+
+  - [Cmder](http://cmder.net/) includes built-in git and SSH support, so you can do most things that you need without any additional plugins.
+  - [Cygwin](https://www.cygwin.com/) allows you to install a large variety of linux packages inside its bash environment, though it can be a little more tricky to manage and is less integrated into the Windows environment.
+
 ## Synced Folders
 
 Most issues have to do synced folders. These are the most common ones:
@@ -10,7 +17,7 @@ By default, if you use the 'NFS' synced folder type, Vagrant will ignore this di
 
   1. **Install the `vagrant-winnfsd` plugin**. See the 'NFS' section later for more details and caveats.
   2. **Use `smb` for the synced folder's type.**
-  2. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/).
+  2. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/) or [Cmder](http://cmder.net/).
 
 ### Symbolic Links
 
@@ -33,6 +40,10 @@ You should probably disable Git's `fileMode` option inside the VM and on your ho
 
 You can use the [vagrant-winnfsd](https://github.com/GM-Alex/vagrant-winnfsd) plugin to get NFS support on windows. Be aware that there are multiple issues logged against both the plugin and the winnfsd project, so no guarantees.
 
+#### Using WinNFSD without `vagrant-winnfsd`
+
+Another option for the more adventurous is to manually install and configure WinNFSD, and manually mount the shares within your VM. This requires a bit more work, but could be more stable on Windows; see this blog post for more details: [Windows + Vagrant + WinNFSD without file update problems](https://hollyit.net/blog/windowsvagrantwinnfsd-without-file-update-problems).
+
 ### "Authentication failure" on vagrant up
 
 Some Windows users have reported running into an issue where an authentication failure is reported once the VM is booted (e.g. `drupalvm: Warning: Authentication failure. Retrying...` — see [#170](https://github.com/geerlingguy/drupal-vm/issues/170)). To fix this, do the following:
@@ -50,7 +61,7 @@ If you are running Windows 7 and `vagrant up` hangs, you may need to upgrade Pow
 If you install either the `vagrant-hostsupdater` or `vagrant-hostmanager` plugin, you might get a permissions error when Vagrant tries changing the hosts file. On a Mac or Linux workstation, you're prompted for a sudo password so the change can be made, but on Windows, you have to do one of the following to make sure hostsupdater works correctly:
 
   1. Run PowerShell or whatever CLI you use with Vagrant as an administrator. Right click on the application and select 'Run as administrator', then proceed with `vagrant` commands as normal.
-  2. Change the permissions on the hosts file so anyone can edit the file (this has security implications, so it's best to use option 1 unless you know what you're doing).
+  2. Change the permissions on the hosts file so your account has permission to edit the file (this has security implications, so it's best to use option 1 unless you know what you're doing). To do this, open `%SystemRoot%\system32\drivers\etc` in Windows Explorer, right-click the `hosts` file, and under Security, add your account and give yourself full access to the file.
 
 ## Intel VT-x virtualization support
 
