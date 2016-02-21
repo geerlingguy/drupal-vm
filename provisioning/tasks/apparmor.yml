@@ -1,12 +1,17 @@
 ---
+- name: Detect if AppArmor is installed.
+  stat:
+    path: /etc/init.d/apparmor
+  register: apparmor_installed
+
 - name: Ensure MySQL AppArmor profile is disabled (for slow query log).
   file:
     path: /etc/apparmor.d/disable/usr.sbin.mysqld
     src: /etc/apparmor.d/usr.sbin.mysqld
     state: link
   register: mysql_apparmor
-  when: mysql_slow_query_log_enabled
+  when: mysql_slow_query_log_enabled and apparmor_installed.stat.exists
 
-- name: Restart AppArmor if necessary.
+- name: Restart the AppArmor if necessary.
   service: name=apparmor state=restarted
   when: mysql_apparmor.changed
