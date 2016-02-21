@@ -1,0 +1,15 @@
+---
+admin_user: my_admin_username
+
+# On RHEL/CentOS, 'wheel'; on Debian/Ubuntu, 'root'.
+admin_group: root
+
+# IMPORTANT: Configure your own password for the admin user account. To generate
+# a password hash, use either of the following commands:
+#   - `openssl passwd -1 [password]`
+#   - `mkpasswd --method=SHA-512`.
+admin_password: $1$HgT69GsW$qZ8FUJHafZZWD76KXgAZO/
+
+# Configuration for copying local public SSH key to admin's authorized_keys.
+admin_copy_ssh_pubkey: true
+admin_pubkey: ~/.ssh/id_rsa.pub

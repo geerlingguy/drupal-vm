@@ -11,9 +11,13 @@ mysql_root_password: root
 # Only install extras that you will need/use on your site, and don't install
 # development-related software on production environments!
 installed_extras:
-  - memcached
+  # - memcached
+  # - redis
   # - solr
   - varnish
+
+# Disable the dashboard page. Also remove any unneeded virtualhosts.
+dashboard_install_dir: ''
 
 # Enable a more hardened security configuration.
 extra_security_enabled: true
@@ -23,7 +27,6 @@ firewall_allowed_tcp_ports:
   - "22"
   - "80"
   - "443"
-  - "8983"
 firewall_log_dropped_packets: true
 
 # Set Apache to listen on port 81 (internal only), and Varnish on 80.

@@ -1,0 +1,30 @@
+---
+- hosts: drupalvm
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Create admin user account.
+      user:
+        name: "{{ admin_user }}"
+        createhome: yes
+        home: "/home/{{ admin_user }}"
+        generate_ssh_key: yes
+        ssh_key_comment: "ansible-{{ inventory_hostname }}"
+        password: "{{ admin_password }}"
+        groups: "{{ admin_group }}"
+        shell: /bin/bash
+
+    - name: Add local SSH public key to admin account authorized_keys.
+      authorized_key:
+        user: "{{ admin_user }}"
+        key: "{{ lookup('file', '{{ admin_pubkey }}') }}"
+        manage_dir: yes
+
+    - name: Disable requiretty.
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: '^Defaults.+requiretty'
+        line: 'Defaults    !requiretty'
+        state: present
