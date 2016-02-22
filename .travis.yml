@@ -18,10 +18,10 @@ env:
       init: /usr/lib/systemd/systemd
       run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
       additional_vars: "centos-7-vars.yml"
-  # - distribution: ubuntu
-  #   version: 14.04
-  #   init: /sbin/init
-  #   run_opts: "--privileged"
+    - distribution: ubuntu
+      version: 14.04
+      init: /sbin/init
+      run_opts: "--privileged"
   # - distribution: ubuntu
   #   version: 12.04
   #   init: /sbin/init
