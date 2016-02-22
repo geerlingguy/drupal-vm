@@ -1,3 +1,4 @@
+---
 sudo: required
 
 env:
@@ -8,24 +9,20 @@ env:
       MACHINE_NAME: drupalvm
       IP: 192.168.88.88
   matrix:
-    - distribution: centos
-      version: 6
+    - distribution: ubuntu
+      version: 14.04
       init: /sbin/init
       run_opts: "--privileged"
-      additional_vars: "centos-6-vars.yml"
+    - distribution: ubuntu
+      version: 14.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      additional_vars: ubuntu-14-nginx.yml
     - distribution: centos
       version: 7
       init: /usr/lib/systemd/systemd
       run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
       additional_vars: "centos-7-vars.yml"
-    - distribution: ubuntu
-      version: 14.04
-      init: /sbin/init
-      run_opts: "--privileged"
-  # - distribution: ubuntu
-  #   version: 12.04
-  #   init: /sbin/init
-  #   run_opts: "--privileged"
 
 services:
   - docker
