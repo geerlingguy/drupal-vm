@@ -107,7 +107,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Allow override of the default synced folder type.
-  config.vm.synced_folder ".", "/vagrant", type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_default_synced_folder_type'] : 'nfs'
+  config.vm.synced_folder ".", "/vagrant", type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
   # Provisioning. Use ansible if it's installed, JJG-Ansible-Windows if not.
   if which('ansible-playbook')
