@@ -26,7 +26,7 @@
 - name: Copy Nginx vhosts into place.
   template:
     src: ../templates/nginx-vhost.conf.j2
-    dest: "{{ nginx_vhost_path }}/{{ item.server_name }}.conf"
+    dest: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
     force: yes
     owner: root
     group: root

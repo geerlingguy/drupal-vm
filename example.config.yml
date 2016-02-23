@@ -9,7 +9,7 @@ vagrant_synced_folder_default_type: nfs
 # machine name, and IP address for each instance.
 vagrant_hostname: drupalvm.dev
 vagrant_machine_name: drupalvm
-vagrant_ip: 192.168.88.88
+vagrant_ip: 0.0.0.0
 
 # Allow Drupal VM to be accessed via a public network interface on your host.
 # Vagrant boxes are insecure by default, so be careful. You've been warned!
@@ -98,6 +98,7 @@ apache_vhosts:
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"
 
   - servername: "{{ vagrant_ip }}"
+    serveralias: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
 
 apache_remove_default_vhost: true
@@ -128,7 +129,7 @@ nginx_hosts:
     root: "{{ pimpmylog_install_dir }}"
     is_php: true
 
-  - server_name: "{{ vagrant_ip }}"
+  - server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"
     root: "{{ dashboard_install_dir }}"
 
 nginx_remove_default_vhost: true
