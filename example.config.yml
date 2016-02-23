@@ -9,7 +9,7 @@ vagrant_synced_folder_default_type: nfs
 # machine name, and IP address for each instance.
 vagrant_hostname: drupalvm.dev
 vagrant_machine_name: drupalvm
-vagrant_ip: 0.0.0.0
+vagrant_ip: 192.168.88.88
 
 # Allow Drupal VM to be accessed via a public network interface on your host.
 # Vagrant boxes are insecure by default, so be careful. You've been warned!
