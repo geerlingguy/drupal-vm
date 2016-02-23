@@ -11,15 +11,7 @@
     state: directory
     recurse: yes
     mode: 0775
-  when: drupal_site.stat.exists == false
-
-- name: Ensure drupal_core_path directory is owned by ssh user.
-  file:
-    path: "{{ drupal_core_path }}"
-    state: directory
-    owner: "{{ ansible_ssh_user }}"
-    group: "{{ ansible_ssh_user }}"
-    mode: 0775
+  become: no
   when: drupal_site.stat.exists == false
 
 - name: Generate Drupal site with drush makefile.
