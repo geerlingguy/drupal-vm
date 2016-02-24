@@ -2,6 +2,14 @@
 # Normally, this would be set to the hostname of your DigitalOcean Droplet.
 drupal_domain: "drupalvm.dev"
 
+# Delete all the `apache_vhosts` or `nginx_hosts` you don't need. If only
+# installing a single Drupal site, the variable should look like this (Apache):
+apache_vhosts:
+  - servername: "{{ drupal_domain }}"
+    documentroot: "{{ drupal_core_path }}"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+
 # Since this will be a publicly-accessible instance of Drupal VM, make sure you
 # configure secure passwords, especially for Drupal and MySQL!
 drupal_account_pass: admin

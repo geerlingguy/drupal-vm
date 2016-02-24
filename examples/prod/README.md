@@ -70,7 +70,14 @@ After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configu
 
 ## Known issues
 
-  - The `files` folder that is generated during the initial Drupal installation is set to be owned by the admin account; to make it work (and to allow Drupal to generate stylesheets and files correctly), you have to manually log into the server and run `sudo chown -R www-data:www-data /var/www/drupalvm/drupal/sites/default/files` after initial provisioning is complete.
+  - You may need to manually create the `drupal_core_path` directory on the server at this time; it's not always created automatically due to permissions errors.
+  - The `files` folder that is generated during the initial Drupal installation is set to be owned by the admin account; to make it work (and to allow Drupal to generate stylesheets and files correctly), you have to manually log into the server and run the following two commands after provisioning is complete:
+
+      ```
+      $ sudo chown -R www-data /var/www/drupalvm/drupal/sites/default/files
+      $ sudo chmod -R 0700 /var/www/drupalvm/drupal/sites/default/files
+      ```
+
   - You can't synchronize folders between your host machine and DigitalOcean (at least not in any sane way); so you'll need to either have Drupal VM install a site from a given Drush make file or composer.json, or deploy your site yourself.
   - The way you build a production Drupal VM instance (vs. a local instance) is a little bit of a kludge. Follow https://github.com/geerlingguy/drupal-vm/issues/455 to track progress on a more streamlined process.
   - Drupal VM doesn't include any kind of backup system. You should use one if you have any kind of important data on your server!

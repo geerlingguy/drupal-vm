@@ -78,7 +78,7 @@
     - include: tasks/cron.yml
 
     - include: tasks/dashboard.yml
-      when: dashboard_install_dir is defined
+      when: dashboard_install_dir is defined and dashboard_install_dir != ''
 
     - name: Run configured post-provision shell scripts.
       script: "{{ item }}"
