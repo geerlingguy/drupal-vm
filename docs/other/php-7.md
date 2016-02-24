@@ -9,7 +9,6 @@ Ondřej Surý's PPA for PHP 7.0 is included with Drupal VM, and you can make the
 ```yaml
 php_version: "7.0"
 php_packages:
-  - libapache2-mod-php7.0
   - php7.0-common
   - php7.0-cli
   - php7.0-dev
@@ -29,12 +28,10 @@ Also, comment out `xhprof`, `xdebug`, `redis` and `memcached` from the `installe
 
 You can also build from source using the same/included `geerlingguy.php` Ansible role, but that process is a bit more involved and for power users comfortable with the process.
 
-**If you're using Nginx** instead of Apache, don't include `libapache2-mod-php7.0` in the `php_packages` list in `config.yml`.
-
 ## RedHat/CentOS 7
 
 Remi's RPM repository is included with Drupal VM, and you can make the following changes to use it to install PHP 7:
 
   1. Make sure you've followed the directions for switching to CentOS 7 in the [use a different base OS](base-os.md) guide.
   2. Change `php_version` inside `config.yml` to `"7.0"`.
-  3. Comment out `xhprof`, `xdebug`, `redis` and `memcached` from the `installed_extras` list, as these extensions are not yet supported for PHP 7 (as of late 2015).
+  3. Comment out `xhprof`, `xdebug`, `redis` and `memcached` from the `installed_extras` list, as these extensions are not yet supported for PHP 7 (as of early 2016).
