@@ -53,7 +53,7 @@
         {% if drupalvm_webserver == 'apache' -%}
           {%- for host in apache_vhosts -%}
             {%- if host.documentroot != dashboard_install_dir -%}
-              <li>{{ host.servername }} {{ vagrant_ip }}</li>
+              <li>{{ vagrant_ip }} {{ host.servername }}</li>
             {%- endif -%}
             {% if host.serveralias is defined -%}
               {%- for alias in host.serveralias.split() -%}
@@ -64,7 +64,7 @@
         {%- elif drupalvm_webserver == 'nginx' -%}
           {%- for host in nginx_hosts -%}
             {%- if host.root != dashboard_install_dir -%}
-              <li>{{ host.server_name }} {{ vagrant_ip }}</li>
+              <li>{{ vagrant_ip }} {{ host.server_name }}</li>
             {%- endif -%}
           {%- endfor -%}
         {%- endif %}
