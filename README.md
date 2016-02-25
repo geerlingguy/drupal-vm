@@ -113,11 +113,9 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
 
 Drupal VM runs on almost any modern computer that can run VirtualBox and Vagrant, however for the best out-of-the-box experience, it's recommended you have a computer with at least:
 
-  - Intel Core i5, i7 or better processor
+  - Intel Core processor with VT-x enabled
   - At least 4 GB RAM (higher is better)
   - An SSD (for greater speed with synced folders)
-
-If you have an older processor or a processor without VT-x virtualization support (e.g. the i3), you can still use Drupal VM, but you will need to switch the `vagrant_box` in `config.yml` to use a 3rd party 32-bit box, like `ubuntu/trusty32` or `hashicorp/precise32`.
 
 ## Other Notes
 
