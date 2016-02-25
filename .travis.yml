@@ -94,7 +94,7 @@ script:
 
   - >
     sudo docker exec "$(cat ${container_id})" curl -s --header Host:${IP} localhost
-    | grep -q "<li>${HOSTNAME} ${IP}</li>"
+    | grep -q "<li>${IP} ${HOSTNAME}</li>"
     && (echo 'Dashboard install pass' && exit 0)
     || (echo 'Dashboard install fail' && exit 1)
 
