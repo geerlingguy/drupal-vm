@@ -78,7 +78,7 @@
             <th>Hostname</th>
             <th>Document Root</th>
             {% if configure_local_drush_aliases -%}
-              <th>Drush alias</th>
+              <th>Drush alias*</th>
             {%- endif %}
         </thead>
         <tbody>
@@ -91,6 +91,7 @@
               {{ printSite(host.server_name, host.root) }}
             {%- endfor -%}
           {%- endif %}
+          <tr><td colspan=3><small>*Note: Drush aliases are NOT created automatically on Windows. This is due to Ansible running from within the VM.</small></td></tr>
         </tbody>
       </table>
     {%- endmacro -%}
