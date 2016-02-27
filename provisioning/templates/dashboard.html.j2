@@ -57,7 +57,7 @@
             {%- endif -%}
             {% if host.serveralias is defined -%}
               {%- for alias in host.serveralias.split() -%}
-                <li>{{ alias }} {{ vagrant_ip }}</li>
+                <li>{{ vagrant_ip }} {{ alias }}</li>
               {%- endfor -%}
             {%- endif %}
           {%- endfor -%}
