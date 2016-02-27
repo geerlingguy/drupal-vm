@@ -48,24 +48,37 @@
       {% endif %}
     {%- endmacro %}
 
+    {%- macro printHostsEntry(ip, servername) -%}
+      {%- if servername != ip -%}
+        <li>{{ ip }} {{ servername }}</li>
+      {%- endif -%}
+    {%- endmacro %}
+
     {%- macro sectionHost() -%}
       <ul class="section-host">
         {% if drupalvm_webserver == 'apache' -%}
           {%- for host in apache_vhosts -%}
-            {%- if host.documentroot != dashboard_install_dir -%}
-              <li>{{ vagrant_ip }} {{ host.servername }}</li>
-            {%- endif -%}
+
+            {{ printHostsEntry(vagrant_ip, host.servername) }}
             {% if host.serveralias is defined -%}
               {%- for alias in host.serveralias.split() -%}
-                <li>{{ vagrant_ip }} {{ alias }}</li>
+                {{ printHostsEntry(vagrant_ip, alias) }}
               {%- endfor -%}
             {%- endif %}
+
           {%- endfor -%}
         {%- elif drupalvm_webserver == 'nginx' -%}
           {%- for host in nginx_hosts -%}
-            {%- if host.root != dashboard_install_dir -%}
-              <li>{{ vagrant_ip }} {{ host.server_name }}</li>
-            {%- endif -%}
+
+            {% for server_name in host.server_name.split(' ') -%}
+              {{ printHostsEntry(vagrant_ip, server_name) }}
+            {%- endfor %}
+            {% if host.server_name_redirect is defined -%}
+              {%- for server_name in host.server_name_redirect.split(' ') -%}
+                {{ printHostsEntry(vagrant_ip, server_name) }}
+              {%- endfor -%}
+            {%- endif %}
+
           {%- endfor -%}
         {%- endif %}
       </ul>

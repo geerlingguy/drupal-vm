@@ -64,28 +64,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # If a hostsfile manager plugin is installed, add all server names as aliases.
   aliases = []
-  blacklist = [config.vm.hostname, vconfig['vagrant_ip']]
   if vconfig['drupalvm_webserver'] == 'apache'
     vconfig['apache_vhosts'].each do |host|
-      unless blacklist.include?(host['servername'])
-        aliases.push(host['servername'])
-      end
+      aliases.push(host['servername'])
       aliases.concat(host['serveralias'].split) if host['serveralias']
     end
   else
     vconfig['nginx_hosts'].each do |host|
-      unless blacklist.include?(host['server_name'])
-        aliases.push(host['server_name'])
-      end
+      aliases.concat(host['server_name'].split)
+      aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
     end
   end
+  aliases = aliases.uniq - [config.vm.hostname, vconfig['vagrant_ip']]
 
   if Vagrant.has_plugin?('vagrant-hostsupdater')
-    config.hostsupdater.aliases = aliases.uniq
+    config.hostsupdater.aliases = aliases
   elsif Vagrant.has_plugin?('vagrant-hostmanager')
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
-    config.hostmanager.aliases = aliases.uniq
+    config.hostmanager.aliases = aliases
   end
 
   # Synced folders.
