@@ -7,7 +7,7 @@ post_provision_scripts:
   - "../scripts/post-provision.sh"
 ```
 
-The above example results in a `post-provision.sh` script running after the main Drupal VM setup is complete. Note that post provision scripts run _every_ time you the VM is provisioned provision the environment (e.g. when you run `vagrant up` or `vagrant provision`).
+The above example results in a `post-provision.sh` script running after the main Drupal VM setup is complete. Note that post provision scripts run _every_ time you start the VM (`vagrant up`) or provision the environment (`vagrant provision`).
 
 You can define as many scripts as you would like, and any arguments after the path will be passed to the shell script itself (e.g. `"- "../scripts/setup-paths.sh --option"`).
 
