@@ -2,7 +2,7 @@
 server {
     listen       80;
     server_name  {{ item.server_name_redirect }};
-    return       301 http://{{ item.server_name }}$request_uri;
+    return       301 http://{{ item.server_name.split(' ')[0] }}$request_uri;
 }
 {% endif %}
 
