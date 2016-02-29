@@ -31,6 +31,6 @@
     owner: root
     group: root
     mode: 0644
-  with_items: nginx_hosts
+  with_items: "{{ nginx_hosts }}"
   notify: restart nginx
   when: drupalvm_webserver == 'nginx'

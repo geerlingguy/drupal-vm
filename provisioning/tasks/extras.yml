@@ -1,10 +1,10 @@
 ---
 - name: Install extra apt packages (if any are configured).
   apt: "name={{ item }} state=installed"
-  with_items: extra_packages | list
+  with_items: "{{ extra_packages | list }}"
   when: ansible_os_family == 'Debian' and extra_packages | length
 
 - name: Install extra yum packages (if any are configured).
   yum: "name={{ item }} state=installed"
-  with_items: extra_packages | list
+  with_items: "{{ extra_packages | list }}"
   when: ansible_os_family == 'RedHat' and extra_packages | length
