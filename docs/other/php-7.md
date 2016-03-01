@@ -1,6 +1,6 @@
 Drupal VM fully supports PHP 7, but currently defaults to 5.6 in order to maximize compatibility with older Drupal 6 and 7 sites. Soon, Drupal VM will change its defaults to install PHP 7.x instead of 5.x, but until then, follow the instructions below to use PHP 7.
 
-_Note: If you have Ansible installed on your host machine, make sure you're running the latest version of all Ansible role dependencies by running `ansible-galaxy install -r provisioning/requirements.txt --force` inside the root Drupal VM project folder._
+_Note: If you have Ansible installed on your host machine, make sure you're running the latest version of all Ansible role dependencies by running `ansible-galaxy install -r provisioning/requirements.yml --force` inside the root Drupal VM project folder._
 
 ## Ubuntu 14.04
 
