@@ -19,6 +19,7 @@ php_packages:
   - php7.0-imap
   - php7.0-json
   - php7.0-opcache
+  - php7.0-xml
 php_mysql_package: php7.0-mysql
 php_fpm_daemon: php7.0-fpm
 php_fpm_pool_conf_path: "/etc/php/7.0/fpm/pool.d/www.conf"
