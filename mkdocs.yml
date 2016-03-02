@@ -21,7 +21,6 @@ pages:
     - 'Use Drush with Drupal VM': 'extras/drush.md'
     - 'Use Drupal Console with Drupal VM': 'extras/drupal-console.md'
     - 'Use Varnish with Drupal VM': 'extras/varnish.md'
-    - 'Use MariaDB instead of MySQL': 'extras/mariadb.md'
     - 'Use Node.js and NPM': 'extras/nodejs.md'
     - 'Use SSL vhosts with Apache': 'extras/ssl.md'
     - 'View Logs with Pimp my Log': 'extras/pimpmylog.md'
@@ -33,6 +32,7 @@ pages:
   - Other Information:
     - 'Using Different Base OSes': 'other/base-os.md'
     - 'Using Different Webservers': 'other/webservers.md'
+    - 'Using Different Database Engines': 'other/database-engines.md'
     - 'Using a local Vagrantfile': 'other/local-vagrantfile.md'
     - 'PHP 7 on Drupal VM': 'other/php-7.md'
     - 'Drupal VM Management Tools': 'other/management-tools.md'
