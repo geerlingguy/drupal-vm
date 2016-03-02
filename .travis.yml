@@ -119,5 +119,8 @@ script:
     && (echo 'Drush install pass' && exit 0)
     || (echo 'Drush install fail' && exit 1)
 
+  # Debug
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm drush @${MACHINE_NAME}.${HOSTNAME} status'
+
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
