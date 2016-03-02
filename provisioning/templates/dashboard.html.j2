@@ -177,23 +177,27 @@
       </table>
     {%- endmacro -%}
 
-    {%- macro sectionDatabaseConnection() -%}
+    {%- macro sectionDatabaseConnection(hostname, port, username, password) -%}
       <table class="table">
         <tr>
-          <th>MySQL Hostname</th>
-          <td><code>127.0.0.1</code></td>
+          <th>Hostname</th>
+          <td><code>{{ hostname }}</code></td>
         </tr>
         <tr>
-          <th>MySQL Port</th>
-          <td><code>{{ mysql_port }}</code></td>
+          <th>Port</th>
+          <td><code>{{ port }}</code></td>
         </tr>
         <tr>
-          <th>MySQL Username</th>
-          <td><code>{{ mysql_root_username }}</code></td>
+          <th>Username</th>
+          <td><code>{{ username }}</code></td>
         </tr>
         <tr>
-          <th>MySQL Password</th>
-          <td><code>{{ mysql_root_password }}</code></td>
+          <th>Password</th>
+          {% if password != '' -%}
+            <td><code>{{ password }}</code></td>
+          {%- else -%}
+            <td><em>Passwordless</em></td>
+          {%- endif %}
         </tr>
         <tr>
           <th>SSH Hostname</th>
@@ -215,15 +219,18 @@
         <thead>
           <tr>
             <th>Database name</th>
+            <th>Engine</th>
             {% if 'adminer' in installed_extras -%}
               <th></th>
             {%- endif %}
           </tr>
         </thead>
         <tbody>
-          {% for database in mysql_databases -%}
+          {% set database_list = (drupalvm_database == 'pgsql') | ternary(postgresql_databases, mysql_databases) %}
+          {% for database in database_list -%}
             <tr>
               <td><code>{{ database.name }}</code></td>
+              <td>{{ (drupalvm_database == 'pgsql') | ternary('PostgreSQL', 'MySQL') }}</td>
               {% if 'adminer' in installed_extras -%}
               <td>
                 <a href="http://{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}?username={{ mysql_root_username }}&db={{ database.name }}" class="btn btn-success btn-xs" role="button">Adminer</a>
@@ -241,15 +248,31 @@
           <tr>
             <th>Username</th>
             <th>Password</th>
+            <th>Engine</th>
           </tr>
         </thead>
         <tbody>
-          {% for user in mysql_users -%}
-            <tr>
-              <td><code>{{ user.name }}</code></td>
-              <td><code>{{ user.password }}</code></td>
-            </tr>
-          {%- endfor %}
+          {% if drupalvm_database == 'pgsql' -%}
+            {% for user in postgresql_users -%}
+              <tr>
+                <td><code>{{ user.name }}</code></td>
+                {% if user.encrypted | default(False) -%}
+                  <td><em>Encrypted</em></td>
+                {%- else -%}
+                  <td><code>{{ user.pass }}</code></td>
+                {%- endif %}
+                <td>PostgreSQL</td>
+              </tr>
+            {%- endfor %}
+          {% else %}
+            {% for user in mysql_users -%}
+              <tr>
+                <td><code>{{ user.name }}</code></td>
+                <td><code>{{ user.password }}</code></td>
+                <td>MySQL</td>
+              </tr>
+            {%- endfor %}
+          {% endif %}
         </tbody>
       </table>
     {%- endmacro -%}
@@ -297,12 +320,21 @@
         </div>
 
         <div class="col-md-5">
-          <section class="panel panel-default">
-            <div class="panel-heading">MySQL connection information</div>
-            <div class="panel-body">
-              {{ sectionDatabaseConnection() }}
-            </div>
-          </section>
+          {% if drupalvm_database == 'pgsql' -%}
+            <section class="panel panel-default">
+              <div class="panel-heading">PostgreSQL connection information</div>
+              <div class="panel-body">
+                {{ sectionDatabaseConnection('127.0.0.1', postgresql_port, postgresql_admin_user, '') }}
+              </div>
+            </section>
+          {% else -%}
+            <section class="panel panel-default">
+              <div class="panel-heading">MySQL connection information</div>
+              <div class="panel-body">
+                {{ sectionDatabaseConnection('127.0.0.1', mysql_port, mysql_root_username, drupal_mysql_password) }}
+              </div>
+            </section>
+          {%- endif %}
 
           <section class="panel panel-default">
             <div class="panel-heading">Databases</div>

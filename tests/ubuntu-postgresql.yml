@@ -1,0 +1,15 @@
+drupalvm_database: pgsql
+
+postgresql_databases:
+  - name: "{{ drupal_mysql_database }}"
+    owner: "{{ drupal_mysql_user }}"
+
+postgresql_users:
+  - name: "{{ drupal_mysql_user }}"
+    pass: "{{ drupal_mysql_password }}"
+    encrypted: no
+
+postgresql_user_privileges:
+  - name: "{{ drupal_mysql_user }}"
+    db: "{{ drupal_mysql_user }}"
+    priv: "ALL"

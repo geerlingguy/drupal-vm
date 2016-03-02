@@ -1,0 +1,26 @@
+drupalvm_database: pgsql
+
+postgresql_databases:
+  - name: "{{ drupal_mysql_database }}"
+    owner: "{{ drupal_mysql_user }}"
+
+postgresql_users:
+  - name: "{{ drupal_mysql_user }}"
+    pass: "{{ drupal_mysql_password }}"
+    encrypted: no
+
+postgresql_user_privileges:
+  - name: "{{ drupal_mysql_user }}"
+    db: "{{ drupal_mysql_user }}"
+    priv: "ALL"
+
+mysql_packages:
+  - mariadb
+  - mariadb-server
+  - mariadb-libs
+  - MySQL-python
+  - perl-DBD-MySQL
+mysql_daemon: mariadb
+mysql_log_error: /var/log/mariadb/mariadb.log
+mysql_syslog_tag: mariadb
+mysql_pid_file: /var/run/mariadb/mariadb.pid

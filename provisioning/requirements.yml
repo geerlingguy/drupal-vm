@@ -1,4 +1,5 @@
 ---
+- src: ANXS.postgresql
 - src: arknoll.selenium
 - src: geerlingguy.adminer
 - src: geerlingguy.apache
