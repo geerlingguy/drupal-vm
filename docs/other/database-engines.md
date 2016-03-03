@@ -5,8 +5,8 @@ By default Drupal VM uses the package managers version of MySQL. If you're using
 This is the default setup for Drupal VM but for reference you need the following configuration in your `config.yml`
 
 ```yaml
-# The database software to use. Can be either 'mysql' or 'pgsql'.
-drupalvm_database: mysql
+# The database engine to use. Can be either 'mysql' or 'pgsql'.
+drupal_database_engine: mysql
 
 # MySQL Databases and users. If build_makefile: is true, first database will
 # be used for the makefile-built site.
@@ -20,6 +20,10 @@ mysql_users:
     host: "%"
     password: "{{ drupal_mysql_password }}"
     priv: "{{ drupal_mysql_database }}.*:ALL"
+
+installed_extras:
+  - ...
+  - mysql
 ```
 
 ## Using MariaDB
@@ -57,15 +61,23 @@ The configurations are the same as for MySQL and you can find out more options i
 
 ## Using PostgreSQL
 
-If you prefer to use PostgreSQL instead of MySQL/MariaDB you can install it by changing the `drupalvm_database` variable to `pgsql`:
+If you prefer to use PostgreSQL instead of MySQL/MariaDB you can install it by changing the `drupal_database_engine` variable to `pgsql`:
 
 ```yaml
-drupalvm_database: pgsql
+drupal_database_engine: pgsql
+```
+
+And adding `pgsql` to `installed_extras` list:
+
+```yaml
+installed_extras:
+  - ...
+  - pgsql
 ```
 
 To create the drupal database and the database user also add this to your `config.yml`:
 
-```
+```yaml
 # PostgreSQL
 postgresql_databases:
   - name: "{{ drupal_mysql_database }}"

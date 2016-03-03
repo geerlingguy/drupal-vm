@@ -32,4 +32,4 @@
 
 - name: Install PHP PostgreSQL dependencies.
   apt: name=php5-pgsql state=installed
-  when: drupalvm_database == "pgsql"
+  when: "'pgsql' in installed_extras or drupal_database_engine == 'pgsql'"

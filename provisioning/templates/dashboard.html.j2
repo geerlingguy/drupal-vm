@@ -226,18 +226,32 @@
           </tr>
         </thead>
         <tbody>
-          {% set database_list = (drupalvm_database == 'pgsql') | ternary(postgresql_databases, mysql_databases) %}
-          {% for database in database_list -%}
-            <tr>
-              <td><code>{{ database.name }}</code></td>
-              <td>{{ (drupalvm_database == 'pgsql') | ternary('PostgreSQL', 'MySQL') }}</td>
-              {% if 'adminer' in installed_extras -%}
-              <td>
-                <a href="http://{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}?username={{ mysql_root_username }}&db={{ database.name }}" class="btn btn-success btn-xs" role="button">Adminer</a>
-              </td>
-              {%- endif %}
-            </tr>
-          {%- endfor %}
+          {% if 'mysql' in installed_extras -%}
+            {%- for database in mysql_databases | default([]) -%}
+              <tr>
+                <td><code>{{ database.name }}</code></td>
+                <td>MySQL</td>
+                {% if 'adminer' in installed_extras -%}
+                <td>
+                  <a href="http://{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}?username={{ mysql_root_username }}&db={{ database.name }}" class="btn btn-success btn-xs" role="button">Adminer</a>
+                </td>
+                {%- endif %}
+              </tr>
+            {%- endfor -%}
+          {%- endif %}
+          {% if 'pgsql' in installed_extras -%}
+            {%- for database in postgresql_databases | default([]) -%}
+              <tr>
+                <td><code>{{ database.name }}</code></td>
+                <td>PostgreSQL</td>
+                {% if 'adminer' in installed_extras -%}
+                <td>
+                  <a href="http://{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}?username={{ mysql_root_username }}&db={{ database.name }}" class="btn btn-success btn-xs" role="button">Adminer</a>
+                </td>
+                {%- endif %}
+              </tr>
+            {%- endfor -%}
+          {%- endif %}
         </tbody>
       </table>
     {%- endmacro -%}
@@ -252,7 +266,7 @@
           </tr>
         </thead>
         <tbody>
-          {% if drupalvm_database == 'pgsql' -%}
+          {% if 'pgsql' in installed_extras -%}
             {% for user in postgresql_users -%}
               <tr>
                 <td><code>{{ user.name }}</code></td>
@@ -264,7 +278,8 @@
                 <td>PostgreSQL</td>
               </tr>
             {%- endfor %}
-          {% else %}
+          {%- endif %}
+          {% if 'mysql' in installed_extras -%}
             {% for user in mysql_users -%}
               <tr>
                 <td><code>{{ user.name }}</code></td>
@@ -272,7 +287,7 @@
                 <td>MySQL</td>
               </tr>
             {%- endfor %}
-          {% endif %}
+          {%- endif %}
         </tbody>
       </table>
     {%- endmacro -%}
@@ -320,18 +335,19 @@
         </div>
 
         <div class="col-md-5">
-          {% if drupalvm_database == 'pgsql' -%}
-            <section class="panel panel-default">
-              <div class="panel-heading">PostgreSQL connection information</div>
-              <div class="panel-body">
-                {{ sectionDatabaseConnection('127.0.0.1', postgresql_port, postgresql_admin_user, '') }}
-              </div>
-            </section>
-          {% else -%}
+          {% if 'mysql' in installed_extras -%}
             <section class="panel panel-default">
               <div class="panel-heading">MySQL connection information</div>
               <div class="panel-body">
                 {{ sectionDatabaseConnection('127.0.0.1', mysql_port, mysql_root_username, drupal_mysql_password) }}
+              </div>
+            </section>
+          {%- endif %}
+          {% if 'pgsql' in installed_extras -%}
+            <section class="panel panel-default">
+              <div class="panel-heading">PostgreSQL connection information</div>
+              <div class="panel-body">
+                {{ sectionDatabaseConnection('127.0.0.1', postgresql_port, postgresql_admin_user, '') }}
               </div>
             </section>
           {%- endif %}
