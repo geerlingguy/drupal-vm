@@ -16,17 +16,7 @@ postgresql_user_privileges:
 
 installed_extras:
   - adminer
-  - drupalconsole
   - mailhog
-  - memcached
-  - mysql
-  # - nodejs
   - pgsql
   - pimpmylog
-  # - redis
-  # - ruby
-  # - selenium
-  # - solr
-  - varnish
-  - xdebug
   - xhprof
