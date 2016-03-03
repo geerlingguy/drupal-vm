@@ -1,17 +1,17 @@
 drupal_database_engine: pgsql
 
 postgresql_databases:
-  - name: "{{ drupal_mysql_database }}"
-    owner: "{{ drupal_mysql_user }}"
+  - name: "{{ drupal_database_name }}"
+    owner: "{{ drupal_database_user }}"
 
 postgresql_users:
-  - name: "{{ drupal_mysql_user }}"
-    pass: "{{ drupal_mysql_password }}"
+  - name: "{{ drupal_database_user }}"
+    pass: "{{ drupal_database_password }}"
     encrypted: no
 
 postgresql_user_privileges:
-  - name: "{{ drupal_mysql_user }}"
-    db: "{{ drupal_mysql_user }}"
+  - name: "{{ drupal_database_user }}"
+    db: "{{ drupal_database_user }}"
     priv: "ALL"
 
 installed_extras:

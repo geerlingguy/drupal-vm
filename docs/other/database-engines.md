@@ -11,15 +11,15 @@ drupal_database_engine: mysql
 # MySQL Databases and users. If build_makefile: is true, first database will
 # be used for the makefile-built site.
 mysql_databases:
-  - name: "{{ drupal_mysql_database }}"
+  - name: "{{ drupal_database_name }}"
     encoding: utf8
     collation: utf8_general_ci
 
 mysql_users:
-  - name: "{{ drupal_mysql_user }}"
+  - name: "{{ drupal_database_user }}"
     host: "%"
-    password: "{{ drupal_mysql_password }}"
-    priv: "{{ drupal_mysql_database }}.*:ALL"
+    password: "{{ drupal_database_password }}"
+    priv: "{{ drupal_database_name }}.*:ALL"
 
 installed_extras:
   - ...
@@ -80,17 +80,17 @@ To create the drupal database and the database user also add this to your `confi
 ```yaml
 # PostgreSQL
 postgresql_databases:
-  - name: "{{ drupal_mysql_database }}"
-    owner: "{{ drupal_mysql_user }}"
+  - name: "{{ drupal_database_name }}"
+    owner: "{{ drupal_database_user }}"
 
 postgresql_users:
-  - name: "{{ drupal_mysql_user }}"
-    pass: "{{ drupal_mysql_password }}"
+  - name: "{{ drupal_database_user }}"
+    pass: "{{ drupal_database_password }}"
     encrypted: no
 
 postgresql_user_privileges:
-  - name: "{{ drupal_mysql_user }}"
-    db: "{{ drupal_mysql_user }}"
+  - name: "{{ drupal_database_user }}"
+    db: "{{ drupal_database_user }}"
     priv: "ALL"
 ```
 
