@@ -174,7 +174,7 @@ nodejs_version: "0.12"
 nodejs_npm_global_packages: []
 
 # `ruby` must be in installed_extras for this to work.
-ruby_install_gems_user: "{{ vagrant_user }}"
+ruby_install_gems_user: "{{ ansible_ssh_user }}"
 ruby_install_gems: []
 
 # You can configure almost anything else on the server in the rest of this file.
@@ -216,9 +216,9 @@ php_enable_php_fpm: true
 php_fpm_listen: "127.0.0.1:9000"
 
 composer_path: /usr/bin/composer
-composer_home_path: "/home/{{ vagrant_user }}/.composer"
-composer_home_owner: "{{ vagrant_user }}"
-composer_home_group: "{{ vagrant_user }}"
+composer_home_path: "/home/{{ ansible_ssh_user }}/.composer"
+composer_home_owner: "{{ ansible_ssh_user }}"
+composer_home_group: "{{ ansible_ssh_user }}"
 # composer_global_packages:
 #   - { name: phpunit/phpunit, release: '@stable' }
 
