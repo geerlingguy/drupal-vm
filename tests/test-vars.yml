@@ -1,0 +1,1 @@
+composer_home_path: "/{{ drupalvm_user }}/.composer"

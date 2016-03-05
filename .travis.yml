@@ -54,7 +54,8 @@ script:
   - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$CONFIG /var/www/drupalvm/config.yml'
   - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$MAKEFILE /var/www/drupalvm/drupal.make.yml'
 
-  # Append additional variables if set.
+  # Append additional variables.
+  - 'sudo docker exec "$(cat ${container_id})" bash -c "cat /var/www/drupalvm/tests/test-vars.yml >> /var/www/drupalvm/config.yml" || true'
   - '[[ $additional_vars ]] && sudo docker exec "$(cat ${container_id})" bash -c "cat /var/www/drupalvm/tests/${additional_vars} >> /var/www/drupalvm/config.yml" || true'
 
   # Vagrantfile syntax check
