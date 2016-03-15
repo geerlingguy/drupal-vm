@@ -44,6 +44,27 @@ You can use the [vagrant-winnfsd](https://github.com/GM-Alex/vagrant-winnfsd) pl
 
 Another option for the more adventurous is to manually install and configure WinNFSD, and manually mount the shares within your VM. This requires a bit more work, but could be more stable on Windows; see this blog post for more details: [Windows + Vagrant + WinNFSD without file update problems](https://hollyit.net/blog/windowsvagrantwinnfsd-without-file-update-problems).
 
+There is a fork of vagrant-winnfsd that add logging and debug https://github.com/GuyPaddock/vagrant-winnfsd, replace in your .vagrant.d\gems\gems folder to test it.
+
+The best config is to mount only one folder with nfs see [vagrant-winnfsd issue #12](https://github.com/winnfsd/vagrant-winnfsd/issues/12#issuecomment-78195957), so you need to adapt your config and set vagrant folder to native:
+
+    vagrant_synced_folder_default_type: ""
+
+Add mount_options to your synced folder to avoid an error:
+
+    type: nfs
+    mount_options: ["rw","vers=3","udp","nolock"]
+
+In your Vagrantfile.local, add user access to vagrant:
+
+    config.winnfsd.uid=900
+    config.winnfsd.gid=900
+
+If you are using the fork of vagrant-winnfsd, you can set aditionnal options and use logging="on" in case of problem in your Vagrantfile.local:
+
+    config.winnfsd.logging="off"
+    config.winnfsd.halt_on_reload="on"
+
 ### "Authentication failure" on vagrant up
 
 Some Windows users have reported running into an issue where an authentication failure is reported once the VM is booted (e.g. `drupalvm: Warning: Authentication failure. Retrying...` — see [#170](https://github.com/geerlingguy/drupal-vm/issues/170)). To fix this, do the following:
