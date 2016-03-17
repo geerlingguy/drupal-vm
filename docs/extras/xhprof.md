@@ -6,7 +6,9 @@ As a prerequisite, make sure you have `xhprof` in the `installed_extras` list in
 
 The easiest way to use XHProf to profile your PHP code on a Drupal site is to install the [XHProf](https://www.drupal.org/project/xhprof) module, then in XHProf's configuration (at `/admin/config/development/xhprof`), check the 'Enable profiling of page views and drush requests' checkbox.
 
-The XHProf module doesn't yet include support for callgraphs, but there's an issue to [add callgraph support](https://www.drupal.org/node/1470740).
+The XHProf module doesn't include built-in support for callgraphs, but there's an issue to [add callgraph support](https://www.drupal.org/node/1470740).
+
+You can view callgraphs (and a listing of all stored runs) using Drupal VM's own XHProf installation by visiting `http://xhprof.drupalvm.dev/` and clicking on the relevant run, then clicking the "[View Full Callgraph]" link.
 
 ## Devel module (deprecated)
 
