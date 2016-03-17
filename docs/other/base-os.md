@@ -9,6 +9,8 @@ Currently-supported OSes are:
 
 For certain OSes, there are a couple other caveats and tweaks you may need to perform to get things running smoothly—the main features and latest development is only guaranteed to work with the default OS as configured in `example.config.yml`.
 
+Some other OSes should work, but are not regularly tested with Drupal VM, including Debian 8/Jessie (`debian/jessie64`) and Debian 7/Wheezy (`debian/wheezy64`).
+
 ## RedHat Enterprise Linux / CentOS 7
 
 **MySQL/MariaDB**: RHEL/CentOS 7 switched from using MySQL as the default database system to using MariaDB, so to make sure everything is configured properly, you need to add the following to `config.yml` so MariaDB installs correctly:
