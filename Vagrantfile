@@ -150,6 +150,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     p.name = vconfig['vagrant_hostname']
     p.memory = vconfig['vagrant_memory']
     p.cpus = vconfig['vagrant_cpus']
+    p.update_guest_tools = true
   end
 
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
