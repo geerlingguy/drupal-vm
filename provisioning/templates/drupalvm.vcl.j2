@@ -34,6 +34,26 @@ sub vcl_recv {
         return (hash);
     }
 
+    # Only allow BAN requests from IP addresses in the 'purge' ACL.
+    if (req.method == "BAN") {
+        # Same ACL check as above:
+        if (!client.ip ~ purge) {
+            return (synth(403, "Not allowed."));
+        }
+
+        # Logic for the ban, using the X-Drupal-Cache-Tags header. For more info
+        # see https://github.com/geerlingguy/drupal-vm/issues/397.
+        if (req.http.X-Drupal-Cache-Tags) {
+            ban("obj.http.X-Drupal-Cache-Tags ~ " + req.http.X-Drupal-Cache-Tags);
+        }
+        else {
+            return (synth(403, "X-Drupal-Cache-Tags header missing."));
+        }
+
+        # Throw a synthetic page so the request won't go to the backend.
+        return (synth(200, "Ban added."));
+    }
+
     # Only cache GET and HEAD requests (pass through POST requests).
     if (req.method != "GET" && req.method != "HEAD") {
         return (pass);
@@ -90,6 +110,13 @@ sub vcl_recv {
 
 # Set a header to track a cache HITs and MISSes.
 sub vcl_deliver {
+    # Remove ban-lurker friendly custom headers when delivering to client.
+    unset resp.http.X-Url;
+    unset resp.http.X-Host;
+    # Comment these for easier Drupal cache tag debugging in development.
+    unset resp.http.X-Drupal-Cache-Tags;
+    unset resp.http.X-Drupal-Cache-Contexts;
+
     if (obj.hits > 0) {
         set resp.http.X-Varnish-Cache = "HIT";
     }
@@ -100,6 +127,10 @@ sub vcl_deliver {
 
 # Instruct Varnish what to do in the case of certain backend responses (beresp).
 sub vcl_backend_response {
+    # Set ban-lurker friendly custom headers.
+    set beresp.http.X-Url = bereq.url;
+    set beresp.http.X-Host = bereq.http.host;
+
     # Cache 404s, 301s, at 500s with a short lifetime to protect the backend.
     if (beresp.status == 404 || beresp.status == 301 || beresp.status == 500) {
         set beresp.ttl = 10m;
