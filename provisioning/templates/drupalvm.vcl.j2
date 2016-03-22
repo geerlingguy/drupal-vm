@@ -41,13 +41,13 @@ sub vcl_recv {
             return (synth(403, "Not allowed."));
         }
 
-        # Logic for the ban, using the X-Drupal-Cache-Tags header. For more info
-        # read through https://github.com/geerlingguy/drupal-vm/issues/397.
-        if (req.http.X-Drupal-Cache-Tags) {
-            ban("obj.http.X-Drupal-Cache-Tags ~ " + req.http.X-Drupal-Cache-Tags);
+        # Logic for the ban, using the X-Cache-Tags header. For more info, see
+        # https://github.com/geerlingguy/drupal-vm/issues/397.
+        if (req.http.X-Cache-Tags) {
+            ban("obj.http.X-Cache-Tags ~ " + req.http.X-Cache-Tags);
         }
         else {
-            return (synth(403, "X-Drupal-Cache-Tags header missing."));
+            return (synth(403, "X-Cache-Tags header missing."));
         }
 
         # Throw a synthetic page so the request won't go to the backend.
@@ -114,8 +114,7 @@ sub vcl_deliver {
     unset resp.http.X-Url;
     unset resp.http.X-Host;
     # Uncomment on production (when not debugging).
-    # unset resp.http.X-Drupal-Cache-Tags;
-    # unset resp.http.X-Drupal-Cache-Contexts;
+    # unset resp.http.X-Cache-Tags;
 
     if (obj.hits > 0) {
         set resp.http.X-Varnish-Cache = "HIT";
