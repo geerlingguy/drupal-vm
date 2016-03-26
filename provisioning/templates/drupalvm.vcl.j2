@@ -134,6 +134,12 @@ sub vcl_backend_response {
         set beresp.ttl = 10m;
     }
 
+    # Enable streaming directly to backend for BigPipe responses.
+    if (beresp.http.Surrogate-Control ~ "BigPipe/1.0") {
+        set beresp.do_stream = true;
+        set beresp.ttl = 0s;
+    }
+
     # Don't allow static files to set cookies.
     # (?i) denotes case insensitive in PCRE (perl compatible regular expressions).
     # This list of extensions appears twice, once here and again in vcl_recv so
