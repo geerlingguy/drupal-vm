@@ -35,6 +35,7 @@ pages:
     - 'Using Different Webservers': 'other/webservers.md'
     - 'Using a local Vagrantfile': 'other/local-vagrantfile.md'
     - 'PHP 7 on Drupal VM': 'other/php-7.md'
+    - 'BigPipe with Drupal VM': 'other/bigpipe.md'
     - 'Drupal VM Management Tools': 'other/management-tools.md'
     - 'Networking Notes': 'other/networking.md'
     - 'Drupal 6 Notes': 'other/drupal-6.md'
