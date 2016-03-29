@@ -133,6 +133,7 @@ nginx_hosts:
     root: "{{ dashboard_install_dir }}"
 
 nginx_remove_default_vhost: true
+nginx_ppa_use: true
 
 # MySQL Databases and users. If build_makefile: is true, first database will
 # be used for the makefile-built site.
