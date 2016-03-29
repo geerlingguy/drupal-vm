@@ -2,17 +2,13 @@
 
 To do this, BigPipe requires an environment configured to allow the authenticated request response to be streamed from PHP all the way through to the client. All parts of the web stack that intermediate the connection have to have output buffering disabled so the response stream can flow through.
 
-Drupal VM's default configuration uses Apache's `mod_proxy_fastcgi` module, which doesn't allow output buffering to be disabled, so to use BigPipe with Drupal VM, you will need to either switch to Nginx or make a few modifications to the Apache configuration.
+Drupal VM's default configuration uses Apache with the `mod_proxy_fastcgi` module to connect to PHP-FPM, which isn't the most optimal configuration for BigPipe, and requires gzip compression to be disabled, so you should either switch to Nginx or consider further customizing the Apache configuration.
 
 Drupal VM's Varnish configuration works with BigPipe out of the box, as it allows the backend response to be streamed whenever BigPipe is enabled (it outputs a `Surrogate-Control: BigPipe/1.0` header to tell Varnish when to stream the response).
 
 ## PHP configuration
 
-BigPipe requires PHP's output buffering to be disabled. To do this, add the following line to `config.yml` with the other PHP configuration settings:
-
-    php_output_buffering: "Off"
-
-(You also need to make sure `zlib.output_compression` is `Off`—but that's the default, so you shouldn't need to change anything else in the PHP configuration).
+BigPipe doesn't require any particular modifications to PHP in Drupal VM's default configuration. However, for some test scenarios, you can disable php's `output_buffering` entirely by setting `php_output_buffering: "Off"` in `config.yml`.
 
 ## Nginx configuration
 
@@ -25,9 +21,17 @@ Nginx is the recommended way to use BigPipe, for the following reasons:
 
 ## Apache configuration
 
-There are a few ways you can configure Apache to work with a streamed response, but Drupal VM's default configuration uses `mod_proxy_fastcgi`, which is incompatible with BigPipe.
+Apache has three primary means of interacting with PHP applications like Drupal: `mod_php`, `mod_fastcgi`, and `mod_proxy_fcgi`. Drupal VM uses `mod_proxy_fcgi`, which is the most widely used and supported method of using Apache with PHP-FPM for the best scalability and memory management with Apache + PHP.
 
-If you don't want to use Nginx (which requires no special configuration), you can switch Apache to use `mod_php` by making the following changes in `config.yml`:
+For all of these methods, you have to make sure `mod_deflate` gzip compression is disabled; you can do this by adding the following line immediately after the `ProxyPassMatch` line under a host in the `apache_vhosts` list inside `config.yml`:
+
+    SetEnv no-gzip 1
+
+This will disable the `mod_deflate` module for any requests inside that directory.
+
+> Even without gzip, `mod_proxy_fcgi` buffers responses in a minimum of 4096-byte chunks. Most BigPipe usage deals with chunks of content larger than that, but if you're testing PHP's output buffering and notice that Apache delivers the entire page at once instead of flushing output immediately, you might be running into this buffer. See [this issue](https://github.com/geerlingguy/drupal-vm/issues/532#issuecomment-203128163) for more information.
+
+If you want to switch Apache to use `mod_php` instead of proxying requests through PHP-FPM, you can make the following changes in `config.yml`:
 
   1. Add `libapache2-mod-php5` to `extra_packages` in `config.yml`.
   2. Delete the `extra_parameters` under any Drupal site in the list of `apache_vhosts` (so there is no `ProxyPassMatch` rule).
