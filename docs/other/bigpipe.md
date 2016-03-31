@@ -8,7 +8,7 @@ Drupal VM's Varnish configuration works with BigPipe out of the box, as it allow
 
 ## PHP configuration
 
-BigPipe doesn't require any particular modifications to PHP in Drupal VM's default configuration. However, for some test scenarios, you can disable php's `output_buffering` entirely by setting `php_output_buffering: "Off"` in `config.yml`.
+BigPipe doesn't require any particular modifications to PHP in Drupal VM's default configuration. However, for some scenarios, you might want to disable php's `output_buffering` entirely by setting `php_output_buffering: "Off"` in `config.yml`, or change the `output_buffering` level from it's default of `4096` bytes.
 
 ## Nginx configuration
 
@@ -28,8 +28,6 @@ For all of these methods, you have to make sure `mod_deflate` gzip compression i
     SetEnv no-gzip 1
 
 This will disable the `mod_deflate` module for any requests inside that directory.
-
-> Even without gzip, `mod_proxy_fcgi` buffers responses in a minimum of 4096-byte chunks. Most BigPipe usage deals with chunks of content larger than that, but if you're testing PHP's output buffering and notice that Apache delivers the entire page at once instead of flushing output immediately, you might be running into this buffer. See [this issue](https://github.com/geerlingguy/drupal-vm/issues/532#issuecomment-203128163) for more information.
 
 If you want to switch Apache to use `mod_php` instead of proxying requests through PHP-FPM, you can make the following changes in `config.yml`:
 
