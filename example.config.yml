@@ -199,6 +199,8 @@ firewall_allowed_tcp_ports:
 firewall_log_dropped_packets: false
 
 # PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
+# PHP 7.0 requires a few additional changes. See the documentation at
+# http://docs.drupalvm.com/en/latest/other/php-7/
 php_version: "5.6"
 php_memory_limit: "192M"
 php_display_errors: "On"
