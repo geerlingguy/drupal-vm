@@ -9,6 +9,7 @@
     - python-apt
     - python-pycurl
     - build-essential
+    - unzip
 
 - name: Disable the ufw firewall (since we use a simple iptables firewall).
   service: name=ufw state=stopped

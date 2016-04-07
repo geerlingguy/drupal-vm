@@ -5,6 +5,7 @@
     - "curl"
     - "python-pycurl"
     - "@development"
+    - "unzip"
 
 - name: Enable remi repo for MySQL.
   set_fact: mysql_enablerepo="remi"

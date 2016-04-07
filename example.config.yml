@@ -166,8 +166,7 @@ installed_extras:
   - xhprof
 
 # Add any extra apt or yum packages you would like installed.
-extra_packages:
-  - unzip
+extra_packages: []
 
 # `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
 # "0.12", "4.x", "5.x".
