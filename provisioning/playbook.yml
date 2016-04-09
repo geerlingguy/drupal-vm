@@ -7,6 +7,11 @@
     - ../config.yml
 
   pre_tasks:
+    - include_vars: "{{ item }}"
+      with_fileglob:
+        - ../../prod.config.yml
+        - ../../local.config.yml
+
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
     - include: tasks/init-redhat.yml
