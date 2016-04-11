@@ -41,10 +41,10 @@ You can disable Drupal VM's automatic Drush alias file management if you want to
 
 For sql-sync to work between two remotes make sure you are running Drush 8.0.3 or later on your host and your guest machine, as well as 7.1.0 or later on the remote.
 
-If you're locked to an older version of Drush, it is likely that Drush will try to run the command from the `@destination` instead of from your host computer, which means you need to move your `@remote` alias to Drupal VM as well. You can place the file in any of the [directories that drush searches](https://github.com/drush-ops/drush/blob/5a1328d6e9cb919a286e70360df159d1b4b15d3e/examples/example.aliases.drushrc.php#L43:L51), for example `/home/vagrant/.drush/<remote-alias>.aliases.drushrc.php`.
+If you're locked to an older version of Drush, it is likely that Drush will try to run the command from the `@destination` instead of from your host computer, which means you need to move your `@remote` alias to Drupal VM as well. You can place the file in any of the [directories Drush searches](https://github.com/drush-ops/drush/blob/5a1328d6e9cb919a286e70360df159d1b4b15d3e/examples/example.aliases.drushrc.php#L43:L51), for example `/home/vagrant/.drush/<remote-alias>.aliases.drushrc.php`.
 
-If you're still having issues, you can avoid `sql-sync` entirely and simply pipe the mysqldump output yourself with:
+If you're still having issues, you can avoid `sql-sync` entirely and pipe the mysqldump output yourself with:
 
 ```
-drush @remote sql-dump | drush @durpalvm.drupalvm.dev sql-cli
+drush @remote sql-dump | drush @drupalvm.drupalvm.dev sql-cli
 ```
