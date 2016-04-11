@@ -23,7 +23,7 @@ php_packages:
   - php7.0-mbstring
 php_mysql_package: php7.0-mysql
 php_fpm_daemon: php7.0-fpm
-php_conf_paths: 
+php_conf_paths:
   - /etc/php/7.0/fpm
   - /etc/php/7.0/apache2
   - /etc/php/7.0/cli
