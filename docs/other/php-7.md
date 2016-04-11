@@ -36,8 +36,6 @@ php_fpm_pool_conf_path: "/etc/php/7.0/fpm/pool.d/www.conf"
 
 Also, comment out `xhprof`, `xdebug`, `redis` and `memcached` from the `installed_extras` list, as these extensions are not yet supported for PHP 7 (as of late 2015).
 
-Xdebug 2.4.0 works with PHP 7.0. Sources available at https://xdebug.org/files/xdebug-2.4.0.tgz but you'll need to update `ansible-role-php-xdebug` to pick the source from there.
-
 You can also build from source using the same/included `geerlingguy.php` Ansible role, but that process is a bit more involved and for power users comfortable with the process.
 
 ## RedHat/CentOS 7
