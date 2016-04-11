@@ -172,6 +172,7 @@ extra_packages: []
 # "0.12", "4.x", "5.x".
 nodejs_version: "0.12"
 nodejs_npm_global_packages: []
+nodejs_install_npm_user: "{{ drupalvm_user }}"
 
 # `ruby` must be in installed_extras for this to work.
 ruby_install_gems_user: "{{ drupalvm_user }}"
