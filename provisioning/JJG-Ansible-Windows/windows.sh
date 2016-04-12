@@ -9,6 +9,23 @@
 # Uncomment if behind a proxy server.
 # export {http,https,ftp}_proxy='http://username:password@proxy-host:80'
 
+args=()
+extra_vars=("is_windows=true")
+
+# Process and remove all flags.
+while (($#)); do
+  case $1 in
+    --extra-vars=*) extra_vars+=("${1#*=}") ;;
+    --extra-vars|-e) shift; extra_vars+=("$1") ;;
+    -*) echo "invalid option: $1" >&2; exit 1 ;;
+    *) args+=("$1") ;;
+  esac
+  shift
+done
+
+# Restore the arguments without flags.
+set -- "${args[@]}"
+
 ANSIBLE_PLAYBOOK=$1
 PLAYBOOK_DIR=${ANSIBLE_PLAYBOOK%/*}
 
@@ -35,13 +52,9 @@ if ! command -v ansible >/dev/null; then
     exit 1;
   fi
 
-  echo "Installing pip via easy_install."
-  wget https://raw.githubusercontent.com/ActiveState/ez_setup/v0.9/ez_setup.py
-  python ez_setup.py && rm -f ez_setup.py
-  easy_install pip
-
-  # Make sure setuptools are installed crrectly.
-  pip install setuptools --no-use-wheel --upgrade
+  echo "Installing pip."
+  wget https://bootstrap.pypa.io/get-pip.py
+  python get-pip.py && rm -f get-pip.py
 
   # Install GCC / required build tools.
   if [[ ! -z $YUM ]]; then
@@ -63,4 +76,4 @@ find "/vagrant/$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements
 
 # Run the playbook.
 echo "Running Ansible provisioner defined in Vagrantfile."
-ansible-playbook -i 'localhost,' "/vagrant/${ANSIBLE_PLAYBOOK}" --extra-vars "is_windows=true" --connection=local
+ansible-playbook -i 'localhost,' "/vagrant/${ANSIBLE_PLAYBOOK}" --extra-vars "${extra_vars[*]}" --connection=local
