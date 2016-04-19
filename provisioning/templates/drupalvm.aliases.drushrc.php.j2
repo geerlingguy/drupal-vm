@@ -30,8 +30,10 @@ $aliases['{{ host }}'] = array(
   {%- endfor -%}
 {%- elif drupalvm_webserver == 'nginx' -%}
   {%- for host in nginx_hosts -%}
-    {%- for server_name in host.server_name.split() -%}
-      {{ alias(server_name, host.root) }}
-    {%- endfor -%}
+    {%- if host.root is defined -%}
+      {%- for server_name in host.server_name.split() -%}
+        {{ alias(server_name, host.root) }}
+      {%- endfor -%}
+    {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
