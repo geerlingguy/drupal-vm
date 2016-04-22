@@ -23,7 +23,7 @@
     {%- macro getServernameFromDocroot(path) -%}
       {%- if drupalvm_webserver == 'apache' -%}
         {%- for host in apache_vhosts -%}
-          {%- if host.documentroot == path -%}
+          {%- if host.documentroot is defined and host.documentroot == path -%}
             {{ host.servername }}
           {%- endif -%}
         {%- endfor -%}
@@ -97,7 +97,9 @@
         <tbody>
           {% if drupalvm_webserver == 'apache' -%}
             {%- for host in apache_vhosts -%}
-              {{ printSite(host.servername, host.documentroot) }}
+              {%- if host.documentroot is defined -%}
+                {{ printSite(host.servername, host.documentroot) }}
+              {%- endif %}
             {%- endfor -%}
           {%- elif drupalvm_webserver == 'nginx' -%}
             {%- for host in nginx_hosts -%}
