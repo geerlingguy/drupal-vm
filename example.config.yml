@@ -218,6 +218,11 @@ php_max_input_vars: "4000"
 php_enable_php_fpm: true
 php_fpm_listen: "127.0.0.1:9000"
 
+php_pear_channels:
+  - pear.twig-project.org
+php_pear_libraries:
+  - twig/CTwig
+
 composer_path: /usr/bin/composer
 composer_home_path: "/home/{{ drupalvm_user }}/.composer"
 composer_home_owner: "{{ drupalvm_user }}"

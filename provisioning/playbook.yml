@@ -28,6 +28,7 @@
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }
     - geerlingguy.mysql
     - geerlingguy.php
+    - geerlingguy.php-pear
     - geerlingguy.php-pecl
     - geerlingguy.php-mysql
     - geerlingguy.composer

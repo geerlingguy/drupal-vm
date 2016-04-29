@@ -18,6 +18,7 @@
 - src: geerlingguy.php
 - src: geerlingguy.php-memcached
 - src: geerlingguy.php-mysql
+- src: geerlingguy.php-pear
 - src: geerlingguy.php-pecl
 - src: geerlingguy.php-redis
 - src: geerlingguy.php-xdebug
