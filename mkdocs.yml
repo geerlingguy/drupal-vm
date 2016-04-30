@@ -42,3 +42,4 @@ pages:
     - 'Linux Notes': 'other/linux.md'
     - 'Windows Notes': 'other/windows.md'
     - 'Vagrant and VirtualBox Tips': 'other/vagrant-virtualbox.md'
+    - 'Storing Drupal VM in a subdirectory': 'other/drupalvm-in-subdirectory.md'
