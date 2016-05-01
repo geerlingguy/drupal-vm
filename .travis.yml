@@ -23,6 +23,11 @@ env:
       init: /usr/lib/systemd/systemd
       run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
       additional_vars: "centos-7-vars.yml"
+    - distribution: ubuntu
+      version: 14.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      additional_vars: ubuntu-14-postgresql.yml
 
 services:
   - docker
@@ -109,6 +114,9 @@ script:
     | grep -q 'Drupal bootstrap.*Successful'
     && (echo 'Drush install pass' && exit 0)
     || (echo 'Drush install fail' && exit 1)
+
+  # Debug
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm drush @${MACHINE_NAME}.${HOSTNAME} status'
 
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'

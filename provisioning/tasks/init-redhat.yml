@@ -26,3 +26,7 @@
   set_fact:
     php_xhprof_html_dir: "/usr/share/pear/xhprof_html"
   when: php_xhprof_html_dir is not defined
+
+- name: Install PHP PostgreSQL dependencies.
+  yum: name=php-pgsql state=installed
+  when: "'pgsql' in installed_extras or drupal_database_engine == 'pgsql'"

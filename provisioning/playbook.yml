@@ -26,10 +26,11 @@
     - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }
     - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache' }
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }
-    - geerlingguy.mysql
     - geerlingguy.php
     - geerlingguy.php-pecl
-    - geerlingguy.php-mysql
+    - { role: geerlingguy.mysql, when: '"mysql" in installed_extras or drupal_database_engine == "mysql"' }
+    - { role: geerlingguy.php-mysql, when: '"mysql" in installed_extras or drupal_database_engine == "mysql"' }
+    - { role: ANXS.postgresql, when: '"pgsql" in installed_extras or drupal_database_engine == "pgsql"' }
     - geerlingguy.composer
     - geerlingguy.drush
 
