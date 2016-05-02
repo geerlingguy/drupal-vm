@@ -25,23 +25,17 @@ Installed extras that are currently unsupported on Ubuntu 16.04:
   - `varnish`
   - `xhprof`
 
+## Ubuntu 14.04 Trusty LTS
+
+Everything should work out of the box with Ubuntu 14.04.
+
+## Ubuntu 12.04 Precise LTS
+
+Everything should work out of the box with Ubuntu 12.04.
+
 ## RedHat Enterprise Linux / CentOS 7
 
-**MySQL/MariaDB**: RHEL/CentOS 7 switched from using MySQL as the default database system to using MariaDB, so to make sure everything is configured properly, you need to add the following to `config.yml` so MariaDB installs correctly:
-
-```yaml
-mysql_packages:
-  - mariadb
-  - mariadb-server
-  - mariadb-libs
-  - MySQL-python
-  - perl-DBD-MySQL
-mysql_daemon: mariadb
-mysql_socket: /var/lib/mysql/mysql.sock
-mysql_log_error: /var/log/mariadb/mariadb.log
-mysql_syslog_tag: mariadb
-mysql_pid_file: /var/run/mariadb/mariadb.pid
-```
+Everything should work out of the box with RHEL 7.
 
 ## RedHat Enterprise Linux / CentOS 6
 
