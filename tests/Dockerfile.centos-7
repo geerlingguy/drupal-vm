@@ -20,6 +20,9 @@ RUN yum clean all
 RUN easy_install pip
 RUN pip install ansible
 
+# Fix weird issue with setuptools
+RUN pip install --upgrade setuptools --user python
+
 # Disable requiretty
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
