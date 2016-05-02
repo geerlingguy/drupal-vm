@@ -12,6 +12,8 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*; \
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
+RUN yum -y install redhat-lsb-core
+
 # Install Ansible
 RUN yum -y install epel-release
 RUN yum -y install git sudo which curl tar unzip xz logrotate initscripts
