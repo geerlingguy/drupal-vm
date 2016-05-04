@@ -1,5 +1,6 @@
 ---
 - src: arknoll.selenium
+- src: franklinkim.newrelic
 - src: geerlingguy.adminer
 - src: geerlingguy.apache
 - src: geerlingguy.apache-php-fpm
