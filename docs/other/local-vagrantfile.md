@@ -11,9 +11,6 @@ config.vm.provider :virtualbox do |v|
   # Enable GUI mode instead of running a headless machine.
   v.gui = true
 
-  # Reduce disk usage of multiple boxes by sharing a master VM.
-  v.linked_clone = true
-
   # Cap the host CPU execution at 50% usage.
   v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
 end
