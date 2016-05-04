@@ -7,6 +7,7 @@ vagrant_synced_folders:
   - local_path: ~/Sites/drupalvm
     destination: /var/www/drupalvm
     type: smb
+    create: true
 ```
 
 You can add as many synced folders as you'd like, and you can configure [any type of share](https://www.vagrantup.com/docs/synced-folders/index.html) supported by Vagrant; just add another item to the list of `vagrant_synced_folders`.
@@ -53,9 +54,10 @@ If you are using rsync, it is advised to exclude certain directories so that the
 
 ```yaml
 vagrant_synced_folders:
-  - local_path: ~/Sites/drupalvm/drupal
+  - local_path: ~/Sites/drupalvm
     destination: /var/www/drupalvm
     type: rsync
+    create: true
     excluded_paths:
       - drupal/private
       - drupal/public/.git
