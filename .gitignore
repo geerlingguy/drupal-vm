@@ -8,6 +8,7 @@ vagrant_ansible_inventory_default
 config.yml
 drupal.make.yml
 Vagrantfile.local
+provisioning/playbook.local.yml
 examples/prod/inventory
 examples/prod/bootstrap/vars.yml
 scripts/

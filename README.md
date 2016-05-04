@@ -42,6 +42,7 @@ There are a couple places where you can customize the VM for your needs:
 
   - `config.yml`: Contains variables like the VM domain name and IP address, PHP and MySQL configuration, etc.
   - `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (more about [Drush make files](https://www.drupal.org/node/1432374)).
+  - `provisioning/playbook.local.yml`: Contains an optional playbook override file. See example.playbook.local.yml.
 
 If you want to switch from Drupal 8 (default) to Drupal 7 or 6 on the initial install, do the following:
 

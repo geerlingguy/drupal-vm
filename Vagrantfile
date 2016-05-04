@@ -106,20 +106,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder '.', '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
   # Provisioning. Use ansible if it's installed, JJG-Ansible-Windows if not.
+  playbook = File.exist?("#{dir}/provisioning/playbook.local.yml") ? 'playbook.local.yml' : 'playbook.yml'
   if which('ansible-playbook')
     config.vm.provision 'ansible' do |ansible|
-      ansible.playbook = "#{dir}/provisioning/playbook.yml"
+      ansible.playbook = "#{dir}/provisioning/{playbook}"
     end
   else
     config.vm.provision 'shell' do |sh|
       sh.path = "#{dir}/provisioning/JJG-Ansible-Windows/windows.sh"
-      sh.args = '/provisioning/playbook.yml'
+      sh.args = "/provisioning/{playbook}"
     end
   end
   # ansible_local provisioner is broken in Vagrant < 1.8.2.
   # else
   #   config.vm.provision "ansible_local" do |ansible|
-  #     ansible.playbook = "provisioning/playbook.yml"
+  #     ansible.playbook = "provisioning/{playbook}"
   #     ansible.galaxy_role_file = "provisioning/requirements.yml"
   #   end
   # end

@@ -1,0 +1,13 @@
+---
+# You will most likely want to build on top of the default playbook.
+- include: provisioning/playbook.yml
+
+# Add additional roles.
+- hosts: all
+  become: yes
+
+  roles:
+    # Example: A role from ansible-galaxy not already in the drupal-vm playbook.
+    - geerlingguy.svn
+    # Example: A custom PECL yaml role added to provisioning/roles/my-php-yaml.
+    - my-php-yaml
