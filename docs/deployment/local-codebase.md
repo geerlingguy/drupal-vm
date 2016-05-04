@@ -23,16 +23,41 @@ install_site: false
 
 If you aren't copying back a database, and want to have Drupal VM run `drush si` for your Drupal site, you can leave `install_site` set to `true` and it will run a site install on your Drupal codebase using the `drupal_*` config variables.
 
-## Update `apache_vhosts`
+## Update `drupal_core_path`
 
-Add your site to `apache_vhosts`, setting the `documentroot` to the same value as the `destination` of the synced folder you configured earlier:
+Set `drupal_core_path` to the same value as the `destination` of the synced folder you configured earlier:
 
 ```yaml
+drupal_core_path: "/var/www/my-drupal-site"
+```
+
+This variable will be used for the document root of the webserver.
+
+## Set the domain
+
+By default the domain of your site will be `drupalvm.dev` but you can change it by setting `drupal_domain` to the domain of your choice:
+
+```
+drupal_domain: "local.my-drupal-site.com"
+```
+
+If you prefer using your domain as the root of all extra packages installed, ie. `adminer`, `xhprof` and `pimpmylog`, set it as the value of `vagrant_hostname` instead.
+
+```
+vagrant_hostname: "my-drupal-site.com"
+
 apache_vhosts:
-  - servername: "local.my-drupal-site.com"
-    documentroot: "/var/www/my-drupal-site"
+  # Resolves to http://my-drupal-site.com/
+  - servername: "{{ drupal_domain }}"
+    documentroot: "{{ drupal_core_path }}"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+
+  # Resolves to http://adminer.my-drupal-site.com/
+  - servername: "adminer.{{ vagrant_hostname }}"
+    documentroot: "{{ adminer_install_dir }}"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ adminer_install_dir }}"
 ```
 
 ## Update MySQL info
