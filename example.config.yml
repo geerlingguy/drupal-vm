@@ -155,6 +155,7 @@ installed_extras:
   - drupalconsole
   - mailhog
   - memcached
+  # - newrelic
   # - nodejs
   - pimpmylog
   # - redis
