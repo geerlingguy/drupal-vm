@@ -169,10 +169,6 @@ installed_extras:
 # Add any extra apt or yum packages you would like installed.
 extra_packages: []
 
-# `newrelic` must be in installed_extras for this to work.
-# See all vars: https://github.com/weareinteractive/ansible-newrelic#variables
-newrelic_license_key: yourkey
-
 # `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
 # "0.12", "4.x", "5.x".
 nodejs_version: "0.12"
