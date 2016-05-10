@@ -12,6 +12,11 @@
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
 
+    - name: Run configured pre-provision shell scripts.
+      script: "{{ item }}"
+      with_items: "{{ pre_provision_scripts }}"
+      when: pre_provision_scripts is defined
+
     - name: Set the PHP webserver daemon correctly when nginx is in use.
       set_fact:
         php_webserver_daemon: nginx
