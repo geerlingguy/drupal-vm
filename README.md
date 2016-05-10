@@ -109,6 +109,17 @@ If you don't want or need one or more of these extras, just delete them or comme
 
 Drupal VM is built to integrate with every developer's workflow. Many guides for using Drupal VM for common development tasks are available on the [Drupal VM documentation site](http://docs.drupalvm.com).
 
+## Updating Drupal VM
+
+Drupal VM follows semantic versioning, which means your configuration should continue working (potentially with very minor modifications) throughout a major release cycle. Here is the process to follow when updating Drupal VM between minor releases:
+
+  1. Read through the [release notes](https://github.com/geerlingguy/drupal-vm/releases) and add/modify `config.yml` variables mentioned therein.
+  2. Do a diff of my config.yml with the updated example.config.yml (e.g. `curl https://raw.githubusercontent.com/geerlingguy/drupal-vm/master/example.config.yml | git diff --no-index config.yml -`).
+  3. If Ansible is installed, update all roles locally (`sudo ansible-galaxy install -r provisioning/requirements.yml --force`).
+  4. Run `vagrant provision` to provision the VM, incorporating all the latest changes.
+
+For major version upgrades (e.g. 2.x.x to 3.x.x), it may be simpler to destroy the VM (`vagrant destroy`) then build a fresh new VM (`vagrant up`) using the new version of Drupal VM.
+
 ## System Requirements
 
 Drupal VM runs on almost any modern computer that can run VirtualBox and Vagrant, however for the best out-of-the-box experience, it's recommended you have a computer with at least:
