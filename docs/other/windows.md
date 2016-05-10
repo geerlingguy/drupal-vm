@@ -44,26 +44,19 @@ You can use the [vagrant-winnfsd](https://github.com/GM-Alex/vagrant-winnfsd) pl
 
 Another option for the more adventurous is to manually install and configure WinNFSD, and manually mount the shares within your VM. This requires a bit more work, but could be more stable on Windows; see this blog post for more details: [Windows + Vagrant + WinNFSD without file update problems](https://hollyit.net/blog/windowsvagrantwinnfsd-without-file-update-problems).
 
-GuyPaddock's fork of [vagrant-winnfsd](https://github.com/GuyPaddock/vagrant-winnfsd) adds logging and debug messages. You can replace the vagrant-winnfsd gem inside .vagrant.d\gems\gems to use it instead.
-
-The best config is to mount only one folder with nfs see [vagrant-winnfsd issue #12](https://github.com/winnfsd/vagrant-winnfsd/issues/12#issuecomment-78195957), so you need to adapt your config and set vagrant folder to native:
+GuyPaddock's [fork of `vagrant-winnfsd`](https://github.com/GuyPaddock/vagrant-winnfsd) adds logging and debug messages. You can replace the vagrant-winnfsd gem inside `.vagrant.d\gems\gems` to use it instead. For further caveats, please read through [vagrant-winnfsd issue #12](https://github.com/winnfsd/vagrant-winnfsd/issues/12#issuecomment-78195957), and make the following changes to `config.yml`:
 
     vagrant_synced_folder_default_type: ""
 
-Add mount_options to your synced folder to avoid an error:
+Add `mount_options` to your synced folder to avoid an error:
 
     type: nfs
     mount_options: ["rw","vers=3","udp","nolock"]
 
-In your Vagrantfile.local, add user access to vagrant:
+In a custom `Vagrantfile.local`, add user access to Vagrant:
 
     config.winnfsd.uid=900
     config.winnfsd.gid=900
-
-If you are using the fork of vagrant-winnfsd, you can set aditionnal options and use logging="on" in case of problem in your Vagrantfile.local:
-
-    config.winnfsd.logging="off"
-    config.winnfsd.halt_on_reload="on"
 
 ### "Authentication failure" on vagrant up
 
