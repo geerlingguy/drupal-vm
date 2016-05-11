@@ -25,7 +25,7 @@ pages:
     - 'Use Node.js and NPM': 'extras/nodejs.md'
     - 'Use SSL vhosts with Apache': 'extras/ssl.md'
     - 'View Logs with Pimp my Log': 'extras/pimpmylog.md'
-    - 'Profile Code with XHProf': 'extras/xhprof.md'
+    - 'Profile Code - XHProf, Blackfire, Xdebug': 'extras/profile-code.md'
     - 'Debug Code with XDebug': 'extras/xdebug.md'
     - 'Catch Emails with MailHog': 'extras/mailhog.md'
     - 'Test with Behat and Selenium': 'extras/behat.md'

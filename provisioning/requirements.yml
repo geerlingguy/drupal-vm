@@ -4,6 +4,7 @@
 - src: geerlingguy.adminer
 - src: geerlingguy.apache
 - src: geerlingguy.apache-php-fpm
+- src: geerlingguy.blackfire
 - src: geerlingguy.composer
 - src: geerlingguy.daemonize
 - src: geerlingguy.drupal-console
