@@ -13,9 +13,6 @@ installed_extras:
 
 # Make sure the following four packages are in composer_global_packages:
 composer_global_packages:
-  - { name: behat/mink, release: '1.5.*@stable' }
-  - { name: behat/mink-goutte-driver, release: '*' }
-  - { name: behat/mink-selenium2-driver, release: '*' }
   - { name: drupal/drupal-extension, release: '*' }
 ```
 
@@ -26,7 +23,7 @@ $ behat --version
 behat version 3.0.15
 ```
 
-_You can also include the `behat/*` and `drupal/drupal-extension` directly in your project's `composer.json` file, and install the dependencies per-project. Either option (installing globally, like above, or installing per-project) is perfectly acceptable._
+_You can also include `drupal/drupal-extension` directly in your project's `composer.json` file, and install the dependencies per-project. Either option (installing globally, like above, or installing per-project) is perfectly acceptable._
 
 ## Setting up Behat for your project
 
