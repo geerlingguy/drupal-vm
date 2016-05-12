@@ -1,5 +1,5 @@
 ---
-- name: Ensure configured cron jobs exist in root account's crontab.
+- name: Ensure configured cron jobs exist in user account's crontab.
   cron:
     name: "{{ item.name }}"
     minute: "{{ item.minute | default('*') }}"
@@ -11,3 +11,4 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ drupalvm_cron_jobs }}"
   when: drupalvm_cron_jobs is defined
+  become: no

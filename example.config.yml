@@ -60,8 +60,8 @@ drupal_mysql_database: drupal
 # Additional arguments or options to pass to `drush site-install`.
 drupal_site_install_extra_args: []
 
-# Cron jobs are added to the root user's crontab. Keys include name (required),
-# minute, hour, day, weekday, month, job (required), and state.
+# Cron jobs are added to the vagrant user's crontab. Keys include name
+# (required), minute, hour, day, weekday, month, job (required), and state.
 drupalvm_cron_jobs: []
   # - {
   #   name: "Drupal Cron",
