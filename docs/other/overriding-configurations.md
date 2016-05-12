@@ -1,3 +1,24 @@
+## Overriding variables in `config.yml` with a `local.config.yml`
+
+If available, Drupal VM will also load a `local.config.yml` after having loaded the main `config.yml`. Using this file you can override variables previously defined in `config.yml`. For teams who are sharing a VM configuration, this is a good place to configure anything that's specific to your own environment.
+
+```yaml
+# Increase the memory available to your Drupal site.
+vagrant_memory: 1536
+php_memory_limit: "512M"
+
+# Override the synced folders to use rsync instead of NFS.
+vagrant_synced_folders:
+  - local_path: ~/Sites/drupalvm
+    destination: /var/www/drupalvm
+    type: rsync
+    create: true
+```
+
+_Note: The merge of the variables in these two files is shallow, so if you want to override a single item in a list, you will need to re-define all items in that list._
+
+## Extending the `Vagrantfile` with `Vagrantfile.local`
+
 Out of the box Drupal VM supports having VirtualBox, Parallels as well as VMware as a provider. Besides these there are multitude of others available (for example `vagrant-aws`, `vagrant-digitalocean`).
 
 If you want to use an unsupported provider, or otherwise modify the vagrant configuration in a way that is not exposed by Drupal VM, you can create a `Vagrantfile.local` in the root directory of this project.
@@ -16,7 +37,7 @@ config.vm.provider :virtualbox do |v|
 end
 ```
 
-## Example: Using the `vagrant-aws` provider
+### Example: Using the `vagrant-aws` provider
 
 Add the following variables to your `config.yml`.
 
