@@ -33,7 +33,7 @@ pages:
   - Other Information:
     - 'Using Different Base OSes': 'other/base-os.md'
     - 'Using Different Webservers': 'other/webservers.md'
-    - 'Using a local Vagrantfile': 'other/local-vagrantfile.md'
+    - 'Overriding configurations': 'other/overriding-configurations.md'
     - 'PHP 7 on Drupal VM': 'other/php-7.md'
     - 'BigPipe with Drupal VM': 'other/bigpipe.md'
     - 'Drupal VM Management Tools': 'other/management-tools.md'

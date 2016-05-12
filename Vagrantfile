@@ -24,13 +24,17 @@ def walk(obj, &fn)
   end
 end
 
-# Use config.yml for basic VM configuration.
+# Use config.yml and local.config.yml for VM configuration.
 require 'yaml'
 dir = File.dirname(File.expand_path(__FILE__))
 unless File.exist?("#{dir}/config.yml")
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
 vconfig = YAML.load_file("#{dir}/config.yml")
+# Include a local.config.yml file if available.
+if File.exist?("#{dir}/local.config.yml")
+  vconfig.merge!(YAML.load_file("#{dir}/local.config.yml"))
+end
 
 # Replace jinja variables in config.
 vconfig = walk(vconfig) do |value|
