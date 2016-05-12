@@ -26,12 +26,13 @@ end
 
 # Use config.yml, prod.config.yml and local.config.yml for VM configuration.
 require 'yaml'
-vconfig = {}
 dir = File.dirname(File.expand_path(__FILE__))
 unless File.exist?("#{dir}/config.yml")
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
-['config.yml', 'prod.config.yml', 'local.config.yml'].each do |file|
+vconfig = YAML.load_file("#{dir}/config.yml")
+# Include environment config files if available.
+['prod.config.yml', 'local.config.yml'].each do |file|
   if File.exist?("#{dir}/#{file}")
     vconfig.merge!(YAML.load_file("#{dir}/#{file}"))
   end
