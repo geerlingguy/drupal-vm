@@ -84,11 +84,11 @@ script:
     && (echo 'Pimp my Log install pass' && exit 0)
     || (echo 'Pimp my Log install fail' && exit 1)
 
-  # - >
-  #   sudo docker exec "$(cat ${container_id})" curl -s --header Host:xhprof.${HOSTNAME} localhost
-  #   | grep -q '<title>XHProf'
-  #   && (echo 'XHProf install pass' && exit 0)
-  #   || (echo 'XHProf install fail' && exit 1)
+  - >
+    sudo docker exec "$(cat ${container_id})" curl -s --header Host:xhprof.${HOSTNAME} localhost
+    | grep -q '<title>XHProf'
+    && (echo 'XHProf install pass' && exit 0)
+    || (echo 'XHProf install fail' && exit 1)
 
   - >
     sudo docker exec "$(cat ${container_id})" curl -s localhost:8025
