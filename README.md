@@ -9,10 +9,10 @@ This project aims to make spinning up a simple local Drupal test/development env
 It will install the following on an Ubuntu 14.04 (by default) linux VM:
 
   - Apache 2.4.x (or Nginx 1.x)
-  - PHP 5.6.x (configurable)
-  - MySQL 5.5.x
+  - PHP 7.0.x (configurable)
+  - MySQL 5.7.x
   - Drush (configurable)
-  - Drupal 6.x, 7.x, or 8.x.x (configurable)
+  - Drupal 7.x, or 8.x.x (configurable)
   - Optional:
     - Drupal Console
     - Varnish 4.x (configurable)
@@ -23,6 +23,7 @@ It will install the following on an Ubuntu 14.04 (by default) linux VM:
     - Memcached
     - Redis
     - XHProf, for profiling your code
+    - Blackfire, for profiling your code
     - XDebug, for debugging your code
     - Adminer, for accessing databases directly
     - Pimp my Log, for easy viewing of log files

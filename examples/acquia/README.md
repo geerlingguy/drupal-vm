@@ -4,7 +4,7 @@ This directory contains example configuration changes for the default Drupal VM 
 
   - Ubuntu 12.04.5 LTS
   - Apache 2.2.22
-  - PHP 5.5.23
+  - PHP 5.6.21
   - MySQL/Percona 5.5.24
   - Apache Solr 4.5.1
 
