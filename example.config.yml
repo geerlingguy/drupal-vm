@@ -259,6 +259,9 @@ php_xdebug_remote_connect_back: 1
 php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
 
+# XHProf configuration.
+xhprof_output_dir: /var/tmp
+
 # Solr Configuration (if enabled above).
 solr_version: "4.10.4"
 solr_xms: "64M"
