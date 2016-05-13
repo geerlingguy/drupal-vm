@@ -34,6 +34,7 @@ pages:
     - 'Using Different Base OSes': 'other/base-os.md'
     - 'Using Different Webservers': 'other/webservers.md'
     - 'Overriding configurations': 'other/overriding-configurations.md'
+    - 'Installing Drupal VM as a Composer Dependency': 'other/drupalvm-composer-dependency.md'
     - 'PHP 5.6 on Drupal VM': 'other/php-56.md'
     - 'BigPipe with Drupal VM': 'other/bigpipe.md'
     - 'Drupal VM Management Tools': 'other/management-tools.md'
@@ -42,4 +43,3 @@ pages:
     - 'Linux Notes': 'other/linux.md'
     - 'Windows Notes': 'other/windows.md'
     - 'Vagrant and VirtualBox Tips': 'other/vagrant-virtualbox.md'
-    - 'Storing Drupal VM in a subdirectory': 'other/drupalvm-in-subdirectory.md'

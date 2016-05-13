@@ -6,10 +6,13 @@
     - vars/main.yml
 
   pre_tasks:
-    - include_vars: "{{ config_file | default('../config.yml') }}"
+    - include_vars: "{{ item }}"
+      with_items:
+        - "{{ config_dir | default('..') }}/config.yml"
+
     - include_vars: "{{ item }}"
       with_fileglob:
-        - ../../local.config.yml
+        - "{{ config_dir | default('../..') }}/local.config.yml"
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
