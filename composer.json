@@ -1,0 +1,20 @@
+{
+    "name": "geerlingguy/drupal-vm",
+    "type": "project",
+    "description": "A VM for local Drupal development, built with Vagrant + Ansible",
+    "keywords": ["vagrant", "vm", "virtual machine", "drupal"],
+    "homepage": "http://www.drupalvm.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeff Geerling",
+            "homepage": "http://www.jeffgeerling.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/geerlingguy/drupal-vm/issues",
+        "source": "https://github.com/geerlingguy/drupal-vm",
+        "docs": "http://docs.drupalvm.com"
+    },
+    "require": {}
+}
