@@ -113,6 +113,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if which('ansible-playbook')
     config.vm.provision 'ansible' do |ansible|
       ansible.playbook = "#{dir}/provisioning/playbook.yml"
+      ansible.galaxy_role_file = "#{dir}/provisioning/requirements.yml"
     end
   else
     config.vm.provision 'shell' do |sh|
