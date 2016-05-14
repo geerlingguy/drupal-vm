@@ -7,7 +7,7 @@ RUN apt-get install -y software-properties-common git
 # https://github.com/ansible/ansible/issues/15524
 # RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-get update
-RUN apt-get install -y ansible ufw curl apparmor apparmor-profiles
+RUN apt-get install -y ansible ufw curl
 
 COPY initctl_faker .
 RUN chmod +x initctl_faker && rm -fr /sbin/initctl && ln -s /initctl_faker /sbin/initctl
