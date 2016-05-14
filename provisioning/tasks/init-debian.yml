@@ -9,6 +9,7 @@
     - python-apt
     - python-pycurl
     - build-essential
+    - sudo
     - unzip
 
 - name: Disable the ufw firewall (since we use a simple iptables firewall).
