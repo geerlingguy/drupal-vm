@@ -7,13 +7,10 @@ RUN apt-get install -y software-properties-common git
 # https://github.com/ansible/ansible/issues/15524
 # RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-get update
-RUN apt-get install -y ansible ufw curl
+RUN apt-get install -y ansible ufw curl apparmor apparmor-profiles
 
 COPY initctl_faker .
 RUN chmod +x initctl_faker && rm -fr /sbin/initctl && ln -s /initctl_faker /sbin/initctl
-
-# Disable AppArmor as it doesn't work properly within Docker containers.
-RUN apt-get remove apparmor
 
 # Install Ansible inventory file
 RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
