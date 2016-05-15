@@ -1,7 +1,5 @@
 ---
 composer_home_path: "/{{ drupalvm_user }}/.composer"
-drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
-
 drupalvm_webserver: nginx
 
 installed_extras:

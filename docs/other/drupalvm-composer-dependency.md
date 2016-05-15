@@ -10,7 +10,7 @@ composer require --dev geerlingguy/drupal-vm
 
 ### Setup your configuration files
 
-Add and configure the `config.yml` anywhere you like, in this example we place it in a `config/` directory. If you're using `build_makefile`, this would also be a good location for the `drupal.make.yml` file.
+Add and configure the `config.yml` anywhere you like, in this example we place it in a `config/` directory. If you're using `build_makefile` this will be the default location Drupal VM looks for the `drupal.make.yml` file.
 
 _Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as [`local.config.yml` and `Vagrantfile.local`](overriding-configurations.md)._
 
@@ -29,14 +29,9 @@ _Note: This will be the directory where Drupal VM looks for other local configur
         └── drupal-vm/
 ```
 
-If you're using `pre_provision_scripts`, `post_provision_scripts` or `drush_makefile_path` you also need to adjust their paths to take into account the new directory structure. The examples used in `example.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
+If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `example.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
 
 ```yaml
-# The default provided in `example.config.yml`:
-drush_makefile_path: ../../drupal.make.yml
-# With Drupal VM as a Composer dependency:
-drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
-
 post_provision_scripts:
   # The default provided in `example.config.yml`:
   - "../../examples/scripts/configure-solr.sh"
@@ -110,11 +105,6 @@ If you don't use `composer` in your project you can still download  Drupal VM (o
 Configure your `config.yml` as mentioned in the [`composer` section](#setup-your-configuration-files) above.
 
 ```yaml
-# The default provided in `example.config.yml`:
-drush_makefile_path: ../../drupal.make.yml
-# With Drupal VM in a toplevel subdirectory
-drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
-
 post_provision_scripts:
   # The default provided in `example.config.yml`:
   - "../../examples/scripts/configure-solr.sh"
