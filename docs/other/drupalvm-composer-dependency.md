@@ -29,19 +29,19 @@ _Note: This will be the directory where Drupal VM looks for other local configur
         └── drupal-vm/
 ```
 
-If you're using `pre_provision_scripts`, `post_provision_scripts` or `drush_makefile_path` you also need to adjust their paths to take into account the new directory structure. The examples used in `example.config.yml` assume the files are located in the Drupal VM directory.
+If you're using `pre_provision_scripts`, `post_provision_scripts` or `drush_makefile_path` you also need to adjust their paths to take into account the new directory structure. The examples used in `example.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
 
 ```yaml
 # The default provided in `example.config.yml`:
 drush_makefile_path: ../../drupal.make.yml
 # With Drupal VM as a Composer dependency:
-drush_makefile_path: ../../../../../config/drupal.make.yml
+drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 
 post_provision_scripts:
   # The default provided in `example.config.yml`:
   - "../../examples/scripts/configure-solr.sh"
   # With Drupal VM as a Composer dependency:
-  - "../../../../../examples/scripts/configure-solr.sh"
+  - "{{ config_dir }}/../examples/scripts/configure-solr.sh"
 ```
 
 ### Create a delegating `Vagrantfile`
@@ -107,19 +107,19 @@ If you don't use `composer` in your project you can still download  Drupal VM (o
     └── Vagrantfile
 ```
 
-Configure your `config.yml` like mentioned in the `composer` section above but adjust the paths for this directory structure instead.
+Configure your `config.yml` as mentioned in the [`composer` section](#setup-your-configuration-files) above.
 
 ```yaml
 # The default provided in `example.config.yml`:
 drush_makefile_path: ../../drupal.make.yml
 # With Drupal VM in a toplevel subdirectory
-drush_makefile_path: ../../../config/drupal.make.yml
+drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 
 post_provision_scripts:
   # The default provided in `example.config.yml`:
   - "../../examples/scripts/configure-solr.sh"
   # With Drupal VM in a toplevel subdirectory
-  - "../../../examples/scripts/configure-solr.sh"
+  - "{{ config_dir }}/../examples/scripts/configure-solr.sh"
 ```
 
 Your directory structure should now look like this:
