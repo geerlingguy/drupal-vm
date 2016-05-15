@@ -22,6 +22,7 @@ It will install the following on an Ubuntu 16.04 (by default) linux VM:
     - Ruby
     - Memcached
     - Redis
+    - SQLite
     - XHProf, for profiling your code
     - Blackfire, for profiling your code
     - XDebug, for debugging your code
