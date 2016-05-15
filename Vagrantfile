@@ -118,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   else
     config.vm.provision 'shell' do |sh|
       sh.path = "#{dir}/provisioning/JJG-Ansible-Windows/windows.sh"
-      sh.args = '/provisioning/playbook.yml'
+      sh.args = '/vagrant/provisioning/playbook.yml'
     end
   end
   # ansible_local provisioner is broken in Vagrant < 1.8.2.

@@ -34,7 +34,7 @@ YUM=$(which yum 2>/dev/null)
 APT_GET=$(which apt-get 2>/dev/null)
 
 # Make sure Ansible playbook exists.
-if [ ! -f "/vagrant/$ANSIBLE_PLAYBOOK" ]; then
+if [ ! -f "$ANSIBLE_PLAYBOOK" ]; then
   echo "Cannot find Ansible playbook."
   exit 1
 fi
@@ -72,8 +72,8 @@ fi
 
 # Install requirements.
 echo "Installing Ansible roles from requirements file, if available."
-find "/vagrant/$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements.txt" \) -exec sudo ansible-galaxy install --force --ignore-errors -r {} \;
+find "$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements.txt" \) -exec sudo ansible-galaxy install --force --ignore-errors -r {} \;
 
 # Run the playbook.
 echo "Running Ansible provisioner defined in Vagrantfile."
-ansible-playbook -i 'localhost,' "/vagrant/${ANSIBLE_PLAYBOOK}" --extra-vars "${extra_vars[*]}" --connection=local
+ansible-playbook -i 'localhost,' "${ANSIBLE_PLAYBOOK}" --extra-vars "${extra_vars[*]}" --connection=local
