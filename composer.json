@@ -9,6 +9,10 @@
         {
             "name": "Jeff Geerling",
             "homepage": "http://www.jeffgeerling.com"
+        },
+        {
+            "name": "Oskar Schöldström",
+            "homepage": "http://oxy.fi"
         }
     ],
     "support": {
