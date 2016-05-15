@@ -1,2 +1,10 @@
 ---
 composer_home_path: "/{{ drupalvm_user }}/.composer"
+
+installed_extras:
+  - adminer
+  - drupalconsole
+  - mailhog
+  - pimpmylog
+  - varnish
+  - xhprof
