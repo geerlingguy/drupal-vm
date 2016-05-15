@@ -21,6 +21,7 @@ php_packages:
   - php5-dev
   - php5-fpm
   - php5-gd
+  - php5-sqlite
   - php-pear
   - libpcre3-dev
 php_conf_paths:
