@@ -15,7 +15,8 @@ projects:
     download:
       # Drupal core branch (e.g. "6.x", "7.x", "8.0.x").
       branch: "8.1.x"
-      working-copy: true
+      # Uncomment if you need a working git repository of Drupal core.
+      # working-copy: true
 
   # Other modules.
   devel: "1.x-dev"
