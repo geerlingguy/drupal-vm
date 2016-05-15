@@ -25,8 +25,8 @@ In order for Varnish to actually do anything helpful (instead of just pass throu
 You will also need to make a few small changes to your site's `settings.php` configuration to make Drupal work correctly behind a reverse proxy like Varnish:
 
 ```php
-$conf['reverse_proxy'] = TRUE;
-$conf['reverse_proxy_addresses'] = array('127.0.0.1');
+$settings['reverse_proxy'] = TRUE;
+$settings['reverse_proxy_addresses'] = array('127.0.0.1');
 ```
 
 If you don't set these values, Drupal will think all requests are coming from `127.0.0.1`. There are other settings you can change to make Drupal not store copies of cached pages in the Database (since Varnish is caching everything, this is redundant), but those other settings are not covered here.

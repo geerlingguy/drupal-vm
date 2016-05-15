@@ -9,7 +9,7 @@ mysql_packages:
   - python-mysqldb
 ```
 
-This set of packages works out of the box with the default Ubuntu 14.04 installation that comes with Drupal VM.
+This set of packages works out of the box with Ubuntu 14.04 as well as the default Ubuntu 16.04 installation that comes with Drupal VM.
 
 Alternatively, if you want to use RedHat 7 or CentOS 7 instead of Ubuntu, you can set the following variables to install and configure MariaDB instead of MySQL:
 
