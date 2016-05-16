@@ -24,8 +24,8 @@ Place your pre and post provision scripts inside a `scripts` directory in the ro
 To use an extra ansible task file, configure the path to the file (relative to `provisioning/files/`) in `config.yml`:
 
 ```yaml
-custom_pre_tasks_directory: "../../scripts/pre/*"
-custom_post_tasks_directory: "../../scripts/post-provision.yml"
+pre_provision_tasks_dir: "../../scripts/pre/*"
+post_provision_tasks_dir: "../../scripts/post-provision.yml"
 ```
 
 The path will be evaluated as a [glob pattern](https://docs.python.org/2/library/glob.html) so you can point to a single file or a directory matching a set of files.
