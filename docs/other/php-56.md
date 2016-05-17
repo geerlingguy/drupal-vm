@@ -44,6 +44,20 @@ xhprof_download_folder_name: xhprof-master
 
 If you're using Apache with `mod_php` you should also add `libapache2-mod-php5` to the `php_packages` list.
 
+Also, if you're using one of the `installed_extras`, you may need to update the package names accordingly:
+
+```yaml
+# If you install `redis`:
+php_redis_package: php5-redis
+
+# If you install `memcached`:
+php_memcached_package: php5-memcached
+
+# If you install `xhprof`:
+xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+xhprof_download_folder_name: xhprof-master
+```
+
 ## RedHat/CentOS 7
 
 Remi's RPM repository is included with Drupal VM, and you can make the following changes to use it to install PHP 5.6 instead of 7:
