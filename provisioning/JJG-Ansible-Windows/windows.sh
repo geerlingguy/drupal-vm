@@ -56,11 +56,11 @@ if ! command -v ansible >/dev/null; then
   wget https://bootstrap.pypa.io/get-pip.py
   python get-pip.py && rm -f get-pip.py
 
-  # Install GCC / required build tools.
+  echo "Installing required build tools."
   if [[ ! -z $YUM ]]; then
-    yum install -y gcc
+    yum install -y gcc libffi-devel openssl-devel
   elif [[ ! -z $APT_GET ]]; then
-    apt-get install -y build-essential
+    apt-get install -y build-essential libssl-dev libffi-dev
   fi
 
   echo "Installing required python modules."
