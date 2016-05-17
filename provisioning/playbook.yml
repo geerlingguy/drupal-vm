@@ -18,8 +18,12 @@
 
     - name: Run configured pre-provision shell scripts.
       script: "{{ item }}"
-      with_items: "{{ pre_provision_scripts }}"
-      when: pre_provision_scripts is defined
+      with_items: "{{ pre_provision_scripts|default(omit) }}"
+
+    - name: Run configured pre-provision ansible task files.
+      include: "{{ item }}"
+      with_fileglob:
+        - "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - name: Set the PHP webserver daemon correctly when nginx is in use.
       set_fact:
@@ -93,5 +97,9 @@
 
     - name: Run configured post-provision shell scripts.
       script: "{{ item }}"
-      with_items: "{{ post_provision_scripts }}"
-      when: post_provision_scripts is defined
+      with_items: "{{ post_provision_scripts|default(omit) }}"
+
+    - name: Run configured post-provision ansible task files.
+      include: "{{ item }}"
+      with_fileglob:
+        - "{{ post_provision_tasks_dir|default(omit) }}"

@@ -1,4 +1,6 @@
-Drupal VM allows you to run extra shell scripts in the beginning and at the end of the provisioning process, in case you need to do extra setup, further configure the VM, or install extra software outside the purview of Drupal VM.
+Drupal VM allows you to run extra shell scripts and ansible task files in the beginning and at the end of the provisioning process, in case you need to do extra setup, further configure the VM, or install extra software outside the purview of Drupal VM.
+
+## Shell scripts
 
 To use an extra script, configure the path to the script (relative to `provisioning/playbook.yml`) in `config.yml`:
 
@@ -16,3 +18,18 @@ _Note: The pre provision scripts run before any other packages are installed. If
 You can define as many scripts as you would like, and any arguments after the path will be passed to the shell script itself (e.g. `"- "../scripts/setup-paths.sh --option"`).
 
 Place your pre and post provision scripts inside a `scripts` directory in the root of your Drupal VM project directory; this directory is gitignored, so you can continue to update Drupal VM without overwriting your scripts.
+
+## Ansible task files
+
+To use an extra ansible task file, configure the path to the file (relative to `provisioning/files/`) in `config.yml`:
+
+```yaml
+pre_provision_tasks_dir: "../../scripts/pre/*"
+post_provision_tasks_dir: "../../scripts/post-provision.yml"
+```
+
+The path will be evaluated as a [glob pattern](https://docs.python.org/2/library/glob.html) so you can point to a single file or a directory matching a set of files.
+
+The files matched will run in alphabetical order, and as with shell scripts, pre-provision task files will run before any other packages are installed.
+
+_Note: Unlike pre- and post-provision scripts, extra task files will be relative to `provisioning/files/` instead of `provisioning/`._
