@@ -18,7 +18,7 @@
 
     - name: Run configured pre-provision shell scripts.
       script: "{{ item }}"
-      with_items: "{{ pre_provision_scripts|default(omit) }}"
+      with_items: "{{ pre_provision_scripts|default([]) }}"
 
     - name: Run configured pre-provision ansible task files.
       include: "{{ item }}"
@@ -97,7 +97,7 @@
 
     - name: Run configured post-provision shell scripts.
       script: "{{ item }}"
-      with_items: "{{ post_provision_scripts|default(omit) }}"
+      with_items: "{{ post_provision_scripts|default([]) }}"
 
     - name: Run configured post-provision ansible task files.
       include: "{{ item }}"
