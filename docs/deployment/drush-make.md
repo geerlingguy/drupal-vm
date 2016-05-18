@@ -2,4 +2,4 @@ Drupal VM is configured by default to use a Drush make file to build a Drupal si
 
 You can use any make file you want, just copy it or symlink it into the root of the Drupal VM folder with the filename `drupal.make.yml`. You can also set a separate path to the makefile using the `drush_makefile_path` variable.
 
-Leave the rest of the settings in `config.yml` as defaults from `default.config.yml`, or tweak the settings as you'd like, then run `vagrant up` as in the Quick Start Guide. Within a few minutes, you should have your site running and available at the `drupal_domain` configured in `config.yml`.
+Have a look at the defaults in `default.config.yml` and tweak the settings as you'd like in your `config.yml`, then run `vagrant up` as in the Quick Start Guide. Within a few minutes, you should have your site running and available at the `drupal_domain` configured in `config.yml`, falling back to the default `http://drupalvm.dev` set in `default.config.yml`.
