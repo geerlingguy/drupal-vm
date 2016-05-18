@@ -3,7 +3,7 @@ sudo: required
 
 env:
   global:
-    - CONFIG: example.config.yml
+    - CONFIG: tests/config.yml
       MAKEFILE: example.drupal.make.yml
       HOSTNAME: drupalvm.dev
       MACHINE_NAME: drupalvm
@@ -18,7 +18,7 @@ env:
       version: 16.04
       init: /sbin/init
       run_opts: "--privileged"
-      local_config: ubuntu-16-nginx.config.yml
+      local_config: tests/ubuntu-16-nginx.config.yml
       config_dir: /var/www/drupalvm/config
     - distribution: centos
       version: 7
@@ -59,7 +59,7 @@ script:
   - 'sudo docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
 
   # Override configuration variables.
-  - 'sudo docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/tests/${local_config:-local.config.yml} ${config_dir:-$DRUPALVM_DIR}/local.config.yml"'
+  - '[[ ! -z "${local_config}" ]] && sudo docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
 
   # Vagrantfile syntax check
   - 'rubocop --except LineLength,Eval,MutableConstant'

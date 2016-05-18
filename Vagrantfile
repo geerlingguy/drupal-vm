@@ -34,15 +34,14 @@ def walk(obj, &fn)
   end
 end
 
-# Use config.yml and local.config.yml for VM configuration.
 require 'yaml'
-unless File.exist?("#{host_config_dir}/config.yml")
-  raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
-end
-vconfig = YAML.load_file("#{host_config_dir}/config.yml")
-# Include a local.config.yml file if available.
-if File.exist?("#{host_config_dir}/local.config.yml")
-  vconfig.merge!(YAML.load_file("#{host_config_dir}/local.config.yml"))
+# Load default VM configurations.
+vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
+# Use optional config.yml and local.config.yml for configuration overrides.
+['config.yml', 'local.config.yml'].each do |config_file|
+  if File.exist?("#{host_config_dir}/#{config_file}")
+    vconfig.merge!(YAML.load_file("#{host_config_dir}/#{config_file}"))
+  end
 end
 
 # Replace jinja variables in config.
