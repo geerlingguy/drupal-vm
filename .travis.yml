@@ -8,6 +8,7 @@ env:
       HOSTNAME: drupalvm.dev
       MACHINE_NAME: drupalvm
       IP: 192.168.88.88
+      DRUPALVM_DIR: /var/www/drupalvm
   matrix:
     - distribution: ubuntu
       version: 16.04
@@ -18,6 +19,7 @@ env:
       init: /sbin/init
       run_opts: "--privileged"
       local_config: ubuntu-16-nginx.config.yml
+      config_dir: /var/www/drupalvm/config
     - distribution: centos
       version: 7
       init: /usr/lib/systemd/systemd
@@ -38,32 +40,40 @@ script:
   - container_id=$(mktemp)
 
   # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD}":/var/www/drupalvm/:rw ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
+  - 'sudo docker run --detach --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
   # Set hostname.
   - 'sudo docker exec "$(cat ${container_id})" hostname ${HOSTNAME}'
 
   # Setup directories.
-  - 'sudo docker exec "$(cat ${container_id})" mkdir -p /var/www/drupalvm/drupal'
+  - 'sudo docker exec "$(cat ${container_id})" mkdir -p ${DRUPALVM_DIR}/drupal'
 
   # Install dependencies.
-  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r /var/www/drupalvm/provisioning/requirements.yml'
+  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r ${DRUPALVM_DIR}/provisioning/requirements.yml'
+
+  # Setup config directory.
+  - '[[ ! -z "${config_dir}" ]] && sudo docker exec "$(cat ${container_id})" mkdir -p ${config_dir} || true'
 
   # Copy configuration files into place.
-  - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$CONFIG /var/www/drupalvm/config.yml'
-  - 'sudo docker exec "$(cat ${container_id})" cp /var/www/drupalvm/$MAKEFILE /var/www/drupalvm/drupal.make.yml'
+  - 'sudo docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${CONFIG} ${config_dir:-$DRUPALVM_DIR}/config.yml'
+  - 'sudo docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
 
   # Override configuration variables.
-  - 'sudo docker exec "$(cat ${container_id})" bash -c "cp /var/www/drupalvm/tests/${local_config:-local.config.yml} /var/www/drupalvm/local.config.yml" || true'
+  - 'sudo docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/tests/${local_config:-local.config.yml} ${config_dir:-$DRUPALVM_DIR}/local.config.yml"'
 
   # Vagrantfile syntax check
   - 'rubocop --except LineLength,Eval,MutableConstant'
 
   # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /var/www/drupalvm/provisioning/playbook.yml --syntax-check'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'
 
   # Run the playbook with ansible-playbook.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /var/www/drupalvm/provisioning/playbook.yml'
+  - >
+    if [ ! -z "${config_dir}" ]; then
+      sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
+    else
+      sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
+    fi
 
   # Run the integration tests
   - >

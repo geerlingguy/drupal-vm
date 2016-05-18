@@ -2,6 +2,16 @@
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = '2'
 
+# Absolute paths on the host machine.
+host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
+host_project_dir = ENV['DRUPALVM_PROJECT_ROOT'] || host_drupalvm_dir
+host_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "#{host_project_dir}/#{ENV['DRUPALVM_CONFIG_DIR']}" : host_project_dir
+
+# Absolute paths on the guest machine.
+guest_project_dir = '/vagrant'
+guest_drupalvm_dir = ENV['DRUPALVM_DIR'] ? "/vagrant/#{ENV['DRUPALVM_DIR']}" : guest_project_dir
+guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG_DIR']}" : guest_project_dir
+
 # Cross-platform way of finding an executable in the $PATH.
 def which(cmd)
   exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
@@ -26,14 +36,13 @@ end
 
 # Use config.yml and local.config.yml for VM configuration.
 require 'yaml'
-dir = File.dirname(File.expand_path(__FILE__))
-unless File.exist?("#{dir}/config.yml")
+unless File.exist?("#{host_config_dir}/config.yml")
   raise 'Configuration file not found! Please copy example.config.yml to config.yml and try again.'
 end
-vconfig = YAML.load_file("#{dir}/config.yml")
+vconfig = YAML.load_file("#{host_config_dir}/config.yml")
 # Include a local.config.yml file if available.
-if File.exist?("#{dir}/local.config.yml")
-  vconfig.merge!(YAML.load_file("#{dir}/local.config.yml"))
+if File.exist?("#{host_config_dir}/local.config.yml")
+  vconfig.merge!(YAML.load_file("#{host_config_dir}/local.config.yml"))
 end
 
 # Replace jinja variables in config.
@@ -107,32 +116,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Allow override of the default synced folder type.
-  config.vm.synced_folder '.', '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
+  config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
   # Provisioning. Use ansible if it's installed, JJG-Ansible-Windows if not.
   if which('ansible-playbook')
     config.vm.provision 'ansible' do |ansible|
-      ansible.playbook = "#{dir}/provisioning/playbook.yml"
-      ansible.galaxy_role_file = "#{dir}/provisioning/requirements.yml"
+      ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
+      ansible.galaxy_role_file = "#{host_drupalvm_dir}/provisioning/requirements.yml"
+      ansible.extra_vars = {
+        config_dir: host_config_dir
+      }
     end
   else
     config.vm.provision 'shell' do |sh|
-      sh.path = "#{dir}/provisioning/JJG-Ansible-Windows/windows.sh"
-      sh.args = '/vagrant/provisioning/playbook.yml'
+      sh.path = "#{host_drupalvm_dir}/provisioning/JJG-Ansible-Windows/windows.sh"
+      sh.args = "-e 'config_dir=\"#{guest_config_dir}\"' #{guest_drupalvm_dir}/provisioning/playbook.yml"
     end
   end
   # ansible_local provisioner is broken in Vagrant < 1.8.2.
   # else
   #   config.vm.provision "ansible_local" do |ansible|
-  #     ansible.playbook = "provisioning/playbook.yml"
-  #     ansible.galaxy_role_file = "provisioning/requirements.yml"
+  #     ansible.playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
+  #     ansible.galaxy_role_file = "#{guest_drupalvm_dir}/provisioning/requirements.yml"
+  #     ansible.extra_vars = {
+  #       config_dir: guest_config_dir
+  #     }
   #   end
   # end
 
   # VMware Fusion.
   config.vm.provider :vmware_fusion do |v, override|
     # HGFS kernel module currently doesn't load correctly for native shares.
-    override.vm.synced_folder '.', '/vagrant', type: 'nfs'
+    override.vm.synced_folder host_project_dir, '/vagrant', type: 'nfs'
 
     v.gui = false
     v.vmx['memsize'] = vconfig['vagrant_memory']
@@ -162,5 +177,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define vconfig['vagrant_machine_name']
 
   # Allow an untracked Vagrantfile to modify the configurations
-  eval File.read 'Vagrantfile.local' if File.exist?('Vagrantfile.local')
+  eval File.read "#{host_config_dir}/Vagrantfile.local" if File.exist?("#{host_config_dir}/Vagrantfile.local")
 end
