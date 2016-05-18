@@ -1,4 +1,4 @@
-You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `example.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/drupalvm` on your host into the `/var/www/drupalvm` folder on Drupal VM.
+You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `default.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/drupalvm` on your host into the `/var/www/drupalvm` folder on Drupal VM.
 
 If you want to use a different synced folder method (e.g. `smb`), you can change `type` to:
 

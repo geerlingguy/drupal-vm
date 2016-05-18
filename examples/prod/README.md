@@ -33,7 +33,7 @@ Your DigitalOcean Droplet is booted and ready to have Drupal VM installed on it.
 
 ## Customize `config.yml` and `inventory` for production
 
-Just like you would with the normal `example.config.yml`, you need to copy the file to `config.yml`, then go through `prod.overrides.yml` (in this directory), and make sure to update your `config.yml`, making sure all the variables are set to match `prod.overrides.yml`.
+Just like you would with the normal `default.config.yml`, you need to copy the file to `config.yml`, then go through `prod.overrides.yml` (in this directory), and make sure to update your `config.yml`, making sure all the variables are set to match `prod.overrides.yml`.
 
 The changes outlined in `prod.overrides.yml` disable development-environment tools (like Pimp My Log and Adminer) and add extra security hardening configuration (via the `extra_security_enabled` variable).
 
