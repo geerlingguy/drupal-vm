@@ -14,6 +14,7 @@ Ondřej Surý's PPA for PHP 7.0 is used to install PHP 7, but you can switch to 
 php_version: "5.6"
 php_packages:
   - php5
+  - php5-apcu
   - php5-mcrypt
   - php5-cli
   - php5-common
