@@ -18,17 +18,21 @@ $aliases['{{ host }}'] = array(
 
 {%- if drupalvm_webserver == 'apache' -%}
   {%- for vhost in apache_vhosts -%}
-    {{ alias(vhost.servername, vhost.documentroot) }}
-    {%- if vhost.serveralias is defined -%}
-      {%- for serveralias in vhost.serveralias.split() -%}
-        {{ alias(serveralias, vhost.documentroot) }}
-      {%- endfor -%}
+    {%- if vhost.documentroot is defined -%}
+      {{ alias(vhost.servername, vhost.documentroot) }}
+      {%- if vhost.serveralias is defined -%}
+        {%- for serveralias in vhost.serveralias.split() -%}
+          {{ alias(serveralias, vhost.documentroot) }}
+        {%- endfor -%}
+      {%- endif -%}
     {%- endif -%}
   {%- endfor -%}
 {%- elif drupalvm_webserver == 'nginx' -%}
   {%- for host in nginx_hosts -%}
-    {%- for server_name in host.server_name.split() -%}
-      {{ alias(server_name, host.root) }}
-    {%- endfor -%}
+    {%- if host.root is defined -%}
+      {%- for server_name in host.server_name.split() -%}
+        {{ alias(server_name, host.root) }}
+      {%- endfor -%}
+    {%- endif -%}
   {%- endfor -%}
 {%- endif -%}

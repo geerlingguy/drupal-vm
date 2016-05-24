@@ -23,13 +23,13 @@
     {%- macro getServernameFromDocroot(path) -%}
       {%- if drupalvm_webserver == 'apache' -%}
         {%- for host in apache_vhosts -%}
-          {%- if host.documentroot == path -%}
+          {%- if host.documentroot is defined and host.documentroot == path -%}
             {{ host.servername }}
           {%- endif -%}
         {%- endfor -%}
       {%- elif drupalvm_webserver == 'nginx' -%}
         {%- for host in nginx_hosts -%}
-          {%- if host.root == path -%}
+          {%- if host.root is defined and host.root == path -%}
             {{ host.server_name }}
           {%- endif -%}
         {%- endfor -%}
@@ -97,11 +97,15 @@
         <tbody>
           {% if drupalvm_webserver == 'apache' -%}
             {%- for host in apache_vhosts -%}
-              {{ printSite(host.servername, host.documentroot) }}
+              {%- if host.documentroot is defined -%}
+                {{ printSite(host.servername, host.documentroot) }}
+              {%- endif %}
             {%- endfor -%}
           {%- elif drupalvm_webserver == 'nginx' -%}
             {%- for host in nginx_hosts -%}
-              {{ printSite(host.server_name, host.root) }}
+              {%- if host.root is defined -%}
+                {{ printSite(host.server_name, host.root) }}
+              {%- endif %}
             {%- endfor -%}
           {%- endif %}
           <tr><td colspan=3><small>*Note: On Windows or when you don't have Ansible installed on your host, Drush aliases are only created inside the VM.</small></td></tr>

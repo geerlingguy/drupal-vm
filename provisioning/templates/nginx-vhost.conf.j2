@@ -6,6 +6,7 @@ server {
 }
 {% endif %}
 
+{% if item.root is defined %}
 server {
     listen {{ item.listen | default("80") }};
 
@@ -91,3 +92,20 @@ server {
     gzip_buffers 16 8k;
     gzip_min_length 512;
 }
+{% endif %}
+
+
+{% if item.proxy_pass is defined %}
+server {
+    listen {{ item.listen | default("80") }};
+    server_name  {{ item.server_name }};
+
+    location / {
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_pass {{ item.proxy_pass }};
+    }
+}
+{% endif %}

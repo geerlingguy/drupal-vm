@@ -132,6 +132,9 @@ nginx_hosts:
   - server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"
     root: "{{ dashboard_install_dir }}"
 
+  - server_name: "mailhog.{{ vagrant_hostname }}"
+    proxy_pass: "http://127.0.0.1:8025"
+
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
 
