@@ -33,6 +33,7 @@
     src: ../templates/drupalvm-local.aliases.drushrc.php.j2
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   become: no
+  when: configure_local_drush_aliases
 
 - name: Ensure drush directory exists for root user inside VM.
   file: 'path="~/.drush" state=directory'
@@ -41,3 +42,4 @@
   template:
     src: ../templates/drupalvm-local.aliases.drushrc.php.j2
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+  when: configure_local_drush_aliases
