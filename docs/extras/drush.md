@@ -1,4 +1,4 @@
-If you have Drush installed on your host workstation, and would like to interact with a Drupal site running inside Drupal VM, there are drush aliases automatically created by Drupal VM for each of the virtual hosts you have configured.
+If you have Drush and Ansible installed on your host workstation, and would like to interact with a Drupal site running inside Drupal VM, there are drush aliases automatically created by Drupal VM for each of the virtual hosts you have configured.
 
 With the example configuration, you can manage the example Drupal site using the Drush alias `@drupalvm.dev`. For example, to check if Drush can connect to the site in Drupal VM, run:
 
