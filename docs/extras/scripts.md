@@ -33,3 +33,19 @@ The path will be evaluated as a [glob pattern](https://docs.python.org/2/library
 The files matched will run in alphabetical order, and as with shell scripts, pre-provision task files will run before any other packages are installed.
 
 _Note: Unlike pre- and post-provision scripts, extra task files will be relative to `provisioning/files/` instead of `provisioning/`._
+
+
+## Ansible playbooks
+
+Out of the box Drupal VM does not support running additional playbooks or adding your own roles but using [`Vagrantfile.local`](../other/overriding-configurations.md#extending-the-vagrantfile-with-vagrantfilelocal) you can add any number of additional provisioners to vagrant.
+
+As an example you might have a `local.playbook.yml` with it's own dependencies defined in `local.requirements.yml`. Place both of these next to your `config.yml` and add the following `Vagrantfile.local`.
+
+```rb
+config.vm.provision 'ansible' do |ansible|
+  ansible.playbook = "#{host_config_dir}/local.playbook.yml"
+  ansible.galaxy_role_file = "#{host_config_dir}/local.requirements.yml"
+end
+```
+
+When you run `vagrant provision` this playbook will run after Drupal VM's own playbook.
