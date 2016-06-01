@@ -19,7 +19,7 @@ php_memory_limit: "512M"
 
 # Override the synced folders to use rsync instead of NFS.
 vagrant_synced_folders:
-  - local_path: ~/Sites/drupalvm
+  - local_path: .
     destination: /var/www/drupalvm
     type: rsync
     create: true
