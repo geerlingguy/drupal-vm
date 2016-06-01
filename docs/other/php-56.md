@@ -37,10 +37,6 @@ php_fpm_daemon: php5-fpm
 php_fpm_conf_path: "/etc/php5/fpm"
 php_fpm_pool_conf_path: "/etc/php5/fpm/pool.d/www.conf"
 php_mysql_package: php5-mysql
-php_memcached_package: php5-memcached
-
-xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
-xhprof_download_folder_name: xhprof-master
 ```
 
 If you're using Apache with `mod_php` you should also add `libapache2-mod-php5` to the `php_packages` list.

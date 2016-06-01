@@ -6,12 +6,12 @@ Because the webservers are configured somewhat differently, there are a few thin
 
 ## Using Apache
 
-You have complete control over all aspects of Apache VirtualHosts using the `apache_vhosts` configuration. A few simple examples are shown in `example.config.yml`, but this configuration can be much more complex.
+You have complete control over all aspects of Apache VirtualHosts using the `apache_vhosts` configuration. A few simple examples are shown in `default.config.yml`, but this configuration can be much more complex.
 
 See the examples included in the [`geerlingguy.apache` Ansible role's README](https://github.com/geerlingguy/ansible-role-apache#readme) for more info, as well as many other variables you can override to configure Apache exactly how you like it.
 
 ## Using Nginx
 
-Because Nginx server directives behave a little differently than Apache's VirtualHosts, Drupal VM includes a custom Drupal-optimized Nginx server block configuration, and you can control all the servers ('virtual hosts') Nginx will run using the `nginx_hosts` configuration. A few simple examples are shown in `example.config.yml`, but you have some extra flexibility if you need it. See the `nginx-vhost.conf.j2` template for more information.
+Because Nginx server directives behave a little differently than Apache's VirtualHosts, Drupal VM includes a custom Drupal-optimized Nginx server block configuration, and you can control all the servers ('virtual hosts') Nginx will run using the `nginx_hosts` configuration. A few simple examples are shown in `default.config.yml`, but you have some extra flexibility if you need it. See the `nginx-vhost.conf.j2` template for more information.
 
 Also, see the examples included in the [`geerlingguy.nginx` Ansible role's README](https://github.com/geerlingguy/ansible-role-nginx#readme) for more info, as well as many other variables you can override to configure Nginx exactly how you like it.
