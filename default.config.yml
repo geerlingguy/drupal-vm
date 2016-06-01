@@ -21,8 +21,8 @@ vagrant_public_ip: ""
 # http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
-  # build_makefile: is 'true'.
-  - local_path: ~/Sites/drupalvm
+  # build_makefile: is 'true'. By default it's set to the drupal-vm folder.
+  - local_path: .
     destination: /var/www/drupalvm
     type: nfs
     create: true
