@@ -27,7 +27,7 @@ _You can also include `drupal/drupal-extension` directly in your project's `comp
 
 ## Setting up Behat for your project
 
-Using the default Drupal site as an example (it's installed in `/var/www/drupalvm/drupal` by default, and is shared to `~/Sites/drupalvm/drupal` on your host machine), the following steps will help you get your first Behat tests up and running!
+Using the default Drupal site as an example (it's installed in `/var/www/drupalvm/drupal` by default, and is shared to the `./drupal` folder inside the drupal-vm directory on your host machine), the following steps will help you get your first Behat tests up and running!
 
   1. Create a `behat.yml` file inside the docroot of your site (e.g. create this file alongside the rest of the Drupal codebase at `/var/www/drupalvm/drupal/behat.yml`), with the following contents:
 
