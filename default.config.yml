@@ -21,7 +21,8 @@ vagrant_public_ip: ""
 # http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
-  # build_makefile: is 'true'. By default it's set to the drupal-vm folder.
+  # any of the build_* settings are 'true'. By default the folder is set to
+  # the drupal-vm folder.
   - local_path: .
     destination: /var/www/drupalvm
     type: nfs
@@ -34,17 +35,29 @@ vagrant_cpus: 2
 # The web server software to use. Can be either 'apache' or 'nginx'.
 drupalvm_webserver: apache
 
-# Set this to false if you are using a different site deployment strategy and
+# Set this to 'false' if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_makefile: true
 drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 
-# Set this to false if you don't need to install drupal (using the drupal_*
+# Set 'build_makefile' to 'false' and this to 'true' if you are using a
+# composer based site deployment strategy.
+build_composer: false
+drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
+drupal_composer_install_dir: "/var/www/drupalvm/drupal"
+drupal_composer_dependencies: []
+
+# Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
+# are using Composer's create-project as a site deployment strategy.
+build_composer_project: false
+drupal_composer_project_package: ""
+drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
+
+# Set this to 'false' if you don't need to install drupal (using the drupal_*
 # settings below), but instead copy down a database (e.g. using drush sql-sync).
 install_site: true
 
-# Settings for building a Drupal site from a makefile (if 'build_makefile:'
-# is 'true').
+# Settings for installing a Drupal site (if 'install_site:' is 'true').
 drupal_major_version: 8
 drupal_core_path: "/var/www/drupalvm/drupal"
 drupal_domain: "{{ vagrant_hostname }}"
@@ -138,8 +151,8 @@ nginx_hosts:
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
 
-# MySQL Databases and users. If build_makefile: is true, first database will
-# be used for the makefile-built site.
+# MySQL Databases and users. If 'install_site' is 'true', first database will
+# be used for the site.
 mysql_databases:
   - name: "{{ drupal_mysql_database }}"
     encoding: utf8

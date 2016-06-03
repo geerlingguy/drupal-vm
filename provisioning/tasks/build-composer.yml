@@ -1,0 +1,29 @@
+---
+- name: Ensure drupal_composer_install_dir directory exists.
+  file:
+    path: "{{ drupal_composer_install_dir }}"
+    state: directory
+    mode: 0775
+  become: no
+  when: drupal_composer_path and not drupal_site_exists
+
+- name: Copy composer.json into place.
+  copy:
+    src: "{{ drupal_composer_path }}"
+    dest: "{{ drupal_composer_install_dir }}/composer.json"
+  when: drupal_composer_path and not drupal_site_exists
+  become: no
+
+- name: Run composer install.
+  command: >
+    composer install
+    chdir={{ drupal_composer_install_dir }}
+  when: not drupal_site_exists
+  become: no
+
+- name: Install dependencies with composer require.
+  command: >
+    {{ composer_path }} require {{ item }}
+    chdir={{ drupal_composer_install_dir }}
+  with_items: "{{ drupal_composer_dependencies|default([]) }}"
+  become: no

@@ -5,6 +5,7 @@ env:
   global:
     - CONFIG: tests/config.yml
       MAKEFILE: example.drupal.make.yml
+      COMPOSERFILE: example.drupal.composer.json
       HOSTNAME: drupalvm.dev
       MACHINE_NAME: drupalvm
       IP: 192.168.88.88
@@ -57,6 +58,7 @@ script:
   # Copy configuration files into place.
   - 'sudo docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${CONFIG} ${config_dir:-$DRUPALVM_DIR}/config.yml'
   - 'sudo docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
+  - 'sudo docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${COMPOSERFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.composer.json'
 
   # Override configuration variables.
   - '[[ ! -z "${local_config}" ]] && sudo docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
