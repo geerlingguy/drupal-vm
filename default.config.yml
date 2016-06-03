@@ -261,7 +261,7 @@ php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
 
 # Solr Configuration (if enabled above).
-solr_version: "4.10.4"
+solr_version: "5.5.1"
 solr_xms: "64M"
 solr_xmx: "128M"
 
