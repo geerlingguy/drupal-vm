@@ -1,11 +1,17 @@
 ---
+# TODO: Deprecate legacy variable & remove shim in next major release.
+- name: Shim for legacy configure_local_drush_aliases variable.
+  set_fact:
+    configure_drush_aliases: "{{ configure_local_drush_aliases }}"
+  when: configure_local_drush_aliases is defined and configure_drush_aliases is undefined
+
 - name: Check if local Drush configuration folder exists.
   stat:
     path: ~/.drush
   register: local_drush_config_folder
   delegate_to: 127.0.0.1
   become: no
-  when: configure_local_drush_aliases
+  when: configure_drush_aliases
 
 - name: Create Drush configuration folder if it doesn't exist.
   file:
@@ -13,7 +19,7 @@
     state: directory
   delegate_to: 127.0.0.1
   become: no
-  when: configure_local_drush_aliases and (local_drush_config_folder.stat.exists == false)
+  when: configure_drush_aliases and (local_drush_config_folder.stat.exists == false)
 
 # Note that this doesn't work for Windows, since Ansible's running in the VM.
 - name: Configure host machine drush aliases.
@@ -22,7 +28,7 @@
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   delegate_to: 127.0.0.1
   become: no
-  when: configure_local_drush_aliases
+  when: configure_drush_aliases
 
 - name: Ensure drush directory exists for vagrant user inside VM.
   file: 'path="~/.drush" state=directory'
@@ -33,6 +39,7 @@
     src: ../templates/drupalvm-local.aliases.drushrc.php.j2
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   become: no
+  when: configure_drush_aliases
 
 - name: Ensure drush directory exists for root user inside VM.
   file: 'path="~/.drush" state=directory'
@@ -41,3 +48,4 @@
   template:
     src: ../templates/drupalvm-local.aliases.drushrc.php.j2
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+  when: configure_drush_aliases
