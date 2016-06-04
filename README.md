@@ -42,7 +42,7 @@ Full Drupal VM documentation is available at http://docs.drupalvm.com/
 
 There are a couple places where you can customize the VM for your needs:
 
-  - `config.yml`: Contains variables like the VM domain name and IP address, PHP and MySQL configuration, etc.
+  - `config.yml`: Override any of the default VM configuration from `default.config.yml`; customize almost any aspect of any software installed in the VM (more about [overriding configurations](http://docs.drupalvm.com/en/latest/other/overriding-configurations/).
   - `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (more about [Drush make files](https://www.drupal.org/node/1432374)).
 
 If you want to switch from Drupal 8 (default) to Drupal 7 on the initial install, do the following:
@@ -69,9 +69,9 @@ Notes:
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.
-  2. Make copies of both of the `example.*` files, and modify to your liking:
+  2. Make copies of both example configuration files, and modify to your liking:
     - Copy `example.drupal.make.yml` to `drupal.make.yml`.
-    - Copy `example.config.yml` to `config.yml`.
+    - Copy `default.config.yml` to `config.yml`.
   3. Create a local directory where Drupal will be installed and configure the path to that directory in `config.yml` (`local_path`, inside `vagrant_synced_folders`).
   4. Open Terminal, `cd` to this directory (containing the `Vagrantfile` and this README file).
   5. Type in `vagrant up`, and let Vagrant do its magic.
@@ -117,7 +117,7 @@ Drupal VM is built to integrate with every developer's workflow. Many guides for
 Drupal VM follows semantic versioning, which means your configuration should continue working (potentially with very minor modifications) throughout a major release cycle. Here is the process to follow when updating Drupal VM between minor releases:
 
   1. Read through the [release notes](https://github.com/geerlingguy/drupal-vm/releases) and add/modify `config.yml` variables mentioned therein.
-  2. Do a diff of my config.yml with the updated example.config.yml (e.g. `curl https://raw.githubusercontent.com/geerlingguy/drupal-vm/master/example.config.yml | git diff --no-index config.yml -`).
+  2. Do a diff of your `config.yml` with the updated `default.config.yml` (e.g. `curl https://raw.githubusercontent.com/geerlingguy/drupal-vm/master/default.config.yml | git diff --no-index config.yml -`).
   3. Run `vagrant provision` to provision the VM, incorporating all the latest changes.
 
 For major version upgrades (e.g. 2.x.x to 3.x.x), it may be simpler to destroy the VM (`vagrant destroy`) then build a fresh new VM (`vagrant up`) using the new version of Drupal VM.

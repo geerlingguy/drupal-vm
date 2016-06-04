@@ -29,11 +29,11 @@ _Note: This will be the directory where Drupal VM looks for other local configur
         └── drupal-vm/
 ```
 
-If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `example.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
+If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `default.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
 
 ```yaml
 post_provision_scripts:
-  # The default provided in `example.config.yml`:
+  # The default provided in `default.config.yml`:
   - "../../examples/scripts/configure-solr.sh"
   # With Drupal VM as a Composer dependency:
   - "{{ config_dir }}/../examples/scripts/configure-solr.sh"
@@ -98,7 +98,7 @@ If you don't use `composer` in your project you can still download  Drupal VM (o
 │   └── index.php
 └── box/
     ├── ...
-    ├── example.config.yml
+    ├── default.config.yml
     └── Vagrantfile
 ```
 
@@ -106,7 +106,7 @@ Configure your `config.yml` as mentioned in the [`composer` section](#setup-your
 
 ```yaml
 post_provision_scripts:
-  # The default provided in `example.config.yml`:
+  # The default provided in `default.config.yml`:
   - "../../examples/scripts/configure-solr.sh"
   # With Drupal VM in a toplevel subdirectory
   - "{{ config_dir }}/../examples/scripts/configure-solr.sh"
@@ -126,7 +126,7 @@ Your directory structure should now look like this:
 │   └── index.php
 └── box/
     ├── ...
-    ├── example.config.yml
+    ├── default.config.yml
     └── Vagrantfile
 ```
 

@@ -21,8 +21,8 @@ vagrant_public_ip: ""
 # http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
-  # build_makefile: is 'true'.
-  - local_path: ~/Sites/drupalvm
+  # build_makefile: is 'true'. By default it's set to the drupal-vm folder.
+  - local_path: .
     destination: /var/www/drupalvm
     type: nfs
     create: true
@@ -100,6 +100,9 @@ apache_vhosts:
   - servername: "{{ vagrant_ip }}"
     serveralias: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
+    extra_parameters: |
+          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ dashboard_install_dir }}"
+          DirectoryIndex index.html
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
@@ -261,7 +264,7 @@ php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
 
 # Solr Configuration (if enabled above).
-solr_version: "4.10.4"
+solr_version: "5.5.1"
 solr_xms: "64M"
 solr_xmx: "128M"
 

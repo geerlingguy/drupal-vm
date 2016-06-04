@@ -6,6 +6,10 @@ If you know of any other tools to help manage Drupal VM, please add them to this
 
 [Lunchbox](https://github.com/LunchboxDevTools/lunchbox) is a wrapper for the Drupal VM project to manage your Drupal development process. It is a Node.js-based GUI to assist in setting up Drupal VM and creating and managing instances.
 
+## Acquia BLT
+
+[BLT (Build and Launch Tool)](https://github.com/acquia/blt) is a project from Acquia that builds a Drupal project repository, and can optionally include Drupal VM as part of the project. There is an open PR that may [use Composer to add Drupal VM as a project dependency automatically](https://github.com/acquia/blt/pull/93).
+
 ## Drupal VM Config Generator
 
 [Drupal VM Config Generator](https://github.com/opdavies/drupal-vm-config-generator) is a Symfony Console application that manages and customises configuration files for Drupal VM projects.

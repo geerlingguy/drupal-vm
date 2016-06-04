@@ -1,10 +1,10 @@
-You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `example.config.yml` file contains an example `nfs` share that would sync the folder `~/Sites/drupalvm` on your host into the `/var/www/drupalvm` folder on Drupal VM.
+You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `default.config.yml` file contains an example `nfs` share that would sync the entire drupal-vm directory (configured as the relative path `.`) on your host into the `/var/www/drupalvm` folder on Virtual Machine.
 
 If you want to use a different synced folder method (e.g. `smb`), you can change `type` to:
 
 ```yaml
 vagrant_synced_folders:
-  - local_path: ~/Sites/drupalvm
+  - local_path: .
     destination: /var/www/drupalvm
     type: smb
     create: true
@@ -54,7 +54,7 @@ If you are using rsync, it is advised to exclude certain directories so that the
 
 ```yaml
 vagrant_synced_folders:
-  - local_path: ~/Sites/drupalvm
+  - local_path: .
     destination: /var/www/drupalvm
     type: rsync
     create: true
@@ -73,11 +73,11 @@ There are a number of issues people encounter with synced folders from time to t
 
 ### Using Native Synced Folders
 
-You can use a native synced folder, which should work pretty flawlessly on any platform, but with a potential serious performance downside (compared to other synced folder methods). Just set `type` to `""`, and you can even put the synced folder inside the drupal-vm folder using a relative path, like:
+You can use a native synced folder, which should work pretty flawlessly on any platform, but with a potential serious performance downside (compared to other synced folder methods). Just set `type` to `""`.
 
 ```yaml
 vagrant_synced_folders:
-  - local_path: docroot
+  - local_path: .
     destination: /var/www/docroot
     type: ""
     create: true

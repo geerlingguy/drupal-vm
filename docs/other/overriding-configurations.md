@@ -1,4 +1,14 @@
-## Overriding variables in `config.yml` with a `local.config.yml`
+## Overriding Drupal VM's `default.config.yml` with `config.yml`
+
+If available, Drupal VM will load a `config.yml` where you can override any of the defaults set in `default.config.yml`. Commonly this is a copy of `default.config.yml` with the values tweaked to your own project. For an easier upgrade path you would only set the values you are actually overriding.
+
+```yaml
+vagrant_box: geerlingguy/centos7
+vagrant_hostname: my-custom-site.dev
+vagrant_machine_name: my_custom_site
+```
+
+## Overriding variables with a `local.config.yml`
 
 If available, Drupal VM will also load a `local.config.yml` after having loaded the main `config.yml`. Using this file you can override variables previously defined in `config.yml`. For teams who are sharing a VM configuration, this is a good place to configure anything that's specific to your own environment.
 
@@ -9,7 +19,7 @@ php_memory_limit: "512M"
 
 # Override the synced folders to use rsync instead of NFS.
 vagrant_synced_folders:
-  - local_path: ~/Sites/drupalvm
+  - local_path: .
     destination: /var/www/drupalvm
     type: rsync
     create: true

@@ -8,7 +8,7 @@ Currently-supported OSes are:
   - RedHat Enterprise Linux / CentOS 7
   - RedHat Enterprise Linux / CentOS 6
 
-For certain OSes, there are a couple other caveats and tweaks you may need to perform to get things running smoothly—the main features and latest development is only guaranteed to work with the default OS as configured in `example.config.yml`.
+For certain OSes, there are a couple other caveats and tweaks you may need to perform to get things running smoothly—the main features and latest development is only guaranteed to work with the default OS as configured in `default.config.yml`.
 
 Some other OSes should work, but are not regularly tested with Drupal VM, including Debian 8/Jessie (`debian/jessie64`) and Debian 7/Wheezy (`debian/wheezy64`).
 

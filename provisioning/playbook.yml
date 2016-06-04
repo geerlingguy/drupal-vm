@@ -4,6 +4,7 @@
 
   vars_files:
     - vars/main.yml
+    - ../default.config.yml
 
   pre_tasks:
     - name: Define config_dir.
@@ -12,11 +13,8 @@
       when: config_dir is not defined
 
     - include_vars: "{{ item }}"
-      with_items:
-        - "{{ config_dir }}/config.yml"
-
-    - include_vars: "{{ item }}"
       with_fileglob:
+        - "{{ config_dir }}/config.yml"
         - "{{ config_dir }}/local.config.yml"
 
     - include: tasks/init-debian.yml

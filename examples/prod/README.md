@@ -14,7 +14,7 @@ Make sure you have an SSH key you can use to connect to your DigitalOcean drople
 
 Once you are logged into DigitalOcean and have added your SSH key, click the 'Create Droplet' button on your Droplets page. For the Droplet, choose the following options:
 
-  - **Image**: Choose `Ubuntu 14.04.x x64`
+  - **Image**: Choose `Ubuntu 16.04.x x64`
   - **Size**: 1 GB / 1 CPU (currently $10/month; you can choose a higher plan if needed)
   - **Region**: Choose whatever region is geographically nearest to you and your site visitors
   - **Settings**: (Nothing here affects how Drupal VM works, choose what you'd like)
@@ -33,9 +33,9 @@ Your DigitalOcean Droplet is booted and ready to have Drupal VM installed on it.
 
 ## Customize `config.yml` and `inventory` for production
 
-Just like you would with the normal `example.config.yml`, you need to copy the file to `config.yml`, then go through `prod.overrides.yml` (in this directory), and make sure to update your `config.yml`, making sure all the variables are set to match `prod.overrides.yml`.
+Copy `prod.config.yml` to `config.yml`, and by looking at `default.config.yml` add any other overrides you'd like. Whatever variables you have set in `config.yml` will override the defaults set by `default.config.yml`.
 
-The changes outlined in `prod.overrides.yml` disable development-environment tools (like Pimp My Log and Adminer) and add extra security hardening configuration (via the `extra_security_enabled` variable).
+The changes outlined in `prod.config.yml` disable development-environment tools (like Pimp My Log and Adminer) and add extra security hardening configuration (via the `extra_security_enabled` variable).
 
 The only other thing you need to do is copy the inventory file `example.inventory` to `inventory` (so it is located at `prod/inventory`). By default, it reads:
 
@@ -84,6 +84,6 @@ After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configu
 
 ## Go Further
 
-You can use Ubuntu 12.04, Ubuntu 14.04, CentOS 6 or CentOS 7 when you build the DigitalOcean Droplet. Just like with Drupal VM running locally, you can customize almost every aspect of the server!
+You can use Ubuntu 12.04, Ubuntu 14.04, Ubuntu 16.04, CentOS 6 or CentOS 7 when you build the DigitalOcean Droplet. Just like with Drupal VM running locally, you can customize almost every aspect of the server!
 
 You may want to customize your configuration even further, to make sure Drupal VM is tuned for your specific Drupal site's needs, or you may want to change things and make the server configuration more flexible, etc. For all that, the book [Ansible for DevOps](http://ansiblefordevops.com/) will give you a great introduction to using Ansible to make Drupal VM and the included Ansible configuration do exactly what you need!

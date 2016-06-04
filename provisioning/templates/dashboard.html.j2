@@ -104,13 +104,18 @@
               {{ printSite(host.server_name, host.root) }}
             {%- endfor -%}
           {%- endif %}
-          <tr><td colspan=3><small>*Note: On Windows or when you don't have Ansible installed on your host, Drush aliases are only created inside the VM.</small></td></tr>
+          <tr><td colspan=3><small>*Note: If Ansible isn't installed installed on your host, Drush aliases are only created inside the VM.</small></td></tr>
         </tbody>
       </table>
     {%- endmacro -%}
 
     {%- macro sectionDevelopmentTools() -%}
       <table class="table">
+        {% if not installed_extras -%}
+          <tr>
+            <td>There are no development tools installed inside the VM.</td>
+          </tr>
+        {%- endif -%}
         {% if 'adminer' in installed_extras -%}
           {% macro servername() %}{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}{% endmacro %}
           {%- if servername() != "/{{ adminer_install_filename }}" -%}
@@ -174,6 +179,28 @@
             </tr>
           {%- endif -%}
         {%- endif %}
+      </table>
+    {%- endmacro -%}
+
+    {%- macro sectionPhpInformation() -%}
+      <table class="table">
+        <tr>
+          <th>PHP Version</th>
+          <td><code>{{ php_version }}</code></td>
+        </tr>
+        <tr>
+          <th>Webserver</th>
+          <td><code>{{ drupalvm_webserver|capitalize }}</code></td>
+        </tr>
+        <tr>
+          <th>Memory limit</th>
+          <td><code>{{ php_memory_limit }}</code></td>
+        </tr>
+        <tr>
+          <th>PHP-FPM enabled</th>
+          <td><code>{{ 'yes' if php_enable_php_fpm else 'no' }}</code></td>
+        </tr>
+        <tr><td colspan=2><small><a href="/server-info.php">View more details in the server's phpinfo() report</a>.</small></td></tr>
       </table>
     {%- endmacro -%}
 
@@ -292,6 +319,13 @@
             <div class="panel-heading">Development tools</div>
             <div class="panel-body">
               {{ sectionDevelopmentTools() }}
+            </div>
+          </section>
+
+          <section class="panel panel-default">
+            <div class="panel-heading">PHP information</div>
+            <div class="panel-body">
+              {{ sectionPhpInformation() }}
             </div>
           </section>
         </div>
