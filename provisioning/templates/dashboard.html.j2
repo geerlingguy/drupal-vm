@@ -41,7 +41,7 @@
         <tr>
           <td><a href="http://{{ servername }}">{{ servername }}</a></td>
           <td><code>{{ docroot }}</code></td>
-        {% if configure_local_drush_aliases %}
+        {% if configure_drush_aliases %}
           <td><code>drush @{{ vagrant_machine_name }}.{{ servername }}</code></td>
         {% endif %}
         </tr>
@@ -90,7 +90,7 @@
           <tr>
             <th>Hostname</th>
             <th>Document Root</th>
-            {% if configure_local_drush_aliases -%}
+            {% if configure_drush_aliases -%}
               <th>Drush alias*</th>
             {%- endif %}
         </thead>
