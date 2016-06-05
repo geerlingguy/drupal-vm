@@ -132,5 +132,7 @@ script:
     && (echo 'Drush install pass' && exit 0)
     || (echo 'Drush install fail' && exit 1)
 
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm composer --version'
+
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
