@@ -15,16 +15,28 @@ env:
       version: 16.04
       init: /sbin/init
       run_opts: "--privileged"
+      local_config: tests/makefile.config.yml
     - distribution: ubuntu
       version: 16.04
       init: /sbin/init
       run_opts: "--privileged"
-      local_config: tests/ubuntu-16-nginx.config.yml
-      config_dir: /var/www/drupalvm/config
-    - distribution: centos
-      version: 7
-      init: /usr/lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      local_config: tests/composer.config.yml
+    - distribution: ubuntu
+      version: 16.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/composer-xdebug.config.yml
+    - distribution: ubuntu
+      version: 16.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/composer-min-stability.config.yml
+    - distribution: ubuntu
+      version: 16.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/composer-shallow-clone.config.yml
+
 
 services:
   - docker
