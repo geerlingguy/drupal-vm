@@ -12,6 +12,7 @@ pages:
   - Home: 'index.md'
   - Drupal Deployment Strategies:
     - 'Drush Make file': 'deployment/drush-make.md'
+    - 'Composer': 'deployment/composer.md'
     - 'Local Drupal codebase': 'deployment/local-codebase.md'
     - 'Drupal multisite': 'deployment/multisite.md'
   - Extra Software and Setup:

@@ -80,6 +80,11 @@
     - name: Check if Drupal is already set up.
       stat: "path={{ drupal_core_path }}/index.php"
       register: drupal_site
+      ignore_errors: true
+
+    - name: Define drupal_site_exists
+      set_fact:
+        drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
 
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
@@ -90,6 +95,14 @@
     # Build makefile if configured.
     - include: tasks/build-makefile.yml
       when: build_makefile
+
+    # Build with composer if configured.
+    - include: tasks/build-composer.yml
+      when: build_composer
+
+    # Build a composer project if configured.
+    - include: tasks/build-composer-project.yml
+      when: build_composer_project
 
     # Install site if configured.
     - include: tasks/install-site.yml
