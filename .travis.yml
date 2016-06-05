@@ -36,6 +36,11 @@ env:
       init: /sbin/init
       run_opts: "--privileged"
       local_config: tests/composer-shallow-clone.config.yml
+    - distribution: ubuntu
+      version: 16.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/composer-prestissimo-dev.config.yml
 
 
 services:
