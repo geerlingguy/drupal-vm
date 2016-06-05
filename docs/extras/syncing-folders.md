@@ -103,6 +103,30 @@ mount_options: ["dmode=775,fmode=664"]
 
 See [this issue](https://github.com/geerlingguy/drupal-vm/issues/66) for more details.
 
+### Using [`vagrant-bindfs`](https://github.com/gael-ian/vagrant-bindfs) to work around permissions-related errors
+
+If you're using NFS synced folders the mounted directories will use the same numeric permissions on the guest VM as on the host OS. If you're on OSX for instance, your files within the VM would be owned by 501:20. To correct these permissions you can use the [`vagrant-bindfs` plugin](https://github.com/gael-ian/vagrant-bindfs) to mount your NFS folders to a temporary location and then re-mount them to the actual destination with the correct ownership.
+
+First install the plugin with `vagrant plugin install vagrant-bindfs` and then add a `Vagrantfile.local` with the following:
+
+```rb
+vconfig['vagrant_synced_folders'].each do |synced_folder|
+  case synced_folder['type']
+  when "nfs"
+    guest_path = synced_folder['destination']
+    host_path = File.expand_path(synced_folder['local_path'])
+    config.vm.synced_folders[guest_path][:guestpath] = "/var/nfs#{host_path}"
+    config.bindfs.bind_folder "/var/nfs#{host_path}", guest_path,
+      u: 'vagrant',
+      g: 'www-data',
+      perms: 'u=rwX:g=rwD',
+      o: 'nonempty'
+    config.nfs.map_uid = Process.uid
+    config.nfs.map_gid = Process.gid
+  end
+end
+```
+
 ### Other NFS-related errors
 
 If you're having other weird issues, and none of the above fixes helps, you might want to try a different synced folder method (see top of this page), or something like File Conveyor or a special rsync setup (see [here](http://wolfgangziegler.net/auto-rsync-local-changes-to-remote-server#comments) for some examples).
