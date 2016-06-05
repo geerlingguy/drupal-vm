@@ -1,0 +1,7 @@
+---
+build_makefile: false
+build_composer: true
+drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
+
+pre_provision_scripts:
+  - ../tests/composer-shallow-clone.sh
