@@ -37,7 +37,7 @@ drupalvm_webserver: apache
 
 # Set this to 'false' if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
-build_makefile: true
+build_makefile: false
 drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 
 # Set 'build_makefile' to 'false' and this to 'true' if you are using a
@@ -45,12 +45,13 @@ drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 build_composer: false
 drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
 drupal_composer_install_dir: "/var/www/drupalvm/drupal"
-drupal_composer_dependencies: []
+drupal_composer_dependencies:
+  - "drupal/devel:8.*"
 
 # Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
 # are using Composer's create-project as a site deployment strategy.
-build_composer_project: false
-drupal_composer_project_package: ""
+build_composer_project: true
+drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 # Set this to 'false' if you don't need to install drupal (using the drupal_*
@@ -59,7 +60,7 @@ install_site: true
 
 # Settings for installing a Drupal site (if 'install_site:' is 'true').
 drupal_major_version: 8
-drupal_core_path: "/var/www/drupalvm/drupal"
+drupal_core_path: "{{ drupal_composer_install_dir }}/web"
 drupal_domain: "{{ vagrant_hostname }}"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
@@ -241,7 +242,7 @@ composer_home_path: "/home/{{ drupalvm_user }}/.composer"
 composer_home_owner: "{{ drupalvm_user }}"
 composer_home_group: "{{ drupalvm_user }}"
 composer_global_packages:
-  - { name: hirak/prestissimo, release: '^0.2' }
+  - { name: hirak/prestissimo, release: '^0.3' }
 
 # Run specified scripts before or after VM is provisioned. Path is relative to
 # the `provisioning/playbook.yml` file.
