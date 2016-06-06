@@ -175,6 +175,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
   config.vm.define vconfig['vagrant_machine_name']
 
+  # Cache packages and dependencies if vagrant-cachier plugin is present.
+  if Vagrant.has_plugin?('vagrant-cachier')
+    config.cache.scope = :box
+    config.cache.auto_detect = false
+    config.cache.enable :apt
+    # Cache the composer directory.
+    config.cache.enable :generic, cache_dir: '/home/vagrant/.composer/cache'
+    # Cache via NFS shares.
+    config.cache.synced_folder_opts = {
+      type: :nfs,
+      mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+    }
+  end
+
   # Allow an untracked Vagrantfile to modify the configurations
   eval File.read "#{host_config_dir}/Vagrantfile.local" if File.exist?("#{host_config_dir}/Vagrantfile.local")
 end
