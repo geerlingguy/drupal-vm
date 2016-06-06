@@ -11,12 +11,14 @@ vagrant_synced_folders:
     type: nfs
 ```
 
-## Disable the Drush make build and site install
+## Disable the Composer project build and site install
 
-Set `build_makefile` and `install_site` to `false`:
+Set all the `build_` variables and `install_site` to `false`:
 
 ```yaml
-build_makefile:: false
+build_makefile: false
+build_composer: false
+build_composer_project: true
 ...
 install_site: false
 ```

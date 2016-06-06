@@ -1,9 +1,9 @@
-Drupal VM is configured to use [Drush make](drush-make.md) by default but supports building Drupal from a custom composer.json or creating a project from a composer package (`composer create-project`).
+Drupal VM is configured to use `composer create-project` to build a Drupal 8 codebase by default but supports building Drupal from a custom composer.json or [Drush make file](drush-make.md).
 
 ## Using composer.json
 
 1. Copy `example.drupal.composer.json` to `drupal.composer.json` and modify it to your liking.
-2. Switch the build system by setting `build_makefile: false` and `build_composer: true` in your `config.yml`.
+2. Use the Composer build system by setting `build_composer: true` in your `config.yml` (make sure `build_makefile` is set to `false`).
 3. Configure `drupal_core_path` to point to the webroot directory: `drupal_core_path: {{ drupal_composer_install_dir }}/docroot`
 
 ```yaml
@@ -28,14 +28,14 @@ drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 
 ## Creating a project from a composer package: `composer create-project`
 
-There's a couple of things you need to configure in your `config.yml`:
+This is the default Drupal VM build configuration, set up by the following settings in `config.yml`:
 
-- Switch the build system by setting `build_makefile: false`, `build_composer: false` and `build_composer_project: true`.
-- Configure the composer package in `drupal_composer_project_package`.
-- Additionally you can adjust the create-project CLI options in `drupal_composer_project_options` as well as add additional dependencies in `drupal_composer_dependencies`.
-- Ensure that the webroot configured in the composer package matches the one set in `drupal_core_path`.
+  - Composer will build the project if `build_composer_project` is `true`, and `build_makefile` and `build_composer` are both `false`.
+  - The Composer package is defined by `drupal_composer_project_package`.
+  - Adjust the create-project CLI options in `drupal_composer_project_options` as well as add additional dependencies in `drupal_composer_dependencies`.
+  - Ensure that the webroot configured in the Composer package matches the one set in `drupal_core_path`.
 
-With [drupal-composer/drupal-project](https://github.com/drupal-composer/drupal-project) as an example your `config.yml` overrides would be:
+With [drupal-composer/drupal-project](https://github.com/drupal-composer/drupal-project) as an example your `config.yml` settings would be:
 
 ```yaml
 build_makefile: false
@@ -57,15 +57,8 @@ Opting for composer based installs will most likely increase your VM's time to p
 
 If you manage multiple VM's own your computer, you can use the [`vagrant-cachier` plugin](http://fgrehm.viewdocs.io/vagrant-cachier/) to share Composer's package cache across all VM's. The first build will be as slow as before but subsequent builds with the same `vagrant_box` (eg `geerlingguy/ubuntu1604`) will be much faster.
 
-1. Install the plugin on your host computer: `vagrant plugin install vagrant-cachier`
-2. Create a `Vagrantfile.local` next to your `config.yml` with the following:
+Install the plugin on your host computer: `vagrant plugin install vagrant-cachier`.
 
-```rb
-config.cache.scope = :box
-config.cache.auto_detect = false
-config.cache.enable :generic, { :cache_dir => "/home/vagrant/.composer/cache"  }
-```
-
-_Note: Out of the box, sharing the Composer cache is not supported as the plugin requires PHP to be installed when the VM first boots up. This is why the generic cache bucket is used instead._
+Drupal VM's `Vagrantfile` includes the appropriate `vagrant-cachier` configuration to cache Composer and apt dependencies.
 
 _You can also use this plugin to share other package manager caches. For more information read the [documentation](http://fgrehm.viewdocs.io/vagrant-cachier/usage/)._
