@@ -194,6 +194,7 @@ installed_extras:
   - drupalconsole
   # - elasticsearch
   # - java
+  # - drush
   - mailhog
   # - memcached
   # - newrelic
@@ -215,6 +216,7 @@ extra_packages:
 extra_security_enabled: false
 
 drush_version: "master"
+drush_path: "{{ drupal_composer_install_dir }}/vendor/drush/drush/drush"
 drush_keep_updated: true
 drush_composer_cli_options: "--prefer-dist --no-interaction"
 

@@ -5,3 +5,13 @@ drupalvm_webserver: nginx
 build_makefile: true
 build_composer_project: false
 drupal_core_path: "/var/www/drupalvm/drupal"
+
+drush_path: "/usr/local/bin/drush"
+installed_extras:
+  - adminer
+  - drupalconsole
+  - mailhog
+  - pimpmylog
+  - varnish
+  - xhprof
+  - drush

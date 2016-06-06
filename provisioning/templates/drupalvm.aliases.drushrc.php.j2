@@ -14,6 +14,9 @@ $aliases['{{ host }}'] = array(
   'remote-host' => '{{ host }}',
   'remote-user' => '{{ vagrant_user }}',
   'ssh-options' => '-o PasswordAuthentication=no -i ' . drush_server_home() . '/.vagrant.d/insecure_private_key',
+  'path-aliases' => array(
+    '%drush-script' => '{{ drush_path }}',
+  ),
 );
 
 {% endif -%}

@@ -10,6 +10,7 @@ env:
       MACHINE_NAME: drupalvm
       IP: 192.168.88.88
       DRUPALVM_DIR: /var/www/drupalvm
+      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
       TEST_INSTALLED_EXTRAS: true
   matrix:
     # Defaults - Ubuntu 16.04.
@@ -24,6 +25,7 @@ env:
       run_opts: "--privileged"
       local_config: tests/ubuntu-16-nginx.config.yml
       config_dir: /var/www/drupalvm/config
+      DRUSH_BIN: "/usr/local/bin/drush"
     # PostgreSQL - Ubuntu 16.04.
     - type: postgresql
       distro: ubuntu1604
@@ -131,7 +133,7 @@ script:
     || (echo 'Dashboard install fail' && exit 1)
 
   - >
-    docker exec ${container_id} drush @${MACHINE_NAME}.${HOSTNAME} status
+    docker exec ${container_id} ${DRUSH_BIN} @${MACHINE_NAME}.${HOSTNAME} status
     | grep -q 'Drupal bootstrap.*Successful'
     && (echo 'Drush install pass' && exit 0)
     || (echo 'Drush install fail' && exit 1)
