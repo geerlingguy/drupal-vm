@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = '2'
+Vagrant.require_version '>= 1.8.1'
 
 # Absolute paths on the host machine.
 host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
