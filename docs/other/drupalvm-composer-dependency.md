@@ -15,9 +15,9 @@ Add and configure the `config.yml` anywhere you like, in this example we place i
 _Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as [`local.config.yml` and `Vagrantfile.local`](overriding-configurations.md)._
 
 ```
+├── composer.json
 ├── config/
 │   ├── config.yml
-│   ├── drupal.make.yml
 │   ├── local.config.yml
 │   └── Vagrantfile.local
 ├── docroot/
@@ -27,6 +27,16 @@ _Note: This will be the directory where Drupal VM looks for other local configur
     ├── ...
     └── geerlingguy/
         └── drupal-vm/
+```
+
+Change the build strategy to use your `composer.json` file by setting:
+
+```yaml
+build_composer_project: false
+build_composer: true
+drupal_composer_path: false
+drupal_composer_install_dir: "/var/www/drupalvm"
+drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 ```
 
 If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `default.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
@@ -66,7 +76,6 @@ Your project structure should now look like this:
 ├── composer.json
 ├── config/
 │   ├── config.yml
-│   ├── drupal.make.yml
 │   ├── local.config.yml
 │   └── Vagrantfile.local
 ├── docroot/
@@ -117,7 +126,6 @@ Your directory structure should now look like this:
 ```
 ├── Vagrantfile
 ├── config/
-│   ├── drupal.make.yml
 │   ├── config.yml
 │   ├── local.config.yml
 │   └── Vagrantfile.local

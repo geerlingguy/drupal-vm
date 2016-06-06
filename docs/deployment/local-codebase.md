@@ -18,7 +18,7 @@ Set all the `build_` variables and `install_site` to `false`:
 ```yaml
 build_makefile: false
 build_composer: false
-build_composer_project: true
+build_composer_project: false
 ...
 install_site: false
 ```
