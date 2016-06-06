@@ -43,16 +43,25 @@ Full Drupal VM documentation is available at http://docs.drupalvm.com/
 There are a couple places where you can customize the VM for your needs:
 
   - `config.yml`: Override any of the default VM configuration from `default.config.yml`; customize almost any aspect of any software installed in the VM (more about [overriding configurations](http://docs.drupalvm.com/en/latest/other/overriding-configurations/).
-  - `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (more about [Drush make files](https://www.drupal.org/node/1432374)).
+  - `drupal.composer.json` or `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (you can build using Composer, Drush make, or your own codebase).
 
 If you want to switch from Drupal 8 (default) to Drupal 7 on the initial install, do the following:
 
+  1. Switch to using a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/).
   1. Update the Drupal `version` and `core` inside the `drupal.make.yml` file.
   2. Update `drupal_major_version` inside `config.yml`.
 
 ## Quick Start Guide
 
-This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using the included example Drush make file. You can also use the Drupal VM with a [Composer based installation](http://docs.drupalvm.com/en/latest/deployment/composer/), with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/) or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
+This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using Composer with `drupal-project`. You can also use Drupal VM with [Composer](http://docs.drupalvm.com/en/latest/deployment/composer/), a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/), with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/), or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
+
+If you want to install a Drupal 8 site locally with minimal fuss, just:
+
+  1. Install Vagrant.
+  2. Download or clone this project to your workstation.
+  3. `cd` into this project directory and run `vagrant up`.
+
+But Drupal VM allows you to build your site exactly how you like, using whatever tools you need, with almost infinite flexibility and customization!
 
 ### 1 - Install Vagrant
 
@@ -64,14 +73,12 @@ Notes:
 
   - **For faster provisioning** (Mac/Linux only): *[Install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
   - **NFS on Linux**: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
-  - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of February 2016, Drupal VM recommends: Vagrant 1.8.1, VirtualBox 5.0.14, and Ansible 2.0.0.*
+  - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of February 2016, Drupal VM recommends: Vagrant 1.8.1, VirtualBox 5.0.20, and Ansible 2.1.0.*
 
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.
-  2. Make copies of both example configuration files, and modify to your liking:
-    - Copy `example.drupal.make.yml` to `drupal.make.yml`.
-    - Copy `default.config.yml` to `config.yml`.
+  2. (Optional) Copy `default.config.yml` to `config.yml` and modify it to your liking.
   3. Create a local directory where Drupal will be installed and configure the path to that directory in `config.yml` (`local_path`, inside `vagrant_synced_folders`).
   4. Open Terminal, `cd` to this directory (containing the `Vagrantfile` and this README file).
   5. Type in `vagrant up`, and let Vagrant do its magic.
@@ -145,4 +152,4 @@ This project is licensed under the MIT open source license.
 
 ## About the Author
 
-[Jeff Geerling](http://www.jeffgeerling.com/), owner of [Midwestern Mac, LLC](http://www.midwesternmac.com/), created this project in 2014 so he could accelerate his Drupal core and contrib development workflow. This project, and others like it, are also featured as examples in Jeff's book, [Ansible for DevOps](http://www.ansiblefordevops.com/).
+[Jeff Geerling](http://www.jeffgeerling.com/) created Drupal VM in 2014 for a more efficient Drupal site and core/contrib development workflow. This project is featured as an example in [Ansible for DevOps](http://www.ansiblefordevops.com/).
