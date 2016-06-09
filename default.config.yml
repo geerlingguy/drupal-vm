@@ -188,16 +188,6 @@ installed_extras:
 extra_packages:
   - sqlite
 
-# `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
-# "0.12", "4.x", "5.x".
-nodejs_version: "0.12"
-nodejs_npm_global_packages: []
-nodejs_install_npm_user: "{{ drupalvm_user }}"
-
-# `ruby` must be in installed_extras for this to work.
-ruby_install_gems_user: "{{ drupalvm_user }}"
-ruby_install_gems: []
-
 # You can configure almost anything else on the server in the rest of this file.
 extra_security_enabled: false
 
@@ -244,9 +234,6 @@ composer_home_group: "{{ drupalvm_user }}"
 composer_global_packages:
   - { name: hirak/prestissimo, release: '^0.3' }
 
-# NodeJS Configuration.
-npm_config_prefix: "~/.npm-global"
-
 # Run specified scripts before or after VM is provisioned. Path is relative to
 # the `provisioning/playbook.yml` file.
 pre_provision_scripts: []
@@ -260,7 +247,18 @@ mysql_slow_query_time: 2
 mysql_wait_timeout: 300
 adminer_install_filename: index.php
 
-# Varnish Configuration.
+# Node.js configuration (if enabled above).
+# Valid examples: "0.10", "0.12", "4.x", "5.x".
+nodejs_version: "0.12"
+nodejs_npm_global_packages: []
+nodejs_install_npm_user: "{{ drupalvm_user }}"
+npm_config_prefix: "~/.npm-global"
+
+# Ruby Configuration (if enabled above).
+ruby_install_gems_user: "{{ drupalvm_user }}"
+ruby_install_gems: []
+
+# Varnish Configuration (if enabled above).
 varnish_listen_port: "81"
 varnish_default_vcl_template_path: templates/drupalvm.vcl.j2
 varnish_default_backend_host: "127.0.0.1"
