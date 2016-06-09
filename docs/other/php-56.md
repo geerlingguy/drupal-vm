@@ -39,6 +39,8 @@ php_fpm_pool_conf_path: "/etc/php5/fpm/pool.d/www.conf"
 php_mysql_package: php5-mysql
 ```
 
+_Note: If you'd like to run xdebug, you will want to swap out `- php5` with `php5-xdebug` in the php_packages.
+
 If you're using Apache with `mod_php` you should also add `libapache2-mod-php5` to the `php_packages` list.
 
 Also, if you're using one of the `installed_extras`, you may need to update the package names accordingly:
