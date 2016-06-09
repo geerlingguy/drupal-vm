@@ -244,6 +244,9 @@ composer_home_group: "{{ drupalvm_user }}"
 composer_global_packages:
   - { name: hirak/prestissimo, release: '^0.3' }
 
+# NodeJS Configuration.
+npm_config_prefix: "~/.npm-global"
+
 # Run specified scripts before or after VM is provisioned. Path is relative to
 # the `provisioning/playbook.yml` file.
 pre_provision_scripts: []
