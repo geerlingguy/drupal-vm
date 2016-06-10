@@ -134,7 +134,7 @@
           {%- endif -%}
         {%- endif %}
         {% if 'mailhog' in installed_extras -%}
-          {% macro servername() %}{{ vagrantname }}:8025{% endmacro %}
+          {% macro servername() %}{{ vagrant_hostname }}:8025{% endmacro %}
           {%- if servername() != ":8025" -%}
             <tr>
               <th>MailHog</th>
@@ -160,7 +160,7 @@
           {%- endif -%}
         {%- endif %}
         {% if 'solr' in installed_extras -%}
-          {% macro servername() %}{{ vagrantname }}:{{ solr_port }}/solr/{% endmacro %}
+          {% macro servername() %}{{ vagrant_hostname }}:{{ solr_port }}/solr/{% endmacro %}
           <tr>
             <th>Solr</th>
             <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
