@@ -188,16 +188,6 @@ installed_extras:
 extra_packages:
   - sqlite
 
-# `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
-# "0.12", "4.x", "5.x".
-nodejs_version: "0.12"
-nodejs_npm_global_packages: []
-nodejs_install_npm_user: "{{ drupalvm_user }}"
-
-# `ruby` must be in installed_extras for this to work.
-ruby_install_gems_user: "{{ drupalvm_user }}"
-ruby_install_gems: []
-
 # You can configure almost anything else on the server in the rest of this file.
 extra_security_enabled: false
 
