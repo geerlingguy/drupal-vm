@@ -22,7 +22,7 @@
     {# Sets vagrant IP if equals 0.0.0.0 #}
     {%- if vagrant_ip == '0.0.0.0' -%}
       {%- set vagrant_ip = ansible_all_ipv4_addresses[1] -%}
-    {%- endif -%}
+    {% endif -%}
     {# Returns the hosts server name based on the document root #}
     {%- macro getServernameFromDocroot(path) -%}
       {%- if drupalvm_webserver == 'apache' -%}
@@ -63,10 +63,10 @@
         {% if drupalvm_webserver == 'apache' -%}
           {%- for host in apache_vhosts -%}
 
-            {{ printHostsEntry(vagrant_host_ip, host.servername) }}
+            {{ printHostsEntry(vagrant_ip, host.servername) }}
             {% if host.serveralias is defined -%}
               {%- for alias in host.serveralias.split() -%}
-                {{ printHostsEntry(vagrant_host_ip, alias) }}
+                {{ printHostsEntry(vagrant_ip, alias) }}
               {%- endfor -%}
             {%- endif %}
 
@@ -75,11 +75,11 @@
           {%- for host in nginx_hosts -%}
 
             {% for server_name in host.server_name.split(' ') -%}
-              {{ printHostsEntry(vagrant_host_ip, server_name) }}
+              {{ printHostsEntry(vagrant_ip, server_name) }}
             {%- endfor %}
             {% if host.server_name_redirect is defined -%}
               {%- for server_name in host.server_name_redirect.split(' ') -%}
-                {{ printHostsEntry(vagrant_host_ip, server_name) }}
+                {{ printHostsEntry(vagrant_ip, server_name) }}
               {%- endfor -%}
             {%- endif %}
 
@@ -134,7 +134,7 @@
           {%- endif -%}
         {%- endif %}
         {% if 'mailhog' in installed_extras -%}
-          {% macro servername() %}{{ vagrant_hostname }}:8025{% endmacro %}
+          {% macro servername() %}{{ vagrantname }}:8025{% endmacro %}
           {%- if servername() != ":8025" -%}
             <tr>
               <th>MailHog</th>
@@ -160,7 +160,7 @@
           {%- endif -%}
         {%- endif %}
         {% if 'solr' in installed_extras -%}
-          {% macro servername() %}{{ vagrant_hostname }}:{{ solr_port }}/solr/{% endmacro %}
+          {% macro servername() %}{{ vagrantname }}:{{ solr_port }}/solr/{% endmacro %}
           <tr>
             <th>Solr</th>
             <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
@@ -228,7 +228,7 @@
         </tr>
         <tr>
           <th>SSH Hostname</th>
-          <td><code>{{ vagrant_host_ip }}</code></td>
+          <td><code>{{ vagrant_ip }}</code></td>
         </tr>
         <tr>
           <th>SSH Username</th>
