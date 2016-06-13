@@ -14,5 +14,5 @@ With the default settings the Drupal site will be built on the VM inside `/var/w
 ```yaml
 build_composer_project: false
 build_makefile: true
-drush_core_path: "/var/www/drupalvm/drupal"
+drupal_core_path: "/var/www/drupalvm/drupal"
 ```
