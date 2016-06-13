@@ -19,6 +19,10 @@
     </style>
   </head>
   <body>
+    {# Sets vagrant IP if equals 0.0.0.0 #}
+    {%- if vagrant_ip == '0.0.0.0' -%}
+      {%- set vagrant_ip = ansible_all_ipv4_addresses[1] -%}
+    {%- endif -%}
     {# Returns the hosts server name based on the document root #}
     {%- macro getServernameFromDocroot(path) -%}
       {%- if drupalvm_webserver == 'apache' -%}
