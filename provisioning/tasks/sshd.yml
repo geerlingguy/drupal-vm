@@ -19,3 +19,13 @@
     mode: 0644
   become: no
   when: known_hosts_file.stat.exists
+
+- name: Set SSH home directory.
+  lineinfile:
+    dest: "/home/{{ drupalvm_user }}/.bashrc"
+    state: present
+    create: yes
+    regexp: "^SSH_HOME="
+    line: "SSH_HOME={{ ssh_home }} && [ -e $SSH_HOME ] && cd $SSH_HOME"
+  become: no
+  when: ssh_home is defined
