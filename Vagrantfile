@@ -107,7 +107,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       rsync__args: ['--verbose', '--archive', '--delete', '-z', '--chmod=ugo=rwX'],
       id: synced_folder['id'],
       create: synced_folder.include?('create') ? synced_folder['create'] : false,
-      mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
+      mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : nil
     }
     if synced_folder.include?('options_override')
       options = options.merge(synced_folder['options_override'])
