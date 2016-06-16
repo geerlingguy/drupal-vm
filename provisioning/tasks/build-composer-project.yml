@@ -6,6 +6,8 @@
     {{ drupal_composer_project_options|default('--prefer-dist --no-interaction') }}
   when: not drupal_site_exists
   become: no
+  environment:
+      COMPOSER_PROCESS_TIMEOUT: 1200
 
 - name: Install dependencies with composer require.
   command: >

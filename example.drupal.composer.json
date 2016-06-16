@@ -34,5 +34,8 @@
             "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/contrib/{$name}": ["type:drupal-drush"]
         }
+    },
+    "config": {
+        "process-timeout": 1200
     }
 }
