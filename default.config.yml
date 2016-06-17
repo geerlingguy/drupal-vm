@@ -255,7 +255,7 @@ adminer_install_filename: index.php
 nodejs_version: "0.12"
 nodejs_npm_global_packages: []
 nodejs_install_npm_user: "{{ drupalvm_user }}"
-npm_config_prefix: "~/.npm-global"
+npm_config_prefix: "/home/{{ drupalvm_user }}/.npm-global"
 
 # Ruby Configuration (if enabled above).
 ruby_install_gems_user: "{{ drupalvm_user }}"
