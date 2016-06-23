@@ -25,6 +25,20 @@ env:
       version: 7
       init: /usr/lib/systemd/systemd
       run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distribution: ubuntu
+      version: 14.04
+      init: /sbin/init
+      run_opts: "--privileged"
+    - distribution: ubuntu
+      version: 14.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/ubuntu-1404-nginx.config.yml
+    - distribution: ubuntu
+      version: 14.04
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/ubuntu-1404-php56.config.yml
 
 services:
   - docker

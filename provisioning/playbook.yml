@@ -7,6 +7,9 @@
     - ../default.config.yml
 
   pre_tasks:
+    - name: Include OS-specific variables.
+      include_vars: "{{ ansible_os_family }}.yml"
+
     - name: Define config_dir.
       set_fact:
         config_dir: "{{ playbook_dir }}/.."
@@ -35,6 +38,12 @@
       set_fact:
         php_webserver_daemon: nginx
       when: drupalvm_webserver == 'nginx'
+
+    - name: Set the correct XHProf package when PHP 5.6 is used.
+      set_fact:
+        xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+        xhprof_download_folder_name: xhprof-master
+      when: php_version == '5.6'
 
   roles:
     # Essential roles.
