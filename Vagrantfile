@@ -124,7 +124,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision 'ansible-galaxy', type: 'ansible' do |ansible|
       ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
       ansible.galaxy_role_file = "#{host_drupalvm_dir}/provisioning/requirements.yml"
-      ansible.raw_arguments = "--syntax-check"
+      ansible.raw_arguments = '--syntax-check'
     end
     # vagrant provision  --provision-with ansible-playbook
     config.vm.provision 'ansible-playbook', type: 'ansible' do |ansible|
