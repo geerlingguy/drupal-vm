@@ -90,4 +90,8 @@ server {
         image/x-icon;
     gzip_buffers 16 8k;
     gzip_min_length 512;
+
+{% if item.extra_parameters is defined %}
+    {{ item.extra_parameters }}
+{% endif %}
 }
