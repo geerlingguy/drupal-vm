@@ -93,6 +93,14 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
     - You can have Vagrant automatically configure your hosts file if you install the `hostsupdater` plugin (`vagrant plugin install vagrant-hostsupdater`). All hosts defined in `apache_vhosts` or `nginx_hosts` will be automatically managed. `vagrant-hostmanager` is also supported.
     - The `auto_network` plugin (`vagrant plugin install vagrant-auto_network`) can help with IP address management if you set `vagrant_ip` to `0.0.0.0` inside `config.yml`.
   2. Open your browser and access [http://drupalvm.dev/](http://drupalvm.dev/). The default login for the admin account is `admin` for both the username and password.
+  3. In Windows environments with the current Drupal-VM configuration you will likely need to set your IP manually in the `hosts` file to `192.168.88.88`.
+    - With the default configuration `config.yml` your entries should look something like:
+      - 192.168.88.88  drupalvm.dev
+      - 192.168.88.88  www.drupalvm.dev
+      - 192.168.88.88  adminer.drupalvm.dev
+      - 192.168.88.88  xhprof.drupalvm.dev
+      - 192.168.88.88  pimpmylog.drupalvm.dev
+      - 192.168.88.88  dashboard.drupalvm.dev
 
 ## Extra software/utilities
 
