@@ -11,6 +11,7 @@ Ubuntu 16.04 Xenial defaults to PHP 7.0 in it's system packages. No older versio
 Ondřej Surý's PPA for PHP 7.0 is used to install PHP 7, but you can switch to using different 5.6 packages instead by making the following changes to `config.yml`:
 
 ```yaml
+vagrant_box: geerlingguy/ubuntu1404
 php_version: "5.6"
 php_packages:
   - php5
