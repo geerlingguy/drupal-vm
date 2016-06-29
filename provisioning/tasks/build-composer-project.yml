@@ -1,4 +1,14 @@
 ---
+- name: Ensure drupal_composer_install_dir directory has proper permissions.
+  file:
+    path: "{{ drupal_composer_install_dir }}"
+    state: directory
+    owner: "{{ drupalvm_user }}"
+    group: "{{ drupalvm_user }}"
+    mode: 0775
+  when: not drupal_site_exists
+  failed_when: false
+
 - name: Generate Drupal project with composer package.
   command: >
     {{ composer_path }} create-project
