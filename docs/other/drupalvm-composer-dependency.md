@@ -39,6 +39,10 @@ drupal_composer_install_dir: "/var/www/drupalvm"
 drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 ```
 
+If you intened to use the devel module, it must be added as a requirement to your `composer.json` file. Alternatively, if you do not intend to use it remove it from `drupal_enabled_modules` in your `config.yml` file:
+
+`drupal_enabled_modules: []`
+
 If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `default.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
 
 ```yaml
