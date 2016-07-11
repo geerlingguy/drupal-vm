@@ -3,7 +3,7 @@
     "type": "project",
     "description": "A VM for local Drupal development, built with Vagrant + Ansible",
     "keywords": ["vagrant", "vm", "virtual machine", "drupal"],
-    "homepage": "http://www.drupalvm.com",
+    "homepage": "https://www.drupalvm.com",
     "license": "MIT",
     "authors": [
         {
