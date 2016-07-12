@@ -48,8 +48,8 @@ There are a couple places where you can customize the VM for your needs:
 If you want to switch from Drupal 8 (default) to Drupal 7 on the initial install, do the following:
 
   1. Switch to using a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/).
-  1. Update the Drupal `version` and `core` inside the `drupal.make.yml` file.
-  2. Update `drupal_major_version` inside `config.yml`.
+  1. Update the Drupal `version` and `core` inside your `drupal.make.yml` file.
+  2. Set `drupal_major_version: 7` inside `config.yml`.
 
 ## Quick Start Guide
 
