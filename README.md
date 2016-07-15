@@ -17,6 +17,7 @@ It will install the following on an Ubuntu 16.04 (by default) linux VM:
     - Drupal Console
     - Varnish 4.x (configurable)
     - Apache Solr 4.10.x (configurable)
+    - Elasticsearch
     - Node.js 0.12 (configurable)
     - Selenium, for testing your sites via Behat
     - Ruby
