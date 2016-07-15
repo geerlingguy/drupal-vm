@@ -120,9 +120,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Provisioning. Use ansible if it's installed, JJG-Ansible-Windows if not.
   if which('ansible-playbook')
-    config.vm.provision 'ansible' do |ansible|
+    # vagrant provision  --provision-with ansible-galaxy
+    config.vm.provision 'ansible-galaxy', type: 'ansible' do |ansible|
       ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
       ansible.galaxy_role_file = "#{host_drupalvm_dir}/provisioning/requirements.yml"
+      ansible.raw_arguments = '--syntax-check'
+    end
+    # vagrant provision  --provision-with ansible-playbook
+    config.vm.provision 'ansible-playbook', type: 'ansible' do |ansible|
+      ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
       ansible.extra_vars = {
         config_dir: host_config_dir
       }
