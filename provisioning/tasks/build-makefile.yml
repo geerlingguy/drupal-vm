@@ -16,7 +16,7 @@
 
 - name: Generate Drupal site with drush makefile.
   command: >
-    {{ drush_path }} make -y /tmp/drupal.make.yml --no-gitinfofile
+    {{ drush_path }} make -y /tmp/drupal.make.yml {{ drush_make_options }}
     chdir={{ drupal_core_path }}
   when: not drupal_site_exists
   become: no
