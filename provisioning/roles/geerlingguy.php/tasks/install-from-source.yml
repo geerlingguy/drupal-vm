@@ -1,0 +1,150 @@
+---
+- name: Ensure dependencies for building from source are installed (RedHat).
+  yum: "pkg={{ item }} state=installed"
+  with_items:
+    - autoconf
+    - automake
+    - libtool
+    - bison
+    - make
+    - curl-devel
+    - recode-devel
+    - aspell-devel
+    - libxml2-devel
+    - pkgconfig
+    - libmcrypt-devel
+    - t1lib-devel
+    - libXpm-devel
+    - libpng-devel
+    - libjpeg-turbo-devel
+    - bzip2-devel
+    - openssl-devel
+    - freetype-devel
+    - libicu-devel
+    - mariadb-devel
+    - gmp-devel
+  when: ansible_os_family == 'RedHat'
+
+- name: Update apt cache (Debian).
+  apt: update_cache=yes cache_valid_time=86400
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure dependencies for building from source are installed (Debian).
+  apt: "pkg={{ item }} state=installed"
+  with_items:
+    - build-essential
+    - autoconf
+    - automake
+    - libtool
+    - bison
+    - pkg-config
+    - re2c
+    - libxml2-dev
+    - libcurl4-openssl-dev
+    - libbz2-dev
+    - libjpeg-dev
+    - libpng12-dev
+    - libxpm-dev
+    - libfreetype6-dev
+    - libgmp3-dev
+    - libmcrypt-dev
+    - libmysqlclient-dev
+    - libpspell-dev
+    - librecode-dev
+    - libssl-dev
+  when: ansible_os_family == 'Debian'
+
+- name: Define php_fpm_daemon (if not defined already).
+  set_fact:
+    php_fpm_daemon: "php-fpm"
+  when: php_fpm_daemon is not defined
+
+- name: Check if gmp.h is already in a location accessible to gcc.
+  stat: path=/usr/include/gmp.h
+  register: gmp_file
+
+- name: Ensure gmp.h is symlinked into a location accessible to gcc.
+  file:
+    src: "{{ php_source_install_gmp_path }}"
+    dest: /usr/include/gmp.h
+    state: link
+  when: gmp_file.stat.exists == false
+
+- name: Check if PHP is installed.
+  command: which php
+  changed_when: false
+  failed_when: false
+  register: php_installed
+
+- name: Clone the PHP repository.
+  git:
+    repo: https://git.php.net/repository/php-src.git
+    dest: "{{ php_source_clone_dir }}"
+    version: "{{ php_source_version }}"
+    accept_hostkey: yes
+    depth: 1
+  when: php_installed|failed
+
+- name: Ensure PHP installation path exists.
+  file:
+    path: "{{ php_source_install_path }}"
+    state: directory
+    mode: 0755
+  when: php_installed|failed
+
+- name: Build configure script.
+  shell: >
+    ./buildconf --force
+    chdir={{ php_source_clone_dir }}
+  when: php_installed|failed
+
+- name: Run configure script.
+  shell: >
+    {{ php_source_configure_command }}
+    chdir={{ php_source_clone_dir }}
+  when: php_installed|failed
+
+- name: Make and install PHP.
+  shell: >
+    {{ item }}
+    chdir={{ php_source_clone_dir }}
+  with_items:
+    - "{{ php_source_make_command }}"
+    - make install
+  when: php_installed|failed
+
+- name: Ensure php executable is symlinked into a standard path.
+  file:
+    src: "{{ php_source_install_path }}/bin/php"
+    dest: /usr/bin/php
+    state: link
+
+# PHP FPM configuration.
+- name: Ensure php-fpm executable is symlinked into a standard path.
+  file:
+    src: "{{ php_source_install_path }}/sbin/php-fpm"
+    dest: "/usr/sbin/{{ php_fpm_daemon }}"
+    state: link
+  when: "'--enable-fpm' in php_source_configure_command"
+
+- name: Ensure php-fpm init script is installed.
+  template:
+    src: fpm-init.j2
+    dest: "/etc/init.d/{{ php_fpm_daemon }}"
+    mode: 0755
+  when: "'--enable-fpm' in php_source_configure_command"
+  notify: restart php-fpm
+
+- name: Ensure php-fpm config directory exists.
+  file:
+    path: "{{ php_fpm_conf_path }}"
+    state: directory
+  when: "'--enable-fpm' in php_source_configure_command"
+
+- name: Ensure php-fpm config file is installed.
+  template:
+    src: php-fpm.conf.j2
+    dest: "{{ php_fpm_conf_path }}/php-fpm.conf"
+    mode: 0644
+  when: "'--enable-fpm' in php_source_configure_command"
+  notify: restart php-fpm

@@ -1,0 +1,24 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Fail2Ban
+- include: fail2ban-RedHat.yml
+  when: ansible_os_family == 'RedHat' and security_fail2ban_enabled
+
+- include: fail2ban-Debian.yml
+  when: ansible_os_family == 'Debian' and security_fail2ban_enabled
+
+- name: Ensure fail2ban is running and enabled on boot.
+  service: name=fail2ban state=started enabled=yes
+  when: security_fail2ban_enabled
+
+# SSH
+- include: ssh.yml
+
+# Autoupdate
+- include: autoupdate-RedHat.yml
+  when: ansible_os_family == 'RedHat' and security_autoupdate_enabled
+
+- include: autoupdate-Debian.yml
+  when: ansible_os_family == 'Debian' and security_autoupdate_enabled

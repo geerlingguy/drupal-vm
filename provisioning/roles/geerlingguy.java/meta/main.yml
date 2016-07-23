@@ -1,0 +1,27 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: Java for Linux
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.9
+  platforms:
+    - name: EL
+      versions:
+      - 6
+      - 7
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+    - name: FreeBSD
+      versions:
+      - 10.2
+  galaxy_tags:
+    - development
+    - system
+    - web

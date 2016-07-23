@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  vars:
+    php_version: 5.6
+    php_enablerepo: "remi,remi-php56"
+
+  pre_tasks:
+    - name: Include CentOS 7-specific vars.
+      include_vars: centos7-vars.yml
+      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == "7"
+
+    - name: Add repository for PHP 5.6.
+      apt_repository: repo='ppa:ondrej/php5-5.6'
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
+    - geerlingguy.apache
+    - geerlingguy.mysql
+    - geerlingguy.php
+    - role_under_test

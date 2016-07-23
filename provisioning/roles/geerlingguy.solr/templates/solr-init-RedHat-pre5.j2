@@ -1,0 +1,91 @@
+#!/bin/sh
+# chkconfig: 2345 95 05
+# description: Controls an Apache Solr process.
+#
+# TODO: Describe this file.
+#
+# @author Jeff Geerling, 2015
+
+. /etc/rc.d/init.d/functions
+
+SOLR_DIR="{{ solr_install_path }}/example"
+JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.host={{ solr_host }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }} -DSTOP.PORT=8079 -DSTOP.KEY=secret"
+START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
+STOP_COMMAND="java -jar $JAVA_OPTIONS $SOLR_DIR/start.jar --stop"
+LOG_FILE="{{ solr_log_file_path }}"
+
+start () {
+    echo -n "Starting solr... "
+
+    if ps aux | grep "[s]olr.solr.home" > /dev/null
+    then
+        echo -n "already started... "
+    else
+        cd "$SOLR_DIR" && daemon --user="{{ solr_user }}" $START_COMMAND > $LOG_FILE &
+    fi
+
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo "done."
+    else
+        echo "failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+stop () {
+    echo -n "Stopping solr... "
+
+    if ps aux | grep "[s]olr.solr.home" > /dev/null
+    then
+        $STOP_COMMAND
+    else
+        echo -n "already stopped... "
+    fi
+
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo "done."
+    else
+        echo "failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+restart () {
+    $0 stop
+    sleep 3
+    $0 start
+}
+
+check_status () {
+    if ps aux | grep "[s]olr.solr.home" > /dev/null
+    then
+        printf "Solr is running.\n"
+    else
+        printf "Solr is stopped.\n"
+    fi
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    status)
+        check_status
+    ;;
+    stop)
+        stop
+    ;;
+    restart)
+        restart
+    ;;
+    *)
+        echo $"Usage: solr {start|status|stop|restart}"
+        exit 3
+    ;;
+esac
+
+exit $RETVAL

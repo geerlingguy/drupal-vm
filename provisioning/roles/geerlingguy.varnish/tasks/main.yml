@@ -1,0 +1,72 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Copy Varnish configuration (sysvinit).
+  template:
+    src: varnish.j2
+    dest: "{{ varnish_sysvinit_config_path }}/varnish"
+    owner: root
+    group: root
+    mode: 0644
+  when: >
+    (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7) or
+    (ansible_os_family == 'Debian' and ansible_distribution_release != "xenial")
+
+- name: Copy Debian Jessie/Xenial specific Varnish configs (systemd).
+  template:
+    src: varnish.service.j2
+    dest: "{{ varnish_systemd_config_path }}/varnish.service"
+    owner: root
+    group: root
+    mode: 0655
+  when: >
+    (ansible_os_family == 'Debian') and
+    (ansible_distribution_release == "jessie" or ansible_distribution_release == "xenial")
+  notify:
+    - reload systemd
+    - restart varnish
+
+- name: Copy Varnish configuration (systemd).
+  template:
+    src: varnish.params.j2
+    dest: /etc/varnish/varnish.params
+    owner: root
+    group: root
+    mode: 0644
+  when: >
+    (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7) or
+    (ansible_os_family == 'Debian' and ansible_distribution_release == "xenial")
+
+- name: Ensure Varnish config path exists.
+  file:
+    path: "{{ varnish_config_path }}"
+    state: directory
+
+- name: Copy Varnish default VCL.
+  template:
+    src: "{{ varnish_default_vcl_template_path }}"
+    dest: "{{ varnish_config_path }}/default.vcl"
+    owner: root
+    group: root
+    mode: 0644
+  when: varnish_use_default_vcl
+  notify: restart varnish
+
+- name: Copy varnish secret.
+  template:
+    src: secret.j2
+    dest: "{{ varnish_config_path }}/secret"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart varnish
+
+- name: Ensure Varnish is started and set to run on startup.
+  service: name=varnish state=started enabled=yes

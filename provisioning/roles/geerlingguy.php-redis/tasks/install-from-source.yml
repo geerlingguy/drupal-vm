@@ -1,0 +1,36 @@
+---
+- name: Clone the PhpRedis repo.
+  git:
+    repo: "{{ php_redis_source_repo }}"
+    dest: "{{ php_redis_source_clone_dir }}"
+    version: "{{ php_redis_source_version }}"
+    accept_hostkey: yes
+    depth: 1
+
+- name: Run phpize.
+  shell: >
+    phpize
+    chdir={{ php_redis_source_clone_dir }}
+    creates={{ php_extension_conf_paths[0] }}/redis.ini
+
+- name: Run configure script.
+  shell: >
+    {{ php_redis_source_configure_command }}
+    chdir={{ php_redis_source_clone_dir }}
+    creates={{ php_extension_conf_paths[0] }}/redis.ini
+
+- name: Make and install PHP.
+  shell: >
+    {{ item }}
+    chdir={{ php_redis_source_clone_dir }}
+    creates={{ php_extension_conf_paths[0] }}/redis.ini
+  with_items:
+    - make
+    - make install
+
+- name: Ensure the Redis extension is present in PHP's configuration.
+  copy:
+    src: redis.ini
+    dest: "{{ php_extension_conf_paths[0] }}/redis.ini"
+    mode: 0644
+  notify: restart webserver

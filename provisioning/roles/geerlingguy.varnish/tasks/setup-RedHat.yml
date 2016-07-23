@@ -1,0 +1,21 @@
+---
+- name: Ensure gcc is installed (Varnish dependency).
+  yum: name=gcc state=present
+
+- name: Add Varnish repository.
+  command: >
+    rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-{{ varnish_version }}.el6.rpm
+    creates=/var/lib/yum/repos/x86_64/6/varnish-{{ varnish_version }}
+  ignore_errors: true
+  when: ansible_distribution_major_version|int < 7
+
+- name: Set repo fact appropriately.
+  set_fact:
+    varnish_yum_enablerepo: "{{ 'varnish-{{ varnish_version }},epel' if (ansible_distribution_major_version|int < 7) else 'epel' }}"
+
+- name: Install Varnish.
+  yum:
+    name: varnish
+    state: installed
+    enablerepo: "{{ varnish_yum_enablerepo }}"
+    disablerepo: "*"

@@ -1,0 +1,29 @@
+---
+- hosts: all
+
+  vars:
+    nodejs_version: "5.x"
+    nodejs_install_npm_user: root
+    npm_config_prefix: /root/.npm-global
+    npm_config_unsafe_perm: "true"
+    nodejs_npm_global_packages:
+      - name: node-sass
+      - name: jslint
+        version: 0.9.6
+      - name: yo
+
+  pre_tasks:
+    - name: Ensure build dependencies are installed (RedHat).
+      yum: 'name="{{ item }}" state=present'
+      with_items:
+        - which
+      when: ansible_os_family == 'RedHat'
+
+    - name: Ensure build dependencies are installed (Debian).
+      apt: 'name="{{ item }}" state=installed'
+      with_items:
+        - sudo
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role_under_test

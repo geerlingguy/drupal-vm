@@ -1,0 +1,27 @@
+---
+- hosts: all
+
+  vars:
+    php_enablerepo: "remi,remi-php56"
+    apache_listen_port_ssl: 443
+    apache_create_vhosts: true
+    apache_vhosts_filename: "vhosts.conf"
+    apache_vhosts:
+      - servername: "example.com"
+        documentroot: "/var/www/vhosts/example_com"
+
+  pre_tasks:
+    - name: Add repository for PHP 5.5 + Apache 2.4 on Ubuntu 12.04.
+      apt_repository: repo='ppa:ondrej/php5'
+      when: ansible_distribution_version == "12.04"
+
+    - name: Update apt cache on Ubuntu 12.04.
+      apt: update_cache=yes
+      when: ansible_distribution_version == "12.04"
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.apache
+    - role: geerlingguy.php
+    - role: role_under_test

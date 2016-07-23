@@ -1,0 +1,3 @@
+---
+- name: Ensure redis is installed.
+  apt: name=redis-server state=installed

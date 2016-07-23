@@ -1,0 +1,14 @@
+---
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure Blackfire packages are installed.
+  package:
+    name: "{{ blackfire_packages }}"
+    state: present
+  notify:
+    - restart webserver
+    - restart php-fpm

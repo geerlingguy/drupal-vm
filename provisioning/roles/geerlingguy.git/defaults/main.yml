@@ -1,0 +1,23 @@
+---
+workspace: /root
+
+# If git_install_from_source is set to false, these two variables define whether
+# to use an additional repo for the package installation, and which git packages
+# will be installed.
+git_enablerepo: ""
+git_packages:
+  - git
+  - git-svn
+
+# If set to TRUE, git will be installed from source, using the version set with
+# the 'git_version' variable instead of using a package.
+git_install_from_source: false
+git_install_path: "/usr"
+git_version: "2.7.1"
+
+# If git is already installed at and older version, force a new source build.
+# Only applies if git_install_from_source is `true`.
+git_install_from_source_force_update: false
+
+# Leave this at it's default.
+git_reinstall_from_source: false

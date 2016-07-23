@@ -1,0 +1,26 @@
+---
+solr_workspace: /root
+
+solr_create_user: true
+solr_user: solr
+
+solr_version: "6.0.1"
+solr_mirror: "https://archive.apache.org/dist"
+
+solr_service_name: solr
+solr_install_dir: /opt
+solr_install_path: /opt/solr
+solr_home: /var/solr
+solr_port: "8983"
+
+solr_xms: "256M"
+solr_xmx: "512M"
+
+solr_cores:
+  - collection1
+
+solr_config_file: /etc/default/solr.in.sh
+
+# Used only for Solr < 5.
+solr_log_file_path: /var/log/solr.log
+solr_host: "0.0.0.0"

@@ -1,0 +1,14 @@
+zend_extension=opcache.so
+opcache.enable={{ php_opcache_enable }}
+opcache.enable_cli={{ php_opcache_enable_cli }}
+opcache.memory_consumption={{ php_opcache_memory_consumption }}
+opcache.interned_strings_buffer={{ php_opcache_interned_strings_buffer }}
+opcache.max_accelerated_files={{ php_opcache_max_accelerated_files }}
+opcache.max_wasted_percentage={{ php_opcache_max_wasted_percentage }}
+opcache.validate_timestamps={{ php_opcache_validate_timestamps }}
+opcache.revalidate_path={{ php_opcache_revalidate_path }}
+opcache.revalidate_freq={{ php_opcache_revalidate_freq }}
+opcache.max_file_size={{ php_opcache_max_file_size }}
+{% if php_opcache_blacklist_filename != '' %}
+opcache.blacklist_filename={{ php_opcache_blacklist_filename }}
+{% endif %}

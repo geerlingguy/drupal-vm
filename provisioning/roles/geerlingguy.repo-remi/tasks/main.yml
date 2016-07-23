@@ -1,0 +1,10 @@
+---
+- name: Install remi repo.
+  yum:
+    name: "{{ remi_repo_url }}"
+    state: present
+
+- name: Import remi GPG key.
+  rpm_key:
+    key: "{{ remi_repo_gpg_key_url }}"
+    state: present

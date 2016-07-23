@@ -1,0 +1,22 @@
+---
+- name: Install Drupal Console.
+  get_url:
+    url: https://drupalconsole.com/installer
+    dest: "{{ drupal_console_path }}"
+
+- name: Ensure Drupal Console is executable.
+  file:
+    path: "{{ drupal_console_path }}"
+    mode: 0755
+
+- name: Run Drupal Console init.
+  shell: >
+    php {{ drupal_console_path }} init
+    creates={{ drupal_console_config }}
+
+- name: Update Drupal Console to latest version (if configured).
+  shell: >
+    php {{ drupal_console_path }} self-update
+  register: drupal_console_update
+  changed_when: "'console has been updated' in drupal_console_update.stdout"
+  when: drupal_console_keep_updated

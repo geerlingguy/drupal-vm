@@ -1,0 +1,61 @@
+---
+sudo: required
+language: python
+python: "2.7"
+
+env:
+  - SITE=test-install-from-source.yml
+    RUBY_VERSION=2.3.0
+    RUBY_PATH_PREFIX=/usr/local
+  - SITE=test-install-package.yml
+    RUBY_VERSION=1.8.7
+    RUBY_PATH_PREFIX=/usr
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - pip install ansible
+
+  # Ensure ruby is not installed.
+  - yes | gem uninstall --all
+  - yes "yes" | rvm implode --force
+  - sudo apt-get purge -y ruby
+  - sudo rm -rf ~/.rvm
+
+  # Add ansible.cfg to pick up roles path.
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+script:
+  # Check the role/playbook's syntax.
+  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+
+  # Run the role/playbook with ansible-playbook.
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Make sure ruby is installed and at the correct version.
+  - which ruby
+  - test -x $RUBY_PATH_PREFIX/bin/ruby
+
+  - ruby --version
+  - $RUBY_PATH_PREFIX/bin/ruby --version | grep -qF "$RUBY_VERSION"
+
+  # Make sure bundler is installed.
+  - ls -lah /usr/local/bin
+  - which bundle
+
+after_failure:
+  # If we failed, it's likely due to Travis environment changes.
+  - which ruby
+  - ruby --version
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

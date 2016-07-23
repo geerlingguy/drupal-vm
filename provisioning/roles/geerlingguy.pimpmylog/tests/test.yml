@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  vars:
+    pimpmylog_grant_all_privs: yes
+
+  roles:
+    - geerlingguy.apache
+    - geerlingguy.php
+    - ansible-role-pimpmylog

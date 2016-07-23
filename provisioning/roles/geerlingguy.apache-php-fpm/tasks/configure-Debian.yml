@@ -1,0 +1,10 @@
+---
+- name: Enable mod_proxy_fcgi.
+  file:
+    src: "{{ apache_server_root }}/mods-available/{{ item }}"
+    dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
+    state: link
+  with_items:
+    - proxy.load
+    - proxy_fcgi.load
+  notify: restart apache

@@ -1,0 +1,10 @@
+---
+- hosts: all
+
+  vars:
+    php_enable_webserver: false
+    php_enable_php_fpm: true
+
+  roles:
+    - geerlingguy.php
+    - role_under_test

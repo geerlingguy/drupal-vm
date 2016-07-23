@@ -1,0 +1,10 @@
+---
+__mysql_daemon: mysqld
+__mysql_packages:
+  - mysql
+  - mysql-server
+__mysql_slow_query_log_file: /var/log/mysql-slow.log
+mysql_config_file: /etc/my.cnf
+mysql_config_include_dir: /etc/my.cnf.d
+mysql_socket: /var/lib/mysql/mysql.sock
+mysql_supports_innodb_large_prefix: false

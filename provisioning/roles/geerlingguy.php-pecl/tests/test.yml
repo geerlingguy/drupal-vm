@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - geerlingguy.php
+    - ansible-role-php-pecl

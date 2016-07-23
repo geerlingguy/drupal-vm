@@ -1,0 +1,37 @@
+---
+- name: Check for existing APCu config files.
+  find:
+    paths: "{{ item }}"
+    contains: 'extension(\s+)?=(\s+)?apc[u]?\.so'
+  register: php_installed_apc_confs
+  with_items: "{{ php_extension_conf_paths }}"
+
+- name: Remove any non-role-supplied APCu config files.
+  file:
+    path: "{{ item.1.path }}"
+    state: absent
+  when: php_apc_conf_filename != (item.1.path.split('/') | last)
+  with_subelements:
+    - "{{ php_installed_apc_confs.results }}"
+    - files
+  notify: restart webserver
+
+- name: Ensure APCu config file is present.
+  template:
+    src: apc.ini.j2
+    dest: "{{ item }}/{{ php_apc_conf_filename }}"
+    owner: root
+    group: root
+    force: yes
+    mode: 0644
+  with_items: "{{ php_extension_conf_paths }}"
+  when: php_enable_apc
+  notify: restart webserver
+
+- name: Remove APCu config file if APC is disabled.
+  file:
+    path: "{{ item }}/{{ php_apc_conf_filename }}"
+    state: absent
+  with_items: "{{ php_extension_conf_paths }}"
+  when: not php_enable_apc
+  notify: restart webserver

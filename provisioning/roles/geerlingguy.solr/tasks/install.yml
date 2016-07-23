@@ -1,0 +1,15 @@
+---
+- name: Ensure lsof is present (RedHat).
+  yum: name=lsof state=present
+  when: ansible_os_family == "RedHat"
+
+- name: Run Solr installation script.
+  shell: >
+    {{ solr_workspace }}/{{ solr_filename }}/bin/install_solr_service.sh
+    {{ solr_workspace }}/{{ solr_filename }}.tgz
+    -i {{ solr_install_dir }}
+    -d {{ solr_home }}
+    -u {{ solr_user }}
+    -s {{ solr_service_name }}
+    -p {{ solr_port }}
+    creates={{ solr_install_dir }}/solr/bin/solr

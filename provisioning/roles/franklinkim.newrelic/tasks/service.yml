@@ -1,0 +1,7 @@
+---
+
+- name: Configuring service
+  service:
+    name: newrelic-sysmond
+    state: "{{ newrelic_service_state }}"
+    enabled: "{{ newrelic_service_enabled }}"

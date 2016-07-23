@@ -1,0 +1,61 @@
+---
+# Variable setup.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_packages.
+  set_fact:
+    php_packages: "{{ __php_packages | list }}"
+  when: php_packages is not defined
+
+- name: Define php_webserver_daemon.
+  set_fact:
+    php_webserver_daemon: "{{ __php_webserver_daemon }}"
+  when: php_webserver_daemon is not defined
+
+- name: Define php_conf_paths.
+  set_fact:
+    php_conf_paths: "{{ __php_conf_paths }}"
+  when: php_conf_paths is not defined
+
+- name: Define php_extension_conf_paths.
+  set_fact:
+    php_extension_conf_paths: "{{ __php_extension_conf_paths }}"
+  when: php_extension_conf_paths is not defined
+
+- name: Define php_apc_conf_filename.
+  set_fact:
+    php_apc_conf_filename: "{{ __php_apc_conf_filename }}"
+  when: php_apc_conf_filename is not defined
+
+- name: Define php_opcache_conf_filename (Ubuntu 16.04).
+  set_fact:
+    php_opcache_conf_filename: "10-opcache.ini"
+  when: php_opcache_conf_filename is not defined and ansible_distribution_version == "16.04"
+
+- name: Define php_opcache_conf_filename.
+  set_fact:
+    php_opcache_conf_filename: "{{ __php_opcache_conf_filename }}"
+  when: php_opcache_conf_filename is not defined
+
+- name: Define php_fpm_conf_path.
+  set_fact:
+    php_fpm_conf_path: "{{ __php_fpm_conf_path }}"
+  when: php_fpm_conf_path is not defined
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: (php_install_from_source == false) and (ansible_os_family == 'RedHat')
+
+- include: setup-Debian.yml
+  when: (php_install_from_source == false) and (ansible_os_family == 'Debian')
+
+# Install PHP from source when php_install_from_source is true.
+- include: install-from-source.yml
+  when: php_install_from_source == true
+
+# Configure PHP.
+- include: configure.yml
+- include: configure-apcu.yml
+- include: configure-opcache.yml
+- include: configure-fpm.yml

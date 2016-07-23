@@ -1,0 +1,23 @@
+---
+
+- name: Installing dependencies
+  apt:
+    pkg: apt-transport-https
+    state: present
+
+- name: Adding APT key
+  apt_key:
+    id: 548C16BF
+    url: https://download.newrelic.com/548C16BF.gpg
+
+- name: Add APT repository
+  apt_repository:
+    repo: "deb http://apt.newrelic.com/debian/ newrelic non-free"
+    update_cache: yes
+
+- name: Installing packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - newrelic-sysmond

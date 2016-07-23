@@ -1,0 +1,10 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - name: Ensure build dependencies are installed (RedHat).
+      yum: name=which state=present
+      when: ansible_os_family == 'RedHat'
+
+  roles:
+    - role_under_test

@@ -1,0 +1,42 @@
+---
+# Tasks file for selenium
+- name: create directory
+  file: "path={{ selenium_install_dir }}/selenium state=directory recurse=yes"
+  tags: [configuration, selenium, selenium-create-directory]
+
+- name: download
+  get_url: "url=http://selenium-release.storage.googleapis.com/{{ selenium_version | regex_replace('\\.[0-9]+$', '') }}/selenium-server-standalone-{{ selenium_version }}.jar dest=/opt/selenium/selenium-server-standalone-{{ selenium_version }}.jar"
+  tags: [configuration, selenium, selenium-download]
+
+- name: Install xvfb
+  apt: name={{item}}
+  with_items:
+    - xvfb
+  when: ansible_os_family == 'Debian'
+
+- name: Install browser
+  apt: name={{item}}
+  with_items:
+    - firefox
+  when: ansible_os_family == 'Debian' and selenium_install_firefox
+
+- name: Install browser Xvfb
+  yum: name={{item}}
+  with_items:
+    - xorg-x11-server-Xvfb
+  when: ansible_os_family == 'RedHat'
+
+- name: Install browser
+  yum: name={{item}}
+  with_items:
+    - firefox
+  when: ansible_os_family == 'RedHat' and selenium_install_firefox
+
+
+- name: install
+  template: src=selenium-init-{{ ansible_os_family }}.j2 dest=/etc/init.d/selenium owner=root group=root mode=0755
+  tags: [configuration, selenium, selenium-install]
+
+- name: run
+  service: name=selenium state=started enabled=yes
+  tags: [configuration, selenium, selenium-run]

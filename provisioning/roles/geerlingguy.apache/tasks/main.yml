@@ -1,0 +1,58 @@
+---
+# Include variables and define needed variables.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define apache_packages.
+  set_fact:
+    apache_packages: "{{ __apache_packages | list }}"
+  when: apache_packages is not defined
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Suse.yml
+  when: ansible_os_family == 'Suse'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: setup-Solaris.yml
+  when: ansible_os_family == 'Solaris'
+
+# Figure out what version of Apache is installed.
+- name: Get installed version of Apache.
+  shell: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
+  changed_when: false
+  always_run: yes
+  register: _apache_version
+
+- name: Create apache_version variable.
+  set_fact:
+    apache_version: "{{ _apache_version.stdout.split()[2].split('/')[1] }}"
+
+- include_vars: apache-22.yml
+  when: "apache_version.split('.')[1] == '2'"
+
+- include_vars: apache-24.yml
+  when: "apache_version.split('.')[1] == '4'"
+
+# Configure Apache.
+- include: configure-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: configure-Suse.yml
+  when: ansible_os_family == 'Suse'
+
+- include: configure-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: configure-Solaris.yml
+  when: ansible_os_family == 'Solaris'
+
+- name: Ensure Apache has selected state and enabled on boot.
+  service:
+    name: "{{ apache_service }}"
+    state: "{{ apache_state }}"
+    enabled: yes

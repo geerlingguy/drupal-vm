@@ -1,0 +1,26 @@
+---
+- name: Check current list of Solr cores.
+  uri:
+    url: http://localhost:{{ solr_port }}/solr/admin/cores
+    return_content: yes
+  register: solr_cores_current
+
+- name: Ensure Solr conf directories exist.
+  file:
+    path: "/var/solr/data/{{ item }}/conf"
+    state: directory
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    recurse: yes
+  when: "'{{ item }}' not in '{{ solr_cores_current.content }}'"
+  with_items: "{{ solr_cores }}"
+
+- name: Ensure core configuration directories exist.
+  shell: "cp -r {{ solr_install_path }}/example/files/conf/ /var/solr/data/{{ item }}/"
+  when: "'{{ item }}' not in '{{ solr_cores_current.content }}'"
+  with_items: "{{ solr_cores }}"
+
+- name: Create configured cores.
+  shell: "{{ solr_install_path }}/bin/solr create -c {{ item }}"
+  when: "'{{ item }}' not in '{{ solr_cores_current.content }}'"
+  with_items: "{{ solr_cores }}"

@@ -4,6 +4,7 @@
 .vagrant/
 .bundle/
 *.retry
+.galaxy_install_info
 vagrant_ansible_inventory_default
 local.config.yml
 config.yml
@@ -12,5 +13,4 @@ Vagrantfile.local
 examples/prod/inventory
 examples/prod/bootstrap/vars.yml
 scripts/
-roles/
 drupal/

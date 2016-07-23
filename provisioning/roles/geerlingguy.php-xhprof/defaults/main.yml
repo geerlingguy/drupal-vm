@@ -1,0 +1,14 @@
+---
+workspace: /root
+
+# Use the commented URL and folder below if you want to use the 'official'
+# XHProf project.
+xhprof_download_url: https://github.com/RustJason/xhprof/archive/php7.zip
+#xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+xhprof_download_folder_name: xhprof-php7
+# xhprof_download_folder_name: xhprof-master
+
+xhprof_output_dir: /tmp
+
+php_xhprof_lib_dir: /usr/share/php/xhprof_lib
+php_xhprof_html_dir: /usr/share/php/xhprof_html

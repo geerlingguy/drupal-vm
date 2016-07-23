@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  vars:
+    php_enable_webserver: false
+    php_install_from_source: true
+    php_source_clone_dir: /root/php-src
+    php_source_make_command: "make --jobs=2"
+    php_source_version: "php-7.0.5"
+    php_memory_limit: "192M"
+
+  pre_tasks:
+    - name: Ensure build dependencies are installed (RedHat).
+      yum: name=which state=present
+      when: ansible_os_family == 'RedHat'
+
+  roles:
+    - role_under_test

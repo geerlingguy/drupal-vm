@@ -1,0 +1,116 @@
+---
+# Pass in a comma-separated list of repos to use (e.g. "remi,epel").
+php_enablerepo: ""
+
+# PHP package state; use 'installed' to make sure it's installed, or 'latest' if
+# you want to upgrade or switch versions using a new repo.
+php_packages_state: installed
+
+# Set this to false if you're not using PHP with Apache/Nginx/etc.
+php_enable_webserver: true
+
+# PHP-FPM configuration.
+php_enable_php_fpm: false
+php_fpm_listen: "127.0.0.1:9000"
+php_fpm_listen_allowed_clients: "127.0.0.1"
+php_fpm_pm_max_children: 50
+php_fpm_pm_start_servers: 5
+php_fpm_pm_min_spare_servers: 5
+php_fpm_pm_max_spare_servers: 5
+
+# The executable to run when calling PHP from the command line.
+php_executable: "php"
+
+# OpCache settings (useful for PHP >=5.5).
+php_opcache_enable: "1"
+php_opcache_enable_cli: "0"
+php_opcache_memory_consumption: "96"
+php_opcache_interned_strings_buffer: "16"
+php_opcache_max_accelerated_files: "4096"
+php_opcache_max_wasted_percentage: "5"
+php_opcache_validate_timestamps: "1"
+php_opcache_revalidate_path: "0"
+php_opcache_revalidate_freq: "2"
+php_opcache_max_file_size: "0"
+php_opcache_blacklist_filename: ""
+
+# APCu settings.
+php_enable_apc: true
+php_apc_shm_size: "96M"
+php_apc_enable_cli: "0"
+
+# If this is set to false, none of the following options will have any effect.
+# Any and all changes to /etc/php.ini will be your responsibility.
+php_use_managed_ini: true
+
+php_expose_php: "On"
+php_memory_limit: "256M"
+php_max_execution_time: "60"
+php_max_input_time: "60"
+php_max_input_vars: "1000"
+php_realpath_cache_size: "32K"
+php_upload_max_filesize: "64M"
+php_post_max_size: "32M"
+php_date_timezone: "America/Chicago"
+php_allow_url_fopen: "On"
+
+php_sendmail_path: "/usr/sbin/sendmail -t -i"
+php_output_buffering: "4096"
+php_short_open_tag: false
+
+php_session_cookie_lifetime: 0
+php_session_gc_probability: 1
+php_session_gc_divisor: 1000
+php_session_gc_maxlifetime: 1440
+php_session_save_handler: files
+php_session_save_path: ''
+
+php_error_reporting: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
+php_display_errors: "Off"
+php_display_startup_errors: "Off"
+
+# Install PHP from source (instead of using a package manager) with these vars.
+php_install_from_source: false
+php_source_version: "master"
+php_source_clone_dir: "~/php-src"
+php_source_install_path: "/opt/php"
+php_source_install_gmp_path: "/usr/include/x86_64-linux-gnu/gmp.h"
+# For faster compile time: "make --jobs=X" where X is # of cores present.
+php_source_make_command: "make"
+php_source_configure_command: >
+  ./configure
+  --prefix={{ php_source_install_path }}
+  --with-config-file-path={{ php_conf_paths | first }}
+  --enable-mbstring
+  --enable-zip
+  --enable-bcmath
+  --enable-pcntl
+  --enable-ftp
+  --enable-exif
+  --enable-calendar
+  --enable-opcache
+  --enable-pdo
+  --enable-sysvmsg
+  --enable-sysvsem
+  --enable-sysvshm
+  --enable-wddx
+  --with-curl
+  --with-mcrypt
+  --with-iconv
+  --with-gmp
+  --with-pspell
+  --with-gd
+  --with-jpeg-dir=/usr
+  --with-png-dir=/usr
+  --with-zlib-dir=/usr
+  --with-xpm-dir=/usr
+  --with-freetype-dir=/usr
+  --enable-gd-native-ttf
+  --enable-gd-jis-conv
+  --with-openssl
+  --with-pdo-mysql=/usr
+  --with-gettext=/usr
+  --with-zlib=/usr
+  --with-bz2=/usr
+  --with-recode=/usr
+  --with-mysqli=/usr/bin/mysql_config

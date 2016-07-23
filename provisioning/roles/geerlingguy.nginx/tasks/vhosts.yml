@@ -1,0 +1,26 @@
+---
+- name: Remove default nginx vhost config file (if configured).
+  file:
+    path: "{{ nginx_default_vhost_path }}"
+    state: absent
+  when: nginx_remove_default_vhost
+  notify:
+    - reload nginx
+
+- name: Add managed vhost config file (if any vhosts are configured).
+  template:
+    src: vhosts.j2
+    dest: "{{ nginx_vhost_path }}/vhosts.conf"
+    mode: 0644
+  when: nginx_vhosts|length > 0
+  notify:
+    - reload nginx
+
+- name: Remove managed vhost config file (if no vhosts are configured).
+  file:
+    path: "{{ nginx_vhost_path }}/vhosts.conf"
+    state: absent
+  when: nginx_vhosts|length == 0
+  notify:
+    - reload nginx
+

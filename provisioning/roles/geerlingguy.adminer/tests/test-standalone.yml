@@ -1,0 +1,8 @@
+- hosts: all
+
+  vars:
+    adminer_install_dir: /opt/adminer
+    adminer_add_apache_config: false
+
+  roles:
+    - role_under_test

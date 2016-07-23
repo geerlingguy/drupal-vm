@@ -1,0 +1,21 @@
+---
+# meta file for selenium
+galaxy_info:
+  author: Alex Knoll
+  description: Set up selenium and Firefox for running selenium tests.
+  license: Apache V2
+  min_ansible_version: 1.3
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+  - web
+dependencies: []

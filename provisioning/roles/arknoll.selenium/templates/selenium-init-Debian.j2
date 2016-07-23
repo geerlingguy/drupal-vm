@@ -1,0 +1,60 @@
+#!/bin/bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+DISPLAY_ID=":1"
+RUN_AS=root
+
+JAVA_BIN=/usr/bin/java
+
+XVFB_BIN=/usr/bin/xvfb-run
+
+SELENIUM_DIR={{ selenium_install_dir }}/selenium
+SELENIUM_PID_FILE="$SELENIUM_DIR/selenium.pid"
+SELENIUM_JAR_FILE="$SELENIUM_DIR/selenium-server-standalone-{{ selenium_version }}.jar"
+SELENIUM_LOG_FILE="$SELENIUM_DIR/selenium.log"
+SELENIUM_DAEMON_OPTS=" -client -jar $SELENIUM_JAR_FILE -log $SELENIUM_LOG_FILE"
+
+export DISPLAY="$DISPLAY_ID"
+
+set -e
+
+. /lib/lsb/init-functions
+
+case "$1" in
+    start)
+        if status_of_proc -p $SELENIUM_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE > /dev/null; then
+            log_progress_msg "Service already running"
+        else
+            log_daemon_msg "Starting Selenium server"
+            log_progress_msg "selenium"
+            start-stop-daemon -c $RUN_AS --start --quiet --background --pidfile $SELENIUM_PID_FILE --make-pidfile --exec $XVFB_BIN $JAVA_BIN -- $SELENIUM_DAEMON_OPTS
+        fi
+        ;;
+
+    stop)
+        if status_of_proc -p $SELENIUM_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE > /dev/null; then
+            log_daemon_msg "Stopping Selenium server"
+            log_progress_msg "selenium"
+            start-stop-daemon --stop --pidfile $SELENIUM_PID_FILE
+        else
+            log_progress_msg "Service not running"
+        fi
+        ;;
+
+    restart|force-reload)
+        $0 stop
+        sleep 1
+        $0 start
+	;;
+
+	status)
+        status_of_proc -p $SELENIUM_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE && exit 0 || exit $?
+    ;;
+
+    *)
+      	N=/etc/init.d/selenium
+        echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
+        exit 1
+        ;;
+esac

@@ -1,0 +1,23 @@
+---
+dependencies:
+  - geerlingguy.php
+
+galaxy_info:
+  author: geerlingguy
+  description: PHP MySQL support for RedHat/CentOS and Debian/Ubuntu.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.8
+  platforms:
+    - name: EL
+      versions:
+      - all
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+  galaxy_tags:
+    - database
+    - web

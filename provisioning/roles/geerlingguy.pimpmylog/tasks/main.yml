@@ -1,0 +1,14 @@
+---
+- name: Clone Pimp my Log.
+  git:
+    dest: "{{ pimpmylog_install_dir }}"
+    repo: "{{ pimpmylog_repo }}"
+    version: "{{ pimpmylog_version }}"
+    accept_hostkey: yes
+
+- name: Grant all privileges on the Pimp my Log directory.
+  file:
+    path: "{{ pimpmylog_install_dir }}"
+    state: directory
+    mode: 0777
+  when: pimpmylog_grant_all_privs

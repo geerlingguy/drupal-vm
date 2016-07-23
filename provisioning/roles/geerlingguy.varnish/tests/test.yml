@@ -1,0 +1,20 @@
+- hosts: all
+
+  pre_tasks:
+    - name: Ensure build dependencies are installed (RedHat 7+).
+      yum: 'name="{{ item }}" state=present'
+      with_items:
+        - logrotate
+        - redhat-rpm-config
+        - systemd-sysv
+        - initscripts
+      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version >= '7'
+
+    - name: Ensure build dependencies are installed (RedHat < 7).
+      yum: 'name="{{ item }}" state=present'
+      with_items:
+        - logrotate
+      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '7'
+
+  roles:
+    - role_under_test

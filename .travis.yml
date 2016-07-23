@@ -49,9 +49,6 @@ script:
   # Setup directories.
   - 'sudo docker exec "$(cat ${container_id})" mkdir -p ${DRUPALVM_DIR}/drupal'
 
-  # Install dependencies.
-  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r ${DRUPALVM_DIR}/provisioning/requirements.yml'
-
   # Setup config directory.
   - '[[ ! -z "${config_dir}" ]] && sudo docker exec "$(cat ${container_id})" mkdir -p ${config_dir} || true'
 
@@ -64,7 +61,7 @@ script:
   - '[[ ! -z "${local_config}" ]] && sudo docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
 
   # Vagrantfile syntax check
-  - 'rubocop --except LineLength,Eval,MutableConstant'
+  - 'rubocop ./Vagrantfile --except LineLength,Eval,MutableConstant'
 
   # Ansible syntax check.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'

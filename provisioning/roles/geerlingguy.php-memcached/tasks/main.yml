@@ -1,0 +1,28 @@
+---
+# Include variables and define needed variables.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_memcached_package.
+  set_fact:
+    php_memcached_package: "{{ __php_memcached_package }}"
+  when: php_memcached_package is not defined
+
+- name: Install PHP Memcached extension (RedHat).
+  yum:
+    name: "{{ php_memcached_package }}"
+    state: installed
+    enablerepo: "{{ php_enablerepo }}"
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: ansible_os_family == 'RedHat'
+
+- name: Install PHP Memcached extension (Debian).
+  apt:
+    name: "{{ php_memcached_package }}"
+    state: installed
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: ansible_os_family == 'Debian'

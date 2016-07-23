@@ -71,8 +71,8 @@ if ! command -v ansible >/dev/null; then
 fi
 
 # Install requirements.
-echo "Installing Ansible roles from requirements file, if available."
-find "$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements.txt" \) -exec sudo ansible-galaxy install --force --ignore-errors -r {} \;
+#echo "Installing Ansible roles from requirements file, if available."
+#find "$PLAYBOOK_DIR" \( -name "requirements.yml" -o -name "requirements.txt" \) -exec sudo ansible-galaxy install --force --ignore-errors -r {} \;
 
 # Run the playbook.
 echo "Running Ansible provisioner defined in Vagrantfile."

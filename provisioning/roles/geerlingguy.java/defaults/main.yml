@@ -1,0 +1,4 @@
+---
+# Set java_packages if you would like to use a different version than the
+# default (OpenJDK 1.7).
+# java_packages: []
