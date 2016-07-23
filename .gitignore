@@ -4,6 +4,7 @@
 .vagrant/
 .bundle/
 *.retry
+.galaxy_install_info
 vagrant_ansible_inventory_default
 local.config.yml
 config.yml
