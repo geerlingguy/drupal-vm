@@ -1,0 +1,22 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: Security software installation and configuration.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.9
+  platforms:
+    - name: EL
+      versions:
+      - all
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+  galaxy_tags:
+    - system
+    - security

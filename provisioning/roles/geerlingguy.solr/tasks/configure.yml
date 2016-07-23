@@ -1,0 +1,20 @@
+---
+- name: Remove existing SOLR_HEAP configuration.
+  lineinfile:
+    dest: "{{ solr_config_file }}"
+    regexp: "^SOLR_HEAP"
+    state: absent
+  notify: restart solr
+
+- name: Apply Solr memory configuration changes.
+  lineinfile:
+    dest: "{{ solr_config_file }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^.?SOLR_JAVA_MEM="
+      line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'
+    - regexp: "^SOLR_PORT="
+      line: 'SOLR_PORT="{{ solr_port }}"'
+  notify: restart solr

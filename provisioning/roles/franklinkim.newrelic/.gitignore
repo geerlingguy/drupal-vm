@@ -1,0 +1,6 @@
+.*
+*~
+!.git*
+!.clog.toml
+!.travis.yml
+!.editorconfig

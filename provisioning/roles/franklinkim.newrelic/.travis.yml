@@ -1,0 +1,10 @@
+---
+
+language: ruby
+sudo: required
+services:
+  - docker
+install:
+  - docker pull franklinkim/ansible:ubuntu-trusty
+script:
+  - docker run -v $(pwd):/opt/ansible franklinkim/ansible:ubuntu-trusty tests/run.sh

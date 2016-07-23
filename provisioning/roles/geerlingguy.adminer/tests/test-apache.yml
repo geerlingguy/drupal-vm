@@ -1,0 +1,8 @@
+- hosts: all
+
+  vars:
+    adminer_add_apache_config: true
+
+  roles:
+    - geerlingguy.apache
+    - role_under_test

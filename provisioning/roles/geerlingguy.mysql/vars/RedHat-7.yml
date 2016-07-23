@@ -1,0 +1,16 @@
+---
+__mysql_daemon: mariadb
+__mysql_packages:
+  - mariadb
+  - mariadb-server
+  - mariadb-libs
+  - MySQL-python
+  - perl-DBD-MySQL
+__mysql_slow_query_log_file: /var/log/mysql-slow.log
+mysql_log_error: /var/log/mariadb/mariadb.log
+mysql_syslog_tag: mariadb
+mysql_pid_file: /var/run/mariadb/mariadb.pid
+mysql_config_file: /etc/my.cnf
+mysql_config_include_dir: /etc/my.cnf.d
+mysql_socket: /var/lib/mysql/mysql.sock
+mysql_supports_innodb_large_prefix: false

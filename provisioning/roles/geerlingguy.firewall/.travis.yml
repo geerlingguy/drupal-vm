@@ -1,0 +1,60 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - SITE=test.yml
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y curl
+
+install:
+  # Install Ansible.
+  - pip install ansible
+
+  # Add ansible.cfg to pick up roles path.
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+script:
+  # Check the role/playbook's syntax.
+  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+
+  # Run the role/playbook with ansible-playbook.
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Check if TCP port 9123 is open.
+  - >
+    sudo iptables -L -n
+    | grep -q "ACCEPT.*dpt:9123"
+    && (echo 'Port 9123 is open - pass' && exit 0)
+    || (echo 'Port 9123 is not open - fail' && exit 1)
+
+  # Check running firewall has exit code 0
+  - >
+    sudo service firewall status
+    && (echo 'Status of running firewall is 0 - pass' && exit 0)
+    || (echo 'Status of running firewall is not 0 - fail' && exit 1)
+
+  # Stop firewall
+  - >
+    sudo service firewall stop
+    && (echo 'Stopping firewall - pass' && exit 0)
+    || (echo 'Stopping firewall - fail' && exit 1)
+
+  # Check stopped firewall has exit code 3
+  - >
+    sudo service firewall status;
+    EXIT=$?;
+    if [ 3 -eq $EXIT ]; then
+      echo 'Status of stopped firewall is 3 - pass' && exit 0;
+    else
+      echo 'Status of stopped firewall is not 3 - fail' && exit 1;
+    fi 

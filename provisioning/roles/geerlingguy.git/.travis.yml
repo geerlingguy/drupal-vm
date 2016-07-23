@@ -1,0 +1,84 @@
+---
+sudo: required
+
+env:
+  # Only test source install on latest supported OSes.
+  # - distribution: centos
+  #   version: 7
+  #   init: /usr/lib/systemd/systemd
+  #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  #   SITE: source
+  #   GIT_VERSION: 2.7.1
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: source
+    GIT_VERSION: 2.7.1
+
+  # Test package install on all supported OSes.
+  - distribution: centos
+    version: 6
+    init: /sbin/init
+    run_opts: ""
+    SITE: package
+    GIT_VERSION: 1.7.1
+  - distribution: centos
+    version: 7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    SITE: package
+    GIT_VERSION: 1.8.3.1
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: package
+    GIT_VERSION: 1.9.1
+  - distribution: ubuntu
+    version: 12.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: package
+    GIT_VERSION: 1.7.9.5
+
+services:
+  - docker
+
+before_install:
+  # - sudo apt-get update
+  # Pull container
+  - 'sudo docker pull ${distribution}:${version}'
+  # Customize container
+  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
+
+script:
+  - container_id=$(mktemp)
+  # Run container in detached state
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
+
+  # Ansible syntax check.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml --syntax-check'
+
+  # Test role.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml'
+
+  # Test role idempotence.
+  - >
+    sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Ensure Git is installed and at the right version.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which git'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x /usr/bin/git'
+
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm git --version'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/git --version | grep -qF "$GIT_VERSION"'
+
+  # Clean up
+  - 'sudo docker stop "$(cat ${container_id})"'
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

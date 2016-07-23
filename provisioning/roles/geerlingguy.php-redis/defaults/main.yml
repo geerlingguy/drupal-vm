@@ -1,0 +1,10 @@
+---
+# Pass in a comma-separated list of repos to use (e.g. "remi,epel").
+php_enablerepo: ""
+
+# Whether to install the extension from source or from an apt or yum repo.
+php_redis_install_from_source: false
+php_redis_source_repo: https://github.com/phpredis/phpredis.git
+php_redis_source_version: develop
+php_redis_source_clone_dir: ~/phpredis
+php_redis_source_configure_command: "./configure"

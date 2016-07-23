@@ -1,0 +1,46 @@
+---
+dependencies:
+  - geerlingguy.git
+  - geerlingguy.php
+  - geerlingguy.composer
+
+galaxy_info:
+  author: geerlingguy
+  description: Drush - command line shell for Drupal
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+  - name: EL
+    versions:
+    - all
+  - name: GenericUNIX
+    versions:
+    - all
+  - name: Fedora
+    versions:
+    - all
+  - name: opensuse
+    versions:
+    - all
+  - name: GenericBSD
+    versions:
+    - all
+  - name: FreeBSD
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
+  - name: SLES
+    versions:
+    - all
+  - name: GenericLinux
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+    - development
+    - web

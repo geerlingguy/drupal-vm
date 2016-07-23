@@ -1,0 +1,14 @@
+---
+- hosts: all
+
+  vars:
+    git_install_from_source: false
+    git_install_path: /usr/local
+
+  pre_tasks:
+    - name: Ensure build dependencies are installed (RedHat).
+      yum: name=which state=present
+      when: ansible_os_family == 'RedHat'
+
+  roles:
+    - role_under_test

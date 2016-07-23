@@ -1,0 +1,70 @@
+---
+# Install Solr.
+- name: Check if Solr is already installed.
+  stat: "path={{ solr_install_path }}/dist/{{ solr_filename }}.war"
+  register: solr_war_file
+
+- name: Copy Solr into place.
+  command: "cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}"
+  when: not solr_war_file.stat.exists
+
+- name: Ensure Solr install files are owned by the solr_user.
+  file:
+    path: "{{ solr_install_path }}"
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    recurse: yes
+  when: not solr_war_file.stat.exists
+
+# Set up solr_home.
+- name: Check if solr_home is already set up.
+  stat: "path={{ solr_home }}/solr.xml"
+  register: solr_example
+
+- name: Ensure solr_home directory exists.
+  file:
+    path: "{{ solr_home }}"
+    state: directory
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    mode: 0755
+  when: not solr_example.stat.exists
+
+- name: Copy Solr example into solr_home.
+  shell: "cp -r {{ solr_install_path }}/example/solr/* {{ solr_home }}"
+  when: not solr_example.stat.exists
+
+- name: Fix the example solrconfig.xml file.
+  replace:
+    dest: "{{ solr_home }}/collection1/conf/solrconfig.xml"
+    regexp: ^.+solr\.install\.dir.+$
+    replace: ""
+  when: "not solr_example.stat.exists and solr_version.split('.')[0] == '4'"
+
+- name: Ensure Solr home files are owned by the solr_user.
+  file:
+    path: "{{ solr_home }}"
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    recurse: yes
+  when: not solr_example.stat.exists
+
+# Set up Solr init script.
+- name: Ensure log file is created and has proper permissions.
+  file:
+    path: "/var/log/solr.log"
+    state: touch
+    owner: "{{ solr_user }}"
+    group: root
+    mode: 0664
+  changed_when: false
+
+- name: Copy solr init script into place.
+  template:
+    src: "solr-init-{{ ansible_os_family }}-pre5.j2"
+    dest: "/etc/init.d/{{ solr_service_name }}"
+    mode: 0755
+
+- name: Ensure daemon is installed (Debian).
+  apt: name=daemon state=installed
+  when: ansible_os_family == "Debian"

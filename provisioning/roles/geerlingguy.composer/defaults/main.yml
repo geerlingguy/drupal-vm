@@ -1,0 +1,20 @@
+---
+composer_path: /usr/local/bin/composer
+composer_keep_updated: false
+composer_version: ''
+
+# The directory where global packages will be installed.
+composer_home_path: '~/.composer'
+composer_home_owner: root
+composer_home_group: root
+
+# A list of packages to install globally. See commented examples below for
+# usage; the 'release' is optional, and defaults to '@stable'.
+composer_global_packages: []
+  # - { name: phpunit/phpunit, release: "4.7.x" }
+  # - { name: phpunit/phpunit, release: "@stable" }
+
+composer_add_to_path: true
+
+# GitHub OAuth token (used to help overcome API rate limits).
+composer_github_oauth_token: ''

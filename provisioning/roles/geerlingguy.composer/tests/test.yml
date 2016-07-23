@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  vars:
+    php_enablerepo: "remi,remi-php70"
+    php_enable_webserver: false
+
+    # Test a global requirement.
+    composer_global_packages:
+      - { name: phpunit/phpunit, release: "@stable" }
+
+  pre_tasks:
+    - name: Add repository for PHP 7.0.
+      apt_repository: repo='ppa:ondrej/php'
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
+    - geerlingguy.php
+    - role_under_test

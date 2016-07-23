@@ -1,0 +1,4 @@
+[clog]
+changelog = "CHANGELOG.md"
+repository = "https://github.com/weareinteractive/ansible-newrelic"
+from-latest-tag = true

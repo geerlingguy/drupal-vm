@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  vars:
+    php_enable_webserver: false
+    php_memcached_package: php5-memcached
+
+  roles:
+    - geerlingguy.memcached
+    - geerlingguy.php
+    - ansible-role-php-memcached

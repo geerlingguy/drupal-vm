@@ -1,0 +1,14 @@
+---
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=86400
+
+- name: Set rubygems package name for Ubuntu 14.04.
+  set_fact:
+    ruby_rubygems_package_name: rubygems-integration
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
+
+- name: Install ruby and rubygems.
+  apt: "name={{ item }} state=present"
+  with_items:
+    - ruby-full
+    - "{{ ruby_rubygems_package_name }}"

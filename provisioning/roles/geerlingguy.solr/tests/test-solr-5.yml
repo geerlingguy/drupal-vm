@@ -1,0 +1,11 @@
+---
+- hosts: all
+
+  vars:
+    solr_version: "5.5.1"
+    java_packages:
+      - openjdk-7-jdk
+
+  roles:
+    - geerlingguy.java
+    - role_under_test

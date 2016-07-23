@@ -1,0 +1,6 @@
+---
+blackfire_gpg_key_url: https://packagecloud.io/gpg.key
+
+blackfire_packages:
+  - blackfire-agent
+  - blackfire-php

@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - set_fact:
+        java_packages:
+          - java-1.8.0-openjdk
+      when: ansible_os_family == "RedHat"
+
+    - set_fact:
+        java_packages:
+          - openjdk-8-jdk
+      when: ansible_os_family == "Debian" and ansible_distribution_version == "14.04"
+
+    - name: Add repository for OpenJDK 8.
+      apt_repository: repo='ppa:openjdk-r/ppa'
+      when: ansible_os_family == "Debian" and ansible_distribution_version == "14.04"
+
+  roles:
+    - geerlingguy.java
+    - role_under_test

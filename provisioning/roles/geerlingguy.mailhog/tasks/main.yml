@@ -1,0 +1,33 @@
+---
+# Install and configure MailHog.
+- name: Ensure mailhog install directory exists.
+  file:
+    path: "{{ mailhog_install_dir }}"
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: Download MailHog and mhsendmail binaries.
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - url: "{{ mailhog_binary_url }}"
+      dest: "{{ mailhog_install_dir }}/mailhog"
+    - url: "{{ mhsendmail_binary_url }}"
+      dest: "{{ mailhog_install_dir }}/mhsendmail"
+
+- name: Copy mailhog init script into place.
+  template:
+    src: mailhog.init.j2
+    dest: /etc/init.d/mailhog
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Ensure mailhog is enabled and will start on boot.
+  service: name=mailhog state=started enabled=yes

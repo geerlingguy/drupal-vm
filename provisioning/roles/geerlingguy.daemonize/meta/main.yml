@@ -1,0 +1,28 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: "Daemonize for Unix-like operating systems"
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.6
+  platforms:
+  - name: EL
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  - name: GenericUNIX
+    versions:
+    - all
+    - any
+  galaxy_tags:
+    - development
+    - web
+    - system
+    - mail

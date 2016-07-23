@@ -1,0 +1,26 @@
+---
+# Include OS-specific installation tasks.
+- include: setup-RedHat.yml
+  when: (ruby_install_from_source == false) and (ansible_os_family == 'RedHat')
+
+- include: setup-Debian.yml
+  when: (ruby_install_from_source == false) and (ansible_os_family == 'Debian')
+
+# Install ruby from source when ruby_install_from_source is true.
+- include: install-from-source.yml
+  when: ruby_install_from_source == true
+
+# Install Bundler and configured gems.
+- name: Install Bundler.
+  gem: name=bundler state=present user_install=no
+
+- name: Define ruby_install_gems_user.
+  set_fact:
+    ruby_install_gems_user: "{{ ansible_ssh_user }}"
+  when: ruby_install_gems_user is not defined
+
+- name: Install configured gems.
+  gem: "name={{ item }} state=present"
+  become: yes
+  become_user: "{{ ruby_install_gems_user }}"
+  with_items: "{{ ruby_install_gems }}"

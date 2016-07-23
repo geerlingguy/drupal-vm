@@ -1,0 +1,53 @@
+---
+- name: Set php_executable variable to a default if not defined.
+  set_fact:
+    php_executable: php
+  when: php_executable is not defined
+
+- name: Check if Composer is installed.
+  stat: "path={{ composer_path }}"
+  register: composer_bin
+
+- name: Download Composer installer.
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/composer-installer.php
+    mode: 0755
+  when: not composer_bin.stat.exists
+
+- name: Run Composer installer.
+  command: >
+    {{ php_executable }} composer-installer.php {% if composer_version != '' %} --version={{ composer_version }}{% endif %}
+    chdir=/tmp
+  when: not composer_bin.stat.exists
+
+- name: Move Composer into globally-accessible location.
+  shell: >
+    mv /tmp/composer.phar {{ composer_path }}
+    creates={{ composer_path }}
+  when: not composer_bin.stat.exists
+
+- name: Update Composer to latest version (if configured).
+  shell: >
+    {{ php_executable }} {{ composer_path }} self-update
+  register: composer_update
+  changed_when: "'Updating to version' in composer_update.stdout"
+  when: composer_keep_updated
+
+- name: Ensure composer directory exists.
+  file:
+    path: "{{ composer_home_path }}"
+    owner: "{{ composer_home_owner }}"
+    group: "{{ composer_home_group }}"
+    state: directory
+
+- name: Add GitHub OAuth token for Composer (if configured).
+  template:
+    src: "auth.json.j2"
+    dest: "{{ composer_home_path }}/auth.json"
+    owner: "{{ composer_home_owner }}"
+    group: "{{ composer_home_group }}"
+  when: composer_github_oauth_token != ''
+
+- include: global-require.yml
+  when: composer_global_packages|length > 0

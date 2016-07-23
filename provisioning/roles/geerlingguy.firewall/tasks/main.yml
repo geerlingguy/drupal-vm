@@ -1,0 +1,21 @@
+---
+- name: Ensure iptables is installed (RedHat).
+  yum: pkg=iptables state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure iptables is installed (Debian).
+  apt: pkg=iptables state=installed
+  when: ansible_os_family == 'Debian'
+
+- name: Flush iptables the first time playbook runs.
+  command: iptables -F creates=/etc/init.d/firewall
+
+- name: Copy firewall script into place.
+  template: src=firewall.bash.j2 dest=/etc/firewall.bash owner=root group=root mode=0744
+  notify: restart firewall
+
+- name: Copy firewall init script into place.
+  template: src=firewall.j2 dest=/etc/init.d/firewall owner=root group=root mode=0755
+
+- name: Ensure the firewall is enabled and will start on boot.
+  service: name=firewall state=started enabled=yes

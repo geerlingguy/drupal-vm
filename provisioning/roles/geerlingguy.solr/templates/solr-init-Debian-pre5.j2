@@ -1,0 +1,94 @@
+#!/bin/sh
+# chkconfig: 2345 95 05
+# description: Controls an Apache Solr process.
+#
+# This script will launch Solr in a mode that will automatically respawn if it
+# crashes. Output will be sent to $LOG_FILE. A PID file will be created in the
+# standard location.
+#
+# Adapted by Jeff Geerling from http://stackoverflow.com/a/8014720/100134
+
+### BEGIN INIT INFO
+# Provides:             solr
+# Required-Start:       $remote_fs $syslog
+# Required-Stop:        $remote_fs $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Apache Solr search server
+### END INIT INFO
+
+SOLR_DIR="{{ solr_install_path }}/example"
+JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.host={{ solr_host }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"
+START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
+LOG_FILE="{{ solr_log_file_path }}"
+
+start () {
+    echo -n "Starting {{ solr_service_name }}... "
+
+    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name={{ solr_service_name }}
+
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo "done."
+    else
+        echo "failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+stop () {
+    echo -n "Stopping {{ solr_service_name }}... "
+
+    daemon --stop --name={{ solr_service_name }}
+
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo "done."
+    else
+        echo "failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+restart () {
+    echo -n "Restarting solr... "
+    daemon --restart --name={{ solr_service_name }}
+
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo "done."
+    else
+        echo "failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+check_status () {
+    # Report on the status of the daemon
+    daemon --running --name={{ solr_service_name }} --verbose
+    return $?
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    status)
+        check_status
+    ;;
+    stop)
+        stop
+    ;;
+    restart)
+        restart
+    ;;
+    *)
+        echo $"Usage: solr {start|status|stop|restart}"
+        exit 3
+    ;;
+esac
+
+exit $RETVAL

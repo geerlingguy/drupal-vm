@@ -1,0 +1,13 @@
+---
+
+- name: Installing dependencies
+  yum:
+    name: http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm
+    state: present
+
+- name: Installing packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - newrelic-sysmond

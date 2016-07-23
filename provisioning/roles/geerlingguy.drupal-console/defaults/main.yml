@@ -1,0 +1,4 @@
+---
+drupal_console_path: /usr/local/bin/drupal
+drupal_console_keep_updated: false
+drupal_console_config: ~/.console

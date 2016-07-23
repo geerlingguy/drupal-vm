@@ -1,0 +1,17 @@
+---
+- name: Add packagecloud apt key.
+  apt_key:
+    url: "{{ blackfire_gpg_key_url }}"
+    state: present
+
+- name: Add packagecloud repository.
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  register: packagecloud_repos
+  with_items:
+    - "deb http://packages.blackfire.io/debian any main"
+
+- name: Update apt caches after repo is added.
+  apt: update_cache=yes
+  when: packagecloud_repos.changed

@@ -1,0 +1,16 @@
+---
+workspace: /root
+
+# A list of Ruby gems to install.
+ruby_install_gems: []
+
+# The user account under which Ruby gems will be installed.
+# ruby_install_gems_user: username
+
+# If set to TRUE, ruby will be installed from source, using the version set with
+# the 'ruby_version' variable instead of using a package.
+ruby_install_from_source: false
+ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+ruby_version: 2.3.0
+
+ruby_rubygems_package_name: rubygems

@@ -1,0 +1,19 @@
+# Default connection port is 11211
+PORT="{{ memcached_port }}"
+
+# The user to run memcached as.
+USER="{{ memcached_user }}"
+
+# Limit the number of simultaneous incoming connections. The daemon default is 1024.
+MAXCONN="{{ memcached_connections }}"
+
+# Start with a cap of 64 megs of memory. It's reasonable, and the daemon default
+# Note that the daemon will grow to this size, but does not start out holding this much
+# memory
+CACHESIZE="{{ memcached_memory_limit }}"
+
+# Extra options:
+# -l Specify which IP address to listen on. The default is to listen on all IP addresses
+#    This parameter is one of the only security measures that memcached has, so make sure
+#    it's listening on a firewalled interface.
+OPTIONS="-l {{ memcached_listen_ip }} {{ memcached_log_verbosity }} >> {{ memcached_log_file }} 2>&1"

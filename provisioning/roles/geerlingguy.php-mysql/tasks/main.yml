@@ -1,0 +1,29 @@
+---
+# Variable setup.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_mysql_package.
+  set_fact:
+    php_mysql_package: "{{ __php_mysql_package }}"
+  when: php_mysql_package is not defined
+
+# Installation.
+- name: Install PHP MySQL dependencies (RedHat).
+  yum:
+    name: "{{ php_mysql_package }}"
+    state: present
+    enablerepo: "{{ php_enablerepo }}"
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: ansible_os_family == 'RedHat'
+
+- name: Install PHP MySQL dependencies (Debian).
+  apt:
+    name: "{{ php_mysql_package }}"
+    state: present
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: ansible_os_family == 'Debian'

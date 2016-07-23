@@ -1,0 +1,225 @@
+[PHP]
+
+;;;;;;;;;;;;;;;;;;;;
+; Language Options ;
+;;;;;;;;;;;;;;;;;;;;
+
+engine = On
+short_open_tag = {{ php_short_open_tag }}
+asp_tags = Off
+precision = 14
+output_buffering = {{ php_output_buffering }}
+
+zlib.output_compression = Off
+
+implicit_flush = Off
+unserialize_callback_func =
+serialize_precision = 17
+disable_functions =
+disable_classes =
+
+zend.enable_gc = On
+
+;;;;;;;;;;;;;;;;;
+; Miscellaneous ;
+;;;;;;;;;;;;;;;;;
+
+expose_php = {{ php_expose_php }}
+
+;;;;;;;;;;;;;;;;;;;
+; Resource Limits ;
+;;;;;;;;;;;;;;;;;;;
+
+max_execution_time = {{ php_max_execution_time }}
+max_input_time = {{ php_max_input_time }}
+max_input_vars = {{ php_max_input_vars }}
+memory_limit = {{ php_memory_limit }}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Error handling and logging ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+error_reporting = {{ php_error_reporting }}
+display_errors = {{ php_display_errors }}
+display_startup_errors = {{ php_display_startup_errors }}
+log_errors = On
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+track_errors = Off
+html_errors = On
+
+;;;;;;;;;;;;;;;;;
+; Data Handling ;
+;;;;;;;;;;;;;;;;;
+
+variables_order = "GPCS"
+request_order = "GP"
+register_argc_argv = Off
+auto_globals_jit = On
+
+post_max_size = {{ php_post_max_size }}
+auto_prepend_file =
+auto_append_file =
+
+default_mimetype = "text/html"
+always_populate_raw_post_data = -1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Paths and Directories ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+doc_root =
+user_dir =
+
+enable_dl = Off
+
+realpath_cache_size = {{ php_realpath_cache_size }}
+
+;;;;;;;;;;;;;;;;
+; File Uploads ;
+;;;;;;;;;;;;;;;;
+
+file_uploads = On
+upload_max_filesize = {{ php_upload_max_filesize }}
+max_file_uploads = 20
+
+;;;;;;;;;;;;;;;;;;
+; Fopen wrappers ;
+;;;;;;;;;;;;;;;;;;
+
+allow_url_fopen = {{ php_allow_url_fopen }}
+allow_url_include = Off
+
+default_socket_timeout = 60
+
+;;;;;;;;;;;;;;;;;;;
+; Module Settings ;
+;;;;;;;;;;;;;;;;;;;
+
+[CLI Server]
+cli_server.color = On
+
+[Date]
+date.timezone = {{ php_date_timezone }}
+
+[Pdo_mysql]
+pdo_mysql.cache_size = 2000
+pdo_mysql.default_socket=
+
+[mail function]
+; For Win32 only.
+SMTP = localhost
+smtp_port = 25
+
+; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
+sendmail_path = {{ php_sendmail_path }}
+
+mail.add_x_header = On
+
+[SQL]
+sql.safe_mode = Off
+
+[ODBC]
+odbc.allow_persistent = On
+odbc.check_persistent = On
+odbc.max_persistent = -1
+odbc.max_links = -1
+odbc.defaultlrl = 4096
+odbc.defaultbinmode = 1
+
+[MySQL]
+mysql.allow_local_infile = On
+mysql.allow_persistent = On
+mysql.cache_size = 2000
+mysql.max_persistent = -1
+mysql.max_links = -1
+mysql.default_port =
+mysql.default_socket =
+mysql.default_host =
+mysql.default_user =
+mysql.default_password =
+mysql.connect_timeout = 60
+mysql.trace_mode = Off
+
+[MySQLi]
+mysqli.max_persistent = -1
+mysqli.allow_persistent = On
+mysqli.max_links = -1
+mysqli.cache_size = 2000
+mysqli.default_port = 3306
+mysqli.default_socket =
+mysqli.default_host =
+mysqli.default_user =
+mysqli.default_pw =
+mysqli.reconnect = Off
+
+[mysqlnd]
+mysqlnd.collect_statistics = On
+mysqlnd.collect_memory_statistics = Off
+
+[PostgreSQL]
+pgsql.allow_persistent = On
+pgsql.auto_reset_persistent = Off
+pgsql.max_persistent = -1
+pgsql.max_links = -1
+pgsql.ignore_notice = 0
+pgsql.log_notice = 0
+
+[bcmath]
+bcmath.scale = 0
+
+[Session]
+session.save_handler = {{ php_session_save_handler }}
+session.save_path = {{ php_session_save_path }}
+session.use_cookies = 1
+session.use_only_cookies = 1
+session.name = PHPSESSID
+session.auto_start = 0
+
+session.cookie_lifetime = {{ php_session_cookie_lifetime }}
+session.cookie_path = /
+session.cookie_domain =
+session.cookie_httponly =
+
+session.serialize_handler = php
+
+session.gc_probability = {{ php_session_gc_probability }}
+session.gc_divisor = {{ php_session_gc_divisor }}
+session.gc_maxlifetime = {{ php_session_gc_maxlifetime }}
+
+session.bug_compat_42 = Off
+session.bug_compat_warn = Off
+session.referer_check =
+
+session.cache_limiter = nocache
+session.cache_expire = 180
+
+session.use_trans_sid = 0
+
+session.hash_function = 0
+session.hash_bits_per_character = 5
+
+url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
+
+[MSSQL]
+mssql.allow_persistent = On
+mssql.max_persistent = -1
+mssql.max_links = -1
+mssql.min_error_severity = 10
+mssql.min_message_severity = 10
+mssql.compatability_mode = Off
+mssql.secure_connection = Off
+
+[Tidy]
+tidy.clean_output = Off
+
+[soap]
+soap.wsdl_cache_enabled=1
+soap.wsdl_cache_dir="/tmp"
+soap.wsdl_cache_ttl=86400
+soap.wsdl_cache_limit = 5
+
+[ldap]
+ldap.max_links = -1

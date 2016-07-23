@@ -1,0 +1,68 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Download XHProf source.
+  get_url:
+    url: "{{ xhprof_download_url }}"
+    dest: "{{ workspace }}/xhprof.tar.gz"
+  register: xhprof_download_get_url
+
+# TODO: In 2.0, we can set the 'src' to the URL from the get_url task above and
+# cut out one extra task :)
+- name: Untar XHProf.
+  unarchive:
+    src: "{{ workspace }}/xhprof.tar.gz"
+    dest: "{{ workspace }}"
+    copy: no
+  when: xhprof_download_get_url.changed
+
+- name: Build XHProf.
+  shell: >
+    {{ item }}
+    chdir={{ workspace }}/{{ xhprof_download_folder_name }}/extension
+    creates={{ workspace }}/{{ xhprof_download_folder_name }}/extension/modules/xhprof.so
+  with_items:
+    - phpize
+    - ./configure
+    - make
+  notify: restart webserver
+
+- name: Ensure XHProf module path exists.
+  file:
+    path: "{{ php_xhprof_module_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Move XHProf module into place.
+  shell: >
+    cp {{ workspace }}/{{ xhprof_download_folder_name }}/extension/modules/xhprof.so {{ php_xhprof_module_path }}/xhprof.so
+    creates={{ php_xhprof_module_path }}/xhprof.so
+  notify: restart webserver
+
+- name: Move XHProf PHP library into place.
+  shell: >
+    cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_lib {{ php_xhprof_lib_dir }}
+    creates={{ php_xhprof_lib_dir }}/utils/xhprof_lib.php
+
+- name: Move XHProf UI into place.
+  shell: >
+    cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_html {{ php_xhprof_html_dir }}
+    creates={{ php_xhprof_html_dir }}/index.php
+
+- include: configure.yml
+
+- name: Ensure XHProf output directory exists.
+  file:
+    path: "{{ xhprof_output_dir }}"
+    state: directory
+    mode: 0777

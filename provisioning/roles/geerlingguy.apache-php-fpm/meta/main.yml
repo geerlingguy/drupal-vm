@@ -1,0 +1,26 @@
+---
+dependencies:
+  - geerlingguy.apache
+
+galaxy_info:
+  author: geerlingguy
+  description: Apache 2.4+ PHP-FPM support for Linux.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  - name: Debian
+    versions:
+    - wheezy
+    - jessie
+  - name: Ubuntu
+    versions:
+    - precise
+    - trusty
+    - xenial
+  galaxy_tags:
+    - web

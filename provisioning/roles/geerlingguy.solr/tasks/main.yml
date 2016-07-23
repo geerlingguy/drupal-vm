@@ -1,0 +1,48 @@
+---
+- include: user.yml
+  when: solr_create_user
+
+- name: Set solr_filename for Solr 4+.
+  set_fact:
+    solr_filename: "solr-{{ solr_version }}"
+  when: "solr_version.split('.')[0] >= '4'"
+
+- name: Set solr_filename for Solr 3.x.
+  set_fact:
+    solr_filename: "apache-solr-{{ solr_version }}"
+  when: "solr_version.split('.')[0] == '3'"
+
+- name: Download Solr.
+  get_url:
+    url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    force: no
+
+- name: Expand Solr.
+  unarchive:
+    src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}"
+    creates: "{{ solr_workspace }}/{{ solr_filename }}/CHANGES.txt"
+    copy: no
+
+# Install Solr < 5.
+- include: install-pre5.yml
+  when: "solr_version.split('.')[0] < '5'"
+
+# Install Solr 5+.
+- include: install.yml
+  when: "solr_version.split('.')[0] >= '5'"
+
+- name: Ensure solr is started and enabled on boot.
+  service:
+    name: "{{ solr_service_name }}"
+    state: started
+    enabled: yes
+
+# Create cores, if any are configured.
+- include: cores.yml
+  when: "solr_cores and solr_version.split('.')[0] >= '5'"
+
+# Configure solr.
+- include: configure.yml
+  when: "solr_version.split('.')[0] >= '5'"

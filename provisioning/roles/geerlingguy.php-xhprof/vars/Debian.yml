@@ -1,0 +1,4 @@
+---
+php_xhprof_module_path: /usr/lib/php5/modules
+
+php_xhprof_config_filename: 20-xhprof.ini

@@ -1,0 +1,40 @@
+---
+# Install Adminer.
+- name: Ensure Adminer directory exists.
+  file:
+    path: "{{ adminer_install_dir }}"
+    state: directory
+    recurse: yes
+
+- name: Download Adminer to configured directory.
+  get_url:
+    url: http://www.adminer.org/latest.php
+    dest: "{{ adminer_install_dir }}/{{ adminer_install_filename }}"
+    mode: 0644
+
+- name: Symlink Adminer into configured directories.
+  file:
+    src: "{{ adminer_install_dir }}/adminer.php"
+    dest: "{{ item }}/adminer.php"
+    state: link
+  with_items: "{{ adminer_symlink_dirs }}"
+
+# Add Apache configuration (if configured).
+- name: Set the proper Apache configuration directory (Debian).
+  set_fact:
+    apache_extra_conf_dir: "{{ 'conf-enabled' if apache_vhosts_version == '2.4' else 'conf.d' }}"
+  when: adminer_add_apache_config and ansible_os_family == 'Debian'
+
+- name: Add Apache configuration file for Adminer (Debian).
+  template:
+    src: adminer.conf.j2
+    dest: "{{ apache_conf_path }}/{{ apache_extra_conf_dir }}/adminer.conf"
+  when: adminer_add_apache_config and ansible_os_family == 'Debian'
+  notify: restart apache
+
+- name: Add Apache configuration file for Adminer (RedHat).
+  template:
+    src: adminer.conf.j2
+    dest: "{{ apache_conf_path }}/adminer.conf"
+  when: adminer_add_apache_config and ansible_os_family == 'RedHat'
+  notify: restart apache

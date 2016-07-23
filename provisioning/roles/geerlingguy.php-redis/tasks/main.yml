@@ -1,0 +1,36 @@
+---
+# Include variables and define needed variables.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_redis_package.
+  set_fact:
+    php_redis_package: "{{ __php_redis_package }}"
+  when: php_redis_package is not defined
+
+- name: Force install from source on Ubuntu 12.04.
+  set_fact:
+    php_redis_install_from_source: true
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'precise'
+
+# Install PhpRedis from the system package manager.
+- name: Install PhpRedis extension (RedHat).
+  yum:
+    name: "{{ php_redis_package }}"
+    state: installed
+    enablerepo: "{{ php_enablerepo }}"
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: (php_redis_install_from_source == false) and (ansible_os_family == 'RedHat')
+
+- name: Install PhpRedis extension (Debian).
+  apt: "name={{ php_redis_package }} state=installed"
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: (php_redis_install_from_source == false) and (ansible_os_family == 'Debian')
+
+# Install PhpRedis from source.
+- include: install-from-source.yml
+  when: php_redis_install_from_source == true

@@ -1,0 +1,2 @@
+---
+varnish_sysvinit_config_path: /etc/sysconfig
