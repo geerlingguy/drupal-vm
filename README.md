@@ -68,7 +68,7 @@ But Drupal VM allows you to build your site exactly how you like, using whatever
 
 Download and install [Vagrant](https://www.vagrantup.com/downloads.html).
 
-Vagrant will automatically install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) if no providers are available (Drupal VM also works with Parallels or VMware, if you have the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
+Vagrant will automatically install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) if no VM provider is installed. If you want to use an alternative provider like Parallels or VMware, you will need to install the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware).
 
 Notes:
 
