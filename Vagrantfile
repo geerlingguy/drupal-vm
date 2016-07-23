@@ -118,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Allow override of the default synced folder type.
   config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
-  # Provisioning. Use ansible if it's installed, JJG-Ansible-Windows if not.
+  # Provisioning. Use ansible if it's installed, ansible_local if not.
   if which('ansible-playbook')
     config.vm.provision 'ansible' do |ansible|
       ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
@@ -127,20 +127,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
     end
   else
-    config.vm.provision 'shell' do |sh|
-      sh.path = "#{host_drupalvm_dir}/provisioning/JJG-Ansible-Windows/windows.sh"
-      sh.args = "-e 'config_dir=\"#{guest_config_dir}\"' #{guest_drupalvm_dir}/provisioning/playbook.yml"
+    config.vm.provision 'ansible_local' do |ansible|
+      ansible.playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
+      ansible.extra_vars = {
+        config_dir: guest_config_dir
+      }
     end
   end
-  # ansible_local provisioner is broken in Vagrant < 1.8.2.
-  # else
-  #   config.vm.provision "ansible_local" do |ansible|
-  #     ansible.playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
-  #     ansible.extra_vars = {
-  #       config_dir: guest_config_dir
-  #     }
-  #   end
-  # end
 
   # VMware Fusion.
   config.vm.provider :vmware_fusion do |v, override|
