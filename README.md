@@ -58,17 +58,17 @@ This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal
 
 If you want to install a Drupal 8 site locally with minimal fuss, just:
 
-  1. Install Vagrant.
+  1. Install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
   2. Download or clone this project to your workstation.
   3. `cd` into this project directory and run `vagrant up`.
 
 But Drupal VM allows you to build your site exactly how you like, using whatever tools you need, with almost infinite flexibility and customization!
 
-### 1 - Install Vagrant
+### 1 - Install Vagrant and VirtualBox
 
-Download and install [Vagrant](https://www.vagrantup.com/downloads.html).
+Download and install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
 
-Vagrant will automatically install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) if no VM provider is installed. If you want to use an alternative provider like Parallels or VMware, you will need to install the [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware).
+You can also use an alternative provider like Parallels or VMware, (the latter also requires the paid [Vagrant VMware integration plugin](http://www.vagrantup.com/vmware)).
 
 Notes:
 
