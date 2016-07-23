@@ -1,7 +1,5 @@
 Drupal VM defaults to PHP 7, but you can install and use 5.6 if you need to maximize compatibility with older Drupal 6 and 7 sites.
 
-_Note: If you have Ansible installed on your host machine, make sure you're running the latest version of all Ansible role dependencies by running `ansible-galaxy install -r provisioning/requirements.yml --force` inside the root Drupal VM project folder._
-
 ## Ubuntu 16.04
 
 Ubuntu 16.04 Xenial defaults to PHP 7.0 in it's system packages. No older versions of PHP will be supported if using this base box.

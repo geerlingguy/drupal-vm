@@ -45,9 +45,6 @@ config.vm.provider :virtualbox do |v|
   # Cap the host CPU execution at 50% usage.
   v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
 end
-
-# Disable the galaxy role re-installation during provisions.
-config.vm.provisioners[0].config.galaxy_role_file = nil
 ```
 
 ### Example: Using the `vagrant-aws` provider
