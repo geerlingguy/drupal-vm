@@ -125,6 +125,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.extra_vars = {
         config_dir: host_config_dir
       }
+      ansible.raw_arguments = ENV['ANSIBLE_ARGS']
     end
   else
     config.vm.provision 'ansible_local' do |ansible|
@@ -132,6 +133,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.extra_vars = {
         config_dir: guest_config_dir
       }
+      ansible.raw_arguments = ENV['ANSIBLE_ARGS']
     end
   end
 
