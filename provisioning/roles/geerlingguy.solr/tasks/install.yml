@@ -19,3 +19,4 @@
 - name: Ensure solr is stopped (RHEL 7 workaround).
   command: service {{ solr_service_name }} stop
   when: (ansible_os_family == 'RedHat') and (ansible_distribution_version.split(".")[0] == '7') and (solr_install_script_result.changed)
+  failed_when: false
