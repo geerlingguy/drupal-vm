@@ -129,7 +129,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config_dir: host_config_dir,
         drupalvm_env: drupalvm_env
       }
-      ansible.raw_arguments = ENV['ANSIBLE_ARGS']
+      ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
     end
   else
     config.vm.provision 'ansible_local' do |ansible|
@@ -138,7 +138,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config_dir: guest_config_dir,
         drupalvm_env: drupalvm_env
       }
-      ansible.raw_arguments = ENV['ANSIBLE_ARGS']
+      ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
     end
   end
 
