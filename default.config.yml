@@ -160,8 +160,8 @@ nginx_ppa_use: true
 # be used for the site.
 mysql_databases:
   - name: "{{ drupal_mysql_database }}"
-    encoding: utf8
-    collation: utf8_general_ci
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci
 
 mysql_users:
   - name: "{{ drupal_mysql_user }}"
