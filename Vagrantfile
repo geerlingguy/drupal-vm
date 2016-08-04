@@ -75,6 +75,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
 
+  # Configure the proxy.
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    if vconfig["proxy"]["enable_proxy"]
+      config.proxy.http = vconfig["proxy"]["http_proxy"] || ENV['http_proxy']
+      config.proxy.https = vconfig["proxy"]["https_proxy"] || ENV['https_proxy']
+      config.git_proxy.http = vconfig["proxy"]["http_proxy"] || ENV['http_proxy']
+      config.proxy.no_proxy = vconfig["proxy"]["no_proxy"] || ENV['no_proxy']
+      config.proxy.ftp = vconfig["proxy"]["ftp_proxy"] || ENV['ftp_proxy']
+    end
+  end
+
   # If a hostsfile manager plugin is installed, add all server names as aliases.
   aliases = []
   if vconfig['drupalvm_webserver'] == 'apache'
