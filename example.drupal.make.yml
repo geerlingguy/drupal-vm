@@ -11,7 +11,7 @@ projects:
 
   # Core.
   drupal:
-    version: "8.1.7"
+    version: "8.1.8"
     # Use this if you need a working git repository of Drupal core instead of
     # the latest stable.
     # type: "core"
