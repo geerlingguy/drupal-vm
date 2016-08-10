@@ -32,7 +32,7 @@ server {
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $request_filename;
         fastcgi_intercept_errors on;
-        fastcgi_read_timeout 120;
+        fastcgi_read_timeout {{ php_max_execution_time }};
         include fastcgi_params;
         fastcgi_pass {{ php_fpm_listen }};
     }
