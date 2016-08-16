@@ -10,7 +10,7 @@
 - name: Add managed vhost config file (if any vhosts are configured).
   template:
     src: vhosts.j2
-    dest: "{{ nginx_vhost_path }}/vhosts.conf"
+    dest: "{{ nginx_vhost_path }}/{{ nginx_vhosts_filename }}"
     mode: 0644
   when: nginx_vhosts|length > 0
   notify:
@@ -18,9 +18,8 @@
 
 - name: Remove managed vhost config file (if no vhosts are configured).
   file:
-    path: "{{ nginx_vhost_path }}/vhosts.conf"
+    path: "{{ nginx_vhost_path }}/{{ nginx_vhosts_filename }}"
     state: absent
   when: nginx_vhosts|length == 0
   notify:
     - reload nginx
-

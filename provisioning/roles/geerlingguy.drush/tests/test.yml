@@ -1,8 +1,11 @@
 ---
 - hosts: localhost
   remote_user: root
+
   vars:
+    php_enable_webserver: false
     php_opcache_enable: "0"
+
   roles:
     - geerlingguy.php
     - geerlingguy.composer

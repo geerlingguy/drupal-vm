@@ -187,6 +187,9 @@ logfile={{ newrelic_logfile }}
 # Default: none
 #
 #labels=label_type:label_value
+{% if newrelic_labels %}
+labels={{ newrelic_labels }}
+{% endif %}
 
 #
 # Option : disable_nfs
@@ -203,3 +206,14 @@ disable_nfs={{ newrelic_disable_nfs | to_nice_json }}
 # Default: false
 #
 disable_docker={{ newrelic_disable_docker | to_nice_json }}
+
+#
+# Option : override_hostname
+# Type   : string
+# Value  : Set to a non-empty value to use as the hostname that will be reported to New Relic
+# Default: none
+#
+#hostname=newrelic.com
+{% if newrelic_override_hostname %}
+hostname={{ newrelic_override_hostname }}
+{% endif %}

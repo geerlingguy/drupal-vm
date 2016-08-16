@@ -35,3 +35,4 @@
   command: "{{ drush_path }}"
   register: drush_result
   changed_when: "'Execute a drush command' not in drush_result.stdout"
+  become: no

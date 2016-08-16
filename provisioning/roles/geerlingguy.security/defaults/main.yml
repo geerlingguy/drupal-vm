@@ -2,9 +2,19 @@
 security_ssh_port: 22
 security_ssh_password_authentication: "no"
 security_ssh_permit_root_login: "no"
+security_ssh_usedns: "no"
+security_ssh_permit_empty_password: "no"
+security_ssh_challenge_response_auth: "no"
+security_ssh_gss_api_authentication: "no"
+security_ssh_x11_forwarding: "no"
 
 security_sudoers_passwordless: []
 security_sudoers_passworded: []
 
 security_autoupdate_enabled: true
+
+# Autoupdate mail settings used on Debian/Ubuntu only.
+security_autoupdate_mail_to: ""
+security_autoupdate_mail_on_error: true
+
 security_fail2ban_enabled: true
