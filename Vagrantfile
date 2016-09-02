@@ -118,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Allow override of the default synced folder type.
   config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
-  # Provisioning. Use ansible if it's installed, ansible_local if not.
+  # Provisioning. Use ansible if it's installed, ansible_local if not or if forced.
   if which('ansible-playbook') && !vconfig['force_ansible_local']
     config.vm.provision 'ansible' do |ansible|
       ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
