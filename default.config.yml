@@ -32,7 +32,7 @@ vagrant_synced_folders:
 vagrant_memory: 1024
 vagrant_cpus: 2
 
-# Force use of ansible_local provisioner instead of ansible?
+# Force use of ansible_local provisioner, even if Ansible is installed on host.
 force_ansible_local: false
 
 # The web server software to use. Can be either 'apache' or 'nginx'.
