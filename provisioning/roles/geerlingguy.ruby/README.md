@@ -16,9 +16,9 @@ Available variables are listed below, along with default values (see `defaults/m
 
 The location where temporary files will be downloaded in preparation for Ruby installation.
 
-    ruby_rubygems_package_name: rubygems
+    ruby_install_bundler: true
 
-The name of the `rubygems` package. Generally, the default should work; but it will be set to `rubygems-integration` automatically on Ubuntu Trusty (14.04).
+Whether this role should install [Bundler](http://bundler.io/).
 
     ruby_install_gems: []
 
@@ -39,6 +39,10 @@ The URL from which Ruby will be downloaded (only used if `ruby_install_from_sour
     ruby_version: 2.2.1
 
 The version of ruby that will be installed (only used if `ruby_install_from_source` is `true`).
+
+    ruby_rubygems_package_name: rubygems
+
+The name of the `rubygems` package. Generally, the default should work; but it will be set to `rubygems-integration` automatically on Ubuntu Trusty (14.04).
 
 ## Dependencies
 

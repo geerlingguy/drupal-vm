@@ -13,11 +13,7 @@
 # Install Bundler and configured gems.
 - name: Install Bundler.
   gem: name=bundler state=present user_install=no
-
-- name: Define ruby_install_gems_user.
-  set_fact:
-    ruby_install_gems_user: "{{ ansible_ssh_user }}"
-  when: ruby_install_gems_user is not defined
+  when: ruby_install_bundler
 
 - name: Install configured gems.
   gem: "name={{ item }} state=present"

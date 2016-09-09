@@ -1,3 +1,4 @@
+---
 - hosts: all
 
   pre_tasks:
@@ -10,6 +11,10 @@
         - sudo
         - which
       when: ansible_os_family == 'RedHat'
+
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
 
     - name: Ensure build dependencies are installed (Debian).
       apt: 'name="{{ item }}" state=installed'

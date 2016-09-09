@@ -1,8 +1,14 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+
   vars:
-    - firewall_allowed_tcp_ports:
+    firewall_allowed_tcp_ports:
       - "9123"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
   roles:
-    - ansible-role-firewall
+    - role_under_test

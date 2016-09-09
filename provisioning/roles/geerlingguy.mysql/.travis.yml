@@ -7,26 +7,35 @@ env:
     init: /sbin/init
     run_opts: ""
     playbook: test.yml
+    DOCKER_VERSION: "1.9.1-0~trusty"
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: centos-7-test.yml
+    DOCKER_VERSION: "1.9.1-0~trusty"
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
     playbook: test.yml
+    DOCKER_VERSION: "1.9.1-0~trusty"
   # - distribution: ubuntu
   #   version: 12.04
   #   init: /sbin/init
   #   run_opts: ""
   #   playbook: test.yml
+  #   DOCKER_VERSION: "1.9.1-0~trusty"
 
 services:
   - docker
 
 before_install:
+  # Downgrade to older version of Docker engine.
+  - sudo apt-get update
+  - sudo apt-get remove docker-engine -yq
+  - sudo apt-get install docker-engine=$DOCKER_VERSION -yq --no-install-suggests --no-install-recommends --force-yes -o Dpkg::Options::="--force-confnew"
+
   # Pull container
   - 'sudo docker pull ${distribution}:${version}'
   # Customize container
@@ -73,6 +82,12 @@ script:
 
   # Clean up
   - sudo docker stop "$(cat ${container_id})"
+
+after_failure:
+  # Check MySQL settings.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.log'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

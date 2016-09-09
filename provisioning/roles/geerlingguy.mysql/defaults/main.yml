@@ -44,7 +44,10 @@ mysql_read_rnd_buffer_size: "4M"
 mysql_myisam_sort_buffer_size: "64M"
 mysql_thread_cache_size: "8"
 mysql_query_cache_size: "16M"
+mysql_query_cache_limit: "1M"
 mysql_max_connections: "151"
+mysql_tmp_table_size: "16M"
+mysql_max_heap_table_size: "16M"
 
 # Other settings.
 mysql_lower_case_table_names: "0"

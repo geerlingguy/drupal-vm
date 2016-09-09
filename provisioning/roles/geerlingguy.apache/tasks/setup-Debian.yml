@@ -1,6 +1,6 @@
 ---
 - name: Update apt cache.
-  apt: update_cache=yes cache_valid_time=86400
+  apt: update_cache=yes cache_valid_time=3600
 
 - name: Ensure Apache is installed on Debian.
   apt: "name={{ item }} state=installed"

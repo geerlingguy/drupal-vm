@@ -6,15 +6,15 @@
 - src: geerlingguy.adminer
   version: 1.1.0
 - src: geerlingguy.apache
-  version: 1.7.2
+  version: 1.7.3
 - src: geerlingguy.apache-php-fpm
   version: 1.0.2
 - src: geerlingguy.blackfire
   version: 1.0.0
 - src: geerlingguy.composer
-  version: 1.4.1
+  version: 1.4.2
 - src: geerlingguy.daemonize
-  version: 1.1.0
+  version: 1.1.1
 - src: geerlingguy.drupal-console
   version: 1.0.7
 - src: geerlingguy.drush
@@ -22,21 +22,21 @@
 - src: geerlingguy.elasticsearch
   version: 2.1.1
 - src: geerlingguy.firewall
-  version: 1.0.9
+  version: 1.1.0
 - src: geerlingguy.git
   version: 1.1.1
 - src: geerlingguy.java
-  version: 1.4.0
+  version: 1.4.1
 - src: geerlingguy.mailhog
   version: 2.0.0
 - src: geerlingguy.memcached
   version: 1.0.4
 - src: geerlingguy.mysql
-  version: 2.3.1
+  version: 2.3.2
 - src: geerlingguy.nginx
   version: 1.9.3
 - src: geerlingguy.nodejs
-  version: 3.2.0
+  version: 3.3.0
 - src: geerlingguy.php
   version: 3.2.2
 - src: geerlingguy.php-memcached
@@ -60,10 +60,10 @@
 - src: geerlingguy.repo-remi
   version: 1.2.0
 - src: geerlingguy.ruby
-  version: 2.3.1
+  version: 2.4.0
 - src: geerlingguy.security
   version: 1.4.0
 - src: geerlingguy.solr
   version: 3.1.3
 - src: geerlingguy.varnish
-  version: 1.6.1
+  version: 1.6.2

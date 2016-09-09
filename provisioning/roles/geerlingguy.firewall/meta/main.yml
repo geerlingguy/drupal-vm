@@ -6,7 +6,7 @@ galaxy_info:
   description: Simple iptables firewall for most Unix-like systems.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.4
+  min_ansible_version: 1.8
   platforms:
   - name: EL
     versions:
@@ -17,6 +17,7 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - all
-  categories:
+  galaxy_tags:
     - networking
     - system
+    - security

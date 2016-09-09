@@ -25,7 +25,7 @@
     dest: "{{ varnish_systemd_config_path }}/varnish.service"
     owner: root
     group: root
-    mode: 0655
+    mode: 0644
   when: >
     (ansible_os_family == 'Debian') and
     (ansible_distribution_release == "jessie" or ansible_distribution_release == "xenial")
