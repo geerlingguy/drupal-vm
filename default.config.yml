@@ -100,6 +100,7 @@ apache_vhosts:
     documentroot: "{{ drupal_core_path }}"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
 
   - servername: "adminer.{{ vagrant_hostname }}"
     documentroot: "{{ adminer_install_dir }}"
