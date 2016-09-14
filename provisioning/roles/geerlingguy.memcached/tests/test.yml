@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+
   roles:
-    - ansible-role-memcached
+    - role_under_test

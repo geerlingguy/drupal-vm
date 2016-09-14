@@ -30,7 +30,7 @@
 - src: geerlingguy.mailhog
   version: 2.0.0
 - src: geerlingguy.memcached
-  version: 1.0.4
+  version: 1.0.7
 - src: geerlingguy.mysql
   version: 2.3.2
 - src: geerlingguy.nginx

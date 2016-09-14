@@ -1,5 +1,12 @@
+# {{ ansible_managed }}
+# memcached default config file
+# 2003 - Jay Bonci <jaybonci@debian.org>
+# This configuration file is read by the start-memcached script provided as
+# part of the Debian GNU/Linux distribution.
+
 # Run memcached as a daemon. This command is implied, and is not needed for the
-# daemon to run.
+# daemon to run. See the README.Debian that comes with this package for more
+# information.
 -d
 
 # Log memcached's output to /var/log/memcached
@@ -25,3 +32,12 @@ logfile {{ memcached_log_file }}
 
 # Limit the number of simultaneous incoming connections. The daemon default is 1024
 -c {{ memcached_connections }}
+
+# Lock down all paged memory. Consult with the README and homepage before you do this
+# -k
+
+# Return error when memory is exhausted (rather than removing items)
+# -M
+
+# Maximize core file limit
+# -r
