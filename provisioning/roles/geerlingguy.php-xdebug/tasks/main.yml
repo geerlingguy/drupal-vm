@@ -3,30 +3,22 @@
   include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Ensure dependencies for building from source are installed (RedHat).
-  yum: "pkg={{ item }} state=installed"
+  yum: "name={{ item }} state=installed"
   with_items:
-    - make
+    - '@development'
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure dependencies for building from source are installed (Debian).
-  apt: "pkg={{ item }} state=installed"
+  apt: "name={{ item }} state=installed"
   with_items:
-    - make
+    - build-essential
   when: ansible_os_family == 'Debian'
 
-- name: Download Xdebug.
-  get_url:
-    url: "https://xdebug.org/files/xdebug-{{ php_xdebug_version }}.tgz"
-    dest: "{{ workspace }}/xdebug-{{ php_xdebug_version }}.tgz"
-
-# TODO: In 2.0, we can set the 'src' to the URL from the get_url task above and
-# cut out one extra task :)
 - name: Untar Xdebug.
   unarchive:
-    src: "{{ workspace }}/xdebug-{{ php_xdebug_version }}.tgz"
+    src: "https://xdebug.org/files/xdebug-{{ php_xdebug_version }}.tgz"
     dest: "{{ workspace }}"
     copy: no
-
 
 - name: Build Xdebug.
   shell: >

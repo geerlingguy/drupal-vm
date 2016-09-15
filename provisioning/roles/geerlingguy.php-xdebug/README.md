@@ -16,7 +16,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Where Xdebug setup files will be downloaded and built.
 
-    php_xdebug_version: 2.4.0
+    php_xdebug_version: 2.4.1
 
 The version of Xdebug to be installed (see [Updates](https://xdebug.org/updates.php) for a current listing).
 
@@ -74,4 +74,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
