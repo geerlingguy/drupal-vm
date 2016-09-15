@@ -1,8 +1,0 @@
----
-- name: Ensure dependencies for installing from source are installed.
-  yum: "pkg={{ item }} state=installed"
-  with_items:
-    - make
-
-- name: Ensure GraphViz is installed.
-  yum: pkg=graphviz state=installed

@@ -3,26 +3,19 @@
   include_vars: "{{ ansible_os_family }}.yml"
 
 # Setup/install tasks.
-- include: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- name: Ensure dependencies for installing XHProf are present.
+  package: "name={{ item }} state=installed"
+  with_items:
+    - make
+    - gcc
+    - unzip
+    - graphviz
 
-- include: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- name: Download XHProf source.
-  get_url:
-    url: "{{ xhprof_download_url }}"
-    dest: "{{ workspace }}/xhprof.tar.gz"
-  register: xhprof_download_get_url
-
-# TODO: In 2.0, we can set the 'src' to the URL from the get_url task above and
-# cut out one extra task :)
-- name: Untar XHProf.
+- name: Download and untar XHProf.
   unarchive:
-    src: "{{ workspace }}/xhprof.tar.gz"
+    src: "{{ xhprof_download_url }}"
     dest: "{{ workspace }}"
     copy: no
-  when: xhprof_download_get_url.changed
 
 - name: Build XHProf.
   shell: >

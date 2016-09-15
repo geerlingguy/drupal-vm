@@ -1,8 +1,0 @@
----
-- name: Ensure dependencies for installing from source are installed.
-  apt: "pkg={{ item }} state=installed"
-  with_items:
-    - make
-
-- name: Ensure GraphViz is installed.
-  apt: pkg=graphviz state=installed
