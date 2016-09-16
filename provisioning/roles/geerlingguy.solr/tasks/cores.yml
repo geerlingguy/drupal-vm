@@ -7,7 +7,7 @@
 
 - name: Ensure Solr conf directories exist.
   file:
-    path: "/var/solr/data/{{ item }}/conf"
+    path: "{{ solr_home }}/data/{{ item }}/conf"
     state: directory
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
@@ -16,7 +16,7 @@
   with_items: "{{ solr_cores }}"
 
 - name: Ensure core configuration directories exist.
-  shell: "cp -r {{ solr_install_path }}/example/files/conf/ /var/solr/data/{{ item }}/"
+  shell: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item }}/"
   when: "'{{ item }}' not in '{{ solr_cores_current.content }}'"
   with_items: "{{ solr_cores }}"
 

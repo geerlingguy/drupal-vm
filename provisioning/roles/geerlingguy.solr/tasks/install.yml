@@ -12,7 +12,7 @@
     -u {{ solr_user }}
     -s {{ solr_service_name }}
     -p {{ solr_port }}
-    creates={{ solr_install_dir }}/solr/bin/solr
+    creates={{ solr_install_path }}/bin/solr
   register: solr_install_script_result
 
 # Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
