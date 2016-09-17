@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-varnish.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-varnish)
 
-An Ansible Role that installs Varnish on RedHat/CentOS or Debian/Ubuntu Linux.
+Installs the [Varnish HTTP Cache](https://varnish-cache.org/) on RedHat/CentOS or Debian/Ubuntu Linux.
 
 ## Requirements
 
@@ -12,9 +12,13 @@ Requires the EPEL repository on RedHat/CentOS (you can install it using the `gee
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    varnish_version: "4.0"
+    varnish_package_name: "varnish"
 
-Varnish version that should be installed. See `https://repo.varnish-cache.org/redhat/` for a listing of available versions (e.g. `3.0`, `4.0`, `4.1`). _Note: Ubuntu 16.04 "Xenial"
+Varnish package name you want to install. See `apt-cache policy varnish` or `yum list varnish` for a listing of available candidates.
+
+    varnish_version: "4.1"
+
+Varnish version that should be installed. See `https://repo.varnish-cache.org/redhat/` for a listing of available versions (e.g. `3.0`, `4.0`, `4.1`). _Note: Ubuntu 16.04 "Xenial" defaults to 4.1 from the universe repoistory_
 
     varnish_config_path: /etc/varnish
 
@@ -28,14 +32,18 @@ Whether to use the included (simplistic) default Varnish VCL, using the backend 
 
 The default VCL file to be copied (if `varnish_use_default_vcl` is `true`). Defaults the the simple template inside `templates/default.vcl.j2`. This path should be relative to the directory from which you run your playbook.
 
+    varnish_listen_port: "80"
+
+The port on which Varnish will listen (typically port 80).
+
     varnish_default_backend_host: "127.0.0.1"
     varnish_default_backend_port: "8080"
 
 Some settings for the default "default.vcl" template that will be copied to the `varnish_config_path` folder. The default backend host/port could be Apache or Nginx (or some other HTTP server) running on the same host or some other host (in which case, you might use port 80 instead).
 
-    varnish_listen_port: "80"
+    varnish_limit_nofile: 131072
 
-The port on which Varnish will listen (typically port 80).
+The `nofiles` PAM limit Varnish will attempt to set for open files. The normal default is ~1024 which is much too low for Varnish usage.
 
     varnish_secret: "14bac2e6-1e34-4770-8078-974373b76c90"
 
@@ -48,7 +56,11 @@ The host and port through which Varnish will accept admin requests (like purge a
 
     varnish_storage: "file,/var/lib/varnish/varnish_storage.bin,256M"
 
-How Varnish stores cache entries (this is passed in as the argument for `-s`). If you want to use in-memory storage, change to something like `malloc,256M`. Please read Varnish's [Getting Started guide](https://www.varnish-software.com/static/book/Getting_started.html) for more information.
+How Varnish stores cache entries (this is passed in as the argument for `-s`). If you want to use in-memory storage, change to something like `malloc,256M`. Please read Varnish's [Getting Started guide](http://book.varnish-software.com/4.0/chapters/Getting_Started.html) for more information.
+
+    varnish_pidfile: /run/varnishd.pid
+
+Varnish PID file path. Set to an empty string if you don't want to use a PID file.
 
 ## Dependencies
 
@@ -74,4 +86,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
