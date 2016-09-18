@@ -1,6 +1,6 @@
 ---
 - name: Ensure git's dependencies are installed (RedHat).
-  yum: "pkg={{ item }} state=installed"
+  package: "name={{ item }} state=installed"
   with_items:
     - gettext-devel
     - expat-devel
@@ -14,7 +14,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure git's dependencies are installed (Debian).
-  apt: "pkg={{ item }} state=installed"
+  apt: "name={{ item }} state=installed"
   with_items:
     - libcurl4-gnutls-dev
     - libexpat1-dev
@@ -28,8 +28,6 @@
   command: git --version
   changed_when: false
   failed_when: false
-  # Ansible 1.8 feature.
-  # warn: no
   register: git_installed_version
 
 - name: Force git install if the version numbers do not match

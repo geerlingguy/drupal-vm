@@ -11,7 +11,7 @@
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
 
     - name: Ensure build dependencies are installed (RedHat).
-      yum: name=which state=present
+      package: name=which state=present
       when: ansible_os_family == 'RedHat'
 
     - name: Add repository for PHP 7.
@@ -23,5 +23,6 @@
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
 
   roles:
-    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
     - role_under_test

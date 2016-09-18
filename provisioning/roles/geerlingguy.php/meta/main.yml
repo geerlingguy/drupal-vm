@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: geerlingguy
-  description: PHP for RedHat/CentOS/Debian/Ubuntu.
+  description: PHP for RedHat/CentOS/Fedora/Debian/Ubuntu.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 2.0
@@ -12,6 +12,9 @@ galaxy_info:
     versions:
     - 6
     - 7
+  - name: Fedora
+    versions:
+    - all
   - name: Debian
     versions:
     - all

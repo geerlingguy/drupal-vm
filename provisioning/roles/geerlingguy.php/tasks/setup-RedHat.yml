@@ -1,6 +1,6 @@
 ---
 - name: Ensure PHP packages are installed.
-  yum:
+  package:
     name: "{{ item }}"
     state: "{{ php_packages_state }}"
     enablerepo: "{{ php_enablerepo }}"

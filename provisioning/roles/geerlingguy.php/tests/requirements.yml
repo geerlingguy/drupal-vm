@@ -1,2 +1,3 @@
 ---
 - src: geerlingguy.repo-remi
+- src: geerlingguy.git

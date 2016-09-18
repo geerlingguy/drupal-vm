@@ -2,10 +2,13 @@
 sudo: required
 
 env:
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: centos6
     init: /sbin/init
     run_opts: ""
-  - distro: centos7
+  - distro: fedora24
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: ubuntu1604

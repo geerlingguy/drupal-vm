@@ -1,6 +1,6 @@
 ---
 - name: Ensure git is installed (RedHat).
-  yum:
+  package:
     name: "{{ item }}"
     state: installed
     enablerepo: "{{ git_enablerepo }}"

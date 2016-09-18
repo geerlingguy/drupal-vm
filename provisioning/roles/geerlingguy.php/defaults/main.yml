@@ -1,5 +1,6 @@
 ---
-# Pass in a comma-separated list of repos to use (e.g. "remi,epel").
+# Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
+# for RHEL/CentOS.
 php_enablerepo: ""
 
 # PHP package state; use 'installed' to make sure it's installed, or 'latest' if

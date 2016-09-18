@@ -12,7 +12,7 @@
 - src: geerlingguy.blackfire
   version: 1.0.0
 - src: geerlingguy.composer
-  version: 1.4.2
+  version: 1.5.0
 - src: geerlingguy.daemonize
   version: 1.1.1
 - src: geerlingguy.drupal-console
@@ -24,9 +24,9 @@
 - src: geerlingguy.firewall
   version: 1.1.0
 - src: geerlingguy.git
-  version: 1.1.1
+  version: 1.2.0
 - src: geerlingguy.java
-  version: 1.4.1
+  version: 1.7.0
 - src: geerlingguy.mailhog
   version: 2.0.0
 - src: geerlingguy.memcached
@@ -38,7 +38,7 @@
 - src: geerlingguy.nodejs
   version: 3.3.0
 - src: geerlingguy.php
-  version: 3.2.2
+  version: 3.3.0
 - src: geerlingguy.php-memcached
   version: 2.0.0
 - src: geerlingguy.php-mysql

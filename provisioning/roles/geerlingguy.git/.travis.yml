@@ -2,70 +2,73 @@
 sudo: required
 
 env:
-  # Only test source install on latest supported OSes.
-  # - distribution: centos
-  #   version: 7
-  #   init: /usr/lib/systemd/systemd
-  #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  #   SITE: source
-  #   GIT_VERSION: 2.7.1
-  - distribution: ubuntu
-    version: 14.04
-    init: /sbin/init
-    run_opts: ""
-    SITE: source
-    GIT_VERSION: 2.7.1
-
-  # Test package install on all supported OSes.
-  - distribution: centos
-    version: 6
-    init: /sbin/init
-    run_opts: ""
-    SITE: package
-    GIT_VERSION: 1.7.1
-  - distribution: centos
-    version: 7
+  # Test source install on latest supported OSes.
+  - distro: centos7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    SITE: package
+    playbook: test-source.yml
+    GIT_VERSION: 2.9.3
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test-source.yml
+    GIT_VERSION: 2.9.3
+
+  # Test package install on all supported OSes.
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
     GIT_VERSION: 1.8.3.1
-  - distribution: ubuntu
-    version: 14.04
+  - distro: centos6
     init: /sbin/init
-    run_opts: ""
-    SITE: package
+    run_opts: "--privileged"
+    playbook: test.yml
+    GIT_VERSION: 1.7.1
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    GIT_VERSION: 2.7.4
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: "--privileged"
+    playbook: test.yml
     GIT_VERSION: 1.9.1
-  - distribution: ubuntu
-    version: 12.04
+  - distro: ubuntu1204
     init: /sbin/init
-    run_opts: ""
-    SITE: package
+    run_opts: "--privileged"
+    playbook: test.yml
     GIT_VERSION: 1.7.9.5
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    GIT_VERSION: 2.1.4
 
 services:
   - docker
 
 before_install:
-  # - sudo apt-get update
-  # Pull container
-  - 'sudo docker pull ${distribution}:${version}'
-  # Customize container
-  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
+  # Pull container.
+  - 'sudo docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
   - container_id=$(mktemp)
-  # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
+  # Run container in detached state.
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml --syntax-check'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
 
   # Test role idempotence.
+  - idempotence=$(mktemp)
+  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
   - >
-    sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml
+    tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
@@ -77,7 +80,7 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm git --version'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/git --version | grep -qF "$GIT_VERSION"'
 
-  # Clean up
+  # Clean up.
   - 'sudo docker stop "$(cat ${container_id})"'
 
 notifications:

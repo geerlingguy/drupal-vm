@@ -1,7 +1,11 @@
 ---
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
-  when: ansible_distribution != 'Ubuntu'
+  when: ansible_distribution != 'Ubuntu' or ansible_distribution != 'Fedora'
+
+- name: Include OS-specific variables for Fedora.
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == 'Fedora'
 
 - name: Include version-specific variables for Ubuntu.
   include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
@@ -21,3 +25,11 @@
 
 - include: setup-FreeBSD.yml
   when: ansible_os_family == 'FreeBSD'
+
+# Environment setup.
+- name: Set JAVA_HOME if configured.
+  template:
+    src: java_home.sh.j2
+    dest: /etc/profile.d/java_home.sh
+    mode: 0644
+  when: java_home
