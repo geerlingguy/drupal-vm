@@ -34,7 +34,7 @@
 - src: geerlingguy.mysql
   version: 2.3.2
 - src: geerlingguy.nginx
-  version: 1.9.3
+  version: 1.9.5
 - src: geerlingguy.nodejs
   version: 3.3.0
 - src: geerlingguy.php

@@ -53,6 +53,9 @@ http {
 {% for server in upstream.servers %}
         server {{ server }};
 {% endfor %}
+{% if upstream.keepalive is defined %}
+        keepalive {{ upstream.keepalive }};
+{% endif %}
     }
 {% endfor %}
 

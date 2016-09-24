@@ -2,32 +2,32 @@
 server {
     listen {{ vhost.listen | default('80 default_server') }};
 
-    {% if vhost.server_name is defined %}
+{% if vhost.server_name is defined %}
     server_name {{ vhost.server_name }};
-    {% endif %}
+{% endif %}
 
-    {% if vhost.root is defined %}
+{% if vhost.root is defined %}
     root {{ vhost.root }};
-    {% endif %}
+{% endif %}
 
     index {{ vhost.index | default('index.html index.htm') }};
 
-    {% if vhost.error_page is defined %}
+{% if vhost.error_page is defined %}
     error_page {{ vhost.error_page }};
-    {% endif %}
-    {% if vhost.access_log is defined %}
+{% endif %}
+{% if vhost.access_log is defined %}
     access_log {{ vhost.access_log }};
-    {% endif %}
-    {% if vhost.error_log is defined %}
+{% endif %}
+{% if vhost.error_log is defined %}
     error_log {{ vhost.error_log }} error;
-    {% endif %}
+{% endif %}
 
-    {% if vhost.return is defined %}
+{% if vhost.return is defined %}
     return {{ vhost.return }};
-    {% endif %}
+{% endif %}
 
-    {% if vhost.extra_parameters is defined %}
-    {{ vhost.extra_parameters }}
-    {% endif %}
+{% if vhost.extra_parameters is defined %}
+    {{ vhost.extra_parameters|indent(4) }}
+{% endif %}
 }
 {% endfor %}

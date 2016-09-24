@@ -28,14 +28,16 @@ A list of vhost definitions (server blocks) for Nginx virtual hosts. If left emp
         error_log: ""
         extra_parameters: |
           location ~ \.php$ {
-            fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include fastcgi_params;
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass unix:/var/run/php5-fpm.sock;
+              fastcgi_index index.php;
+              fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+              include fastcgi_params;
           }
 
 An example of a fully-populated nginx_vhosts entry, using a `|` to declare a block of syntax for the `extra_parameters`.
+
+Please take note of the indentation in the above block. The first line should be a normal 2-space indent. All other lines should be indented normally relative to that line. In the generated file, the entire block will be 4-space indented. This style will ensure the config file is indented correctly.
 
     nginx_remove_default_vhost: false
 
@@ -53,11 +55,11 @@ If you are configuring Nginx as a load balancer, you can define one or more upst
 
 The user under which Nginx will run. Defaults to `nginx` for RedHat, and `www-data` for Debian.
 
-    nginx_worker_processes: "1"
+    nginx_worker_processes: "{{ ansible_processor_vcpus|default(ansible_processor_count) }}"
     nginx_worker_connections: "1024"
     nginx_multi_accept: "off"
 
-`nginx_worker_processes` should be set to the number of cores present on your machine. Connections (find this number with `grep processor /proc/cpuinfo | wc -l`). `nginx_worker_connections` is the number of connections per process. Set this higher to handle more simultaneous connections (and remember that a connection will be used for as long as the keepalive timeout duration for every client!). You can set `nginx_multi_accept` to `on` if you want Nginx to accept all connections immediately.
+`nginx_worker_processes` should be set to the number of cores present on your machine (if the default is incorrect, find this number with `grep processor /proc/cpuinfo | wc -l`). `nginx_worker_connections` is the number of connections per process. Set this higher to handle more simultaneous connections (and remember that a connection will be used for as long as the keepalive timeout duration for every client!). You can set `nginx_multi_accept` to `on` if you want Nginx to accept all connections immediately.
 
     nginx_error_log: "/var/log/nginx/error.log warn"
     nginx_access_log: "/var/log/nginx/access.log main buffer=16k"
@@ -123,4 +125,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
