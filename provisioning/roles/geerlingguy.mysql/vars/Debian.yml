@@ -7,4 +7,4 @@ __mysql_slow_query_log_file: /var/log/mysql/mysql-slow.log
 mysql_config_file: /etc/mysql/my.cnf
 mysql_config_include_dir: /etc/mysql/conf.d
 mysql_socket: /var/run/mysqld/mysqld.sock
-mysql_supports_innodb_large_prefix: true
+__mysql_supports_innodb_large_prefix: true

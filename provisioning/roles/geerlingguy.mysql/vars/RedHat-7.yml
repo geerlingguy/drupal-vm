@@ -13,4 +13,4 @@ mysql_pid_file: /var/run/mariadb/mariadb.pid
 mysql_config_file: /etc/my.cnf
 mysql_config_include_dir: /etc/my.cnf.d
 mysql_socket: /var/lib/mysql/mysql.sock
-mysql_supports_innodb_large_prefix: true
+__mysql_supports_innodb_large_prefix: true

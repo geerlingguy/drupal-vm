@@ -32,7 +32,7 @@
 - src: geerlingguy.memcached
   version: 1.0.7
 - src: geerlingguy.mysql
-  version: 2.3.2
+  version: 2.3.3
 - src: geerlingguy.nginx
   version: 1.9.5
 - src: geerlingguy.nodejs
