@@ -14,7 +14,7 @@
 
 - name: Disable the ufw firewall (since we use a simple iptables firewall).
   service: name=ufw state=stopped
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and {{ drupalvm_disable_ufw_firewall | default(true) }}
 
 - name: Add repository for Apache 2.4 on Ubuntu 12.
   apt_repository: repo='ppa:ondrej/apache2'
