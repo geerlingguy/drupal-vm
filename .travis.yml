@@ -58,6 +58,9 @@ script:
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'
 
+  # Run the test setup playbook with ansible-playbook.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/test-setup.yml'
+
   # Run the playbook with ansible-playbook.
   - >
     if [ ! -z "${config_dir}" ]; then
