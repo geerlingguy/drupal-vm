@@ -1,54 +1,45 @@
 ---
-sudo: required
+services: docker
 
 env:
-  global:
-    # https://github.com/travis-ci/travis-ci/issues/6461#issuecomment-239577306
-    DOCKER_VERSION: "1.9.1-0~trusty"
-  matrix:
-    - distro: centos7
-      init: /usr/lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      playbook: centos-7-test.yml
-    - distro: centos6
-      init: /sbin/init
-      run_opts: ""
-      playbook: test.yml
-    - distro: ubuntu1604
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      playbook: test.yml
-    - distro: ubuntu1404
-      init: /sbin/init
-      run_opts: ""
-      playbook: test.yml
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: centos-7-test.yml
+  - distro: centos6
+    init: /sbin/init
+    run_opts: ""
+    playbook: test.yml
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    playbook: test.yml
 
 services:
   - docker
 
 before_install:
-  # Downgrade to older version of Docker engine.
-  - sudo apt-get update
-  - sudo apt-get remove docker-engine -yq
-  - sudo apt-get install docker-engine=$DOCKER_VERSION -yq --no-install-suggests --no-install-recommends --force-yes -o Dpkg::Options::="--force-confnew"
-
   # Pull container
-  - 'sudo docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
   - container_id=$(mktemp)
-    # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
+  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
 
   # Test role idempotence.
   - idempotence=$(mktemp)
-  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
   - >
     tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
@@ -56,9 +47,9 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Some MySQL debugging (show all the logs).
-  - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /var/log
-  - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log || true
-  - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err || true
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /var/log
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log || true
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err || true
 
   # Check to make sure we can connect to MySQL via Unix socket.
   - >
@@ -74,14 +65,11 @@ script:
     && (echo 'MySQL running normally' && exit 0)
     || (echo 'MySQL not running' && exit 1)
 
-  # Clean up
-  - sudo docker stop "$(cat ${container_id})"
-
 after_failure:
   # Check MySQL settings.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.log'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.log'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

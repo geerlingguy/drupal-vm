@@ -35,6 +35,11 @@ Whether to force update the MySQL root user's password. By default, this role wi
 
 Whether MySQL should be enabled on startup.
 
+    mysql_config_file: *default value depends on OS*
+    mysql_config_include_dir: *default value depends on OS*
+    
+The main my.cnf configuration file and include directory.
+
     overwrite_global_mycnf: yes
 
 Whether the global my.cnf should be overwritten each time this role is run. Setting this to `no` tells Ansible to only create the `my.cnf` file if it doesn't exist. This should be left at its default value (`yes`) if you'd like to use this role's variables to configure MySQL.
@@ -64,17 +69,19 @@ The MySQL users and their privileges. A user has the values `name`, `host` (defa
     mysql_port: "3306"
     mysql_bind_address: '0.0.0.0'
     mysql_datadir: /var/lib/mysql
+    mysql_socket: *default value depends on OS*
+    mysql_pid_file: *default value depends on OS*
 
 Default MySQL connection configuration.
 
     mysql_log: ""
-    mysql_log_error: /var/log/mysqld.log
-    mysql_syslog_tag: mysqld
+    mysql_log_error: *default value depends on OS*
+    mysql_syslog_tag: *default value depends on OS*
 
 MySQL logging configuration. Setting `mysql_log` (the general query log) or `mysql_log_error` to `syslog` will make MySQL log to syslog using the `mysql_syslog_tag`.
 
     mysql_slow_query_log_enabled: no
-    mysql_slow_query_log_file: /var/log/mysql-slow.log
+    mysql_slow_query_log_file: *default value depends on OS*
     mysql_slow_query_time: 2
 
 Slow query log settings. Note that the log file will be created by this role, but if you're running on a server with SELinux or AppArmor, you may need to add this path to the allowed paths for MySQL, or disable the mysql profile. For example, on Debian/Ubuntu, you can run `sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/usr.sbin.mysqld && sudo service apparmor restart`.
