@@ -171,7 +171,7 @@ mysql_users:
     priv: "{{ drupal_mysql_database }}.*:ALL"
 
 # Comment out any extra utilities you don't want to install. If you don't want
-# to install *any* extras, make set this value to an empty set, e.g. `[]`.
+# to install *any* extras, set this value to an empty set, e.g. `[]`.
 installed_extras:
   - adminer
   # - blackfire
