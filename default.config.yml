@@ -30,7 +30,7 @@ vagrant_synced_folders:
 
 # Memory and CPU to use for this VM.
 vagrant_memory: 1024
-vagrant_cpus: 2
+vagrant_cpus: 1
 
 # Minimum required versions.
 drupalvm_vagrant_version_min: '1.8.5'
