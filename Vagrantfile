@@ -1,7 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = '2' unless defined? VAGRANTFILE_API_VERSION
-Vagrant.require_version '>= 1.8.5'
 
 # Absolute paths on the host machine.
 host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
@@ -52,6 +51,8 @@ vconfig = walk(vconfig) do |value|
   end
   value
 end
+
+Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Networking configuration.
