@@ -8,6 +8,16 @@
   changed_when: false
   become: no
 
+# See: https://www.drupal.org/node/2569365#comment-11680807
+- name: Configure database correctly if using PostgreSQL.
+  command: psql -c "ALTER DATABASE {{ drupal_db_name }} SET bytea_output = 'escape';"
+  when: "'Successful' not in drupal_site_installed.stdout"
+  become: yes
+  become_user: "{{ postgresql_user }}"
+  # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
+  vars:
+    ansible_ssh_pipelining: true
+
 - name: Install Drupal with drush.
   command: >
     {{ drush_path }} site-install {{ drupal_install_profile | default('standard') }} -y
