@@ -1,0 +1,5 @@
+---
+- src: geerlingguy.repo-remi
+- src: geerlingguy.apache
+- src: geerlingguy.postgresql
+- src: geerlingguy.php

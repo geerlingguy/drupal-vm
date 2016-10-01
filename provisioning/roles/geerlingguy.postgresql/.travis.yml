@@ -1,0 +1,67 @@
+---
+services: docker
+
+env:
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    postgresql_bin_dir: /usr/bin
+    postgresql_data_dir: /var/lib/pgsql/data
+  - distro: centos6
+    init: /sbin/init
+    run_opts: ""
+    postgresql_bin_dir: /usr/bin
+    postgresql_data_dir: /var/lib/pgsql/data
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    postgresql_bin_dir: /usr/lib/postgresql/9.5/bin
+    postgresql_data_dir: /var/lib/postgresql/9.5/main
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    postgresql_bin_dir: /usr/lib/postgresql/9.3/bin
+    postgresql_data_dir: /var/lib/postgresql/9.3/main
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    postgresql_bin_dir: /usr/lib/postgresql/9.4/bin
+    postgresql_data_dir: /var/lib/postgresql/9.4/main
+
+services:
+  - docker
+
+before_install:
+  # Pull container
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+
+script:
+  - container_id=$(mktemp)
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+
+  # Test role.
+  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
+
+  # Test role idempotence.
+  - idempotence=$(mktemp)
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Check PostgreSQL status.
+  - 'docker exec -u postgres "$(cat ${container_id})" ${postgresql_bin_dir}/pg_ctl -D ${postgresql_data_dir} status'
+
+after_failure:
+  # Check what happened on systemd systems.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl -l status postgresql.service'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

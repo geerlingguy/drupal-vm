@@ -1,0 +1,23 @@
+---
+# Variable configuration.
+- include: variables.yml
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: initialize.yml
+- include: configure.yml
+
+- name: Ensure PostgreSQL is started and enabled on boot.
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: started
+    enabled: yes
+
+# Configure PostgreSQL.
+- include: databases.yml
+- include: users.yml

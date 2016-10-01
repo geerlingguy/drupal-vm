@@ -42,6 +42,9 @@ force_ansible_local: false
 # The web server software to use. Can be either 'apache' or 'nginx'.
 drupalvm_webserver: apache
 
+# The database system to use. Can be either 'mysql' or 'pgsql'.
+drupalvm_database: mysql
+
 # Set this to 'false' if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_makefile: false
@@ -68,9 +71,9 @@ install_site: true
 
 # Required Drupal settings.
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
-drupal_mysql_user: drupal
-drupal_mysql_password: drupal
-drupal_mysql_database: drupal
+drupal_db_user: drupal
+drupal_db_password: drupal
+drupal_db_name: drupal
 
 # Settings for installing a Drupal site if 'install_site:' is 'true'.
 drupal_major_version: 8
@@ -161,18 +164,26 @@ nginx_hosts:
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
 
-# MySQL Databases and users. If 'install_site' is 'true', first database will
-# be used for the site.
+# MySQL databases and users.
 mysql_databases:
-  - name: "{{ drupal_mysql_database }}"
+  - name: "{{ drupal_db_name }}"
     encoding: utf8mb4
     collation: utf8mb4_general_ci
 
 mysql_users:
-  - name: "{{ drupal_mysql_user }}"
+  - name: "{{ drupal_db_user }}"
     host: "%"
-    password: "{{ drupal_mysql_password }}"
-    priv: "{{ drupal_mysql_database }}.*:ALL"
+    password: "{{ drupal_db_password }}"
+    priv: "{{ drupal_db_name }}.*:ALL"
+
+# PostgreSQL databases and users.
+postgresql_databases:
+  - name: "{{ drupal_db_name }}"
+
+postgresql_users:
+  - name: "{{ drupal_db_user }}"
+    password: "{{ drupal_db_password }}"
+    priv: "ALL"
 
 # Comment out any extra utilities you don't want to install. If you don't want
 # to install *any* extras, set this value to an empty set, e.g. `[]`.

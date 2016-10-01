@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  vars:
+    php_enablerepo: "remi,remi-php70"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - geerlingguy.apache
+    - geerlingguy.postgresql
+    - geerlingguy.php
+    - role_under_test

@@ -1,0 +1,23 @@
+---
+- hosts: all
+
+  vars:
+    postgresql_databases:
+      - name: example
+    postgresql_users:
+      - name: jdoe
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Set custom variable name for old CentOS 6 PostgreSQL install.
+      set_fact:
+        postgresql_global_config_options:
+          - option: unix_socket_directory
+            value: '{{ postgresql_unix_socket_directories[0] }}'
+      when: ansible_os_family == 'RedHat' and ansible_distribution_version.split('.')[0] == '6'
+
+  roles:
+    - role_under_test

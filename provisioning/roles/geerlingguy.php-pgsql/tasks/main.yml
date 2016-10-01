@@ -1,0 +1,29 @@
+---
+# Variable setup.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_pgsql_package.
+  set_fact:
+    php_pgsql_package: "{{ __php_pgsql_package }}"
+  when: php_pgsql_package is not defined
+
+# Installation.
+- name: Install PHP PostgreSQL dependencies (RedHat).
+  yum:
+    name: "{{ php_pgsql_package }}"
+    state: present
+    enablerepo: "{{ php_enablerepo }}"
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: ansible_os_family == 'RedHat'
+
+- name: Install PHP PostgreSQL dependencies (Debian).
+  apt:
+    name: "{{ php_pgsql_package }}"
+    state: present
+  notify:
+    - restart webserver
+    - restart php-fpm
+  when: ansible_os_family == 'Debian'

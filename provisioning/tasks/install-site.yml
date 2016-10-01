@@ -14,7 +14,7 @@
     --site-name="{{ drupal_site_name }}"
     --account-name={{ drupal_account_name }}
     --account-pass={{ drupal_account_pass }}
-    --db-url=mysql://{{ drupal_mysql_user }}:{{ drupal_mysql_password }}@localhost/{{ mysql_databases[0].name }}
+    --db-url={{ drupalvm_database }}://{{ drupal_db_user }}:{{ drupal_db_password }}@localhost/{{ drupal_db_name }}
     {{ drupal_site_install_extra_args | default([]) | join(" ") }}
     chdir={{ drupal_core_path }}
   notify: restart webserver
