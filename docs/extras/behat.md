@@ -92,3 +92,12 @@ Hooray! Now you're ready to get started testing ALL THE THINGS! Check out the fo
 
   - [Behat 3.0 Documentation](http://behat.readthedocs.org/en/v3.0/)
   - [Drupal Extension Documentation](https://behat-drupal-extension.readthedocs.org/en/3.0/)
+
+## Debugging issues
+
+There are many different ways you can run Behat tests via PhantomJS and other drivers, and some people have encountered issues and workarounds with different approaches. Here are some relevant issues you can read through for more background:
+
+  - [Selenium Questions](https://github.com/geerlingguy/drupal-vm/issues/367)
+  - [Trying to achieve a Visual Regression Testing Strategy](https://github.com/geerlingguy/drupal-vm/issues/421)
+
+Also, see Acquia's [BLT](https://github.com/acquia/blt) project for a good example of Behat test integration with Drupal VM.
