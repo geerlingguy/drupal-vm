@@ -3,7 +3,7 @@ Since Drupal VM is built in a modular fashion, you can swap out the database eng
 To switch from MySQL to PostgreSQL, switch the `drupalvm_database` setting in your local `config.yml` to `pgsql`:
 
 ```yaml
-drupalvm_database: mysql
+drupalvm_database: pgsql
 ```
 
-For more PostgreSQL configuration options, see the README included with the [`geerlingguy.postgresql](https://galaxy.ansible.com/geerlingguy/postgresql/) Ansible role.
+For more PostgreSQL configuration options, see the README included with the [`geerlingguy.postgresql`](https://galaxy.ansible.com/geerlingguy/postgresql/) Ansible role.
