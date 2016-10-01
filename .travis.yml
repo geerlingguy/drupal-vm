@@ -25,7 +25,7 @@ env:
     - distro: ubuntu1604
       init: /sbin/init
       run_opts: "--privileged"
-      local_config: tests/ubuntu-16-postgres.config.yml
+      local_config: tests/ubuntu-16-postgresql.config.yml
       config_dir: /var/www/drupalvm/config
     # Defaults - CentOS 7.
     - distro: centos7
