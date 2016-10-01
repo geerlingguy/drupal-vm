@@ -99,7 +99,7 @@
     - include: tasks/extras.yml
     - include: tasks/www.yml
     - include: tasks/apparmor.yml
-      when: ansible_os_family == 'Debian'
+      when: ansible_os_family == 'Debian' and drupalvm_database == 'mysql'
 
     # Build makefile if configured.
     - include: tasks/build-makefile.yml

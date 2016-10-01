@@ -183,6 +183,7 @@ postgresql_databases:
 postgresql_users:
   - name: "{{ drupal_db_user }}"
     password: "{{ drupal_db_password }}"
+    db: "{{ drupal_db_name }}"
     priv: "ALL"
 
 # Comment out any extra utilities you don't want to install. If you don't want
@@ -268,6 +269,13 @@ mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
 mysql_wait_timeout: 300
 adminer_install_filename: index.php
+
+# PostgreSQL configuration.
+postgresql_global_config_options:
+  - option: unix_socket_directories
+    value: '{{ postgresql_unix_socket_directories | join(",") }}'
+  - option: bytea_output
+    value: 'escape'
 
 # Node.js configuration (if enabled above).
 # Valid examples: "0.10", "0.12", "4.x", "5.x".
