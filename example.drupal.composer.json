@@ -18,8 +18,8 @@
     "require": {
         "composer/installers": "^1.0.20",
         "drupal-composer/drupal-scaffold": "^2.0.1",
-        "drupal/core": "~8.0",
-        "drupal/devel": "1.0.x-dev"
+        "drupal/core": "~8.1",
+        "drupal/devel": "1.x-dev"
     },
     "replace": {
         "drupal/drupal": "*"
