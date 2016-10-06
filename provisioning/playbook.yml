@@ -76,7 +76,12 @@
     - { role: geerlingguy.redis, when: '"redis" in installed_extras' }
     - { role: geerlingguy.php-redis, when: '"redis" in installed_extras' }
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
-    - { role: geerlingguy.java, when: '"solr" in installed_extras or "selenium" in installed_extras or "elasticsearch" in installed_extras'}
+    - role: geerlingguy.java
+      when: >
+        "java" in installed_extras or
+        "solr" in installed_extras or
+        "selenium" in installed_extras or
+        "elasticsearch" in installed_extras
     - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.elasticsearch, when: '"elasticsearch" in installed_extras' }

@@ -193,6 +193,7 @@ installed_extras:
   # - blackfire
   - drupalconsole
   # - elasticsearch
+  # - java
   - mailhog
   # - memcached
   # - newrelic
