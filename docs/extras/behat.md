@@ -1,4 +1,4 @@
-Behat is an open source behavior-driven development tool for PHP. You can use Behat to build and run automated tests for site functionality on your Drupal sites, and Drupal VM has excellent built-in support for Behat, using Selenium to run tests in a headless instance of FireFox.
+Behat is an open source behavior-driven development tool for PHP. You can use Behat to build and run automated tests for site functionality on your Drupal sites, and Drupal VM has excellent built-in support for Behat, using Selenium to run tests in a headless instance of either Google Chrome (default) or Firefox.
 
 ## Getting Started - Installing Prerequisites
 
@@ -23,7 +23,7 @@ $ behat --version
 behat version 3.0.15
 ```
 
-_You can also include `drupal/drupal-extension` directly in your project's `composer.json` file, and install the dependencies per-project. Either option (installing globally, like above, or installing per-project) is perfectly acceptable._
+_You can also include `drupal/drupal-extension` directly in your project's `composer.json` file, and install the dependencies per-project._
 
 ## Setting up Behat for your project
 
