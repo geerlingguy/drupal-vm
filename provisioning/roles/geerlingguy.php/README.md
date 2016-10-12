@@ -34,6 +34,10 @@ The default values for the HTTP server deamon are `httpd` (used by Apache) for R
 
 If you have enabled any additional repositories such as [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel) or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to swap PHP versions on the fly. By default, this is set to 'installed'. You can now override this variable to 'latest'. Combined with php_enablerepo, a user now doesn't need to manually uninstall the existing PHP packages before installing them from a different repository.
 
+    php_install_recommends: yes
+
+(Debian/Ubuntu only) Whether to install recommended packages when installing `php_packages`; you might want to set this to `no` explicitly if you're installing a PPA that recommends certain packages you don't want (e.g. Ondrej's `php` PPA will install `php7.0-cli` if you install `php-pear` alongside `php5.6-cli`... which is often not desired!).
+
     php_executable: "php"
 
 The executable to run when calling PHP from the command line. You should only change this if running `php` on your server doesn't target the correct executable, or if you're using software collections on RHEL/CentOS and need to target a different version of PHP.

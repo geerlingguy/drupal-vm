@@ -11,43 +11,48 @@ Ondřej Surý's PPA for PHP 7.0 is used to install PHP 7, but you can switch to 
 ```yaml
 vagrant_box: geerlingguy/ubuntu1404
 php_version: "5.6"
+php_install_recommends: no
+php_version: "5.6"
+php_install_recommends: no
 php_packages:
-  - php5
-  - php5-apcu
-  - php5-mcrypt
-  - php5-cli
-  - php5-common
-  - php5-curl
-  - php5-dev
-  - php5-fpm
-  - php5-gd
-  - php5-sqlite
+  - php5.6
+  - php5.6-apcu
+  - php5.6-mcrypt
+  - php5.6-cli
+  - php5.6-common
+  - php5.6-curl
+  - php5.6-dev
+  - php5.6-fpm
+  - php5.6-gd
+  - php5.6-sqlite3
+  - php5.6-xml
+  - php5.6-mbstring
   - php-pear
   - libpcre3-dev
 php_conf_paths:
-  - /etc/php5/fpm
-  - /etc/php5/apache2
-  - /etc/php5/cli
+  - /etc/php/5.6/fpm
+  - /etc/php/5.6/apache2
+  - /etc/php/5.6/cli
 php_extension_conf_paths:
-  - /etc/php5/fpm/conf.d
-  - /etc/php5/apache2/conf.d
-  - /etc/php5/cli/conf.d
-php_fpm_daemon: php5-fpm
-php_fpm_conf_path: "/etc/php5/fpm"
-php_fpm_pool_conf_path: "/etc/php5/fpm/pool.d/www.conf"
-php_mysql_package: php5-mysql
+  - /etc/php/5.6/fpm/conf.d
+  - /etc/php/5.6/apache2/conf.d
+  - /etc/php/5.6/cli/conf.d
+php_fpm_daemon: php5.6-fpm
+php_fpm_conf_path: "/etc/php/5.6/fpm"
+php_fpm_pool_conf_path: "/etc/php/5.6/fpm/pool.d/www.conf"
+php_mysql_package: php5.6-mysql
 ```
 
-If you're using Apache with `mod_php` you should also add `libapache2-mod-php5` to the `php_packages` list.
+If you're using Apache with `mod_php` you should also add `libapache2-mod-php5.6` to the `php_packages` list.
 
 Also, if you're using one of the `installed_extras`, you may need to update the package names accordingly:
 
 ```yaml
 # If you install `redis`:
-php_redis_package: php5-redis
+php_redis_package: php5.6-redis
 
 # If you install `memcached`:
-php_memcached_package: php5-memcached
+php_memcached_package: php5.6-memcached
 
 # If you install `xhprof`:
 xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz

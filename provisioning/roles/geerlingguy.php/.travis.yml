@@ -1,5 +1,5 @@
 ---
-sudo: required
+services: docker
 
 env:
   # Test package install on all supported OSes.
@@ -8,6 +8,11 @@ env:
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     php_version: 7.0
+  - distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    php_version: 5.6
   - distro: ubuntu1604
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
@@ -36,30 +41,27 @@ env:
     playbook: test-source.yml
     php_version: 7.0.5
 
-services:
-  - docker
-
 before_install:
   # Pull container.
-  - 'sudo docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Install dependencies.
-  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
+  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
 
   # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
 
   # Test role idempotence.
   - idempotence=$(mktemp)
-  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
   - >
     tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
@@ -67,18 +69,14 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Ensure PHP is installed and at the right version.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which php'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x /usr/bin/php'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which php'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x /usr/bin/php'
 
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm php --version'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/php --version | grep -qF "PHP ${php_version}"'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm php --version'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/php --version | grep -qF "PHP ${php_version}"'
 
   # Ensure PHP configurations have taken effect.
-  - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm php -i | grep 'memory_limit.*192'
-
-after_success:
-  # Clean up.
-  - 'sudo docker stop "$(cat ${container_id})"'
+  - docker exec --tty "$(cat ${container_id})" env TERM=xterm php -i | grep 'memory_limit.*192'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
