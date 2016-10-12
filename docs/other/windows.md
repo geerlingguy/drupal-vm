@@ -1,8 +1,25 @@
 There are a few caveats when using Drupal VM on Windows, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Windows host.
 
+## Windows Subsystem for Linux / Ubuntu bash
+
+If you are running Windows 10 (Anniversary edition) or later, you can install the Windows Subsytem for Linux, which allows you to install an Ubuntu-based CLI inside of Windows. With this installed, you can then manage and run Drupal VM inside the Linux-like environment. Follow these steps to use Drupal VM in the WSL:
+
+  1. Install Vagrant and VirtualBox in Windows (links in the [Drupal VM Quick Start Guide](https://github.com/geerlingguy/drupal-vm#quick-start-guide)).
+  2. [Install/Enable the Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide).
+    1. Create an admin account for the Ubuntu Bash environment when prompted.
+  3. Download the latest release of [cbwin](https://github.com/xilun/cbwin) and follow the [cbwin installation instructions](https://github.com/xilun/cbwin#installation).
+  4. Open an instance of `outbash.exe`.
+  5. In a local copy of Drupal VM (downloaded or Git cloned into a path that's in the Windows filesystem, e.g. `/mnt/c/Users/yourusername/Sites/drupal-vm`), run `wrun vagrant up`.
+
+If you need to run any other `vagrant` commands (with the exception of `vagrant ssh`—for now, that must be run in a different environment; see [Vagrant: Use Linux Subsystem on Windows](https://github.com/mitchellh/vagrant/issues/7731)), you can do so by prefixing them with `wrun`.
+
+> Note: using `wrun`, interactive prompts don't seem to work (e.g. if you run `vagrant destroy` without `-f`, you have to Ctrl-C out of it because it just hangs).
+>
+> Note 2: that the WSL is still in beta, and tools like `cbwin` are still undergoing rapid development, so some of these instructions are subject to change!
+
 ## Command line environment
 
-You can use PowerShell, Git Bash, Git Shell, or other PowerShell-based environments with Drupal VM and Vagrant; however you might want to consider using a more POSIX-like environment so you can more easily work with Drupal VM:
+If you're not on Windows 10, or if you don't want to install the WSL, you can use PowerShell, Git Bash, Git Shell, or other PowerShell-based environments with Drupal VM and Vagrant; however you might want to consider using a more POSIX-like environment so you can more easily work with Drupal VM:
 
   - [Cmder](http://cmder.net/) includes built-in git and SSH support, so you can do most things that you need without any additional plugins.
   - [Cygwin](https://www.cygwin.com/) allows you to install a large variety of linux packages inside its bash environment, though it can be a little more tricky to manage and is less integrated into the Windows environment.
@@ -27,6 +44,8 @@ There are two parts to this:
 
   1. VirtualBox does not allow gets VMs to create symlinks in synced folders by default.
   2. Windows does not allow the creation of symlinks unless your local policy allows it; see [TechNet article](https://technet.microsoft.com/en-us/library/dn221947%28v=ws.10%29.aspx). Even if local policy allows it, many users experience problems in the creation of symlinks.
+
+Using Ubuntu bash under Windows 10 _can_ make this easier, but there are still issues when creating and managing symlinks between the bash environment and the guest Vagrant operating system.
 
 ### Git and File permissions
 
