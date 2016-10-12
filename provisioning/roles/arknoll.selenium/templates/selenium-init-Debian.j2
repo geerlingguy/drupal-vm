@@ -1,4 +1,13 @@
 #!/bin/bash
+### BEGIN INIT INFO
+# Provides:          selenium
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: selenium
+# Description:       selenium test framework
+### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
@@ -10,8 +19,8 @@ JAVA_BIN=/usr/bin/java
 XVFB_BIN=/usr/bin/xvfb-run
 
 SELENIUM_DIR={{ selenium_install_dir }}/selenium
-SELENIUM_PID_FILE="$SELENIUM_DIR/selenium.pid"
 SELENIUM_JAR_FILE="$SELENIUM_DIR/selenium-server-standalone-{{ selenium_version }}.jar"
+DAEMON_PID_FILE="$SELENIUM_DIR/selenium.pid"
 SELENIUM_LOG_FILE="$SELENIUM_DIR/selenium.log"
 SELENIUM_DAEMON_OPTS=" -client -jar $SELENIUM_JAR_FILE -log $SELENIUM_LOG_FILE"
 
@@ -23,20 +32,25 @@ set -e
 
 case "$1" in
     start)
-        if status_of_proc -p $SELENIUM_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE > /dev/null; then
+        if status_of_proc -p $DAEMON_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE > /dev/null; then
             log_progress_msg "Service already running"
         else
             log_daemon_msg "Starting Selenium server"
             log_progress_msg "selenium"
-            start-stop-daemon -c $RUN_AS --start --quiet --background --pidfile $SELENIUM_PID_FILE --make-pidfile --exec $XVFB_BIN $JAVA_BIN -- $SELENIUM_DAEMON_OPTS
+            start-stop-daemon -c $RUN_AS --start --quiet --background --pidfile $DAEMON_PID_FILE --make-pidfile --exec $XVFB_BIN $JAVA_BIN -- $SELENIUM_DAEMON_OPTS
         fi
         ;;
 
     stop)
-        if status_of_proc -p $SELENIUM_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE > /dev/null; then
+        if status_of_proc -p $DAEMON_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE > /dev/null; then
             log_daemon_msg "Stopping Selenium server"
             log_progress_msg "selenium"
-            start-stop-daemon --stop --pidfile $SELENIUM_PID_FILE
+            DAEMON_PID=$(cat $DAEMON_PID_FILE)
+            DAEMON_CHILDREN=$(pstree -l -p $DAEMON_PID |grep "([[:digit:]]*)" -o |tr -d '()')
+            # Stop daemon itself.
+            start-stop-daemon --stop --pidfile $DAEMON_PID_FILE
+            # Stop all child processes.
+            sudo kill $DAEMON_CHILDREN
         else
             log_progress_msg "Service not running"
         fi
@@ -49,7 +63,7 @@ case "$1" in
 	;;
 
 	status)
-        status_of_proc -p $SELENIUM_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE && exit 0 || exit $?
+        status_of_proc -p $DAEMON_PID_FILE "$SELENIUM_JAR_FILE" $SELENIUM_JAR_FILE && exit 0 || exit $?
     ;;
 
     *)

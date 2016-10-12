@@ -1,42 +1,72 @@
 ---
 # Tasks file for selenium
+- name: Include OS-Specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags: [configuration, selenium]
+
+- name: Install dependencies
+  package: name=unzip
+  tags: [configuration, selenium]
+
 - name: create directory
   file: "path={{ selenium_install_dir }}/selenium state=directory recurse=yes"
   tags: [configuration, selenium, selenium-create-directory]
 
-- name: download
-  get_url: "url=http://selenium-release.storage.googleapis.com/{{ selenium_version | regex_replace('\\.[0-9]+$', '') }}/selenium-server-standalone-{{ selenium_version }}.jar dest=/opt/selenium/selenium-server-standalone-{{ selenium_version }}.jar"
+- name: Download Selenium
+  get_url:
+    url: "http://selenium-release.storage.googleapis.com/{{ selenium_version | regex_replace('\\.[0-9]+$', '') }}/selenium-server-standalone-{{ selenium_version }}.jar"
+    dest: "{{ selenium_install_dir }}/selenium/selenium-server-standalone-{{ selenium_version }}.jar"
   tags: [configuration, selenium, selenium-download]
 
+- name: Install FireFox (if configured)
+  package: name=firefox state=present
+  when: selenium_install_firefox
+  tags: [configuration, selenium, selenium-firefox]
+
+- name: Install Chrome (if configured, Debian)
+  apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    state: present
+  when: ansible_os_family == 'Debian' and selenium_install_chrome
+  tags: [configuration, selenium, selenium-chrome]
+
+- name: Install Chrome (if configured, RedHat)
+  yum:
+    name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    state: present
+  when: ansible_os_family == 'RedHat' and selenium_install_chrome
+  tags: [configuration, selenium, selenium-chrome]
+
+- name: Get the latest release for chromedriver
+  uri:
+    url: http://chromedriver.storage.googleapis.com/LATEST_RELEASE
+    return_content: yes
+  register: chromedriver_latest
+  when: selenium_install_chrome
+  tags: [configuration, selenium, selenium-chrome]
+
+- name: Install chromedriver
+  unarchive:
+    src: "http://chromedriver.storage.googleapis.com/{{ chromedriver_latest.content | trim }}/chromedriver_linux64.zip"
+    dest: /usr/bin
+    mode: 0755
+    copy: no
+  when: selenium_install_chrome
+  tags: [configuration, selenium, selenium-chrome]
+
 - name: Install xvfb
-  apt: name={{item}}
-  with_items:
-    - xvfb
-  when: ansible_os_family == 'Debian'
+  package: name={{ selenium_xvfb_package }}
+  tags: [configuration, selenium, selenium-xvfb]
 
-- name: Install browser
-  apt: name={{item}}
-  with_items:
-    - firefox
-  when: ansible_os_family == 'Debian' and selenium_install_firefox
-
-- name: Install browser Xvfb
-  yum: name={{item}}
-  with_items:
-    - xorg-x11-server-Xvfb
-  when: ansible_os_family == 'RedHat'
-
-- name: Install browser
-  yum: name={{item}}
-  with_items:
-    - firefox
-  when: ansible_os_family == 'RedHat' and selenium_install_firefox
-
-
-- name: install
-  template: src=selenium-init-{{ ansible_os_family }}.j2 dest=/etc/init.d/selenium owner=root group=root mode=0755
+- name: Install init script
+  template:
+    src: "selenium-init-{{ ansible_os_family }}.j2"
+    dest: /etc/init.d/selenium
+    owner: root
+    group: root
+    mode: 0755
   tags: [configuration, selenium, selenium-install]
 
-- name: run
+- name: Ensure selenium is running
   service: name=selenium state=started enabled=yes
   tags: [configuration, selenium, selenium-run]

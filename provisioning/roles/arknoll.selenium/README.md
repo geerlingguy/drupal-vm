@@ -9,7 +9,9 @@ Set up selenium and Firefox for running selenium tests.
 #### Variables
 
 * `selenium_install_dir`: [default: `/opt`] Install directory
-* `selenium_version`: [default: `2.44.0`] Install version
+* `selenium_version`: [default: `2.53.0`] Install version
+* `selenium_install_firefox`: [default: `no`] Whether to install FireFox
+* `selenium_install_chrome`: [default: `yes`] Whether to install Google Chrome
 
 ## Dependencies
 
@@ -31,6 +33,22 @@ $ service selenium start
 $ service selenium stop
 $ service selenium restart
 ```
+
+#### Known issue with Firefox
+
+For some OS combinations the package manager version of Firefox 
+doesn't work appropriately with Selenium. In these circumstances 
+you may see an error like:
+
+```
+WebDriver\Exception\UnknownError: Unable to connect to host 127.0.0.1 on port 7055 after 45000 ms. Firefox console output:
+```
+
+Chrome and chromedriver don't appear to have this issue. If 
+possible, use Chrome. If you still want to use firefox, then 
+I suggest using https://galaxy.ansible.com/arknoll/firefox/ 
+to install an older version of firefox. (38.0 worked for me 
+on Ubuntu 16.04).
 
 #### License and Author
 
