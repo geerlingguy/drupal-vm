@@ -1,6 +1,6 @@
 ---
 - src: arknoll.selenium
-  version: 1.3.0
+  version: 2.0.0
 - src: franklinkim.newrelic
   version: 1.4.0
 - src: geerlingguy.adminer

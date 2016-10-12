@@ -1,5 +1,6 @@
 ---
 # defaults file for selenium
 selenium_install_dir: /opt
-selenium_version: 2.53.0
-selenium_install_firefox: yes
+selenium_version: "2.53.0"
+selenium_install_firefox: no
+selenium_install_chrome: yes
