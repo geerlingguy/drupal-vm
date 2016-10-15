@@ -9,7 +9,7 @@
 
 - name: Enable remi repo for MySQL.
   set_fact: mysql_enablerepo="remi"
-  when: mysql_enablerepo is not defined
+  when: mysql_enablerepo is not defined or mysql_enablerepo == ""
 
 - name: Enable remi repo for PHP 5.5.
   set_fact: php_enablerepo="remi,remi-php55"
