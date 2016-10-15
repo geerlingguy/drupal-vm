@@ -66,7 +66,7 @@ script:
   - '[[ ! -z "${local_config}" ]] && docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
 
   # Vagrantfile syntax check.
-  - 'rubocop ./Vagrantfile --except LineLength,Eval,MutableConstant'
+  - 'rubocop ./Vagrantfile --except LineLength,Eval,MutableConstant,BlockLength'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'
