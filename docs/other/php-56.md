@@ -12,8 +12,6 @@ Ondřej Surý's PPA for PHP 7.0 is used to install PHP 7, but you can switch to 
 vagrant_box: geerlingguy/ubuntu1404
 php_version: "5.6"
 php_install_recommends: no
-php_version: "5.6"
-php_install_recommends: no
 php_packages:
   - php5.6
   - php5.6-apcu
