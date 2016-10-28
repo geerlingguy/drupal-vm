@@ -31,7 +31,7 @@ sub vcl_recv {
         if (!client.ip ~ purge) {
             return (synth(405, "Not allowed."));
         }
-        return (hash);
+        return (purge);
     }
 
     # Only allow BAN requests from IP addresses in the 'purge' ACL.
