@@ -4,7 +4,6 @@
 vagrant_box: geerlingguy/ubuntu1604
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
-vagrant_cachier_folder_default_type: nfs
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
