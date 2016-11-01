@@ -8,6 +8,8 @@ mysql_packages:
   - mariadb-server
   - python-mysqldb
 ```
+Note that you may also need to add the following line in the event of postgresql failures:
+`postgresql_packages: []`
 
 This set of packages works out of the box with Ubuntu 14.04 as well as the default Ubuntu 16.04 installation that comes with Drupal VM.
 
