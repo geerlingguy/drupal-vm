@@ -61,6 +61,7 @@ php_allow_url_fopen: "On"
 php_sendmail_path: "/usr/sbin/sendmail -t -i"
 php_output_buffering: "4096"
 php_short_open_tag: false
+php_disable_functions: []
 
 php_session_cookie_lifetime: 0
 php_session_gc_probability: 1
