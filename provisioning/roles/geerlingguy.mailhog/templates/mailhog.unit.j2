@@ -1,0 +1,12 @@
+[Unit]
+Description=MailHog Email Catcher
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart={{ mailhog_install_dir }}/mailhog
+StandardOutput=journal
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

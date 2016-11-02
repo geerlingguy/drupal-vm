@@ -19,12 +19,15 @@
 # Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
+  static: no
 
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
+  static: no
 
 - include: setup-FreeBSD.yml
   when: ansible_os_family == 'FreeBSD'
+  static: no
 
 # Environment setup.
 - name: Set JAVA_HOME if configured.

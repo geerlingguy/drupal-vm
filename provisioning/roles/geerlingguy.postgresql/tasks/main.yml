@@ -1,13 +1,16 @@
 ---
 # Variable configuration.
 - include: variables.yml
+  static: no
 
 # Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
+  static: no
 
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
+  static: no
 
 - include: initialize.yml
 - include: configure.yml
