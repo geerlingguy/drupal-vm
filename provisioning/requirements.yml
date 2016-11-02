@@ -6,7 +6,7 @@
 - src: geerlingguy.adminer
   version: 1.1.0
 - src: geerlingguy.apache
-  version: 1.7.3
+  version: 1.7.4
 - src: geerlingguy.apache-php-fpm
   version: 1.0.2
 - src: geerlingguy.blackfire

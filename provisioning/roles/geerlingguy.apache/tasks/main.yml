@@ -9,17 +9,8 @@
   when: apache_packages is not defined
 
 # Setup/install tasks.
-- include: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
-
-- include: setup-Suse.yml
-  when: ansible_os_family == 'Suse'
-
-- include: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- include: setup-Solaris.yml
-  when: ansible_os_family == 'Solaris'
+- include: "setup-{{ ansible_os_family }}.yml"
+  static: no
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
@@ -39,17 +30,8 @@
   when: "apache_version.split('.')[1] == '4'"
 
 # Configure Apache.
-- include: configure-RedHat.yml
-  when: ansible_os_family == 'RedHat'
-
-- include: configure-Suse.yml
-  when: ansible_os_family == 'Suse'
-
-- include: configure-Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- include: configure-Solaris.yml
-  when: ansible_os_family == 'Solaris'
+- include: "configure-{{ ansible_os_family }}.yml"
+  static: no
 
 - name: Ensure Apache has selected state and enabled on boot.
   service:
