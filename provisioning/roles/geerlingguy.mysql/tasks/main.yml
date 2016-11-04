@@ -5,9 +5,11 @@
 # Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
+  static: no
 
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
+  static: no
 
 - name: Check if MySQL packages were installed.
   set_fact:

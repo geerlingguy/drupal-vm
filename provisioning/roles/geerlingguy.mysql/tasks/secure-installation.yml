@@ -23,7 +23,7 @@
   shell: >
     mysql -u root -NBe
     'ALTER USER "{{ mysql_root_username }}"@"{{ item }}" IDENTIFIED WITH mysql_native_password BY "{{ mysql_root_password }}";'
-  with_items: "{{ mysql_root_hosts.stdout_lines }}"
+  with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
   when: ((mysql_install_packages | bool) or mysql_root_password_update) and ('5.7.' in mysql_cli_version.stdout)
 
 # Set root password for MySQL < 5.7.x.
@@ -31,7 +31,7 @@
   shell: >
     mysql -u root -NBe
     'SET PASSWORD FOR "{{ mysql_root_username }}"@"{{ item }}" = PASSWORD("{{ mysql_root_password }}");'
-  with_items: "{{ mysql_root_hosts.stdout_lines }}"
+  with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
   when: ((mysql_install_packages | bool) or mysql_root_password_update) and ('5.7.' not in mysql_cli_version.stdout)
 
 # Has to be after the root password assignment, for idempotency.
@@ -54,7 +54,7 @@
      name: ""
      host: "{{ item }}"
      state: absent
-  with_items: "{{ mysql_anonymous_hosts.stdout_lines }}"
+  with_items: "{{ mysql_anonymous_hosts.stdout_lines|default([]) }}"
 
 - name: Remove MySQL test database.
   mysql_db: "name='test' state=absent"
