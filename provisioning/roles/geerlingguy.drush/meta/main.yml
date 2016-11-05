@@ -9,7 +9,7 @@ galaxy_info:
   description: Drush - command line shell for Drupal
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.4
+  min_ansible_version: 1.8
   platforms:
     - name: EL
       versions:

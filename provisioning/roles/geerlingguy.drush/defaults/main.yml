@@ -5,6 +5,4 @@ drush_version: "master"
 drush_keep_updated: no
 drush_force_update: no
 
-# These options are the safest for avoiding GitHub API rate limits, but builds
-# can be sped up substantially by changing to --prefer-dist.
-drush_composer_cli_options: "--prefer-source --no-interaction"
+drush_composer_cli_options: "--prefer-dist --no-interaction"

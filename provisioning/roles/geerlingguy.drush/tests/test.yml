@@ -1,13 +1,23 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
 
   vars:
     php_enable_webserver: false
     php_opcache_enable: "0"
 
+  pre_tasks:
+    - name: Enable remi repo for PHP 7.0 (RedHat).
+      set_fact: php_enablerepo="remi,remi-php70"
+      when: ansible_os_family == 'RedHat'
+
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
   roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
     - geerlingguy.php
     - geerlingguy.composer
     - geerlingguy.git
-    - ansible-role-drush
+    - role_under_test
