@@ -1,6 +1,6 @@
 ---
 - name: Install PECL libaries.
-  shell: "yes \"\" | pecl install {{ item }}"
+  shell: "yes \"\" | {{ php_pecl_install_command }} {{ item }}"
   register: pecl_result
   changed_when: "pecl_result.rc == 0"
   failed_when: "not (('already installed' in pecl_result.stdout) or ('install ok:' in pecl_result.stdout))"

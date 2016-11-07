@@ -1,41 +1,44 @@
 ---
-sudo: required
-language: python
-python: "2.7"
+services: docker
 
 env:
-  - SITE=test.yml
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
-  - sudo apt-get update -qq
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
-
-  # Install required dependencies.
-  - ansible-galaxy install geerlingguy.php
+  # Pull container.
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - container_id=$(mktemp)
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+  # Install dependencies.
+  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
 
-  # Run the role/playbook again, checking to make sure it's idempotent.
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+
+  # Test role.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
+
+  # Test role idempotence.
+  - idempotence=$(mktemp)
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
   - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure Pecl is installed.
   - >
-    which pecl
+    sudo docker exec "$(cat ${container_id})" which pecl
     && (echo 'Pecl is installed' && exit 0)
     || (echo 'Pecl is not installed' && exit 1)
 
