@@ -22,13 +22,13 @@
 - src: geerlingguy.elasticsearch
   version: 2.1.1
 - src: geerlingguy.firewall
-  version: 1.3.0
+  version: 1.3.1
 - src: geerlingguy.git
   version: 1.2.0
 - src: geerlingguy.java
   version: 1.7.1
 - src: geerlingguy.mailhog
-  version: 2.1.0
+  version: 2.1.1
 - src: geerlingguy.memcached
   version: 1.0.7
 - src: geerlingguy.mysql
