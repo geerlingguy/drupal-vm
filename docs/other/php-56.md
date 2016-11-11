@@ -25,7 +25,6 @@ php_packages:
   - php5.6-sqlite3
   - php5.6-xml
   - php5.6-mbstring
-  - php-pear
   - libpcre3-dev
 php_conf_paths:
   - /etc/php/5.6/fpm
