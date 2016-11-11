@@ -1,13 +1,23 @@
 ---
+- name: Ensure APT HTTPS Transport is installed.
+  apt:
+    name: apt-transport-https
+    state: installed
+  when: ansible_distribution_release != "xenial"
+
 - name: Add Varnish apt key.
-  apt_key: url=http://repo.varnish-cache.org/debian/GPG-key.txt state=present
+  apt_key:
+    url: https://repo.varnish-cache.org/GPG-key.txt
+    state: present
   when: ansible_distribution_release != "xenial"
 
 - name: Add Varnish apt repository.
   apt_repository:
-    repo: "deb http://repo.varnish-cache.org/{{ ansible_distribution | lower }}  {{ ansible_distribution_release }} varnish-{{ varnish_version }}"
+    repo: "deb https://repo.varnish-cache.org/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} varnish-{{ varnish_version }}"
     state: present
   when: ansible_distribution_release != "xenial"
 
 - name: Install Varnish.
-  apt: name="{{ varnish_package_name }}" state=installed
+  apt:
+    name: "{{ varnish_package_name }}"
+    state: present

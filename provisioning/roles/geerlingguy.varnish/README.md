@@ -62,6 +62,11 @@ How Varnish stores cache entries (this is passed in as the argument for `-s`). I
 
 Varnish PID file path. Set to an empty string if you don't want to use a PID file.
 
+    varnish_enabled_services:
+      - varnish
+
+Services that will be started at boot and should be running after this role is complete. You might need to add additional services if required, e.g. `varnishncsa` and `varnishlog`. If set to an empty array, no services will be enabled at startup.
+
 ## Dependencies
 
 None.

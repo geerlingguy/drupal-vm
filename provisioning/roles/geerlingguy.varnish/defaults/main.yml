@@ -1,6 +1,6 @@
 ---
 varnish_package_name: "varnish"
-varnish_version: "4.1"
+varnish_version: "5.0.0"
 
 varnish_use_default_vcl: true
 varnish_default_vcl_template_path: default.vcl.j2
@@ -18,3 +18,6 @@ varnish_admin_listen_port: "6082"
 
 varnish_storage: "file,/var/lib/varnish/varnish_storage.bin,256M"
 varnish_pidfile: /run/varnishd.pid
+
+varnish_enabled_services:
+  - varnish
