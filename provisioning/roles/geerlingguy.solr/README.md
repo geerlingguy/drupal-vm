@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-solr.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-solr)
 
-An Ansible Role that installs Apache Solr on Linux servers.
+Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
 ## Requirements
 
@@ -23,9 +23,9 @@ Files will be downloaded to this path on the remote server before being moved in
 
 Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user.
 
-    solr_version: "5.5.1"
+    solr_version: "6.2.0"
 
-The Apache Solr version to install.
+The Apache Solr version to install. For a full list, see [available Apache Solr versions](http://archive.apache.org/dist/lucene/solr/).
 
     solr_mirror: "https://archive.apache.org/dist"
 
@@ -74,8 +74,8 @@ None.
 
     - hosts: solr-servers
       roles:
-        - { role: geerlingguy.java }
-        - { role: geerlingguy.solr }
+        - geerlingguy.java
+        - geerlingguy.solr
 
 ## License
 

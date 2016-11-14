@@ -4,7 +4,7 @@ solr_workspace: /root
 solr_create_user: true
 solr_user: solr
 
-solr_version: "6.1.0"
+solr_version: "6.2.0"
 solr_mirror: "https://archive.apache.org/dist"
 
 solr_service_name: solr

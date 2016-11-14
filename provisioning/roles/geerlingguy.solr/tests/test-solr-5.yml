@@ -2,7 +2,7 @@
 - hosts: all
 
   vars:
-    solr_version: "5.5.2"
+    solr_version: "5.5.3"
     java_packages:
       - openjdk-7-jdk
 
