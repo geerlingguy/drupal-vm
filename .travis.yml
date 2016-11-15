@@ -94,25 +94,25 @@ script:
 
   - >
     if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s --header Host:adminer.${HOSTNAME} localhost
-      | grep -q '<title>Login - Adminer'
-      && (echo 'Adminer install pass' && exit 0)
+      docker exec ${container_id} curl -s --header Host:adminer.${HOSTNAME} localhost \
+      | grep -q '<title>Login - Adminer' \
+      && (echo 'Adminer install pass' && exit 0) \
       || (echo 'Adminer install fail' && exit 1)
     fi
 
   - >
     if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s --header Host:pimpmylog.${HOSTNAME} localhost
-      | grep -q '<title>Pimp my Log'
-      && (echo 'Pimp my Log install pass' && exit 0)
+      docker exec ${container_id} curl -s --header Host:pimpmylog.${HOSTNAME} localhost \
+      | grep -q '<title>Pimp my Log' \
+      && (echo 'Pimp my Log install pass' && exit 0) \
       || (echo 'Pimp my Log install fail' && exit 1)
     fi
 
   - >
     if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s localhost:8025
-      | grep -q '<title>MailHog'
-      && (echo 'MailHog install pass' && exit 0)
+      docker exec ${container_id} curl -s localhost:8025 \
+      | grep -q '<title>MailHog' \
+      && (echo 'MailHog install pass' && exit 0) \
       || (echo 'MailHog install fail' && exit 1)
     fi
 
