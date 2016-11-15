@@ -110,14 +110,6 @@ script:
 
   - >
     if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s --header Host:xhprof.${HOSTNAME} localhost
-      | grep -q '<title>XHProf'
-      && (echo 'XHProf install pass' && exit 0)
-      || (echo 'XHProf install fail' && exit 1)
-    fi
-
-  - >
-    if [ $TEST_INSTALLED_EXTRAS = true ]; then
       docker exec ${container_id} curl -s localhost:8025
       | grep -q '<title>MailHog'
       && (echo 'MailHog install pass' && exit 0)
