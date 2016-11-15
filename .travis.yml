@@ -44,83 +44,84 @@ before_install:
   - 'gem install rubocop'
 
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state
-  - 'docker run --detach --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Run container in detached state and store the id.
+  - 'tmpfile=$(mktemp)'
+  - 'docker run --detach --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
+  - 'container_id=$(cat ${tmpfile})'
 
   # Set hostname.
-  - 'docker exec "$(cat ${container_id})" hostname ${HOSTNAME}'
+  - 'docker exec ${container_id} hostname ${HOSTNAME}'
 
   # Setup directories.
-  - 'docker exec "$(cat ${container_id})" mkdir -p ${DRUPALVM_DIR}/drupal'
+  - 'docker exec ${container_id} mkdir -p ${DRUPALVM_DIR}/drupal'
 
   # Setup config directory.
-  - '[[ ! -z "${config_dir}" ]] && docker exec "$(cat ${container_id})" mkdir -p ${config_dir} || true'
+  - '[[ ! -z "${config_dir}" ]] && docker exec ${container_id} mkdir -p ${config_dir} || true'
 
   # Copy configuration files into place.
-  - 'docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${CONFIG} ${config_dir:-$DRUPALVM_DIR}/config.yml'
-  - 'docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
-  - 'docker exec "$(cat ${container_id})" cp ${DRUPALVM_DIR}/${COMPOSERFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.composer.json'
+  - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${CONFIG} ${config_dir:-$DRUPALVM_DIR}/config.yml'
+  - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
+  - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${COMPOSERFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.composer.json'
 
   # Override configuration variables.
-  - '[[ ! -z "${local_config}" ]] && docker exec "$(cat ${container_id})" bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
+  - '[[ ! -z "${local_config}" ]] && docker exec ${container_id} bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
 
   # Vagrantfile syntax check.
   - 'rubocop ./Vagrantfile --except LineLength,Eval,MutableConstant,BlockLength'
 
   # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'
+  - 'docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'
 
   # Run the test setup playbook with ansible-playbook.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/tests/test-setup.yml'
+  - 'docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/tests/test-setup.yml'
 
   # Run the playbook with ansible-playbook.
   - >
     if [ ! -z "${config_dir}" ]; then
-      docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
+      docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
     else
-      docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
+      docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
     fi
 
   # Run integration tests.
   - >
-    docker exec "$(cat ${container_id})" curl -s --header Host:${HOSTNAME} localhost
+    docker exec ${container_id} curl -s --header Host:${HOSTNAME} localhost
     | grep -q '<title>Welcome to Drupal'
     && (echo 'Drupal install pass' && exit 0)
     || (echo 'Drupal install fail' && exit 1)
 
   - >
-    docker exec "$(cat ${container_id})" curl -s --header Host:adminer.${HOSTNAME} localhost
+    docker exec ${container_id} curl -s --header Host:adminer.${HOSTNAME} localhost
     | grep -q '<title>Login - Adminer'
     && (echo 'Admin install pass' && exit 0)
     || (echo 'Adminer install fail' && exit 1)
 
   - >
-    docker exec "$(cat ${container_id})" curl -s --header Host:pimpmylog.${HOSTNAME} localhost
+    docker exec ${container_id} curl -s --header Host:pimpmylog.${HOSTNAME} localhost
     | grep -q '<title>Pimp my Log'
     && (echo 'Pimp my Log install pass' && exit 0)
     || (echo 'Pimp my Log install fail' && exit 1)
 
   - >
-    docker exec "$(cat ${container_id})" curl -s --header Host:xhprof.${HOSTNAME} localhost
+    docker exec ${container_id} curl -s --header Host:xhprof.${HOSTNAME} localhost
     | grep -q '<title>XHProf'
     && (echo 'XHProf install pass' && exit 0)
     || (echo 'XHProf install fail' && exit 1)
 
   - >
-    docker exec "$(cat ${container_id})" curl -s localhost:8025
+    docker exec ${container_id} curl -s localhost:8025
     | grep -q '<title>MailHog'
     && (echo 'MailHog install pass' && exit 0)
     || (echo 'MailHog install fail' && exit 1)
 
   - >
-    docker exec "$(cat ${container_id})" curl -s --header Host:${IP} localhost
+    docker exec ${container_id} curl -s --header Host:${IP} localhost
     | grep -q "<li>${IP} ${HOSTNAME}</li>"
     && (echo 'Dashboard install pass' && exit 0)
     || (echo 'Dashboard install fail' && exit 1)
 
   - >
-    docker exec "$(cat ${container_id})" drush @${MACHINE_NAME}.${HOSTNAME} status
+    docker exec ${container_id} drush @${MACHINE_NAME}.${HOSTNAME} status
     | grep -q 'Drupal bootstrap.*Successful'
     && (echo 'Drush install pass' && exit 0)
     || (echo 'Drush install fail' && exit 1)
