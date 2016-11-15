@@ -117,6 +117,14 @@ script:
     fi
 
   - >
+    if [ $TEST_INSTALLED_EXTRAS = true ]; then
+      docker exec ${container_id} curl -sI --header Host:${HOSTNAME} localhost:81 \
+      | grep -q 'Via: .* varnish' \
+      && (echo 'Varnish install pass' && exit 0) \
+      || (echo 'Varnish install fail' && exit 1)
+    fi
+
+  - >
     docker exec ${container_id} curl -s --header Host:${IP} localhost
     | grep -q "<li>${IP} ${HOSTNAME}</li>"
     && (echo 'Dashboard install pass' && exit 0)
