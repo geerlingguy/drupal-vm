@@ -38,7 +38,7 @@
 - src: geerlingguy.nodejs
   version: 3.3.0
 - src: geerlingguy.php
-  version: 3.3.3
+  version: 3.4.1
 - src: geerlingguy.php-memcached
   version: 2.0.0
 - src: geerlingguy.php-mysql

@@ -97,6 +97,7 @@ Various defaults for PHP. Only used if `php_use_managed_ini` is set to `true`.
 
 The OpCache is included in PHP starting in version 5.5, and the following variables will only take effect if the version of PHP you have installed is 5.5 or greater.
 
+    php_opcache_zend_extension: "opcache.so"
     php_opcache_enable: "1"
     php_opcache_enable_cli: "0"
     php_opcache_memory_consumption: "96"
@@ -109,6 +110,8 @@ The OpCache is included in PHP starting in version 5.5, and the following variab
     php_opcache_max_file_size: "0"
 
 OpCache ini directives that are often customized on a system. Make sure you have enough memory and file slots allocated in the OpCache (`php_opcache_memory_consumption`, in MB, and `php_opcache_max_accelerated_files`) to contain all the PHP code you are running. If not, you may get less-than-optimal performance!
+
+For custom opcache.so location provide full path with `php_opcache_zend_extension`.
 
     php_opcache_conf_filename: [platform-specific]
 

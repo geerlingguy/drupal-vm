@@ -26,6 +26,7 @@ php_fpm_pm_max_spare_servers: 5
 php_executable: "php"
 
 # OpCache settings (useful for PHP >=5.5).
+php_opcache_zend_extension: "opcache.so"
 php_opcache_enable: "1"
 php_opcache_enable_cli: "0"
 php_opcache_memory_consumption: "96"
