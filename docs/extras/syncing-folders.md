@@ -93,12 +93,18 @@ Otherwise, you will need to make sure you're using the officially supported `gee
 
 ### Permissions-related errors
 
-If you're encountering errors where Drupal or some other software inside the VM is having permissions issues creating or deleting files inside a synced folder, you might need to either make sure the file permissions are correct on your host machine (if a folder is not readable by you, it probably also won't be readable when mounted via NFS!), or add extra configuration to the synced folders item inside the Vagrantfile (if using a sync method like `rsync`):
+If you're encountering errors where Drupal or some other software inside the VM is having permissions issues creating or deleting files inside a synced folder, you might need to either make sure the file permissions are correct on your host machine (if a folder is not readable by you, it probably also won't be readable when mounted via NFS!), or add extra configuration to the synced folders item (if using a sync method like `rsync`):
 
-```
-owner: "vagrant",
-group: "www-data",
-mount_options: ["dmode=775,fmode=664"]
+```yaml
+vagrant_synced_folders:
+  - local_path: .
+    destination: /var/www/drupalvm
+    type: nfs
+    create: true
+    mount_options: ["dmode=775,fmode=664"]
+    options_override:
+      owner: "vagrant"
+      group: "www-data"
 ```
 
 See [this issue](https://github.com/geerlingguy/drupal-vm/issues/66) for more details.
