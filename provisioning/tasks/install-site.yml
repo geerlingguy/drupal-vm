@@ -1,4 +1,14 @@
 ---
+- name: Check if a project specific Drush binary exists.
+  stat: "path={{ drupal_composer_install_dir }}/vendor/drush/drush/drush"
+  register: drush_vendor_bin
+  ignore_errors: true
+
+- name: Use project specific Drush if available.
+  set_fact:
+    drush_path: "{{ drupal_composer_install_dir }}/vendor/drush/drush/drush"
+  when: drush_vendor_bin.stat.exists
+
 - name: Check if site is already installed.
   command: >
     {{ drush_path }} status bootstrap
