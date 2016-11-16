@@ -19,6 +19,7 @@ mysql_root_password: root
 # Only install extras that you will need/use on your site, and don't install
 # development-related software on production environments!
 installed_extras:
+  - drush
   # - memcached
   # - redis
   # - solr
