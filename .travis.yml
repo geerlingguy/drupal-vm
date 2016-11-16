@@ -32,8 +32,8 @@ env:
       run_opts: "--privileged"
       local_config: tests/ubuntu-16-postgresql.config.yml
       config_dir: /var/www/drupalvm/config
-      TEST_INSTALLED_EXTRAS: false
       DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
+      TEST_INSTALLED_EXTRAS: false
     # Defaults - CentOS 7.
     - type: centos
       distro: centos7
