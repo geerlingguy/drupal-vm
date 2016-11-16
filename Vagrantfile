@@ -12,6 +12,8 @@ guest_project_dir = '/vagrant'
 guest_drupalvm_dir = ENV['DRUPALVM_DIR'] ? "/vagrant/#{ENV['DRUPALVM_DIR']}" : guest_project_dir
 guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG_DIR']}" : guest_project_dir
 
+environment = ENV['DRUPALVM_ENV'] = ENV['DRUPALVM_ENV'] || 'vagrant'
+
 # Cross-platform way of finding an executable in the $PATH.
 def which(cmd)
   exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
@@ -38,7 +40,7 @@ require 'yaml'
 # Load default VM configurations.
 vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
 # Use optional config.yml and local.config.yml for configuration overrides.
-['config.yml', 'local.config.yml'].each do |config_file|
+['config.yml', 'local.config.yml', "#{environment}.config.yml"].each do |config_file|
   if File.exist?("#{host_config_dir}/#{config_file}")
     vconfig.merge!(YAML.load_file("#{host_config_dir}/#{config_file}"))
   end

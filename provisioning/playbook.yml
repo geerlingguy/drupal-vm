@@ -22,6 +22,7 @@
       with_fileglob:
         - "{{ config_dir }}/config.yml"
         - "{{ config_dir }}/local.config.yml"
+        - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV') }}.config.yml"
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
