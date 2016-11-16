@@ -12,7 +12,7 @@ guest_project_dir = '/vagrant'
 guest_drupalvm_dir = ENV['DRUPALVM_DIR'] ? "/vagrant/#{ENV['DRUPALVM_DIR']}" : guest_project_dir
 guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG_DIR']}" : guest_project_dir
 
-environment = ENV['DRUPALVM_ENV'] = ENV['DRUPALVM_ENV'] || 'vagrant'
+drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
 
 # Cross-platform way of finding an executable in the $PATH.
 def which(cmd)
@@ -40,7 +40,7 @@ require 'yaml'
 # Load default VM configurations.
 vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
 # Use optional config.yml and local.config.yml for configuration overrides.
-['config.yml', 'local.config.yml', "#{environment}.config.yml"].each do |config_file|
+['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
   if File.exist?("#{host_config_dir}/#{config_file}")
     vconfig.merge!(YAML.load_file("#{host_config_dir}/#{config_file}"))
   end
@@ -126,14 +126,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision 'ansible' do |ansible|
       ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
       ansible.extra_vars = {
-        config_dir: host_config_dir
+        config_dir: host_config_dir,
+        drupalvm_env: drupalvm_env
       }
     end
   else
     config.vm.provision 'ansible_local' do |ansible|
       ansible.playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
       ansible.extra_vars = {
-        config_dir: guest_config_dir
+        config_dir: guest_config_dir,
+        drupalvm_env: drupalvm_env
       }
     end
   end
