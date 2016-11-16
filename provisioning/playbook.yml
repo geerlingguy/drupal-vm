@@ -100,6 +100,11 @@
       set_fact:
         drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
 
+    - name: Update drush_path if drush is not available globally.
+      set_fact:
+        drush_path: "{{ drupal_composer_install_dir }}/vendor/drush/drush/drush"
+      when: "'drush' not in installed_extras"
+
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
     - include: tasks/www.yml
