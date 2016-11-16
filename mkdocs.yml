@@ -4,6 +4,9 @@ repo_url: https://github.com/geerlingguy/drupal-vm
 site_description: 'Drupal VM - A VM for local Drupal development, built with Vagrant + Ansible'
 theme: readthedocs
 
+extra_javascript:
+  - js/fix_search.js
+
 markdown_extensions:
   - toc:
       permalink: True
