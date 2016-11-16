@@ -20,5 +20,10 @@
         - logrotate
       when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '7'
 
+    - name: Force working version of Varnish on Ubuntu 14.04.
+      set_fact:
+        varnish_version: "4.0"
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
+
   roles:
     - role_under_test

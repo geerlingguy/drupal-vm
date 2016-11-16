@@ -6,7 +6,19 @@
     - libedit-devel
     - initscripts
 
-- name: Install Varnish from package.
+- name: Add Varnish repository.
   yum:
-    name: https://repo.varnish-cache.org/pkg/{{ varnish_version }}/varnish-{{ varnish_version }}-1.el{{ ansible_distribution_version.split(".")[0] }}.{{ ansible_architecture }}.rpm
+    name: https://repo.varnish-cache.org/redhat/varnish-{{ varnish_version }}.el6.rpm
     state: present
+  when: ansible_distribution_major_version|int < 7
+
+- name: Set repo fact appropriately.
+  set_fact:
+    varnish_yum_enablerepo: "{{ 'varnish-{{ varnish_version }},epel' if (ansible_distribution_major_version|int < 7) else 'epel' }}"
+
+- name: Install Varnish.
+  yum:
+    name: "{{ varnish_package_name }}"
+    state: installed
+    enablerepo: "{{ varnish_yum_enablerepo }}"
+    disablerepo: "*"
