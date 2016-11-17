@@ -4,6 +4,7 @@
 
 ### Improvements
 
+  * #983: Added a CHANGELOG.md (this thing you're reading!).
   * #872: Improve synced folder documentation for owner/group.
   * #847: Add documentation on using `vagrant-proxyconf` in local Vagrantfile.
   * #455: Environment-specific config file support (e.g. `prod.config.yml`).
