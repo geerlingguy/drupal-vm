@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-drush.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-drush)
 
-Installs Drush, a command line shell and scripting interface for Drupal, on any Linux or UNIX system.
+Installs [Drush](http://www.drush.org/en/master/), a command line shell and scripting interface for Drupal, on any Linux or UNIX system.
 
 ## Requirements
 
@@ -33,6 +33,10 @@ Whether to keep Drush up-to-date with the latest revision of the branch specifie
 
 These options are the safest for avoiding GitHub API rate limits when installing Drush, and can be very helpful when working on dependencies/installation, but builds can be sped up substantially by changing the first option to --prefer-dist.
 
+    drush_clone_depth: 1
+
+Whether to clone the entire repo (by default), or specify the number of previous commits for a smaller and faster clone.
+
 ## Dependencies
 
   - geerlingguy.git (Installs Git).
@@ -43,7 +47,7 @@ These options are the safest for avoiding GitHub API rate limits when installing
 
     - hosts: servers
       roles:
-        - { role: geerlingguy.drush }
+        - geerlingguy.drush
 
 After the playbook runs, the `drush` command will be accessible from normal system accounts.
 

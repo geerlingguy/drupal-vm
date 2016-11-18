@@ -6,6 +6,7 @@
     version: "{{ drush_version }}"
     update: "{{ drush_keep_updated }}"
     force: "{{ drush_force_update }}"
+    depth: "{{ drush_clone_depth }}"
   register: drush_clone
 
 - name: Check for composer.json

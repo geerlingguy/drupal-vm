@@ -6,3 +6,4 @@ drush_keep_updated: no
 drush_force_update: no
 
 drush_composer_cli_options: "--prefer-dist --no-interaction"
+drush_clone_depth: 1
