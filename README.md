@@ -103,6 +103,9 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
       - adminer
       # - blackfire
       - drupalconsole
+      - drush
+      # - elasticsearch
+      # - java
       - mailhog
       # - memcached
       # - newrelic
