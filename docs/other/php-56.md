@@ -51,6 +51,9 @@ php_redis_package: php5.6-redis
 # If you install `memcached`:
 php_memcached_package: php5.6-memcached
 
+# If you have `drupalvm_database` set to `pgsql`:
+php_pgsql_package: php5.6-pgsql
+
 # If you install `xhprof`:
 xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
 xhprof_download_folder_name: xhprof-master
