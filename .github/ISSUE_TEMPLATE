@@ -10,7 +10,7 @@ Drupal VM is used by developers in a wide variety of circumstances. Please use t
 
 ### Your Environment
 
-<!--- Paste the output from the following command: `vagrant --version && echo "VirtualBox `vboxmanage --version`" && ansible --version` (paste it in the space between the three tildes) -->
+<!--- Paste the output from the following command: `vagrant --version && echo "VirtualBox `vboxmanage --version`" && ansible --version` (paste it in the space between the three graves) -->
 ```
 
 ```
@@ -21,6 +21,10 @@ Drupal VM is used by developers in a wide variety of circumstances. Please use t
  - **macOS** (version)
  - **Windows** (version)
  - **Linux** (version)
+
+### Full console output
+
+<!--- If this is a Bug Report / Support Request, please copy the ENTIRE contents of your console (including the command that was run), paste it into a new Gist on https://gist.github.com, then paste the link to the gist here. -->
 
 ### Summary
 
