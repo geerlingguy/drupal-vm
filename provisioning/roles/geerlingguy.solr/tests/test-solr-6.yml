@@ -29,7 +29,7 @@
       when: ansible_distribution == "Debian"
 
     - name: Update apt cache.
-      apt: update_cache=yes
+      apt: update_cache=yes cache_valid_time=600
       when: ansible_distribution == "Debian" and debian_backports.changed
 
   roles:
