@@ -9,8 +9,9 @@
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=yes
+      apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
+      changed_when: false
 
     - include_vars: test-vars-ubuntu1204.yml
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'

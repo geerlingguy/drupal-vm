@@ -24,7 +24,7 @@
 - src: geerlingguy.firewall
   version: 1.3.1
 - src: geerlingguy.git
-  version: 1.2.0
+  version: 1.2.1
 - src: geerlingguy.java
   version: 1.7.1
 - src: geerlingguy.mailhog
@@ -38,7 +38,7 @@
 - src: geerlingguy.nodejs
   version: 3.3.0
 - src: geerlingguy.php
-  version: 3.4.1
+  version: 3.4.2
 - src: geerlingguy.php-memcached
   version: 2.0.0
 - src: geerlingguy.php-mysql

@@ -34,12 +34,12 @@ env:
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
-    php_version: 7.0.5
+    php_version: 7.0.13
   - distro: ubuntu1604
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
-    php_version: 7.0.5
+    php_version: 7.0.13
 
 before_install:
   # Pull container.

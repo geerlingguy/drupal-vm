@@ -82,7 +82,7 @@
     dest: "{{ php_source_clone_dir }}"
     version: "{{ php_source_version }}"
     accept_hostkey: yes
-    depth: 1
+    depth: "{{ php_source_clone_depth }}"
   when: php_installed|failed
 
 - name: Ensure PHP installation path exists.

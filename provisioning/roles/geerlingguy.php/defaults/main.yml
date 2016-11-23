@@ -79,6 +79,7 @@ php_display_startup_errors: "Off"
 php_install_from_source: false
 php_source_version: "master"
 php_source_clone_dir: "~/php-src"
+php_source_clone_depth: 1
 php_source_install_path: "/opt/php"
 php_source_install_gmp_path: "/usr/include/x86_64-linux-gnu/gmp.h"
 # For faster compile time: "make --jobs=X" where X is # of cores present.

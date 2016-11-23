@@ -6,9 +6,10 @@
     git_install_path: /usr/local
 
   pre_tasks:
-    - name: Ensure build dependencies are installed (RedHat).
-      package: name=which state=present
-      when: ansible_os_family == 'RedHat'
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
 
   roles:
     - role_under_test

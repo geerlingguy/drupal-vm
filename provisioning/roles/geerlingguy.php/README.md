@@ -154,6 +154,7 @@ Set this to `true` to install PHP from source instead of installing from package
 The version of PHP to install from source (a git branch, tag, or commit hash).
 
     php_source_clone_dir: "~/php-src"
+    php_source_clone_depth: 1
     php_source_install_path: "/opt/php"
     php_source_install_gmp_path: "/usr/include/x86_64-linux-gnu/gmp.h"
 
