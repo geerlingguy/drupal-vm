@@ -42,7 +42,7 @@ http {
 {% endif %}
 
 {% if nginx_extra_http_options %}
-    {{ nginx_extra_http_options }}
+    {{ nginx_extra_http_options|indent(4, False) }}
 {% endif %}
 
 {% for upstream in nginx_upstreams %}

@@ -4,7 +4,7 @@
     path: "{{ nginx_default_vhost_path }}"
     state: absent
   when: nginx_remove_default_vhost
-  notify: reload nginx
+  notify: restart nginx
 
 - name: Ensure nginx_vhost_path exists.
   file:
