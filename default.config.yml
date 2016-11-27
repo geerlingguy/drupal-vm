@@ -34,7 +34,7 @@ vagrant_cpus: 1
 
 # Minimum required versions.
 drupalvm_vagrant_version_min: '1.8.6'
-drupalvm_ansible_version_min: '2.1'
+drupalvm_ansible_version_min: '2.2'
 
 # Force use of ansible_local provisioner, even if Ansible is installed on host.
 force_ansible_local: false
