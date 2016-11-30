@@ -6,7 +6,7 @@
     state: absent
   notify: restart solr
 
-- name: Apply Solr memory configuration changes.
+- name: Apply Solr configuration changes.
   lineinfile:
     dest: "{{ solr_config_file }}"
     regexp: "{{ item.regexp }}"
@@ -17,4 +17,6 @@
       line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'
     - regexp: "^SOLR_PORT="
       line: 'SOLR_PORT="{{ solr_port }}"'
+    - regexp: "^.?SOLR_TIMEZONE="
+      line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
   notify: restart solr

@@ -49,6 +49,10 @@ The port on which Solr will run.
 
 Memory settings for the JVM. These should be set as high as you can allow for best performance and to reduce the chance of Solr restarting itself due to OOM situations.
 
+    solr_timezone: "UTC"
+
+Default timezone of JVM running solr. You can override this if needed when using dataimport and delta imports (ex: comparing against a MySQL external data source). Read through Apache Solr's [Working with Dates](https://cwiki.apache.org/confluence/display/solr/Working+with+Dates) documentation for more background.
+
     solr_cores:
       - collection1
 
