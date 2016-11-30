@@ -33,7 +33,7 @@ vagrant_memory: 2048
 vagrant_cpus: 1
 
 # Minimum required versions.
-drupalvm_vagrant_version_min: '1.9.0'
+drupalvm_vagrant_version_min: '1.8.6'
 drupalvm_ansible_version_min: '2.2'
 
 # Force use of ansible_local provisioner, even if Ansible is installed on host.
@@ -304,7 +304,7 @@ php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
 
 # Solr Configuration (if enabled above).
-solr_version: "5.5.2"
+solr_version: "5.5.3"
 solr_xms: "64M"
 solr_xmx: "128M"
 
