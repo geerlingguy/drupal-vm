@@ -1,6 +1,6 @@
 {
     "name": "geerlingguy/drupal-vm",
-    "type": "project",
+    "type": "vm",
     "description": "A VM for local Drupal development, built with Vagrant + Ansible",
     "keywords": ["vagrant", "vm", "virtual machine", "drupal"],
     "homepage": "https://www.drupalvm.com",
