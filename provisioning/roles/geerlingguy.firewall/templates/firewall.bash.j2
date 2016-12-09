@@ -29,7 +29,12 @@ echo 1 > $filter
 done
 fi
 
-# Remove all rules and chains.
+# Completely reset the firewall by removing all rules and chains.
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t nat -F
+iptables -t mangle -F
 iptables -F
 iptables -X
 
@@ -81,3 +86,51 @@ iptables -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "
 
 # Drop all other traffic.
 iptables -A INPUT -j DROP
+
+
+# Configure IPv6 if ip6tables is present.
+if [ -x $(which ip6tables) ]; then
+
+  # Remove all rules and chains.
+  ip6tables -F
+  ip6tables -X
+
+  # Accept traffic from loopback interface (localhost).
+  ip6tables -A INPUT -i lo -j ACCEPT
+
+  # Open ports.
+  {# Add a rule for each open port #}
+  {% for port in firewall_allowed_tcp_ports %}
+  ip6tables -A INPUT -p tcp -m tcp --dport {{ port }} -j ACCEPT
+  {% endfor %}
+  {% for port in firewall_allowed_udp_ports %}
+  ip6tables -A INPUT -p udp -m udp --dport {{ port }} -j ACCEPT
+  {% endfor %}
+
+  # Accept icmp ping requests.
+  ip6tables -A INPUT -p icmp -j ACCEPT
+
+  # Allow NTP traffic for time synchronization.
+  ip6tables -A OUTPUT -p udp --dport 123 -j ACCEPT
+  ip6tables -A INPUT -p udp --sport 123 -j ACCEPT
+
+  # Additional custom rules.
+  {% for rule in firewall_ip6_additional_rules %}
+  {{ rule }}
+  {% endfor %}
+
+  # Allow established connections:
+  ip6tables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+  # Log EVERYTHING (ONLY for Debug).
+  # ip6tables -A INPUT -j LOG
+
+  {% if firewall_log_dropped_packets %}
+  # Log other incoming requests (all of which are dropped) at 15/minute max.
+  ip6tables -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped by firewall: "
+  {% endif %}
+
+  # Drop all other traffic.
+  ip6tables -A INPUT -j DROP
+
+fi

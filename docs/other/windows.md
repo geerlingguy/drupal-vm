@@ -7,9 +7,7 @@ If you are running Windows 10 (Anniversary edition) or later, you can install th
   1. Install Vagrant and VirtualBox in Windows (links in the [Drupal VM Quick Start Guide](https://github.com/geerlingguy/drupal-vm#quick-start-guide)).
   2. [Install/Enable the Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide).
     1. Create an admin account for the Ubuntu Bash environment when prompted.
-  3. Download the latest release of [cbwin](https://github.com/xilun/cbwin) and follow the [cbwin installation instructions](https://github.com/xilun/cbwin#installation).
-  4. Open an instance of `outbash.exe`.
-  5. In a local copy of Drupal VM (downloaded or Git cloned into a path that's in the Windows filesystem, e.g. `/mnt/c/Users/yourusername/Sites/drupal-vm`), run `wrun vagrant up`.
+  3. In a local copy of Drupal VM (downloaded or Git cloned into a path that's in the Windows filesystem, e.g. `/mnt/c/Users/yourusername/Sites/drupal-vm`), run `wrun vagrant up`.
 
 If you need to run any other `vagrant` commands (with the exception of `vagrant ssh`—for now, that must be run in a different environment; see [Vagrant: Use Linux Subsystem on Windows](https://github.com/mitchellh/vagrant/issues/7731)), you can do so by prefixing them with `wrun`.
 

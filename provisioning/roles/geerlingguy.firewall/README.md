@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-firewall.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-firewall)
 
-Installs a simple iptables-based firewall for RHEL/CentOS or Debian/Ubunty systems.
+Installs a simple iptables-based firewall for RHEL/CentOS or Debian/Ubuntu systems. Supports both IPv4 (`iptables`) and IPv6 (`ip6tables`).
 
 This firewall aims for simplicity over complexity, and only opens a few specific ports for incoming traffic (configurable through Ansible variables). If you have a rudimentary knowledge of `iptables` and/or firewalls in general, this role should be a good starting point for a secure system firewall.
 
@@ -32,8 +32,19 @@ A list of TCP or UDP ports (respectively) to open to incoming traffic.
 Forward `src` port to `dest` port, either TCP or UDP (respectively).
 
     firewall_additional_rules: []
+    firewall_ip6_additional_rules: []
 
-Any additional (custom) rules to be added to the firewall (in the same format you would add them via command line, e.g. `iptables [rule]`).
+Any additional (custom) rules to be added to the firewall (in the same format you would add them via command line, e.g. `iptables [rule]`/`ip6tables [rule]`). A few examples of how this could be used:
+
+    # Allow only the IP 167.89.89.18 to access port 4949 (Munin).
+    firewall_additional_rules:
+      - "iptables -A INPUT -p tcp --dport 4949 -s 167.89.89.18 -j ACCEPT"
+    
+    # Allow only the IP 214.192.48.21 to access port 3306 (MySQL).
+    firewall_additional_rules:
+      - "iptables -A INPUT -p tcp --dport 3306 -s 214.192.48.21 -j ACCEPT"
+
+See [Iptables Essentials: Common Firewall Rules and Commands](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands) for more examples.
 
     firewall_log_dropped_packets: true
 
