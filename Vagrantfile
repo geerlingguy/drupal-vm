@@ -36,15 +36,24 @@ def walk(obj, &fn)
   end
 end
 
+def load_config_file(config_file, force = false)
+  config = YAML.load_file(config_file) if force || File.exist?(config_file)
+  config or Hash.new
+end
+
 require 'yaml'
 # Load default VM configurations.
-vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
-# Use optional config.yml and local.config.yml for configuration overrides.
-['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
-  if File.exist?("#{host_config_dir}/#{config_file}")
-    vconfig.merge!(YAML.load_file("#{host_config_dir}/#{config_file}"))
+vconfig = load_config_file("#{host_drupalvm_dir}/default.config.yml", true)
+# Use optional config.yml for configuration overrides.
+vconfig.merge!(load_config_file("#{host_config_dir}/config.yml"))
+# Load user defined configuration files.
+vconfig['extra_config_files'].each do |extra_config_file|
+  Dir.glob("#{host_config_dir}/#{extra_config_file}").each do |config_file|
+    vconfig.merge!(load_config_file(config_file))
   end
 end
+# Load environment specific configuration overrides.
+vconfig.merge!(load_config_file("#{host_config_dir}/#{drupalvm_env}.config.yml"))
 
 # Replace jinja variables in config.
 vconfig = walk(vconfig) do |value|

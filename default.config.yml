@@ -264,6 +264,11 @@ pre_provision_scripts: []
 post_provision_scripts: []
   # - "../examples/scripts/configure-solr.sh"
 
+# Include additional YAML config files located in the same directory as your
+# `config.yml`.
+extra_config_files:
+  - local.config.yml
+
 # MySQL Configuration.
 mysql_root_password: root
 mysql_slow_query_log_enabled: true
