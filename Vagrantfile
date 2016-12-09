@@ -38,7 +38,7 @@ end
 
 def load_config_file(config_file, force = false)
   config = YAML.load_file(config_file) if force || File.exist?(config_file)
-  config or Hash.new
+  config || {}
 end
 
 require 'yaml'
