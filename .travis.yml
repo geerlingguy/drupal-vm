@@ -12,12 +12,20 @@ env:
       DRUPALVM_DIR: /var/www/drupalvm
       DRUSH_BIN: drush
       TEST_INSTALLED_EXTRAS: true
+
   matrix:
     # Defaults - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
       init: /sbin/init
       run_opts: "--privileged"
+    # PHP 5.6 - Ubuntu 16.04.
+    - type: defaults
+      distro: ubuntu1604
+      init: /sbin/init
+      run_opts: "--privileged"
+      local_config: tests/ubuntu-16-php56.config.yml
+      TEST_INSTALLED_EXTRAS: false
     # Nginx and Drush make file test - Ubuntu 16.04.
     - type: nginx-drush-make
       distro: ubuntu1604
@@ -67,6 +75,8 @@ script:
   - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
   - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${COMPOSERFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.composer.json'
 
+  - '[[ ! -z "${DRUPALVM_ENV}" ]] && docker exec ${container_id} bash -c "cp ${DRUPALVM_DIR}/tests/${DRUPALVM_ENV}.config.yml ${config_dir:-$DRUPALVM_DIR}/${DRUPALVM_ENV}.config.yml" || true'
+
   # Override configuration variables.
   - '[[ ! -z "${local_config}" ]] && docker exec ${container_id} bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
 
@@ -82,9 +92,9 @@ script:
   # Run the playbook with ansible-playbook.
   - >
     if [ ! -z "${config_dir}" ]; then
-      docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
+      docker exec --tty ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
     else
-      docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
+      docker exec --tty ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
     fi
 
   # Run integration tests.
