@@ -28,14 +28,7 @@ SQL             n/a       -
 
 ## XHProf
 
-[XHProf](http://xhprof.io/) allows easy code profiling and can be used in many different ways. Ensure `xhprof` is in the list of `installed_extras` inside `config.yml`, and if you're using PHP 5.6, make sure you also add the following variables inside `config.yml`:
-
-```
-xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
-xhprof_download_folder_name: xhprof-master
-```
-
-This will ensure the version of XHProf installed is compatible with the older version of PHP.
+[XHProf](http://xhprof.io/) allows easy code profiling and can be used in many different ways. Ensure `xhprof` is in the list of `installed_extras` inside `config.yml`.
 
 ### XHProf module
 
