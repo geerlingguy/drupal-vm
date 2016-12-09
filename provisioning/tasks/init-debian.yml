@@ -20,12 +20,49 @@
   apt_repository: repo='ppa:ondrej/apache2'
   when: ansible_distribution_release == "precise" and ansible_distribution == "Ubuntu"
 
-- name: Add repository for PHP 5.5, 5.6 or 7.0.
+- name: Add repository for PHP 5.5, 5.6, 7.0 or 7.1.
   apt_repository: repo='ppa:ondrej/php'
+  when: ansible_distribution == "Ubuntu"
+  register: php_ondrej_repo
+
+- name: Add repository for PHP 5 compatibility packages.
+  apt_repository: repo='ppa:ondrej/php5-compat'
   when: >
-    (php_version == "5.5" or php_version == "5.6" or php_version == "7.0") and
-    ansible_distribution == "Ubuntu" and
-    ansible_distribution_version != "16.04"
+    (php_version == "5.5" or php_version == "5.6") and
+    ansible_distribution == "Ubuntu"
+
+- name: Purge PHP version packages.
+  apt:
+    name: "{{ item }}"
+    state: absent
+    purge: yes
+    force: yes
+  when: "'php{{ php_version }}' not in item"
+  with_flattened:
+    - "{{ php_packages|regex_replace('php' + php_version, 'php5.5') }}"
+    - "{{ php_packages|regex_replace('php' + php_version, 'php5.6') }}"
+    - "{{ php_packages|regex_replace('php' + php_version, 'php7.0') }}"
+    - "{{ php_packages|regex_replace('php' + php_version, 'php7.1') }}"
+  register: php_purge
+
+- name: Purge PHP packages installed by default on Ubuntu.
+  apt:
+    name: "{{ item }}"
+    state: absent
+    purge: yes
+    force: yes
+  when: php_purge.changed or php_ondrej_repo.changed
+  with_items:
+    - php-common
+
+- name: Purge PHP modules directory.
+  file:
+    path: "{{ item }}"
+    state: absent
+  when: php_purge.changed
+  with_items:
+    - "/usr/lib/php5/modules"
+    - "/usr/lib/php/modules"
 
 - name: Define php_xhprof_html_dir.
   set_fact:
