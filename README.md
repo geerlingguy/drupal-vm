@@ -11,10 +11,10 @@ It will install the following on an Ubuntu 16.04 (by default) linux VM:
   - Apache 2.4.x (or Nginx)
   - PHP 7.0.x (configurable)
   - MySQL 5.7.x (or MariaDB, or PostgreSQL)
-  - Drush (configurable)
-  - Drupal 7.x, or 8.x.x (configurable)
+  - Drupal 7 or 8
   - Optional:
     - Drupal Console
+    - Drush
     - Varnish 4.x (configurable)
     - Apache Solr 4.10.x (configurable)
     - Elasticsearch
