@@ -40,7 +40,7 @@ pages:
     - 'Using Different Webservers': 'other/webservers.md'
     - 'Overriding configurations': 'other/overriding-configurations.md'
     - 'Installing Drupal VM as a Composer Dependency': 'other/drupalvm-composer-dependency.md'
-    - 'PHP 5.6 on Drupal VM': 'other/php-56.md'
+    - 'Using other versions of PHP': 'other/php.md'
     - 'BigPipe with Drupal VM': 'other/bigpipe.md'
     - 'Drupal VM Management Tools': 'other/management-tools.md'
     - 'Deploying Drupal VM to a production environment': 'other/production.md'

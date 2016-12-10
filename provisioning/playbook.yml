@@ -13,6 +13,9 @@
         msg: >
           "You must update Ansible to at least {{ drupalvm_ansible_version_min }} to use this version of Drupal VM."
 
+    - name: Include OS-specific variables.
+      include_vars: "{{ ansible_os_family }}.yml"
+
     - name: Define config_dir.
       set_fact:
         config_dir: "{{ playbook_dir }}/.."
@@ -26,8 +29,10 @@
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
+      static: no
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
+      static: no
 
     - name: Run configured pre-provision shell scripts.
       script: "{{ item }}"
@@ -42,6 +47,12 @@
       set_fact:
         php_webserver_daemon: nginx
       when: drupalvm_webserver == 'nginx'
+
+    - name: Set the correct XHProf package when PHP 5.5 or 5.6 is used.
+      set_fact:
+        xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+        xhprof_download_folder_name: xhprof-master
+      when: php_version == '5.5' or php_version == '5.6'
 
   roles:
     # Essential roles.

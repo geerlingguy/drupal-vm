@@ -237,6 +237,7 @@ firewall_log_dropped_packets: false
 # PHP Configuration. Currently-supported versions: 5.6, 7.0.
 # To use 5.6, see: http://docs.drupalvm.com/en/latest/other/php-56/
 php_version: "7.0"
+php_install_recommends: no
 php_memory_limit: "192M"
 php_display_errors: "On"
 php_display_startup_errors: "On"
