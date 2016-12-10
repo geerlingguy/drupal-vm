@@ -42,7 +42,5 @@ script:
   # Run script to test if Xdebug is available and working.
   - 'docker exec "$(cat ${container_id})" env TERM=xterm php /etc/ansible/roles/role_under_test/tests/xdebug-test.php'
 
-  - 'docker exec "$(cat ${container_id})" env TERM=xterm php --version'
-
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

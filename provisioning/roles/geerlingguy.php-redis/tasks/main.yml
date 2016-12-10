@@ -8,11 +8,6 @@
     php_redis_package: "{{ __php_redis_package }}"
   when: php_redis_package is not defined
 
-- name: Force install from source on Ubuntu 12.04.
-  set_fact:
-    php_redis_install_from_source: true
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'precise'
-
 # Install PhpRedis from the system package manager.
 - name: Install PhpRedis extension (RedHat).
   yum:

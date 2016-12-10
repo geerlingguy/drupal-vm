@@ -50,9 +50,9 @@
 - src: geerlingguy.php-pgsql
   version: 1.0.0
 - src: geerlingguy.php-redis
-  version: 3.0.0
+  version: 3.1.0
 - src: geerlingguy.php-xdebug
-  version: 2.2.0
+  version: 2.2.2
 - src: geerlingguy.php-xhprof
   version: 2.2.0
 - src: geerlingguy.pimpmylog
