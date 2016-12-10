@@ -48,9 +48,7 @@ vconfig = load_config_file("#{host_drupalvm_dir}/default.config.yml", true)
 vconfig.merge!(load_config_file("#{host_config_dir}/config.yml"))
 # Load user defined configuration files.
 vconfig['extra_config_files'].each do |extra_config_file|
-  Dir.glob("#{host_config_dir}/#{extra_config_file}").each do |config_file|
-    vconfig.merge!(load_config_file(config_file))
-  end
+  vconfig.merge!(load_config_file("#{host_config_dir}/#{extra_config_file}"))
 end
 # Load environment specific configuration overrides.
 vconfig.merge!(load_config_file("#{host_config_dir}/#{drupalvm_env}.config.yml"))
