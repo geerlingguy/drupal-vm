@@ -67,6 +67,7 @@
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
     - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }
+    - { role: thom8.php-upload-progress, when: '"upload-progress" in installed_extras' }
     - { role: geerlingguy.blackfire, when: '"blackfire" in installed_extras' }
     - { role: geerlingguy.adminer, when: '"adminer" in installed_extras' }
     - { role: geerlingguy.pimpmylog, when: '"pimpmylog" in installed_extras' }
