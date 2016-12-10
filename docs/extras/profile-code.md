@@ -30,6 +30,8 @@ SQL             n/a       -
 
 [XHProf](http://xhprof.io/) allows easy code profiling and can be used in many different ways. Ensure `xhprof` is in the list of `installed_extras` inside `config.yml`.
 
+_Note: XHProf does currently not work with PHP 7.1._
+
 ### XHProf module
 
 The easiest way to use XHProf to profile your PHP code on a Drupal site is to install the [XHProf](https://www.drupal.org/project/xhprof) module, then in XHProf's configuration (at `/admin/config/development/xhprof`), check the 'Enable profiling of page views and drush requests' checkbox.
