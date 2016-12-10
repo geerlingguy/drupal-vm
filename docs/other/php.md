@@ -2,9 +2,9 @@ Drupal VM defaults to PHP 7.0, but you can also install and use 5.6 or 7.1.
 
 ## Ubuntu
 
-Ondřej Surý's PPA for PHP is used to install PHP 7.0, but you can switch to using 5.6 or 7.1 packages by changing `php_version` inside `config.yml` to eg. `"7.1"`.
+Ondřej Surý's PPA for PHP is used to install PHP 7.0, but you can switch to using 5.6 or 7.1 packages by changing `php_version` inside `config.yml` to `"5.6"` or `"7.1"`.
 
-If you're using Apache with `mod_php` you should also add `libapache2-mod-php7.1` to the `extra_packages` list.
+If you're using Apache with `mod_php` you should also add `libapache2-mod-php5.6` or `libapache2-mod-php7.1` to the `extra_packages` list.
 
 _Note: XHProf does currently not work with PHP 7.1, make sure you don't have it listed in `installed_extras`._
 
