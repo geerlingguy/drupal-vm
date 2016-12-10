@@ -1,0 +1,20 @@
+---
+- hosts: all
+
+  vars:
+    php_enable_webserver: false
+    php_enablerepo: "remi,remi-php70"
+
+  pre_tasks:
+    - name: Ensure build dependencies are installed (RedHat).
+      yum: name=which state=present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Add repository for PHP 7.0.
+      apt_repository: repo='ppa:ondrej/php'
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
+    - geerlingguy.php
+    - role_under_test
