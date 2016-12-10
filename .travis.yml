@@ -25,6 +25,7 @@ env:
       init: /sbin/init
       run_opts: "--privileged"
       local_config: tests/ubuntu-16-php56.config.yml
+      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
       TEST_INSTALLED_EXTRAS: false
     # Nginx and Drush make file test - Ubuntu 16.04.
     - type: nginx-drush-make
