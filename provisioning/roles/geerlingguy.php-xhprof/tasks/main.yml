@@ -2,6 +2,16 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Define php_xhprof_module_path.
+  set_fact:
+    php_xhprof_module_path: "{{ __php_xhprof_module_path }}"
+  when: php_xhprof_module_path is not defined
+
+- name: Define php_xhprof_config_filename.
+  set_fact:
+    php_xhprof_config_filename: "{{ __php_xhprof_config_filename }}"
+  when: php_xhprof_config_filename is not defined
+
 # Setup/install tasks.
 - name: Ensure dependencies for installing XHProf are present.
   package: "name={{ item }} state=installed"
