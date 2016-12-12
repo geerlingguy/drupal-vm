@@ -20,7 +20,9 @@
 
     - name: Include extra config files.
       include_vars:
-        file: "{{ config_dir }}/{{ item }}"
+        dir: "{{ config_dir }}"
+        files_matching: "{{ item }}"
+        depth: 1
       with_flattened:
         - config.yml
         - "{{ extra_config_files }}"
