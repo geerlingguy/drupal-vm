@@ -4,17 +4,36 @@
   register: mysql_cli_version
   changed_when: false
 
+- name: Ensure default user is present.
+  mysql_user:
+    name: "{{ mysql_user_name }}"
+    host: 'localhost'
+    password: "{{ mysql_user_password }}"
+    priv: '*.*:ALL,GRANT'
+    state: present
+  when: mysql_user_name != mysql_root_username
+
+# Has to be after the password assignment, for idempotency.
+- name: Copy user-my.cnf file with password credentials.
+  template:
+    src: "user-my.cnf.j2"
+    dest: "{{ mysql_user_home }}/.my.cnf"
+    owner: "{{ mysql_user_name }}"
+    mode: 0600
+  when: mysql_user_name != mysql_root_username and (mysql_install_packages | bool or mysql_user_password_update)
+
 - name: Disallow root login remotely
   command: 'mysql -NBe "{{ item }}"'
   with_items:
-    - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
+    - DELETE FROM mysql.user WHERE User='{{ mysql_root_username }}' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
   changed_when: false
 
 - name: Get list of hosts for the root user.
-  command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = "root" ORDER BY (Host="localhost") ASC'
+  command: mysql -NBe "SELECT Host FROM mysql.user WHERE User = '{{ mysql_root_username }}' ORDER BY (Host='localhost') ASC"
   register: mysql_root_hosts
   changed_when: false
   always_run: true
+  when: mysql_install_packages | bool or mysql_root_password_update
 
 # Note: We do not use mysql_user for this operation, as it doesn't always update
 # the root password correctly. See: https://goo.gl/MSOejW
@@ -29,7 +48,7 @@
 # Set root password for MySQL < 5.7.x.
 - name: Update MySQL root password for localhost root account (< 5.7.x).
   shell: >
-    mysql -u root -NBe
+    mysql -NBe
     'SET PASSWORD FOR "{{ mysql_root_username }}"@"{{ item }}" = PASSWORD("{{ mysql_root_password }}");'
   with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
   when: ((mysql_install_packages | bool) or mysql_root_password_update) and ('5.7.' not in mysql_cli_version.stdout)
@@ -37,11 +56,12 @@
 # Has to be after the root password assignment, for idempotency.
 - name: Copy .my.cnf file with root password credentials.
   template:
-    src: "user-my.cnf.j2"
-    dest: "{{ mysql_user_home }}/.my.cnf"
+    src: "root-my.cnf.j2"
+    dest: "{{ mysql_root_home }}/.my.cnf"
     owner: root
     group: root
     mode: 0600
+  when: mysql_install_packages | bool or mysql_root_password_update
 
 - name: Get list of hosts for the anonymous user.
   command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = ""'
