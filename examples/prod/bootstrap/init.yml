@@ -19,8 +19,9 @@
     - name: Add local SSH public key to admin account authorized_keys.
       authorized_key:
         user: "{{ admin_user }}"
-        key: "{{ lookup('file', '{{ admin_pubkey }}') }}"
+        key: "{{ lookup('file', admin_pubkey) }}"
         manage_dir: yes
+      when: admin_copy_ssh_pubkey
 
     - name: Disable requiretty.
       lineinfile:
