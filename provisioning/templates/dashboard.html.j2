@@ -102,13 +102,17 @@
         <tbody>
           {% if drupalvm_webserver == 'apache' -%}
             {%- for host in apache_vhosts -%}
-              {{ printSite(host.servername, host.documentroot) }}
+              {%- if host.documentroot is defined -%}
+                {{ printSite(host.servername, host.documentroot) }}
+              {%- endif -%}
             {%- endfor -%}
           {%- elif drupalvm_webserver == 'nginx' -%}
             {%- for host in nginx_hosts -%}
-              {%- for hostname in host.server_name.split() -%}
-                {{ printSite(hostname, host.root) }}
-              {%- endfor -%}
+              {%- if host.root is defined -%}
+                {%- for hostname in host.server_name.split() -%}
+                  {{ printSite(hostname, host.root) }}
+                {%- endfor -%}
+              {%- endif -%}
             {%- endfor -%}
           {%- endif %}
           <tr><td colspan=3><small>*Note: If Ansible isn't installed on your host, Drush aliases are only created inside the VM.</small></td></tr>
