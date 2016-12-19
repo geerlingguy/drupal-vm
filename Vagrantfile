@@ -92,6 +92,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
   aliases = aliases.uniq - [config.vm.hostname, vconfig['vagrant_ip']]
+  # Remove wildcard subdomains.
+  aliases.delete_if { |vhost| vhost.include?('*') }
 
   if Vagrant.has_plugin?('vagrant-hostsupdater')
     config.hostsupdater.aliases = aliases
