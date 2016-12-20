@@ -112,6 +112,10 @@ Run the following command within Drupal VM's root directory (the folder containi
 
     ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo --ask-sudo-pass
 
+_Note: If you have installed [Drupal VM as a Composer dependency](drupalvm-composer-dependency.md) you also need to specify the path of the config directory where you have your `config.yml` located._
+
+    ansible-playbook -i examples/prod/inventory provisioning/playbook.yml -e "config_dir=$(pwd)/config" --sudo --ask-sudo-pass
+
 Ansible will prompt you for your admin account's `sudo` password (the same as the password you encrypted and saved as `admin_password`). Enter it and press return.
 
 After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configured to match your local development environment! You can visit your Droplet and access the fresh Drupal site just like you would locally (e.g. `http://example.drupalvm.com/`).
