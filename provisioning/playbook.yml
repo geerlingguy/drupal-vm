@@ -39,7 +39,9 @@
       with_items: "{{ pre_provision_scripts|default([]) }}"
 
     - name: Run configured pre-provision ansible task files.
-      include: "{{ item }}"
+      include: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
       with_fileglob:
         - "{{ pre_provision_tasks_dir|default(omit) }}"
 
@@ -156,6 +158,8 @@
       with_items: "{{ post_provision_scripts|default([]) }}"
 
     - name: Run configured post-provision ansible task files.
-      include: "{{ item }}"
+      include: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
       with_fileglob:
         - "{{ post_provision_tasks_dir|default(omit) }}"
