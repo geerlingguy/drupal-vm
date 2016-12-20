@@ -114,7 +114,7 @@ Run the following command within Drupal VM's root directory (the folder containi
 
 _Note: If you have installed [Drupal VM as a Composer dependency](drupalvm-composer-dependency.md) you also need to specify the path of the config directory where you have your `config.yml` located._
 
-    ansible-playbook -i examples/prod/inventory provisioning/playbook.yml -e "config_dir=$(pwd)/config" --sudo --ask-sudo-pass
+    ansible-playbook -i config/prod/inventory vendor/geerlingguy/drupal-vm/provisioning/playbook.yml -e "config_dir=$(pwd)/config" --sudo --ask-sudo-pass
 
 Ansible will prompt you for your admin account's `sudo` password (the same as the password you encrypted and saved as `admin_password`). Enter it and press return.
 
