@@ -14,11 +14,13 @@
     regexp: '.*\t{{ hostname_short }}$'
     line: "127.0.0.1\t{{ hostname_fqdn }}\t{{ hostname_short }}"
     state: present
+    unsafe_writes: "{{ (ansible_virtualization_type == 'docker')|ternary('yes', 'no')|bool }}"
 
 - name: Configure hostname.
   copy:
     content: "{{ (ansible_os_family == 'Debian') | ternary(hostname_short, hostname_fqdn) }}\n"
     dest: /etc/hostname
+    unsafe_writes: "{{ (ansible_virtualization_type == 'docker')|ternary('yes', 'no')|bool }}"
   register: set_hostname
 
 - name: Set the hostname for current session.
