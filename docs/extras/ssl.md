@@ -69,3 +69,16 @@ apache_vhosts_ssl:
         ssl_protocols       TLSv1.1 TLSv1.2;
         ssl_ciphers         HIGH:!aNULL:!MD5;
 ```
+
+## Tips & Tricks
+
+To automatically add a SSL virtual host for every Apache host defined in `apache_vhosts` you can add the following to your `config.yml`:
+
+```yaml
+apache_vhost_ssl_parameters:
+  certificate_file: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+  certificate_key_file: "/etc/ssl/private/ssl-cert-snakeoil.key"
+
+# Generate a SSL virtual host for every regular vhost.
+apache_vhosts_ssl: "{% set vhosts = [] %}{% for vhost in apache_vhosts %}{% if vhosts.append(vhost|combine(apache_vhost_ssl_parameters)) %}{% endif %}{% endfor %}{{ vhosts }}"
+```
