@@ -21,11 +21,15 @@
         config_dir: "{{ playbook_dir }}/.."
       when: config_dir is not defined
 
-    - include_vars: "{{ item }}"
-      with_fileglob:
-        - "{{ config_dir }}/config.yml"
-        - "{{ config_dir }}/local.config.yml"
-        - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
+    - name: Include extra config files.
+      include_vars:
+        dir: "{{ config_dir }}"
+        files_matching: "{{ item }}"
+        depth: 1
+      with_flattened:
+        - config.yml
+        - "{{ extra_config_files }}"
+        - "{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
