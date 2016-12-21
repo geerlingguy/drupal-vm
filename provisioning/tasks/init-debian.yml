@@ -12,6 +12,11 @@
     - sudo
     - unzip
 
+- name: Configure /etc/mailname.
+  copy:
+    content: "{{ hostname_fqdn }}\n"
+    dest: /etc/mailname
+
 - name: Disable the ufw firewall (since we use a simple iptables firewall).
   service: name=ufw state=stopped
   when: ansible_distribution == "Ubuntu" and {{ drupalvm_disable_ufw_firewall | default(true) }}

@@ -62,9 +62,6 @@ script:
   - 'docker run --detach --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
   - 'container_id=$(cat ${tmpfile})'
 
-  # Set hostname.
-  - 'docker exec ${container_id} hostname ${HOSTNAME}'
-
   # Setup directories.
   - 'docker exec ${container_id} mkdir -p ${DRUPALVM_DIR}/drupal'
 
