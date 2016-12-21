@@ -207,7 +207,7 @@ installed_extras:
   # - upload-progress
   - varnish
   # - xdebug
-  # - xhprof
+  - xhprof
 
 # Add any extra apt or yum packages you would like installed.
 extra_packages:
