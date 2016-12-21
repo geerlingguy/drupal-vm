@@ -57,12 +57,9 @@ before_install:
   - 'gem install rubocop'
 
 script:
-  # Figure out hostname dependening on OS. Ubuntu uses shortened version while CentOS uses FQDN.
-  - 'docker_hostname=$([[ $distro == ubuntu* ]] && echo ${MACHINE_NAME} || echo ${HOSTNAME})'
-
   # Run container in detached state and store the id.
   - 'tmpfile=$(mktemp)'
-  - 'docker run --detach --hostname "${docker_hostname}" --add-host "${HOSTNAME}$(echo -e "\t")${MACHINE_NAME}":127.0.0.1 --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
+  - 'docker run --detach --add-host "${HOSTNAME}$(echo -e "\t")${MACHINE_NAME}":127.0.0.1 --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
   - 'container_id=$(cat ${tmpfile})'
 
   # Setup directories.
