@@ -133,17 +133,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Provisioning. Use ansible if it's installed, ansible_local if not or if forced.
   if ansible_bin && !vconfig['force_ansible_local']
-    if ansible_version >= ansible_version_min
-      config.vm.provision 'ansible' do |ansible|
-        ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
-        ansible.extra_vars = {
-          config_dir: host_config_dir,
-          drupalvm_env: drupalvm_env
-        }
-        ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
-      end
-    else
+    if ansible_version < ansible_version_min
       raise "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
+    end
+    config.vm.provision 'ansible' do |ansible|
+      ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
+      ansible.extra_vars = {
+        config_dir: host_config_dir,
+        drupalvm_env: drupalvm_env
+      }
+      ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
     end
   else
     config.vm.provision 'ansible_local' do |ansible|
