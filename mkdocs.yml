@@ -28,7 +28,7 @@ pages:
     - 'Use MariaDB instead of MySQL': 'extras/mariadb.md'
     - 'Use PostgreSQL instead of MySQL': 'extras/postgresql.md'
     - 'Use Node.js and NPM': 'extras/nodejs.md'
-    - 'Use SSL vhosts with Apache': 'extras/ssl.md'
+    - 'Use SSL vhosts with Apache/Nginx': 'extras/ssl.md'
     - 'View Logs with Pimp my Log': 'extras/pimpmylog.md'
     - 'Profile Code - XHProf, Blackfire, Xdebug': 'extras/profile-code.md'
     - 'Debug Code with XDebug': 'extras/xdebug.md'
