@@ -26,6 +26,10 @@ def which(cmd)
   nil
 end
 
+def get_ansible_version(exe)
+  /^[^\s]+ (.+)$/.match(`#{exe} --version`) { |match| return match[1] }
+end
+
 def walk(obj, &fn)
   if obj.is_a?(Array)
     obj.map { |value| walk(value, &fn) }
@@ -55,6 +59,10 @@ vconfig = walk(vconfig) do |value|
 end
 
 Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
+
+ansible_bin = which('ansible-playbook')
+ansible_version = Gem::Version.new(get_ansible_version(ansible_bin)) if ansible_bin
+ansible_version_min = Gem::Version.new(vconfig['drupalvm_ansible_version_min'])
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Networking configuration.
@@ -124,14 +132,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
   # Provisioning. Use ansible if it's installed, ansible_local if not or if forced.
-  if which('ansible-playbook') && !vconfig['force_ansible_local']
-    config.vm.provision 'ansible' do |ansible|
-      ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
-      ansible.extra_vars = {
-        config_dir: host_config_dir,
-        drupalvm_env: drupalvm_env
-      }
-      ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
+  if ansible_bin && !vconfig['force_ansible_local']
+    if ansible_version >= ansible_version_min
+      config.vm.provision 'ansible' do |ansible|
+        ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
+        ansible.extra_vars = {
+          config_dir: host_config_dir,
+          drupalvm_env: drupalvm_env
+        }
+        ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
+      end
+    else
+      raise "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
     end
   else
     config.vm.provision 'ansible_local' do |ansible|

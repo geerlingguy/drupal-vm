@@ -7,12 +7,6 @@
     - ../default.config.yml
 
   pre_tasks:
-    - name: Verify Ansible meets Drupal VM's version requirements.
-      assert:
-        that: "ansible_version.full | version_compare(drupalvm_ansible_version_min, '>=')"
-        msg: >
-          "You must update Ansible to at least {{ drupalvm_ansible_version_min }} to use this version of Drupal VM."
-
     - name: Include OS-specific variables.
       include_vars: "{{ ansible_os_family }}.yml"
 
