@@ -36,6 +36,13 @@
       when: ansible_os_family == 'RedHat'
       static: no
 
+    - name: Ensure workspace directory exists.
+      file:
+        path: "{{ workspace }}"
+        state: directory
+        mode: 0775
+      when: workspace is defined
+
     - name: Run configured pre-provision shell scripts.
       script: "{{ item }}"
       with_items: "{{ pre_provision_scripts|default([]) }}"
