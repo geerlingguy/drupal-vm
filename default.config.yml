@@ -314,7 +314,6 @@ solr_xmx: "128M"
 selenium_version: 2.53.0
 
 # Other configuration.
-workspace: "/root/php{{ php_version }}"
 dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts
 #ssh_home: "{{ drupal_core_path }}"
