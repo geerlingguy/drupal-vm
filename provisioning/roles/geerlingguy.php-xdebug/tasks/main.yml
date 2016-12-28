@@ -28,6 +28,7 @@
   unarchive:
     src: "https://xdebug.org/files/xdebug-{{ php_xdebug_version }}.tgz"
     dest: "{{ workspace }}"
+    creates: "{{ workspace }}/xdebug-{{ php_xdebug_version }}"
     copy: no
 
 - name: Build Xdebug.
@@ -39,7 +40,6 @@
     - phpize
     - ./configure
     - make
-  notify: restart webserver
 
 - name: Ensure Xdebug module path exists.
   file:
@@ -50,9 +50,9 @@
     mode: 0755
 
 - name: Move Xdebug module into place.
-  shell: >
-    cp {{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so {{ php_xdebug_module_path }}/xdebug.so
-    creates={{ php_xdebug_module_path }}/xdebug.so
+  copy:
+    src: "{{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so"
+    dest: "{{ php_xdebug_module_path }}/xdebug-{{ php_xdebug_version }}.so"
   notify: restart webserver
 
 - include: configure.yml
