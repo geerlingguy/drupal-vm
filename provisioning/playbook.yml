@@ -52,6 +52,12 @@
         xhprof_download_folder_name: xhprof-master
       when: php_version == '5.5' or php_version == '5.6'
 
+    - name: Ensure PHP version -specific workspace directory exists.
+      file:
+        path: "/root/php{{ php_version }}"
+        state: directory
+        mode: 0775
+
   roles:
     # Essential roles.
     - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
@@ -74,9 +80,15 @@
     - { role: geerlingguy.drush, when: '"drush" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
-    - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
-    - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }
-    - { role: thom8.php-upload-progress, when: '"upload-progress" in installed_extras' }
+    - role: geerlingguy.php-xdebug
+      workspace: "/root/php{{ php_version }}"
+      when: '"xdebug" in installed_extras'
+    - role: geerlingguy.php-xhprof
+      workspace: "/root/php{{ php_version }}"
+      when: '"xhprof" in installed_extras'
+    - role: thom8.php-upload-progress
+      workspace: "/root/php{{ php_version }}"
+      when: '"upload-progress" in installed_extras'
     - { role: geerlingguy.blackfire, when: '"blackfire" in installed_extras' }
     - { role: geerlingguy.adminer, when: '"adminer" in installed_extras' }
     - { role: geerlingguy.pimpmylog, when: '"pimpmylog" in installed_extras' }
