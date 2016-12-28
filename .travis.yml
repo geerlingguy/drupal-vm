@@ -59,11 +59,8 @@ before_install:
 script:
   # Run container in detached state and store the id.
   - 'tmpfile=$(mktemp)'
-  - 'docker run --detach --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
+  - 'docker run --detach --add-host "${HOSTNAME}$(echo -e "\t")${MACHINE_NAME}":127.0.0.1 --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
   - 'container_id=$(cat ${tmpfile})'
-
-  # Set hostname.
-  - 'docker exec ${container_id} hostname ${HOSTNAME}'
 
   # Setup directories.
   - 'docker exec ${container_id} mkdir -p ${DRUPALVM_DIR}/drupal'

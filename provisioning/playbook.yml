@@ -23,6 +23,8 @@
         - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
       tags: ['always']
 
+    - include: tasks/hostname.yml
+
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
       static: no
