@@ -179,7 +179,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.cache.enable :apt
     # Cache the composer directory.
     config.cache.enable :generic, cache_dir: '/home/vagrant/.composer/cache'
-    config.cache.enable :generic, cache_dir: '/root/.composer/cache'
     config.cache.synced_folder_opts = {
       type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
     }
