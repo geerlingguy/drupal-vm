@@ -29,3 +29,5 @@ galaxy_info:
       - 11.3
   galaxy_tags:
     - web
+
+allow_duplicates: yes

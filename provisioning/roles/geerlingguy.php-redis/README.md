@@ -26,7 +26,7 @@ If you want to install PhpRedis directly from source (if you're on an OS that do
 
     php_redis_install_from_source: false
 
-Whether to install PhpRedis from source. If you'd like to install a specific version of PhpRedis not available via the system package manager, you can compile the extension from source. Note that source installation is forced on Ubuntu 12.04.
+Whether to install PhpRedis from source. If you'd like to install a specific version of PhpRedis not available via the system package manager, you can compile the extension from source.
 
     php_redis_source_repo: https://github.com/phpredis/phpredis.git
 
@@ -60,4 +60,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2015 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

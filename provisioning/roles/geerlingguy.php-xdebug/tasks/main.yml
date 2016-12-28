@@ -2,6 +2,16 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Define php_xdebug_module_path.
+  set_fact:
+    php_xdebug_module_path: "{{ __php_xdebug_module_path }}"
+  when: php_xdebug_module_path is not defined
+
+- name: Define php_xdebug_config_filename.
+  set_fact:
+    php_xdebug_config_filename: "{{ __php_xdebug_config_filename }}"
+  when: php_xdebug_config_filename is not defined
+
 - name: Ensure dependencies for building from source are installed (RedHat).
   yum: "name={{ item }} state=installed"
   with_items:
@@ -18,6 +28,7 @@
   unarchive:
     src: "https://xdebug.org/files/xdebug-{{ php_xdebug_version }}.tgz"
     dest: "{{ workspace }}"
+    creates: "{{ workspace }}/xdebug-{{ php_xdebug_version }}"
     copy: no
 
 - name: Build Xdebug.
@@ -29,7 +40,6 @@
     - phpize
     - ./configure
     - make
-  notify: restart webserver
 
 - name: Ensure Xdebug module path exists.
   file:
@@ -40,9 +50,9 @@
     mode: 0755
 
 - name: Move Xdebug module into place.
-  shell: >
-    cp {{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so {{ php_xdebug_module_path }}/xdebug.so
-    creates={{ php_xdebug_module_path }}/xdebug.so
+  copy:
+    src: "{{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so"
+    dest: "{{ php_xdebug_module_path }}/xdebug-{{ php_xdebug_version }}.so"
   notify: restart webserver
 
 - include: configure.yml

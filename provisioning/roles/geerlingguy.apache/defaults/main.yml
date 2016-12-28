@@ -7,6 +7,7 @@ apache_listen_port_ssl: 443
 
 apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
+apache_vhosts_template: "vhosts.conf.j2"
 
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
@@ -16,12 +17,17 @@ apache_global_vhost_settings: |
   DirectoryIndex index.php index.html
 
 apache_vhosts:
-  # Additional properties: 'serveradmin, serveralias, extra_parameters'.
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
 
+apache_allow_override: "All"
+apache_options: "-Indexes +FollowSymLinks"
+
 apache_vhosts_ssl: []
-  # Additional properties: 'serveradmin, extra_parameters'.
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
   # - servername: "local.dev",
   #   documentroot: "/var/www/html",
   #   certificate_file: "/path/to/certificate.crt",
@@ -42,3 +48,7 @@ apache_mods_disabled: []
 
 # Set initial apache state. Recommended values: `started` or `stopped`
 apache_state: started
+
+# Set apache state when configuration changes are made. Recommended values:
+# `restarted` or `reloaded`
+apache_restart_state: restarted

@@ -18,12 +18,16 @@ No special requirements; note that this role requires root access, so either run
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     mysql_user_home: /root
+    mysql_user_name: root
+    mysql_user_password: root
 
-The home directory inside which Python MySQL settings will be stored, which Ansible will use when connecting to MySQL. This should be the home directory of the user which runs this Ansible role.
+The home directory inside which Python MySQL settings will be stored, which Ansible will use when connecting to MySQL. This should be the home directory of the user which runs this Ansible role. The `mysql_user_name` and `mysql_user_password` can be set if you are running this role under a non-root user account and want to set a non-root user.
 
+    mysql_root_home: /root
+    mysql_root_username: root
     mysql_root_password: root
 
-The MySQL root user account password.
+The MySQL root user account details.
 
     mysql_root_password_update: no
 

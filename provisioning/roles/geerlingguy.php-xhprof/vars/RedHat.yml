@@ -1,4 +1,3 @@
 ---
-php_xhprof_module_path: /usr/lib64/php/modules
-
-php_xhprof_config_filename: xhprof.ini
+__php_xhprof_module_path: /usr/lib64/php/modules
+__php_xhprof_config_filename: xhprof.ini

@@ -7,34 +7,39 @@
     - ../default.config.yml
 
   pre_tasks:
-    - name: Verify Ansible meets Drupal VM's version requirements.
-      assert:
-        that: "ansible_version.full | version_compare(drupalvm_ansible_version_min, '>=')"
-        msg: >
-          "You must update Ansible to at least {{ drupalvm_ansible_version_min }} to use this version of Drupal VM."
+    - name: Include OS-specific variables.
+      include_vars: "{{ ansible_os_family }}.yml"
 
     - name: Define config_dir.
       set_fact:
         config_dir: "{{ playbook_dir }}/.."
       when: config_dir is not defined
+      tags: ['always']
 
     - include_vars: "{{ item }}"
       with_fileglob:
         - "{{ config_dir }}/config.yml"
         - "{{ config_dir }}/local.config.yml"
         - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
+      tags: ['always']
+
+    - include: tasks/hostname.yml
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
+      static: no
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
+      static: no
 
     - name: Run configured pre-provision shell scripts.
       script: "{{ item }}"
       with_items: "{{ pre_provision_scripts|default([]) }}"
 
     - name: Run configured pre-provision ansible task files.
-      include: "{{ item }}"
+      include: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
       with_fileglob:
         - "{{ pre_provision_tasks_dir|default(omit) }}"
 
@@ -42,6 +47,18 @@
       set_fact:
         php_webserver_daemon: nginx
       when: drupalvm_webserver == 'nginx'
+
+    - name: Set the correct XHProf package when PHP 5.5 or 5.6 is used.
+      set_fact:
+        xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+        xhprof_download_folder_name: xhprof-master
+      when: php_version == '5.5' or php_version == '5.6'
+
+    - name: Ensure PHP version -specific workspace directory exists.
+      file:
+        path: "/root/php{{ php_version }}"
+        state: directory
+        mode: 0775
 
   roles:
     # Essential roles.
@@ -65,8 +82,15 @@
     - { role: geerlingguy.drush, when: '"drush" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
-    - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
-    - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }
+    - role: geerlingguy.php-xdebug
+      workspace: "/root/php{{ php_version }}"
+      when: '"xdebug" in installed_extras'
+    - role: geerlingguy.php-xhprof
+      workspace: "/root/php{{ php_version }}"
+      when: '"xhprof" in installed_extras'
+    - role: thom8.php-upload-progress
+      workspace: "/root/php{{ php_version }}"
+      when: '"upload-progress" in installed_extras'
     - { role: geerlingguy.blackfire, when: '"blackfire" in installed_extras' }
     - { role: geerlingguy.adminer, when: '"adminer" in installed_extras' }
     - { role: geerlingguy.pimpmylog, when: '"pimpmylog" in installed_extras' }
@@ -144,6 +168,8 @@
       with_items: "{{ post_provision_scripts|default([]) }}"
 
     - name: Run configured post-provision ansible task files.
-      include: "{{ item }}"
+      include: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
       with_fileglob:
         - "{{ post_provision_tasks_dir|default(omit) }}"

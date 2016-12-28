@@ -3,6 +3,9 @@
   yum: name=lsof state=present
   when: ansible_os_family == "RedHat"
 
+- name: Ensure setfacl support is present.
+  package: name=acl state=present
+
 - name: Run Solr installation script.
   shell: >
     {{ solr_workspace }}/{{ solr_filename }}/bin/install_solr_service.sh

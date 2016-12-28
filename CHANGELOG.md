@@ -1,5 +1,38 @@
 # Drupal VM Changelog
 
+## 4.0.0 "We've Got Company" (2016-12-10)
+
+### Breaking Changes
+
+  * Drush is now an optional `installed_extra`. **If you use Drush, and it's not installed as part of your own project's dependencies**, make sure you add `drush` as one of the `installed_extras` in your `config.yml`.
+  * Vagrant 1.8.6 or later, VirtualBox 5.1.10 or later, and Ansible 2.2.0 or later (if installed on host) are now required.
+  * PHP 7.0 is still the default, but **you can install PHP 7.1**, or **switch to PHP 5.6** on-the-fly, thanks to #1043—on any supported OS! See the updated docs: [Using other versions of PHP](http://docs.drupalvm.com/en/latest/other/php/)
+
+### New/changed variables in default.config.yml
+
+  * TODO
+
+### Improvements
+
+  * #1043: Make switching PHP versions easier, and add support for PHP 7.1.
+  * #711: Make Drush optional.
+  * #788: Add optional PHP upload_progress support.
+  * #992: Add optional `DRUPALVM_ANSIBLE_ARGS` support for Ansible CLI options.
+  * #1002: Allow shallow Drush clones for faster builds.
+  * #1007, #1009: Added a GitHub ISSUE_TEMPLATE to help my sanity.
+  * #1018: Fix Solr versioning error in Solr role.
+  * #823: Set composer.json type to `vm` instead of `project`.
+  * Update following Ansible roles to newer versions: Solr, Nginx, Git, PHP, Firewall, Apache, PHP-XDebug, PHP-Redis.
+
+### Bugfixes
+
+  * #981: Bump minimum required Vagrant and VirtualBox versions.
+  * #1014: Fix path in extra tasks example.
+  * #1020: Switch to Drush `8.x` branch (instead of `master`/`9.x`) for Drupal 6/7 compatibility.
+  * #1004: Add note about `php_pgsql_package` for PHP 5.6 (superceded by later work).
+  * #1037: Fix Acquia configuration example for PHP 5.6 (superceded by later work).
+
+
 ## 3.5.2 (2016-11-17)
 
 ### Improvements

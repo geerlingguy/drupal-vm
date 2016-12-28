@@ -1,0 +1,56 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_uploadprogress_module_path.
+  set_fact:
+    php_uploadprogress_module_path: "{{ __php_uploadprogress_module_path }}"
+  when: php_uploadprogress_module_path is not defined
+
+- name: Define php_uploadprogress_config_filename.
+  set_fact:
+    php_uploadprogress_config_filename: "{{ __php_uploadprogress_config_filename }}"
+  when: php_uploadprogress_config_filename is not defined
+
+- name: Download and untar uploadprogress.
+  unarchive:
+    src: "https://github.com/php/pecl-php-uploadprogress/archive/master.tar.gz"
+    dest: "{{ workspace }}"
+    copy: no
+    creates: "{{ workspace }}/pecl-php-uploadprogress-master"
+
+- name: Build uploadprogress.
+  shell: >
+    {{ item }}
+    chdir={{ workspace }}/pecl-php-uploadprogress-master
+    creates={{ workspace }}/pecl-php-uploadprogress-master/modules/uploadprogress.so
+  with_items:
+    - phpize
+    - ./configure
+    - make
+  notify: restart webserver
+
+- name: Ensure uploadprogress module path exists.
+  file:
+    path: "{{ php_uploadprogress_module_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Move uploadprogress module into place.
+  shell: >
+    cp {{ workspace }}/pecl-php-uploadprogress-master/modules/uploadprogress.so {{ php_uploadprogress_module_path }}/uploadprogress.so
+    creates={{ php_uploadprogress_module_path }}/uploadprogress.so
+  notify: restart webserver
+
+- name: Add php extension config for uploadprogress.
+  template:
+    src: uploadprogress.ini.j2
+    dest: "{{ item }}/{{ php_uploadprogress_config_filename }}"
+    owner: root
+    group: root
+    force: yes
+    mode: 0644
+  with_items: "{{ php_extension_conf_paths }}"
+  notify: restart webserver

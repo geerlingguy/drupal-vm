@@ -30,7 +30,7 @@
 
 - name: Add apache vhosts configuration.
   template:
-    src: "vhosts.conf.j2"
+    src: "{{ apache_vhosts_template }}"
     dest: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
     owner: root
     group: root

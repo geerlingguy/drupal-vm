@@ -1,7 +1,7 @@
 ---
 workspace: /root
 
-php_xdebug_version: 2.4.1
+php_xdebug_version: 2.5.0
 
 php_xdebug_coverage_enable: 1
 php_xdebug_default_enable: 1
