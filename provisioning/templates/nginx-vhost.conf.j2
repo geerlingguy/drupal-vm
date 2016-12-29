@@ -17,7 +17,7 @@ server {
 {% if item.is_php is defined and item.is_php %}
     location / {
         # Don't touch PHP for static content.
-        try_files $uri /index.php?$query_string;
+        try_files $uri $uri/ /index.php?$query_string;
     }
 
     # Don't allow direct access to PHP files in the vendor directory.
