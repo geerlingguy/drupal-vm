@@ -11,9 +11,11 @@ vagrant_synced_folders:
     type: nfs
 ```
 
+_If you have Drupal VM installed within your codebase, you can also set the `local_path` to a location relative to the `Vagrantfile`. This is the default setup in `default.config.yml`._
+
 ## Disable the Composer project build and site install
 
-Set all the `build_` variables and `install_site` to `false`:
+Set all the `build_*` variables and `install_site` to `false`:
 
 ```yaml
 build_makefile: false
@@ -39,13 +41,13 @@ This variable will be used for the document root of the webserver.
 
 By default the domain of your site will be `drupalvm.dev` but you can change it by setting `drupal_domain` to the domain of your choice:
 
-```
+```yaml
 drupal_domain: "local.my-drupal-site.com"
 ```
 
 If you prefer using your domain as the root of all extra packages installed, ie. `adminer`, `xhprof` and `pimpmylog`, set it as the value of `vagrant_hostname` instead.
 
-```
+```yaml
 vagrant_hostname: "my-drupal-site.com"
 drupal_domain: "{{ vagrant_hostname }}"
 ```
@@ -56,4 +58,4 @@ If you have your Drupal site configured to use a special database and/or user/pa
 
 ## Build the VM, import your database
 
-Run `vagrant up` to build the VM with your codebase synced into the proper location. Once the VM is created, you can [connect to the MySQL database](../extras/mysql.md) and import your site's database to the Drupal VM, or use a [command like `drush sql-sync`](../extras/drush.md#using-sql-sync) to copy a database from another server.
+Run `vagrant up` to build the VM with your codebase synced into the proper location. Once the VM is created, you can [connect to the MySQL database](../configurations/databases-mysql.md) and import your site's database to the Drupal VM, or use a [command like `drush sql-sync`](../extras/drush.md#using-sql-sync) to copy a database from another server.

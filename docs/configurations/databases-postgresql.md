@@ -6,4 +6,4 @@ To switch from MySQL to PostgreSQL, switch the `drupalvm_database` setting in yo
 drupalvm_database: pgsql
 ```
 
-For more PostgreSQL configuration options, see the README included with the [`geerlingguy.postgresql`](https://galaxy.ansible.com/geerlingguy/postgresql/) Ansible role.
+For more PostgreSQL configuration options, see the [`geerlingguy.postgresql` Ansible role's README](https://github.com/geerlingguy/ansible-role-postgresql#readme).

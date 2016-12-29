@@ -18,3 +18,5 @@ To install packages globally, you can add them to the list of `nodejs_npm_global
 nodejs_npm_global_packages:
   - name: phantomjs
 ```
+
+For a list of available role variables, see the [`geerlingguy.nodejs` Ansible role's README](https://github.com/geerlingguy/ansible-role-nodejs#readme).

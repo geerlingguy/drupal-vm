@@ -74,14 +74,7 @@ You now have Drupal VM configured for production by default. This is the recomme
 
 ### Customize `vagrant.config.yml` for local development
 
-To re-use the same setup for local development, copy `default.config.yml` to `vagrant.config.yml` and configure it so that you override the security hardening configurations that were added in `config.yml`.
-
-When you run `vagrant up` or `vagrant provision` the order of the configuration files read will be:
-
-- `default.config.yml`
-- `config.yml`
-- `local.config.yml`
-- `vagrant.config.yml`
+To re-use the same setup for local development, copy `default.config.yml` to `vagrant.config.yml` and configure it so that you override the security hardening configurations that were added in `config.yml`. Read about how configuration files are read under [Configuring Drupal VM](../getting-started/configure-drupalvm.md)
 
 ### Customize `inventory` for production
 
@@ -112,7 +105,7 @@ Run the following command within Drupal VM's root directory (the folder containi
 
     ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo --ask-sudo-pass
 
-_Note: If you have installed [Drupal VM as a Composer dependency](drupalvm-composer-dependency.md) you also need to specify the path of the config directory where you have your `config.yml` located._
+_Note: If you have installed [Drupal VM as a Composer dependency](../deployment/composer-dependency.md) you also need to specify the path of the config directory where you have your `config.yml` located._
 
     ansible-playbook -i config/prod/inventory vendor/geerlingguy/drupal-vm/provisioning/playbook.yml -e "config_dir=$(pwd)/config" --sudo --ask-sudo-pass
 

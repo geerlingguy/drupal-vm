@@ -1,3 +1,9 @@
+Please read through the [Quick Start Guiden the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mNio_aXMLos" frameborder="0" allowfullscreen></iframe>
+
+_In this video, Jeff Geerling walk you through getting a Drupal 8 website built on your Windows 10 laptop using Drupal VM 3._
+
 There are a few caveats when using Drupal VM on Windows, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Windows host.
 
 ## Windows Subsystem for Linux / Ubuntu bash
@@ -22,7 +28,7 @@ If you're not on Windows 10, or if you don't want to install the WSL, you can us
   - [Cmder](http://cmder.net/) includes built-in git and SSH support, so you can do most things that you need without any additional plugins.
   - [Cygwin](https://www.cygwin.com/) allows you to install a large variety of linux packages inside its bash environment, though it can be a little more tricky to manage and is less integrated into the Windows environment.
 
-## Synced Folders
+## Troubleshooting Vagrant Synced Folders
 
 Most issues have to do synced folders. These are the most common ones:
 

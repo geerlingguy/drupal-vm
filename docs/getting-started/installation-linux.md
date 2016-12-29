@@ -1,8 +1,10 @@
+Please read through the [Quick Start Guiden the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
+
+For a quick introduction to setting up Drupal VM, the [macOS video tutorial](installation-macos.md) applies somwhat to Linux as well.
+
 There are a few caveats when using Drupal VM on Linux, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Linux host.
 
 ## Platform-specific Install Instructions
-
-### All Linux flavors
 
 Always make sure your workstation is up to date (e.g. `apt-get update && apt-get upgrade` on Debian-like systems, or `dnf upgrade` or `yum upgrade` on Fedora/RedHat-like systems). There are sometimes bugs in the base OS packages (e.g. [this NFS-related bug](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1508510)) that can be resolved by a simple upgrade.
 
@@ -37,7 +39,7 @@ Arch Linux uses Python 3 as the default while Ansible requires Python 2. To get 
 ansible_python_interpreter: "/usr/bin/env python2"
 ```
 
-## Synced Folders
+## Troubleshooting Vagrant Synced Folders
 
 Most issues have to do synced folders. These are the most common ones:
 

@@ -1,4 +1,4 @@
-The New Relic PHP agent monitors your application to help you identify and solve performance issues.
+The [New Relic PHP agent](https://docs.newrelic.com/docs/agents/php-agent/getting-started/new-relic-php) monitors your application to help you identify and solve performance issues.
 
 ## Getting Started - Installing Prerequisites
 
@@ -19,3 +19,5 @@ newrelic_license_key: yourkey
 ```
 
 See [New Relic for PHP](https://docs.newrelic.com/docs/agents/php-agent/getting-started/new-relic-php) for help getting started.
+
+For a list of available role variables, see the [`franklinkim.newrelic` Ansible role's README](https://github.com/weareinteractive/ansible-newrelic#readme).

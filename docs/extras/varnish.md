@@ -30,3 +30,5 @@ $settings['reverse_proxy_addresses'] = array('127.0.0.1');
 ```
 
 If you don't set these values, Drupal will think all requests are coming from `127.0.0.1`. There are other settings you can change to make Drupal not store copies of cached pages in the Database (since Varnish is caching everything, this is redundant), but those other settings are not covered here.
+
+For a list of available role variables, see the [`geerlingguy.varnish` Ansible role's README](https://github.com/geerlingguy/ansible-role-varnish#readme).

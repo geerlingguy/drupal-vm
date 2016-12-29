@@ -10,9 +10,9 @@ composer require --dev geerlingguy/drupal-vm
 
 ### Setup your configuration files
 
-Add and configure the `config.yml` anywhere you like, in this example we place it in a `config/` directory. If you're using `build_makefile` this will be the default location Drupal VM looks for the `drupal.make.yml` file.
+Add and configure the `config.yml` anywhere you like, in this example we place it in a `config/` directory.
 
-_Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as [`local.config.yml` and `Vagrantfile.local`](overriding-configurations.md)._
+_Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as `build_makefile`, `local.config.yml` and `Vagrantfile.local`._
 
 ```
 ├── composer.json
@@ -29,7 +29,7 @@ _Note: This will be the directory where Drupal VM looks for other local configur
         └── drupal-vm/
 ```
 
-Change the build strategy to use your `composer.json` file by setting:
+Change the [build strategy to use your `composer.json`](composer.md#using-composer-when-drupal-vm-is-a-composer-dependency-itself) file by setting:
 
 ```yaml
 build_composer_project: false
@@ -41,7 +41,9 @@ drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 
 If you intened to use the devel module, it must be added as a requirement to your `composer.json` file. Alternatively, if you do not intend to use it remove it from `drupal_enabled_modules` in your `config.yml` file:
 
-`drupal_enabled_modules: []`
+```yaml
+drupal_enabled_modules: []
+```
 
 If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `default.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
 
@@ -101,7 +103,7 @@ vagrant up
 
 _Important: you should never issue `vagrant` commands through Drupal VM's own `Vagrantfile` from now on. If you do, it will create a secondary VM in that directory._
 
-## Drupal VM without composer
+## Drupal VM in a subdirectory without composer
 
 If you don't use `composer` in your project you can still download  Drupal VM (or add it as a git submodule) to any subdirectory in your project. As an example let's name that directory `box/`.
 
