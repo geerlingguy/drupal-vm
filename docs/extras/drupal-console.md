@@ -18,3 +18,21 @@ vagrant@drupalvm:/var/www/drupalvm/drupal/web$ drupal cache:rebuild all
 
  The command was executed successfully!
 ```
+
+## Remote command execution
+
+To run commands on your host computer but execute them on the VM, add a new sites file `~/.console/sites/drupalvm.yml` on your host computer:
+
+```yaml
+dev:
+  root: /var/www/drupalvm/drupal
+  host: 192.168.88.88
+  user: vagrant
+  password: vagrant
+```
+
+Execute from host machine using the `--target` option.
+
+    drupal --target=drupalvm.dev site:status
+
+For more details, see [Drupal Console's documentation](https://hechoendrupal.gitbooks.io/drupal-console/content/en/using/how-to-use-drupal-console-in-a-remote-installation.html)
