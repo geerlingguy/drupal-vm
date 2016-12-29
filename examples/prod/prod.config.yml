@@ -8,8 +8,7 @@ vagrant_hostname: "{{ drupal_domain }}"
 apache_vhosts:
   - servername: "{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
-    extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
 # Since this will be a publicly-accessible instance of Drupal VM, make sure you
 # configure secure passwords, especially for Drupal and MySQL!
