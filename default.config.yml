@@ -106,29 +106,38 @@ apache_vhosts:
     serveralias: "www.{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
+          <FilesMatch \.php$>
+            SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://{{ drupal_domain }}/"
+          </FilesMatch>
 
   - servername: "adminer.{{ vagrant_hostname }}"
     documentroot: "{{ adminer_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ adminer_install_dir }}"
+          <FilesMatch \.php$>
+            SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://adminer.{{ vagrant_hostname }}/"
+          </FilesMatch>
 
   - servername: "xhprof.{{ vagrant_hostname }}"
     documentroot: "{{ php_xhprof_html_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ php_xhprof_html_dir }}"
+          <FilesMatch \.php$>
+            SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://xhprof.{{ vagrant_hostname }}/"
+          </FilesMatch>
 
   - servername: "pimpmylog.{{ vagrant_hostname }}"
     documentroot: "{{ pimpmylog_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"
+          <FilesMatch \.php$>
+            SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://pimpmylog.{{ vagrant_hostname }}/"
+          </FilesMatch>
 
   - servername: "{{ vagrant_ip }}"
     serveralias: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ dashboard_install_dir }}"
-          DirectoryIndex index.html
+          <FilesMatch \.php$>
+            SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://dashboard.{{ vagrant_hostname }}/"
+          </FilesMatch>
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
@@ -252,7 +261,7 @@ php_max_input_vars: "4000"
 # to instead use Apache + mod_php with an Ubuntu base box, make sure you add
 # libapache2-mod-php7.0 to `extra_packages` elsewhere in this config file.
 php_enable_php_fpm: true
-php_fpm_listen: "127.0.0.1:9000"
+php_fpm_listen: /var/run/php-fpm.sock
 
 composer_path: /usr/bin/composer
 composer_home_path: "/home/{{ drupalvm_user }}/.composer"
