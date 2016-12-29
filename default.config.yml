@@ -98,6 +98,13 @@ drupalvm_cron_jobs: []
 # this variable is 'true'.
 configure_drush_aliases: true
 
+# Helper variable to configure the PHP-FPM connection for each Apache
+# VirtualHost in the `apache_vhosts` list.
+apache_vhost_php_fpm_parameters: |
+    <FilesMatch \.php$>
+      SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
+    </FilesMatch>
+
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
 # View the geerlingguy.apache Ansible Role README for more options.
@@ -105,39 +112,24 @@ apache_vhosts:
   - servername: "{{ drupal_domain }}"
     serveralias: "www.{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
-    extra_parameters: |
-          <FilesMatch \.php$>
-            SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
-          </FilesMatch>
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
   - servername: "adminer.{{ vagrant_hostname }}"
     documentroot: "{{ adminer_install_dir }}"
-    extra_parameters: |
-          <FilesMatch \.php$>
-            SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
-          </FilesMatch>
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
   - servername: "xhprof.{{ vagrant_hostname }}"
     documentroot: "{{ php_xhprof_html_dir }}"
-    extra_parameters: |
-          <FilesMatch \.php$>
-            SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
-          </FilesMatch>
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
   - servername: "pimpmylog.{{ vagrant_hostname }}"
     documentroot: "{{ pimpmylog_install_dir }}"
-    extra_parameters: |
-          <FilesMatch \.php$>
-            SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
-          </FilesMatch>
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
   - servername: "{{ vagrant_ip }}"
     serveralias: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
-    extra_parameters: |
-          <FilesMatch \.php$>
-            SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
-          </FilesMatch>
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
