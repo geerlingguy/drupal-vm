@@ -34,7 +34,7 @@ server {
         fastcgi_intercept_errors on;
         fastcgi_read_timeout {{ php_max_execution_time }};
         include fastcgi_params;
-        fastcgi_pass unix:{{ php_fpm_listen }};
+        fastcgi_pass {{ php_fpm_listen }};
     }
 
     location @rewrite {
