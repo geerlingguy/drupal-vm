@@ -1,5 +1,38 @@
 # Drupal VM Changelog
 
+## 4.1.0 "Anthem" (2016-12-30)
+
+### Breaking Changes
+
+  * N/A
+
+### New/changed variables in default.config.yml
+
+  * There's a new `apache_vhost_php_fpm_parameters` variable that defines the PHP-FPM handler Apache uses per-virtualhost. The old `extra_parameters` pre-4.1.0 will continue to work, but the new `SetHandler` technique is better for most scenarios than using `ProxyPassMatch`.
+  * The Dashboard entry in `nginx_hosts` now has `is_php: true`.
+
+### Improvements
+
+  * #617: Switch to `SetHandler` instead of `ProxyPassMatch` (fixes #617, #876, #945, #1055).
+  * #1090: Update docs to reference `SetHandler`.
+  * #1047: Add docs on Drupal Console remote command execution.
+  * #1076: Update PHP XDebug role to latest version
+  * #1067: Configure hostname for environments other than VMs.
+  * #1068: Add php-yaml extension.
+  * #1078: Move Ansible version check to Vagrantfile for better UX.
+  * #1071: Improve docs for SSL under Apache and Nginx.
+  * #455: Move prod readme to docs instead of README file.
+
+### Bugfixes
+
+  * #1076: Fix PHP modules not re-compiling on PHP version changes.
+  * #1061: Allow user defined post-provision-tasks to use tags.
+  * #1060: Fix bug where dashboard assumes optional vhost docroot is defined.
+  * #1062: Allow post-provision tasks to use the item variable.
+  * #1059: Fix hostsupdater trying to add wildcard aliases.
+  * #1054: Update Solr role to prevent permissions error.
+
+
 ## 4.0.0 "We've Got Company" (2016-12-10)
 
 ### Breaking Changes
@@ -10,7 +43,11 @@
 
 ### New/changed variables in default.config.yml
 
-  * TODO
+  * `drush` is now a default item in `installed_extras`.
+  * `upload-progress` is now an optional item in `installed_extras`.
+  * `drush_version` now defaults to `8.x` (`master` was causing issues with Drupal < 8).
+  * `php_install_recommends` was removed from the default set of variables.
+  * `solr_version` was bumped to `5.5.3` (was `5.5.2`).
 
 ### Improvements
 
