@@ -10,3 +10,12 @@
     - name: Install test dependencies (RedHat).
       package: name=logrotate state=present
       when: ansible_os_family == 'RedHat'
+
+    - name: Copy initctl_faker into place for Ubuntu 14.04.
+      copy:
+        src: initctl_faker
+        dest: /sbin/initctl
+        mode: 0755
+        force: yes
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
+      changed_when: false
