@@ -26,6 +26,7 @@
     src: "{{ xhprof_download_url }}"
     dest: "{{ workspace }}"
     copy: no
+    creates: "{{ workspace }}/{{ xhprof_download_folder_name }}"
 
 - name: Build XHProf.
   shell: >

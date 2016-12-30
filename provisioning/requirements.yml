@@ -54,7 +54,7 @@
 - src: geerlingguy.php-xdebug
   version: 2.3.1
 - src: geerlingguy.php-xhprof
-  version: 2.2.0
+  version: 2.2.1
 - src: geerlingguy.pimpmylog
   version: 1.0.2
 - src: geerlingguy.postfix
