@@ -1,5 +1,12 @@
 # Drupal VM Changelog
 
+## 4.1.1 (2016-12-30)
+
+### Bugfixes
+
+  * #1093: Install correct version of Apache on Ubuntu 12.04 and 14.04 for `SetHandler`.
+
+
 ## 4.1.0 "Anthem" (2016-12-30)
 
 ### Breaking Changes
