@@ -64,6 +64,7 @@ pages:
   - Other Information:
     - 'Networking Notes': 'other/networking.md'
     - 'Vagrant and VirtualBox': 'other/vagrant-virtualbox.md'
+    - 'Vagrant LXC provider': 'other/vagrant-lxc.md'
     - 'Improving Performance': 'other/performance.md'
     - 'BigPipe with Drupal VM': 'other/bigpipe.md'
     - 'Drupal multisite': 'deployment/multisite.md'
