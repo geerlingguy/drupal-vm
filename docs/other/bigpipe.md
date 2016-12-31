@@ -23,15 +23,21 @@ Nginx is the recommended way to use BigPipe, for the following reasons:
 
 Apache has three primary means of interacting with PHP applications like Drupal: `mod_php`, `mod_fastcgi`, and `mod_proxy_fcgi`. Drupal VM uses `mod_proxy_fcgi`, which is the most widely used and supported method of using Apache with PHP-FPM for the best scalability and memory management with Apache + PHP.
 
-For all of these methods, you have to make sure `mod_deflate` gzip compression is disabled; you can do this by adding the following line immediately after the `ProxyPassMatch` line under a host in the `apache_vhosts` list inside `config.yml`:
+For all of these methods, you have to make sure `mod_deflate` gzip compression is disabled; you can do this by modifying the VirtualHost's `extra_parameters` parameter in the `apache_vhosts` list inside `config.yml`:
 
-    SetEnv no-gzip 1
+    apache_vhosts:
+      - servername: "{{ drupal_domain }}"
+        serveralias: "www.{{ drupal_domain }}"
+        documentroot: "{{ drupal_core_path }}"
+        extra_parameters: |
+            {{ apache_vhost_php_fpm_parameters }}
+            SetEnv no-gzip 1
 
 This will disable the `mod_deflate` module for any requests inside that directory.
 
 If you want to switch Apache to use `mod_php` instead of proxying requests through PHP-FPM, you can make the following changes in `config.yml`:
 
   1. Add `libapache2-mod-php7.0` to `extra_packages` in `config.yml`.
-  2. Delete the `extra_parameters` under any Drupal site in the list of `apache_vhosts` (so there is no `ProxyPassMatch` rule).
+  2. Delete the `extra_parameters` under any Drupal site in the list of `apache_vhosts` (so there is no `SetHandler` rule).
 
 You can also disable PHP-FPM and remove the two `proxy` entries from `apache_mods_enabled` if you don't want to use PHP-FPM with Apache at all, but that's optional; it won't break anything to run Apache with `mod_php` and `mod_proxy_fastcgi` at the same time.

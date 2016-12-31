@@ -53,6 +53,7 @@
   copy:
     src: "{{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so"
     dest: "{{ php_xdebug_module_path }}/xdebug-{{ php_xdebug_version }}.so"
+    remote_src: True
   notify: restart webserver
 
 - include: configure.yml

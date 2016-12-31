@@ -47,19 +47,7 @@ If you prefer using your domain as the root of all extra packages installed, ie.
 
 ```
 vagrant_hostname: "my-drupal-site.com"
-
-apache_vhosts:
-  # Resolves to http://my-drupal-site.com/
-  - servername: "{{ drupal_domain }}"
-    documentroot: "{{ drupal_core_path }}"
-    extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
-
-  # Resolves to http://adminer.my-drupal-site.com/
-  - servername: "adminer.{{ vagrant_hostname }}"
-    documentroot: "{{ adminer_install_dir }}"
-    extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ adminer_install_dir }}"
+drupal_domain: "{{ vagrant_hostname }}"
 ```
 
 ## Update MySQL info

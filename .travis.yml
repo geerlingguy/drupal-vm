@@ -19,6 +19,11 @@ env:
       distro: ubuntu1604
       init: /sbin/init
       run_opts: "--privileged"
+    # Defaults - Ubuntu 14.04.
+    - type: defaults
+      distro: ubuntu1404
+      init: /sbin/init
+      run_opts: "--privileged"
     # PHP 5.6 - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
@@ -90,9 +95,9 @@ script:
   # Run the playbook with ansible-playbook.
   - >
     if [ ! -z "${config_dir}" ]; then
-      docker exec --tty ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
+      docker exec ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
     else
-      docker exec --tty ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
+      docker exec ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
     fi
 
   # Run integration tests.
