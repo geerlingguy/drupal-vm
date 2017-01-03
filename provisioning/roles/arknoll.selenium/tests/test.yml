@@ -4,8 +4,17 @@
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=yes
+      apt: update_cache=yes cache_valid_time=3600
       when: ansible_os_family == 'Debian'
 
+    - name: Don't install Chrome on old OSes.
+      set_fact:
+        selenium_install_firefox: yes
+        selenium_install_chrome: no
+      when: >
+        (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04')
+        or (ansible_os_family == 'RedHat' and ansible_distribution_version.split('.')[0] == '6')
+
   roles:
+    - geerlingguy.java
     - role_under_test

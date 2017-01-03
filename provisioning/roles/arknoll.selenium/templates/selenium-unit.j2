@@ -1,0 +1,11 @@
+[Unit]
+Description=selenium test framework
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/bin/xvfb-run /usr/bin/java -client -jar {{ selenium_install_dir }}/selenium/selenium-server-standalone-{{ selenium_version }}.jar
+Restart=on-failure
+RestartSec=20s
+
+[Install]
+WantedBy=multi-user.target

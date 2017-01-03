@@ -23,9 +23,24 @@
   when: selenium_install_firefox
   tags: [configuration, selenium, selenium-firefox]
 
+- name: Add Chrome key (if configured, Debian)
+  apt_key:
+    url: "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+    state: present
+  when: ansible_os_family == 'Debian' and selenium_install_chrome
+  tags: [configuration, selenium, selenium-chrome]
+
+- name: Add Chrome repo (if configured, Debian)
+  apt_repository:
+    repo: "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    state: present
+    update_cache: yes
+  when: ansible_os_family == 'Debian' and selenium_install_chrome
+  tags: [configuration, selenium, selenium-chrome]
+
 - name: Install Chrome (if configured, Debian)
   apt:
-    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    name: google-chrome-stable
     state: present
   when: ansible_os_family == 'Debian' and selenium_install_chrome
   tags: [configuration, selenium, selenium-chrome]
@@ -67,6 +82,32 @@
     mode: 0755
   tags: [configuration, selenium, selenium-install]
 
+- name: Install systemd unit file (for systemd systems)
+  template:
+    src: "selenium-unit.j2"
+    dest: /etc/systemd/system/selenium.service
+    owner: root
+    group: root
+    mode: 0755
+  when: >
+    (ansible_distribution == 'Ubuntu' and ansible_distribution_version.split(".")[0]|int >= 16) or
+    (ansible_distribution == 'Debian' and ansible_distribution_version.split(".")[0]|int >= 8) or
+    (ansible_distribution == 'CentOS' and ansible_distribution_version.split(".")[0]|int >= 7) or
+    (ansible_distribution == 'Fedora')
+  tags: [configuration, selenium, selenium-install]
+
+- name: Register systemd service status (for systemd systems)
+  shell: 'systemctl status selenium | grep "active (running)"'
+  when: >
+    (ansible_distribution == 'Ubuntu' and ansible_distribution_version.split(".")[0]|int >= 16) or
+    (ansible_distribution == 'Debian' and ansible_distribution_version.split(".")[0]|int >= 8) or
+    (ansible_distribution == 'CentOS' and ansible_distribution_version.split(".")[0]|int >= 7) or
+    (ansible_distribution == 'Fedora')
+  register: selenium_running
+  ignore_errors: yes
+  changed_when: false
+
 - name: Ensure selenium is running
   service: name=selenium state=started enabled=yes
   tags: [configuration, selenium, selenium-run]
+  when: selenium_running.failed is defined and selenium_running.failed == true
