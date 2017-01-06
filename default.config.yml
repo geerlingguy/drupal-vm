@@ -131,6 +131,7 @@ apache_vhosts:
     documentroot: "{{ dashboard_install_dir }}"
     extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
+apache_packages_state: latest
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - expires.load
