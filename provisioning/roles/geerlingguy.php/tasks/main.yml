@@ -8,6 +8,11 @@
     php_packages: "{{ __php_packages | list }}"
   when: php_packages is not defined
 
+- name: Define extra php_packages.
+  set_fact:
+    php_packages: "{{ php_packages | list + php_packages_extra | list }}"
+  when: php_packages_extra is defined
+
 - name: Define php_webserver_daemon.
   set_fact:
     php_webserver_daemon: "{{ __php_webserver_daemon }}"
