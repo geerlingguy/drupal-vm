@@ -10,6 +10,12 @@
 - include: install-from-source.yml
   when: ruby_install_from_source == true
 
+- name: Add user installed RubyGems bin directory to global $PATH.
+  copy:
+    src: rubygems.sh
+    dest: /etc/profile.d/rubygems.sh
+    mode: 0644
+
 # Install Bundler and configured gems.
 - name: Install Bundler.
   gem: name=bundler state=present user_install=no

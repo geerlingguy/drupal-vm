@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  vars:
+    ruby_install_from_source: true
+    ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+    ruby_version: 2.3.0
+    ruby_install_gems_user: root
+    ruby_install_gems:
+      - sass
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role_under_test

@@ -1,61 +1,91 @@
 ---
-sudo: required
-language: python
-python: "2.7"
+services: docker
 
 env:
-  - SITE=test-install-from-source.yml
-    RUBY_VERSION=2.3.0
-    RUBY_PATH_PREFIX=/usr/local
-  - SITE=test-install-package.yml
-    RUBY_VERSION=1.8.7
-    RUBY_PATH_PREFIX=/usr
+  # Package install on all OSes.
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    ruby_version: 2.0.0
+    ruby_path_prefix: /usr
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    ruby_version: 2.3.1
+    ruby_path_prefix: /usr
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    playbook: test.yml
+    ruby_version: 1.9.3
+    ruby_path_prefix: /usr
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    ruby_version: 2.1.5
+    ruby_path_prefix: /usr
+
+  # Source install on latest OSes.
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test-source.yml
+    ruby_version: 2.3.0
+    ruby_path_prefix: /usr/local
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test-source.yml
+    ruby_version: 2.3.0
+    ruby_path_prefix: /usr/local
 
 before_install:
-  - sudo apt-get update -qq
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Ensure ruby is not installed.
-  - yes | gem uninstall --all
-  - yes "yes" | rvm implode --force
-  - sudo apt-get purge -y ruby
-  - sudo rm -rf ~/.rvm
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  # Pull container.
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - container_id=$(mktemp)
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+  # Install dependencies.
+  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
 
-  # Run the role/playbook again, checking to make sure it's idempotent.
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
+
+  # Test role.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
+
+  # Test role idempotence.
+  - idempotence=$(mktemp)
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
   - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure ruby is installed and at the correct version.
-  - which ruby
-  - test -x $RUBY_PATH_PREFIX/bin/ruby
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which ruby'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x ${ruby_path_prefix}/bin/ruby'
 
-  - ruby --version
-  - $RUBY_PATH_PREFIX/bin/ruby --version | grep -qF "$RUBY_VERSION"
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ruby --version'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ${ruby_path_prefix}/bin/ruby --version | grep -qF ${ruby_version}'
 
   # Make sure bundler is installed.
-  - ls -lah /usr/local/bin
-  - which bundle
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /usr/local/bin'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which bundle'
+
+  # Make sure user installed gems are available.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "which sass"'
 
 after_failure:
-  # If we failed, it's likely due to Travis environment changes.
-  - which ruby
-  - ruby --version
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which ruby'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ruby --version'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
