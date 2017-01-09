@@ -10,6 +10,10 @@ On RedHat-based distributions, requires the EPEL repository (you can simply add 
 
 ## Role Variables
 
+    redis_enablerepo: epel
+
+(Used only on RHEL/CentOS) The repository to use for Redis installation.
+
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     redis_port: 6379
@@ -49,11 +53,11 @@ Snapshotting configuration; setting values in this list will save the database t
 Database compression and location configuration.
 
     redis_maxmemory: 0
-    
+
 Limit memory usage to the specified amount of bytes. Leave at 0 for unlimited.
 
     redis_maxmemory_policy: "noeviction"
-    
+
 The method to use to keep memory usage below the limit, if specified. See [Using Redis as an LRU cache](http://redis.io/topics/lru-cache).
 
     redis_maxmemory_samples: 5
@@ -73,6 +77,10 @@ Valid values are `always` (slower, safest), `everysec` (happy medium), or `no` (
 
 Add extra include file paths to this list to include more/localized Redis configuration.
 
+The redis package name for installation via the system package manager. Defaults to `redis-server` on Debian and `redis` on RHEL.
+
+    redis_package_name: "redis28u"
+
 ## Dependencies
 
 None.
@@ -89,4 +97,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

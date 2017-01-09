@@ -1,5 +1,5 @@
 ---
-sudo: required
+services: docker
 
 env:
   - distro: centos7
@@ -18,30 +18,27 @@ env:
     init: /sbin/init
     run_opts: ""
 
-services:
-  - docker
-
 before_install:
   # Pull container.
-  - 'sudo docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Install dependencies.
-  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
+  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
 
   # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
 
   # Test role idempotence.
   - idempotence=$(mktemp)
-  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
   - >
     tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
@@ -49,17 +46,13 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Ensure Node.js is installed.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which node'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm node -v'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which node'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm node -v'
 
   # Ensure npm packages are installed globally.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "npm list -g --depth=0 jslint"'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "npm list -g --depth=0 node-sass"'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "npm list -g --depth=0 yo"'
-
-after_success:
-  # Clean up.
-  - 'sudo docker stop "$(cat ${container_id})"'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "npm list -g --depth=0 jslint"'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "npm list -g --depth=0 node-sass"'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "npm list -g --depth=0 yo"'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

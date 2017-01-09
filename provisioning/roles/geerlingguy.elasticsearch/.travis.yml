@@ -2,20 +2,16 @@
 sudo: required
 
 env:
-  - distribution: centos
-    version: 6
-    init: /sbin/init
-    run_opts: ""
-  - distribution: centos
-    version: 7
+  - distro: centos7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distribution: ubuntu
-    version: 14.04
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: ubuntu1404
     init: /sbin/init
     run_opts: ""
-  - distribution: ubuntu
-    version: 12.04
+  - distro: ubuntu1204
     init: /sbin/init
     run_opts: ""
 
@@ -23,18 +19,16 @@ services:
   - docker
 
 before_install:
-  # Pull container
-  - 'sudo docker pull ${distribution}:${version}'
-  # Customize container
-  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
+  # Pull container.
+  - 'sudo docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
   - container_id=$(mktemp)
-  # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
+  # Run container in detached state.
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
-  # Install required Galaxy roles.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install geerlingguy.java'
+  # Install dependencies.
+  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
 
   # Ansible syntax check.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
@@ -42,16 +36,18 @@ script:
   # Test role.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
 
-  # TODO: Test if elasticsearch is working.
-
   # Test role idempotence.
+  - idempotence=$(mktemp)
+  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
   - >
-    sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml
+    tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Clean up
+  # TODO: Test if elasticsearch is working.
+
+  # Clean up.
   - 'sudo docker stop "$(cat ${container_id})"'
 
 notifications:

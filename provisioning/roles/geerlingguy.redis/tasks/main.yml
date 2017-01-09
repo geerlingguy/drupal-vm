@@ -3,6 +3,11 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Define redis_package.
+  set_fact:
+    redis_package: "{{ __redis_package }}"
+  when: redis_package is not defined
+
 # Setup/install tasks.
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
@@ -17,5 +22,5 @@
     mode: 0644
   notify: restart redis
 
-- name: Ensure redis is running and enabled on boot.
+- name: Ensure Redis is running and enabled on boot.
   service: "name={{ redis_daemon }} state=started enabled=yes"

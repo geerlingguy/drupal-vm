@@ -1,3 +1,5 @@
 ---
-- name: Ensure redis is installed.
-  apt: name=redis-server state=installed
+- name: Ensure Redis is installed.
+  apt:
+    name: "{{ redis_package }}"
+    state: present

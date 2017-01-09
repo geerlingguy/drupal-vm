@@ -4,7 +4,7 @@
 - src: thom8.php-upload-progress
   version: 1.0.1
 - src: franklinkim.newrelic
-  version: 1.4.0
+  version: 1.6.0
 - src: geerlingguy.adminer
   version: 1.1.0
 - src: geerlingguy.apache
@@ -22,13 +22,13 @@
 - src: geerlingguy.drush
   version: 1.2.0
 - src: geerlingguy.elasticsearch
-  version: 2.1.1
+  version: 2.1.2
 - src: geerlingguy.firewall
   version: 2.0.1
 - src: geerlingguy.git
   version: 1.2.1
 - src: geerlingguy.java
-  version: 1.7.1
+  version: 1.7.2
 - src: geerlingguy.mailhog
   version: 2.1.1
 - src: geerlingguy.memcached
@@ -38,7 +38,7 @@
 - src: geerlingguy.nginx
   version: 1.9.6
 - src: geerlingguy.nodejs
-  version: 3.3.0
+  version: 3.3.1
 - src: geerlingguy.php
   version: 3.4.4
 - src: geerlingguy.php-memcached
@@ -62,13 +62,13 @@
 - src: geerlingguy.postgresql
   version: 1.0.2
 - src: geerlingguy.redis
-  version: 1.2.0
+  version: 1.4.1
 - src: geerlingguy.repo-remi
   version: 1.2.0
 - src: geerlingguy.ruby
   version: 2.4.2
 - src: geerlingguy.security
-  version: 1.4.0
+  version: 1.5.0
 - src: geerlingguy.solr
   version: 3.4.1
 - src: geerlingguy.varnish

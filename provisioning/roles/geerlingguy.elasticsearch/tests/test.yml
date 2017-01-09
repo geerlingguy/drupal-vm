@@ -6,6 +6,10 @@
       yum: name=which state=present
       when: ansible_os_family == 'RedHat'
 
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+
   roles:
     - geerlingguy.java
     - role_under_test
