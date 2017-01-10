@@ -9,6 +9,19 @@
 #
 
 #
+# Option : cgroup_style
+# Value  : 0
+# Note   : Setting `cgroup_style=0` fixes issue with docker memory reporting
+#          Workaround for an issue where new relic cannot get container memory stats.
+#          http://stackoverflow.com/questions/36788770/newrelic-does-not-display-cpu-memory-usage-for-dockers-container
+# Default: none
+#
+#cgroup_style=
+{% if newrelic_cgroup_style|default(None) != None %}
+cgroup_style={{ newrelic_cgroup_style }}
+{% endif %}
+
+#
 # Option : license_key
 # Value  : 40-character hexadecimal string provided by New Relic. This is
 #          required in order for the server monitor to start.
@@ -53,6 +66,9 @@ logfile={{ newrelic_logfile }}
 # Default: none (use a direct connection)
 #
 #proxy=
+{% if newrelic_proxy|default(None) != None %}
+proxy={{ newrelic_proxy }}
+{% endif %}
 
 #
 # Setting: ssl
@@ -187,7 +203,7 @@ logfile={{ newrelic_logfile }}
 # Default: none
 #
 #labels=label_type:label_value
-{% if newrelic_labels %}
+{% if newrelic_labels|default(None) != None %}
 labels={{ newrelic_labels }}
 {% endif %}
 
@@ -214,6 +230,6 @@ disable_docker={{ newrelic_disable_docker | to_nice_json }}
 # Default: none
 #
 #hostname=newrelic.com
-{% if newrelic_override_hostname %}
+{% if newrelic_override_hostname|default(None) != None %}
 hostname={{ newrelic_override_hostname }}
 {% endif %}

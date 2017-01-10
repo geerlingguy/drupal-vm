@@ -20,4 +20,4 @@
     state: present
 
 - name: Ensure Node.js and npm are installed.
-  yum: "name=nodejs state=present enablerepo='epel,nodesource'"
+  yum: "name=nodejs-{{ nodejs_version[0] }}.* state=present enablerepo='epel,nodesource'"

@@ -2,6 +2,7 @@
 - name: Install packages required to build ruby (RedHat).
   yum: "name={{ item }} state=present"
   with_items:
+    - '@development'
     - zlib-devel
     - openssl-static
   when: ansible_os_family == 'RedHat'
@@ -13,6 +14,7 @@
 - name: Install packages required to build ruby (Debian).
   apt: "name={{ item }} state=present"
   with_items:
+    - build-essential
     - zlib1g-dev
     - libssl-dev
     - libyaml-dev
@@ -43,7 +45,7 @@
   with_items:
     - ./configure --enable-shared
     - make
-    - sudo make install
+    - make install
 
 - name: Add ruby symlinks.
   file:
