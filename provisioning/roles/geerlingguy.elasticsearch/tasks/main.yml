@@ -18,4 +18,4 @@
   service: name=elasticsearch state=started enabled=yes
 
 - name: Make sure Elasticsearch is running before proceeding.
-  wait_for: port={{ elasticsearch_http_port }} delay=3 timeout=300
+  wait_for: host={{ elasticsearch_network_host }} port={{ elasticsearch_http_port }} delay=3 timeout=300
