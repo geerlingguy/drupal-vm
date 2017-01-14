@@ -1,0 +1,31 @@
+---
+- hosts: all
+
+  vars:
+    php_enable_webserver: false
+    php_enablerepo: "remi,remi-php70"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Set php_packages for PHP 7.0 Debian 8 install.
+      set_fact:
+        php_packages:
+          - php7.0-common
+          - php7.0-cli
+          - php7.0-dev
+          - php7.0-fpm
+          - libpcre3-dev
+          - php7.0-opcache
+          - php7.0-apcu
+      when: ansible_distribution == 'Debian'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.repo-dotdeb
+      when: ansible_distribution == 'Debian'
+    - geerlingguy.php
+    - role_under_test

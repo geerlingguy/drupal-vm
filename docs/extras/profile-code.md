@@ -47,6 +47,12 @@ The Devel module also *used* to provide XHProf configuration, and setting the op
   - **xhprof directory**: `/usr/share/php`
   - **XHProf URL**: `http://xhprof.drupalvm.dev` (assuming this domain is configured in `apache_vhosts` inside `config.yml`)
 
+## Tideways
+
+The XHProf PHP extension has barely been maintained since Facebook abandoned the project around 2015, so it's difficult to get it running under newer versions of PHP. Instead, you can use the Tideways PHP Extension along with either the Tideways module or the XHProf module to profile page views.
+
+TODO: Describe how to use.
+
 ## XDebug
 
 [XDebug](https://xdebug.org/) is a debugger and profiler for PHP. While most people use it only for debugging purposes, you can also use it for profiling. It's not as commonly used for profiling as either Blackfire or XHProf, but it works!

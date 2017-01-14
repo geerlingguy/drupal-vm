@@ -82,6 +82,9 @@
     - { role: geerlingguy.drush, when: '"drush" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
+    - role: geerlingguy.php-tideways
+      workspace: "/root/php{{ php_version }}"
+      when: '"tideways" in installed_extras'
     - role: geerlingguy.php-xdebug
       workspace: "/root/php{{ php_version }}"
       when: '"xdebug" in installed_extras'
