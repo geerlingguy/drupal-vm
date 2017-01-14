@@ -53,7 +53,7 @@ The XHProf PHP extension has barely been maintained since Facebook abandoned the
 
 ### Profiling with the Tideways module
 
-TODO.
+Instructions for profiling with the Tideways module will be added after the following issue is resolved: [Can't install latest dev release on 8.x](https://www.drupal.org/node/2843481).
 
 ### Profiling with the XHProf Module
 
