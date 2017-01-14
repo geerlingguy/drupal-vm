@@ -1,0 +1,7 @@
+[tideways]
+extension="{{ php_tideways_module_path }}/tideways.so"
+{% if tideways_api_key %}
+tideways.api_key={{ tideways_api_key }}
+{% else %}
+tideways.auto_prepend_library=0
+{% endif %}
