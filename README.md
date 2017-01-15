@@ -24,8 +24,7 @@ It will install the following on an Ubuntu 16.04 (by default) linux VM:
     - Memcached
     - Redis
     - SQLite
-    - XHProf, for profiling your code
-    - Blackfire, for profiling your code
+    - Blackfire, XHProf, or Tideways for profiling your code
     - XDebug, for debugging your code
     - Adminer, for accessing databases directly
     - Pimp my Log, for easy viewing of log files

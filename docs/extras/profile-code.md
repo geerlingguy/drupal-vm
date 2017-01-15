@@ -49,15 +49,17 @@ The Devel module also *used* to provide XHProf configuration, and setting the op
 
 ## Tideways
 
-The XHProf PHP extension has barely been maintained since Facebook abandoned the project around 2015, so it's difficult to get it running under newer versions of PHP. Instead, you can use the Tideways PHP Extension along with either the [Tideways](https://www.drupal.org/project/tideways) or [XHProf](https://www.drupal.org/project/xhprof) module to profile page views.
+The XHProf PHP extension has barely been maintained since Facebook abandoned the project around 2015, so it's difficult to get it running under newer versions of PHP.
 
-### Profiling with the Tideways module
-
-Instructions for profiling with the Tideways module will be added after the following issue is resolved: [Can't install latest dev release on 8.x](https://www.drupal.org/node/2843481).
+The Tideways PHP Extension is a well-maintained fork of the XHProf code and works with either the [XHProf](https://www.drupal.org/project/xhprof) or [Tideways](https://www.drupal.org/project/tideways) module to profile page views.
 
 ### Profiling with the XHProf Module
 
 To enable profiling of Drupal pages using the Tideways PHP Extension, follow the directions listed earlier for configuring the XHProf module, but choose the 'Tideways' extension under in the 'Profiling settings' section.
+
+### Profiling with the Tideways module
+
+Instructions for profiling with the Tideways module through the [tideways.io](https://tideways.io) service will be added after the following issue is resolved: [Can't install latest dev release on 8.x](https://www.drupal.org/node/2843481).
 
 ## XDebug
 

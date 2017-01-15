@@ -25,6 +25,23 @@ The URL from which Tideways will be downloaded.
 
 If you use the Tideways UI, set this variable to your API key. Otherwise the extension can be used along with the XHProf UI to view profiles.
 
+    tideways_install_xhprof_ui: yes
+
+Tideways data-format is 100% compatible with XHProf so you can use the XHProf UI to browse profiles reports and the `XHProfRuns_Default` class to write the profile data to disk. If you use the Tideways UI, set this variable to `no`.
+
+    xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+    xhprof_download_folder_name: xhprof-master
+
+The URL from which XHProf will be downloaded.
+
+    php_xhprof_lib_dir: /usr/share/php/xhprof_lib
+
+Directory where the XHProf PHP library is stored.
+
+    php_xhprof_html_dir: /usr/share/php/xhprof_html
+
+Directory where the XHProf UI is stored.
+
 ## Dependencies
 
   - geerlingguy.php
