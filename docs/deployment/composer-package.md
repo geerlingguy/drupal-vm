@@ -15,4 +15,4 @@ drupal_composer_project_options: "--prefer-dist --stability rc --no-interaction"
 drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 ```
 
-_Opting for composer based installs will most likely increase your VM's time to provision considerably. See the section on how to [improve composer build performance](../other/performance.md#improving-composer-build-performance) in the docs for how to improve it._
+_Opting for composer based installs will most likely increase your VM's time to provision considerably. Find out how you can [improve composer build performance](../other/performance.md#improving-composer-build-performance)._
