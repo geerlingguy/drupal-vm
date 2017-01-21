@@ -22,7 +22,7 @@ if [ ! -e "$SOLR_SETUP_COMPLETE_FILE" ]; then
   # Download and expand the Solr module.
   wget -qO- $SOLR_DOWNLOAD | tar xvz -C $SOLR_DOWNLOAD_DIR
 
-  # Copy the Solr configuration into place over the default `collection1` core.
+  # Copy new Solr collection core with the Solr configuration provided by module.
   sudo su - solr -c "/opt/solr/bin/solr create -c $NAME -d $SOLR_DOWNLOAD_DIR/$SOLR_MODULE_NAME/solr-conf/$SOLR_VERSION/"
 
   # Adjust the autoCommit time so index changes are committed in 1s.
