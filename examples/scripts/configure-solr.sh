@@ -7,7 +7,7 @@
 # `solr` in the `installed_extras`, and is currently set up for the D7 versions
 # of Apache Solr Search or Search API Solr.
 
-NAME="drupalvm"
+NAME="d8"
 SOLR_SETUP_COMPLETE_FILE="/etc/drupal_vm_solr_config_complete_"$NAME
 
 # Search API Solr module.
