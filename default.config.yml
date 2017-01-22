@@ -236,6 +236,8 @@ firewall_allowed_tcp_ports:
   - "8983"
   - "9200"
 firewall_log_dropped_packets: false
+firewall_disable_firewalld: true
+firewall_disable_ufw: true
 
 # PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
 # See version-specific notes: http://docs.drupalvm.com/en/latest/other/php/
