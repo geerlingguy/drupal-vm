@@ -39,3 +39,6 @@
 
 - name: Ensure the firewall is enabled and will start on boot.
   service: name=firewall state=started enabled=yes
+
+- include: disable-other-firewalls.yml
+  when: firewall_disable_firewalld or firewall_disable_ufw
