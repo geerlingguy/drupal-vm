@@ -8,14 +8,14 @@
 # of Apache Solr Search or Search API Solr.
 
 NAME="d8"
-SOLR_SETUP_COMPLETE_FILE="/etc/drupal_vm_solr_config_complete_"$NAME
+SOLR_SETUP_COMPLETE_FILE="/etc/drupal_vm_solr_config_complete_$NAME"
 
 # Search API Solr module.
 SOLR_DOWNLOAD="http://ftp.drupal.org/files/projects/search_api_solr-8.x-1.x-dev.tar.gz"
 SOLR_DOWNLOAD_DIR="/tmp"
 SOLR_MODULE_NAME="search_api_solr"
 SOLR_VERSION="5.x"
-SOLR_CORE_PATH="/var/solr/data/"$NAME
+SOLR_CORE_PATH="/var/solr/data/$NAME"
 
 # Check to see if we've already performed this setup.
 if [ ! -e "$SOLR_SETUP_COMPLETE_FILE" ]; then
