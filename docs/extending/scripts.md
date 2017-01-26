@@ -21,7 +21,7 @@ Place your pre and post provision scripts inside a `scripts` directory in the ro
 
 ## Ansible task files
 
-To use an extra ansible task file, configure the path to the file (relative to `provisioning/files/`) in `config.yml`:
+To use an extra ansible task file, configure the path to the file (relative to `provisioning/playbook.yml`) in `config.yml`:
 
 ```yaml
 pre_provision_tasks_dir: "../scripts/pre/*"
@@ -34,7 +34,7 @@ The files matched will run in alphabetical order, and as with shell scripts, pre
 
 ## Ansible playbooks
 
-Out of the box Drupal VM does not support running additional playbooks or adding your own roles but using [`Vagrantfile.local`](../other/overriding-configurations.md#extending-the-vagrantfile-with-vagrantfilelocal) you can add any number of additional provisioners to vagrant.
+Out of the box Drupal VM does not support running additional playbooks or adding your own roles but using [`Vagrantfile.local` you can add any number of additional provisioners to vagrant](vagrantfile.md).
 
 As an example you might have a `local.playbook.yml` with it's own dependencies defined in `local.requirements.yml`. Place both of these next to your `config.yml` and add the following `Vagrantfile.local`.
 

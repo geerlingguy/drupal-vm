@@ -101,3 +101,5 @@ There are many different ways you can run Behat tests via PhantomJS and other dr
   - [Trying to achieve a Visual Regression Testing Strategy](https://github.com/geerlingguy/drupal-vm/issues/421)
 
 Also, see Acquia's [BLT](https://github.com/acquia/blt) project for a good example of Behat test integration with Drupal VM.
+
+For a list of available role variables, see the [`arknoll.selenium` Ansible role's README](https://github.com/arknoll/ansible-role-selenium#readme).

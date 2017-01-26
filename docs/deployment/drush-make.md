@@ -1,6 +1,4 @@
-Drupal VM is configured to use Composer by default to build a Drupal site on the VM inside `/var/www/drupalvm/drupal/web` (in a folder that's synced to your local machine, so you can work with the Drupal codebase either locally or inside the VM).
-
-If you want to build a Drupal site using a [Drush make file](http://www.drush.org/en/master/make/) instead, set `build_composer_project: false`, `build_makefile: true` and either use the `example.drupal.make.yml` file as a base, or use your own Drush make file: just place it or symlink it into the root of the Drupal VM folder with the filename `drupal.make.yml`. You can also set a separate path to the makefile using the `drush_makefile_path` variable.
+If you want to build a Drupal site using a [Drush make file](http://www.drush.org/en/master/make/) instead of composer, set `build_composer_project: false`, `build_makefile: true` and either use the `example.drupal.make.yml` file as a base, or use your own Drush make file: just place it or symlink it into the root of the Drupal VM folder with the filename `drupal.make.yml`. You can also set a separate path to the makefile using the `drush_makefile_path` variable.
 
 ```yaml
 build_composer_project: false

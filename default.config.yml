@@ -90,9 +90,6 @@ drupal_site_install_extra_args: []
 # Cron jobs are added to the vagrant user's crontab. Keys include name
 # (required), minute, hour, day, weekday, month, job (required), and state.
 drupalvm_cron_jobs: []
-  # - name: "Drupal Cron"
-  #   minute: "*/30"
-  #   job: "drush -r {{ drupal_core_path }} core-cron"
 
 # Drupal VM automatically creates a drush alias file in your ~/.drush folder if
 # this variable is 'true'.

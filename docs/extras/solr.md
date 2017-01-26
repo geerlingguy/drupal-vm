@@ -26,3 +26,5 @@ post_provision_scripts:
 ## Extra Solr configuration
 
 You can add extra configuration for Solr, like the minimum and maximum memory allocation for the JVM (`solr_xms` and `solr_xmx`), and even the `solr_version`, by setting the appropriate variables inside `config.yml` before you build Drupal VM.
+
+For a list of available role variables, see the [`geerlingguy.solr` Ansible role's README](https://github.com/geerlingguy/ansible-role-solr#readme).
