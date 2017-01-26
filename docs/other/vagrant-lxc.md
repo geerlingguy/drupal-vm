@@ -14,7 +14,7 @@ As containers can't load modules, but inherit them from the host, you need to lo
 
 To load these automatically when you boot up your system, you should check the guidelines of your specific distribution. Usually you add them to `/etc/modules` or `/etc/modules-load.d/*`
 
-### Create a [`Vagrantfile.local`](overriding-configurations.md#extending-the-vagrantfile-with-vagrantfilelocal)
+### Create a [`Vagrantfile.local`](../extending/vagrantfile.md)
 
     config.vm.networks[0][1][:lxc__bridge_name] = 'vlxcbr1'
     config.vm.provider :lxc do |lxc|
