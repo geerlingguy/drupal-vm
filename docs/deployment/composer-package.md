@@ -1,6 +1,6 @@
 Out of the box Drupal VM is configured to use `composer create-project` to build a Drupal 8 codebase.
 
-This is set up by the following settings in `config.yml`:
+This is set up with the following variables in `config.yml`:
 
   - Composer will build the project if `build_composer_project` is `true`, and `build_makefile` and `build_composer` are both `false`.
   - The Composer package is defined by `drupal_composer_project_package`.

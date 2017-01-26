@@ -1,6 +1,6 @@
 You can share folders between your host computer and the VM in a variety of ways; the most commonly-used method is an NFS share. If you use Windows and encounter any problems with NFS, try switching to `smb`. The `default.config.yml` file contains an example `nfs` share that would sync the entire drupal-vm directory (configured as the relative path `.`) on your host into the `/var/www/drupalvm` folder on Virtual Machine.
 
-If you want to use a different synced folder method (e.g. `smb`), you can change `type` to:
+If you want to use a different synced folder method (e.g. `smb`), you can change `type`:
 
 ```yaml
 vagrant_synced_folders:

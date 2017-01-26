@@ -1,4 +1,4 @@
-Drupal VM is configured to use `composer create-project` to build a Drupal 8 codebase by default but supports building Drupal from a custom composer.json as well.
+Drupal VM is configured to use `composer create-project` to build a Drupal 8 codebase by default but supports building Drupal from a custom `composer.json` file as well.
 
 1. Copy `example.drupal.composer.json` to `drupal.composer.json` and modify it to your liking.
 2. Use the Composer build system by setting `build_composer: true` in your `config.yml` (make sure `build_makefile` and `build_composer_project` are set to `false`).

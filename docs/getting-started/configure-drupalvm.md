@@ -1,4 +1,4 @@
-If you only need a simple Drupal VM environment up and running there are no required configurations. The [configurations used by defualt are listed in `default.config.yml`](https://github.com/geerlingguy/drupal-vm/blob/master/default.config.yml) and you can override them with a number of optional configuration files.
+If you only need a simple Drupal VM environment up and running there are no required configurations. The [configurations used by default are listed in `default.config.yml`](https://github.com/geerlingguy/drupal-vm/blob/master/default.config.yml) and you can override them with a number of optional configuration files.
 
 _Note: The merge of variables in these files is shallow, if you want to override a single item in a list, you will need to re-define all items in that list._
 
@@ -39,10 +39,10 @@ vagrant_synced_folders:
 
 ### 4. vagrant.config.yml
 
-Environment specific overrides. When you run Drupal VM through _Vagrant_, the environment will be set to `vagrant` and thus this file is loaded when available. If you're doing something more advanced, such as running Drupal VM on a [production environment](../other/production.md), you can use a different environment configuration file, eg `prod.config.yml`.
+Environment specific overrides. When you run Drupal VM through _Vagrant_, the environment will be set to `vagrant` and this file is loaded when available. If you're doing something more advanced, such as running Drupal VM on a [production environment](../other/production.md), you can use a different environment configuration file, eg `prod.config.yml`.
 
-_Note: In addition to the variables listed in `default.config.yml`, you can also override the default variables set by the ansible roles included. In the "Installed extras" section of this documentation, each role has a link to the available variables._
+_Note: In addition to the variables listed in `default.config.yml`, you can also override the variables set by any of the ansible roles. In the "Installed extras" section of this documentation, each role has a link to the available variables._
 
-## Additional resources:
+## Additional resources
 
 - Jeff Geerling's DrupalDC talk "[Drupal VM Tips and Tricks for Drupal 8 development](https://www.youtube.com/watch?v=_wV6MDsT42Y)"

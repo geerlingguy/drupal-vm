@@ -6,9 +6,9 @@ Also, see the examples included in the [`geerlingguy.nginx` Ansible role's READM
 
 _Note: if you're using php-fpm, you may want to reflect your use of nginx by setting `php_fpm_pool_user` and `php_fpm_pool_group` in your `config.yml`._
 
-## Enable SSH Support with Nginx
+## Enable SSL Support with Nginx
 
-To enable SSL support for you virtual hosts you first need a certificate file. See the same section under the [Apache documentation](webservers-apache.md#enable-ssh-support-with-apache) for how to generate a self-signed certficiate.
+To enable SSL support for you virtual hosts you first need a certificate file. See the same section under the [Apache documentation](webservers-apache.md#enable-ssl-support-with-apache) for how to generate a self-signed certficiate.
 
 Modify your nginx host configuration by adding the following `extra_parameters` to the first entry in `nginx_hosts`:
 

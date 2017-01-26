@@ -45,7 +45,7 @@ If you intened to use the devel module, it must be added as a requirement to you
 drupal_enabled_modules: []
 ```
 
-If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `default.config.yml` assume the files are located in the Drupal VM directory. If you use relative paths you need to the ascend the directory tree as far as the project root, but using the `config_dir` variable you get the absolute path of where you `config.yml` is located.
+If you're using `pre_provision_scripts` or `post_provision_scripts` you also need to adjust their paths to take into account the new directory structure. The examples used in `default.config.yml` assume the files are located in the Drupal VM directory. You can use the `config_dir` variable which is the absolute path of the directory where your `config.yml` is located.
 
 ```yaml
 post_provision_scripts:
@@ -105,7 +105,7 @@ _Important: you should never issue `vagrant` commands through Drupal VM's own `V
 
 ## Drupal VM in a subdirectory without composer
 
-If you don't use `composer` in your project you can still download  Drupal VM (or add it as a git submodule) to any subdirectory in your project. As an example let's name that directory `box/`.
+If you're not using `composer` in your project you can still download  Drupal VM (or add it as a git submodule) to any subdirectory in your project. As an example let's name that directory `box/`.
 
 ```
 ├── docroot/

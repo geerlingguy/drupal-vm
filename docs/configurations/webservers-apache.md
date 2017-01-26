@@ -4,7 +4,7 @@ You have complete control over all aspects of Apache VirtualHosts using the `apa
 
 See the examples included in the [`geerlingguy.apache` Ansible role's README](https://github.com/geerlingguy/ansible-role-apache#readme) for more info, as well as many other variables you can override to configure Apache exactly how you like it.
 
-## Enable SSH Support with Apache
+## Enable SSL Support with Apache
 
 To enable SSL support for you virtual hosts you first need a certificate file. You can generate a self-signed certificate with a command like
 
