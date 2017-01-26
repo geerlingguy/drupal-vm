@@ -49,4 +49,17 @@ If you're still having issues, you can avoid `sql-sync` entirely and pipe the my
 drush @remote sql-dump | drush @drupalvm.drupalvm.dev sql-cli
 ```
 
+## Running `drush core-cron` as a cron job.
+
+Using the `drupalvm_cron_jobs` list in `config.yml` you can configure your VM to automatically run cron tasks eg. every 30 minutes.
+
+```yaml
+drupalvm_cron_jobs:
+  - name: "Drupal Cron"
+    minute: "*/30"
+    job: "{{ drush_path }} -r {{ drupal_core_path }} core-cron"
+```
+
+_Cron jobs are added to the vagrant user's crontab. Keys include name (required), minute, hour, day, weekday, month, job (required), and state._
+
 For a list of available role variables, see the [`geerlingguy.drush` Ansible role's README](https://github.com/geerlingguy/ansible-role-drush#readme).
