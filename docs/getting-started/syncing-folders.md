@@ -36,38 +36,10 @@ options_override:
   ]
 ```
 
-## Synced Folder Performance
-
-Using different synced folder mechanisms can have a dramatic impact on your Drupal site's performance. Please read through the following blog posts for a thorough overview of synced folder performance:
-
-  - [Comparing filesystem performance in Virtual Machines](http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines)
-  - [NFS, rsync, and shared folder performance in Vagrant VMs](http://www.jeffgeerling.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder)
-
-Generally speaking:
-
-  - NFS offers a decent tradeoff between performance and ease of use
-  - SMB offers a similar tradeoff, but is a bit slower than NFS
-  - Rsync offers the best performance inside the VM, but sync is currently one-way-only (from host to VM), which can make certain development workflows burdensome
-  - Native shared folders offer abysmal performance; only use this mechanism as a last resort!
-
-If you are using rsync, it is advised to exclude certain directories so that they aren't synced. These include version control directories, database exports and Drupal's files directory.
-
-```yaml
-vagrant_synced_folders:
-  - local_path: .
-    destination: /var/www/drupalvm
-    type: rsync
-    create: true
-    excluded_paths:
-      - drupal/private
-      - drupal/public/.git
-      - drupal/public/sites/default/files
-      - drupal/tmp
-```
-
-This example assumes that you have Drupal in a directory called `drupal/public`.
-
 ## Synced Folder Troubleshooting
+
+_Read the following [overview on the performance of the different synced folder mechanisms](../other/performance.md#synced-folder-performance)._
+
 
 There are a number of issues people encounter with synced folders from time to time. The most frequent issues are listed below with possible solutions:
 
