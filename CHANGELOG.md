@@ -1,5 +1,34 @@
 # Drupal VM Changelog
 
+## 4.2.0 "Theme From Tron" (2017-01-30)
+
+### Breaking Changes
+
+  * N/A
+
+### New/changed variables in default.config.yml
+
+  * `apache_packages_state: latest` added to ensure latest Apache version is installed.
+  * `firewall_disable_firewalld: true` and `firewall_disable_ufw: true` to ensure the system default firewalls are disabled on CentOS and Ubuntu, respectively (we set up our own rules, so this prevents weird problems).
+
+### Improvements
+
+  * #1123: Add Tideways support and updated documentation for use.
+  * #1107: Allow additions to PHP packages via php_packages_extra.
+  * #1092: Docs makeover.
+  * #1134: Make Solr core work out of the box with Drupal 8 Search API Solr more easily.
+  * #1110: Move `cron` example to the Docs.
+  * #649: Document how to use `vagrant-lxc` with Drupal VM.
+  * Update roles to latest versions: firewall, elasticsearch, nodejs, solr, nginx.
+
+### Bugfixes
+
+  * #1093: Upgrade Apache packages on provision so latest release is installed.
+  * #1101: Update Selenium role so it works on systemd systems (e.g. Ubuntu 16.04, CentOS 7).
+  * #1102: Update ruby role to add gem bin directory to `$PATH`.
+  * #1131: Fixes solr < 5 on Ubuntu 16, CentOS 7 with Ansible 2.2.
+
+
 ## 4.1.1 (2016-12-30)
 
 ### Bugfixes
