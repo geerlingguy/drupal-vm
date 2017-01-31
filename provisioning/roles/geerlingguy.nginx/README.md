@@ -77,6 +77,10 @@ TCP connection options. See [this blog post](https://t37.net/nginx-optimization-
 
 Nginx keepalive settings. Timeout should be set higher (10s+) if you have more polling-style traffic (AJAX-powered sites especially), or lower (<10s) if you have a site where most users visit a few pages and don't send any further requests.
 
+    nginx_server_tokens: "on"
+
+Nginx server_tokens settings. Controls whether nginx responds with it's version in HTTP headers. Set to `"off"` to disable.
+
     nginx_client_max_body_size: "64m"
 
 This value determines the largest file upload possible, as uploads are passed through Nginx before hitting a backend like `php-fpm`. If you get an error like `client intended to send too large body`, it means this value is set too low.
@@ -99,6 +103,13 @@ Extra lines to be inserted in the top-level `http` block in `nginx.conf`. The va
       proxy_set_header   X-Scheme $scheme;
       proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header   Host $http_host;
+
+    nginx_log_format: |
+      '$remote_addr - $remote_user [$time_local] "$request" '
+      '$status $body_bytes_sent "$http_referer" '
+      '"$http_user_agent" "$http_x_forwarded_for"'
+
+Configures Nginx's [`log_format`](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format). options.
 
     nginx_default_release: ""
 

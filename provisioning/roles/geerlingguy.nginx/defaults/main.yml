@@ -26,6 +26,8 @@ nginx_tcp_nodelay: "on"
 nginx_keepalive_timeout: "65"
 nginx_keepalive_requests: "100"
 
+nginx_server_tokens: "on"
+
 nginx_client_max_body_size: "64m"
 
 nginx_server_names_hash_bucket_size: "64"
@@ -71,3 +73,8 @@ nginx_upstreams: []
 #     "srv2.example.com weight=3",
 #     "srv3.example.com"
 #   }
+
+nginx_log_format: |
+  '$remote_addr - $remote_user [$time_local] "$request" '
+  '$status $body_bytes_sent "$http_referer" '
+  '"$http_user_agent" "$http_x_forwarded_for"'
