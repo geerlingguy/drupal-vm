@@ -237,7 +237,7 @@ firewall_disable_firewalld: true
 firewall_disable_ufw: true
 
 # PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
-# See version-specific notes: http://docs.drupalvm.com/en/latest/other/php/
+# See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
 php_version: "7.0"
 php_install_recommends: no
 php_memory_limit: "192M"
