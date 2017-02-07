@@ -40,6 +40,8 @@ server {
         fastcgi_read_timeout {{ php_max_execution_time }};
         include fastcgi_params;
         fastcgi_pass {{ php_fpm_listen }};
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
     }
 
     location @rewrite {
