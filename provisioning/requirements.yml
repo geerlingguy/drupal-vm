@@ -1,6 +1,6 @@
 ---
 - src: arknoll.selenium
-  version: 2.1.0
+  version: 2.1.1
 - src: thom8.php-upload-progress
   version: 1.0.1
 - src: franklinkim.newrelic

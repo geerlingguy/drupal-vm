@@ -32,7 +32,7 @@
 
 - name: Add Chrome repo (if configured, Debian)
   apt_repository:
-    repo: "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
     state: present
     update_cache: yes
   when: ansible_os_family == 'Debian' and selenium_install_chrome
