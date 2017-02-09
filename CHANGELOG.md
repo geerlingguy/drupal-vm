@@ -1,5 +1,18 @@
 # Drupal VM Changelog
 
+## 4.2.1 (2017-02-08)
+
+### Improvements
+
+  * Update Nginx, Java, Composer, and Selenium roles to latest version.
+
+### Bugfixes
+
+  * #1158: Fix Drupal 7 and Nginx breaking install.php access.
+  * #1155: Fix failure installing Chrome on Ubuntu 14.04 (Selenium role).
+  * #1151: PHP docs fix.
+
+
 ## 4.2.0 "Theme From Tron" (2017-01-30)
 
 ### Breaking Changes
