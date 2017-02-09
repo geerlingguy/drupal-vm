@@ -1,4 +1,5 @@
 ---
 - src: geerlingguy.repo-remi
+- src: geerlingguy.repo-dotdeb
 - src: geerlingguy.git
 - src: geerlingguy.php

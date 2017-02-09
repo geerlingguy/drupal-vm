@@ -1,11 +1,12 @@
 ---
 - name: Install configured globally-required packages.
-  become: yes
-  become_user: "{{ composer_home_owner }}"
-  shell: >
-    COMPOSER_HOME={{ composer_home_path }}
+  command: >
     {{ composer_path }} global require {{ item.name }}:{{ item.release | default('@stable') }} --no-progress
     creates={{ composer_home_path }}/vendor/{{ item.name }}
+  environment:
+    COMPOSER_HOME: "{{ composer_home_path }}"
+  become: yes
+  become_user: "{{ composer_home_owner }}"
   register: composer_global_require_result
   with_items: "{{ composer_global_packages }}"
 
