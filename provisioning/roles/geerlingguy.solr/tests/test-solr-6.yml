@@ -30,7 +30,17 @@
 
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
-      when: ansible_distribution == "Debian" and debian_backports.changed
+      when: ansible_os_family == "Debian"
+
+    # See: http://unix.stackexchange.com/a/342469
+    - name: Install dependencies (Debian).
+      apt:
+        default_release: "{{ ansible_distribution_release }}-backports"
+        name:
+          - openjdk-8-jre-headless
+          - ca-certificates-java
+        state: present
+      when: ansible_distribution == "Debian"
 
   roles:
     - geerlingguy.java
