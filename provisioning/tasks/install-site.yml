@@ -20,6 +20,7 @@
 
 - name: Install Drupal with drush.
   command: >
+    composer install
     {{ drush_path }} site-install {{ drupal_install_profile | default('standard') }} -y
     --site-name="{{ drupal_site_name }}"
     --account-name={{ drupal_account_name }}
