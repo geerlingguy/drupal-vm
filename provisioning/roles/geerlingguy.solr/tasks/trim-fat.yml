@@ -1,0 +1,17 @@
+---
+- name: Remove the downloaded Solr archive.
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    - "{{ solr_workspace }}/{{ solr_filename }}"
+
+- name: Remove extra cruft, if configured.
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ solr_install_path }}/docs"
+    - "{{ solr_install_path }}/example"
+  when: solr_remove_cruft

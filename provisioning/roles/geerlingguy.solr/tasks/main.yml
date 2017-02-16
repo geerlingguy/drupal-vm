@@ -54,10 +54,5 @@
 - include: configure.yml
   when: "solr_version.split('.')[0] >= '5'"
 
-- name: Remove the downloaded Solr archive.
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-    - "{{ solr_workspace }}/{{ solr_filename }}"
+- include: trim-fat.yml
+  static: no
