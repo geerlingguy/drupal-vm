@@ -28,7 +28,7 @@
 - src: geerlingguy.git
   version: 1.2.1
 - src: geerlingguy.java
-  version: 1.7.3
+  version: 1.7.4
 - src: geerlingguy.mailhog
   version: 2.1.1
 - src: geerlingguy.memcached
