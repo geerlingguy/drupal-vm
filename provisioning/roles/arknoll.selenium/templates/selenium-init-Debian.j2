@@ -11,7 +11,7 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-DISPLAY_ID=":1"
+DISPLAY_ID="{{ selenium_display_id }}"
 RUN_AS=root
 
 JAVA_BIN=/usr/bin/java
@@ -22,7 +22,7 @@ SELENIUM_DIR={{ selenium_install_dir }}/selenium
 SELENIUM_JAR_FILE="$SELENIUM_DIR/selenium-server-standalone-{{ selenium_version }}.jar"
 DAEMON_PID_FILE="$SELENIUM_DIR/selenium.pid"
 SELENIUM_LOG_FILE="$SELENIUM_DIR/selenium.log"
-SELENIUM_DAEMON_OPTS=" -client -jar $SELENIUM_JAR_FILE -log $SELENIUM_LOG_FILE"
+SELENIUM_DAEMON_OPTS=" -client -jar $SELENIUM_JAR_FILE -log $SELENIUM_LOG_FILE -port {{ selenium_port }}"
 
 export DISPLAY="$DISPLAY_ID"
 
@@ -37,7 +37,7 @@ case "$1" in
         else
             log_daemon_msg "Starting Selenium server"
             log_progress_msg "selenium"
-            start-stop-daemon -c $RUN_AS --start --quiet --background --pidfile $DAEMON_PID_FILE --make-pidfile --exec $XVFB_BIN $JAVA_BIN -- $SELENIUM_DAEMON_OPTS
+            start-stop-daemon -c $RUN_AS --start --quiet --background --pidfile $DAEMON_PID_FILE --make-pidfile --exec $XVFB_BIN {{ selenium_xvfb_args }} $JAVA_BIN -- $SELENIUM_DAEMON_OPTS
         fi
         ;;
 
