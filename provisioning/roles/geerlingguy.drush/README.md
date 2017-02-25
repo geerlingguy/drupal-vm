@@ -29,6 +29,10 @@ The version of Drush to install (examples: `"master"` for the bleeding edge, `"7
 
 Whether to keep Drush up-to-date with the latest revision of the branch specified by `drush_version`, and whether to force the update (e.g. overwrite local modifications to the drush repository).
 
+    drush_force_composer_install: no
+
+Use this if you get an error message when provisioning like `Unable to load autoload.php. Run composer install to fetch dependencies and write this file`. It will force a `composer install` inside the Drush directory.
+
     drush_composer_cli_options: "--prefer-source --no-interaction"
 
 These options are the safest for avoiding GitHub API rate limits when installing Drush, and can be very helpful when working on dependencies/installation, but builds can be sped up substantially by changing the first option to --prefer-dist.
@@ -57,4 +61,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

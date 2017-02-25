@@ -24,7 +24,7 @@
   shell: >
     {{ composer_path }} install {{ drush_composer_cli_options }}
     chdir={{ drush_install_path }}
-  when: drush_clone.changed and drush_composer.stat.exists
+  when: (drush_clone.changed and drush_composer.stat.exists) or drush_force_composer_install
 
 - name: Create drush symlink.
   file:
