@@ -15,6 +15,6 @@ You can view callgraphs (and a listing of all stored runs) using Drupal VM's own
 The Devel module also *used* to provide XHProf configuration, and setting the options below would allow Devel's XHProf integration to work correctly with Drupal VM's XHProf installation:
 
   - **xhprof directory**: `/usr/share/php`
-  - **XHProf URL**: `http://xhprof.drupalvm.dev` (assuming this domain is configured in `apache_vhosts` inside `config.yml`)
+  - **XHProf URL**: `http://xhprof.drupalvm.dev`
 
 **Note**: You should only enable one code profiler at a time—e.g. when using [Blackfire](blackfire.md), disable [XHProf](xhprof.md), [Tideways](tideways.md) and [XDebug](xdebug.md).
