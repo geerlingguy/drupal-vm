@@ -320,3 +320,9 @@ selenium_version: 2.53.0
 dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts
 #ssh_home: "{{ drupal_core_path }}"
+proxy:
+  enable_proxy: false
+  http_proxy: 'http://LOGIN:PASS@IP:PORT'
+  https_proxy: 'http://LOGIN:PASS@IP:PORT'
+  ftp_proxy: 'http://LOGIN:PASS@IP:PORT'
+  no_proxy: 'localhost,127.0.0.1'
