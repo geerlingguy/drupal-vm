@@ -34,11 +34,12 @@ Everything should work out of the box with RHEL 7.
 
 - **PHP OpCache**: PHP's OpCache (if you're using PHP > 5.5) requires the following setting to be configured in `config.yml` (see upstream bug: [CentOS (6) needs additional php-opcache package](https://github.com/geerlingguy/ansible-role-php/issues/39)):
 
-  ```yaml
-  php_opcache_enabled_in_ini: false
-  ```
+```yaml
+php_opcache_enabled_in_ini: false
+```
 
 - **Firewalld**: [Firewalld](http://www.firewalld.org/) is not available on CentOS 6, so the Drupal VM setting `firewall_disable_firewalld`, which defaults to `true`, must be overridden in `config.yml` and set to `false`:
-  ```yaml
-  firewall_disable_firewalld: false
-  ```
+
+```yaml
+firewall_disable_firewalld: false
+```
