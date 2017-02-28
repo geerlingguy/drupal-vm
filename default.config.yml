@@ -205,6 +205,7 @@ installed_extras:
   # - ruby
   # - selenium
   # - solr
+  # - tideways
   # - upload-progress
   - varnish
   # - xdebug
