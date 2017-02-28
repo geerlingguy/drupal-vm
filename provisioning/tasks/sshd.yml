@@ -6,6 +6,17 @@
     state: absent
     validate: "/usr/sbin/sshd -T -f %s"
 
+- name: Allow client to pass PHP and XDEBUG environment variables over SSH.
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: "AcceptEnv {{ item }}"
+    validate: "/usr/sbin/sshd -T -f %s"
+  with_items:
+    - PHP_IDE_CONFIG
+    - XDEBUG_CONFIG
+    - PHP_OPTIONS
+  when: '"xdebug" in installed_extras'
+
 - name: Check if local known_hosts file is present.
   stat: "path={{ known_hosts_path | default('~/.ssh/known_hosts') }}"
   register: known_hosts_file
