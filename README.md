@@ -36,6 +36,8 @@ Please read through the rest of this README and the [Drupal VM documentation](ht
 
 ## Documentation
 
+[![Join the chat at https://gitter.im/drupal-vm/Lobby](https://badges.gitter.im/drupal-vm/Lobby.svg)](https://gitter.im/drupal-vm/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Full Drupal VM documentation is available at http://docs.drupalvm.com/
 
 ## Customizing the VM
