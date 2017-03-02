@@ -22,15 +22,16 @@
   become: no
 
 - name: Run composer install.
-  command: >
-    composer install
-    chdir={{ drupal_composer_install_dir }}
+  composer:
+    command: install
+    working_dir: "{{ drupal_composer_install_dir }}"
   when: not drupal_site_exists
   become: no
 
 - name: Install dependencies with composer require.
-  command: >
-    {{ composer_path }} require {{ item }}
-    chdir={{ drupal_composer_install_dir }}
+  composer:
+    command: require
+    arguments: "{{ item }}"
+    working_dir: "{{ drupal_composer_install_dir }}"
   with_items: "{{ drupal_composer_dependencies|default([]) }}"
   become: no
