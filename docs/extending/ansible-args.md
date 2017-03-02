@@ -19,5 +19,5 @@ DRUPALVM_ANSIBLE_ARGS='--start-at-task=*post-provision shell*' vagrant provision
 Override a config variable:
 
 ```sh
-DRUPALVM_ANSIBLE_ARGS='--extra-vars=drupalvm_database=pgsql' vagrant provision
+DRUPALVM_ANSIBLE_ARGS='--extra-vars=drupal_db_backend=pgsql' vagrant provision
 ```

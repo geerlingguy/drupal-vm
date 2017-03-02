@@ -72,10 +72,10 @@
     - geerlingguy.php
     - geerlingguy.php-pecl
     - geerlingguy.composer
-    - { role: geerlingguy.mysql, when: drupalvm_database == 'mysql' }
-    - { role: geerlingguy.php-mysql, when: drupalvm_database == 'mysql' }
-    - { role: geerlingguy.postgresql, when: drupalvm_database == 'pgsql' }
-    - { role: geerlingguy.php-pgsql, when: drupalvm_database == 'pgsql' }
+    - { role: geerlingguy.mysql, when: drupal_db_backend == 'mysql' }
+    - { role: geerlingguy.php-mysql, when: drupal_db_backend == 'mysql' }
+    - { role: geerlingguy.postgresql, when: drupal_db_backend == 'pgsql' }
+    - { role: geerlingguy.php-pgsql, when: drupal_db_backend == 'pgsql' }
 
     # Conditionally-installed roles.
     - { role: geerlingguy.drupal-console, when: 'drupal_major_version > 7 and "drupalconsole" in installed_extras' }
@@ -119,46 +119,15 @@
     - { role: geerlingguy.security, when: extra_security_enabled }
 
   tasks:
-    - name: Check if Drupal is already set up.
-      stat: "path={{ drupal_core_path }}/index.php"
-      register: drupal_site
-      ignore_errors: true
-
-    - name: Define drupal_site_exists
-      set_fact:
-        drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
-
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
     - include: tasks/www.yml
     - include: tasks/apparmor.yml
-      when: ansible_os_family == 'Debian' and drupalvm_database == 'mysql'
+      when: ansible_os_family == 'Debian' and drupal_db_backend == 'mysql'
 
-    # Build makefile if configured.
-    - include: tasks/build-makefile.yml
-      when: build_makefile
-
-    # Build with composer if configured.
-    - include: tasks/build-composer.yml
-      when: build_composer
-
-    # Build a composer project if configured.
-    - include: tasks/build-composer-project.yml
-      when: build_composer_project
-
-    - name: Check if a project specific Drush binary exists.
-      stat: "path={{ drupal_composer_install_dir }}/vendor/drush/drush/drush"
-      register: drush_vendor_bin
-      ignore_errors: true
-
-    - name: Use project specific Drush if available.
-      set_fact:
-        drush_path: "{{ drupal_composer_install_dir }}/vendor/drush/drush/drush"
-      when: drush_vendor_bin.stat.exists
-
-    # Install site if configured.
-    - include: tasks/install-site.yml
-      when: install_site
+    # Build and configure the Drupal site.
+    - include_role: name=geerlingguy.drupal
+      static: no
 
     - include: tasks/drush-aliases.yml
     - include: tasks/cron.yml

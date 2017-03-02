@@ -44,17 +44,17 @@ force_ansible_local: false
 drupalvm_webserver: apache
 
 # The database system to use. Can be either 'mysql' or 'pgsql'.
-drupalvm_database: mysql
+drupal_db_backend: mysql
 
 # Set this to 'false' if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
-build_makefile: false
+drupal_build_makefile: false
 drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 drush_make_options: "--no-gitinfofile"
 
 # Set 'build_makefile' to 'false' and this to 'true' if you are using a
 # composer based site deployment strategy.
-build_composer: false
+drupal_build_composer: false
 drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
 drupal_composer_install_dir: "/var/www/drupalvm/drupal"
 drupal_composer_dependencies:
@@ -62,16 +62,17 @@ drupal_composer_dependencies:
 
 # Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
 # are using Composer's create-project as a site deployment strategy.
-build_composer_project: true
+drupal_build_composer_project: true
 drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 # Set this to 'false' if you don't need to install drupal (using the drupal_*
 # settings below), but instead copy down a database (e.g. using drush sql-sync).
-install_site: true
+drupal_install_site: true
 
 # Required Drupal settings.
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
+drupal_core_owner: "{{ drupalvm_user }}"
 drupal_db_user: drupal
 drupal_db_password: drupal
 drupal_db_name: drupal
