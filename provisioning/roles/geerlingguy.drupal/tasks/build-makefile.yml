@@ -1,0 +1,34 @@
+---
+- name: Copy drush makefile into place.
+  copy:
+    src: "{{ drush_makefile_path }}"
+    dest: /tmp/drupal.make.yml
+  when: not drupal_site_exists
+
+- name: Ensure drupal_core_path directory exists.
+  file:
+    path: "{{ drupal_core_path }}"
+    state: directory
+    recurse: yes
+    mode: 0775
+  become: no
+  when: not drupal_site_exists
+
+- name: Generate Drupal site with drush makefile.
+  command: >
+    {{ drush_path }} make -y /tmp/drupal.make.yml {{ drush_make_options }}
+    chdir={{ drupal_core_path }}
+  when: not drupal_site_exists
+  become: no
+
+- name: Check if a composer.json file is present.
+  stat: "path={{ drupal_core_path }}/composer.json"
+  register: drupal_core_composer_file
+  when: not drupal_site_exists
+
+- name: Run composer install if composer.json is present.
+  command: >
+    composer install
+    chdir={{ drupal_core_path }}
+  when: not drupal_site_exists and drupal_core_composer_file.stat.exists
+  become: no

@@ -1,0 +1,28 @@
+---
+- name: Ensure drupal_composer_install_dir directory has proper permissions.
+  file:
+    path: "{{ drupal_composer_install_dir }}"
+    state: directory
+    owner: "{{ drupal_core_owner }}"
+    group: "{{ drupal_core_owner }}"
+    mode: 0775
+  when: not drupal_site_exists
+  failed_when: false
+
+- name: Generate Drupal project with composer package.
+  command: >
+    {{ composer_path }} create-project
+    {{ drupal_composer_project_package }} {{ drupal_composer_install_dir }}
+    {{ drupal_composer_project_options|default('--prefer-dist --no-interaction') }}
+  when: not drupal_site_exists
+  become: no
+  environment:
+      COMPOSER_PROCESS_TIMEOUT: 1200
+
+- name: Install dependencies with composer require.
+  composer:
+    command: require
+    arguments: "{{ item }}"
+    working_dir: "{{ drupal_composer_install_dir }}"
+  with_items: "{{ drupal_composer_dependencies|default([]) }}"
+  become: no
