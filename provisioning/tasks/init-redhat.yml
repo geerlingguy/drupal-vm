@@ -4,7 +4,6 @@
   with_items:
     - "curl"
     - "python-pycurl"
-    - "@development"
     - "unzip"
 
 - name: Enable remi repo for MySQL.
