@@ -1,5 +1,37 @@
 # Drupal VM Changelog
 
+## 4.3.0 "Ring Game and Escape" (2017-03-09)
+
+### Breaking Changes
+
+  * No _explicit_ breaking changes; however, you should update any of the changed variables in the 'Updated Drupal-specific variable names' section below.
+
+### New/changed variables in default.config.yml
+
+  * `vagrant_gui: false` added (allows UI to appear after running `vagrant up` - Issue #1175).
+  * Updated Drupal-specific variable names (Issue #1192):
+    * `drupalvm_database` changed to `drupal_db_backend`
+    * `build_makefile` changed to `drupal_build_makefile`
+    * `build_composer` changed to `drupal_build_composer`
+    * `build_composer_project` changed to `drupal_build_composer_project`
+    * `install_site` changed to `drupal_install_site`
+  * `drupal_core_owner` added (defaults to `drupalvm_user` - Issue #1192)
+  * `tideways` added (commented out) to `installed_extras` (Issue #1181)
+
+### Improvements
+
+  * #1192: Move Drupal build and install code into revamped `geerlingguy.drupal` role.
+  * #1175: Add `vagrant_gui` option to allow GUI to show when running `vagrant up`.
+  * #1200: Only install necessary development packages (for faster, lighter builds).
+  * Roles updated to latest version: Composer, Solr, Java, Selenium, Drush, Firewall, and Varnish.
+
+### Bugfixes
+
+  * #1167, #1181, #1168, #1188: Documentation tweaks.
+  * #420: Update Drush role so 'run drush to set it up' doesn't fail.
+  * #1182: Clean up Tideways documentation.
+
+
 ## 4.2.1 (2017-02-08)
 
 ### Improvements
