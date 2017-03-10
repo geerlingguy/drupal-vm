@@ -65,6 +65,7 @@
   roles:
     # Essential roles.
     - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat', tags: ['webserver, php'] }
+    - { role: geerlingguy.repo-dotdeb, when: ansible_distribution == 'Debian' }
     - { role: geerlingguy.firewall }
     - { role: geerlingguy.git }
     - { role: geerlingguy.postfix }

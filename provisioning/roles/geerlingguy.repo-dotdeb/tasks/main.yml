@@ -1,0 +1,15 @@
+---
+- name: Install DotDeb repo.
+  apt_repository:
+    repo: "{{ item }}"
+  with_items: "{{ dotdeb_sources }}"
+  register: dotdeb_apt_repo_result
+
+- name: Import DotDeb GPG key.
+  apt_key:
+    url: "{{ dotdeb_repo_gpg_key_url }}"
+  register: dotdeb_apt_key_result
+
+- name: Update apt cache if repo or key added.
+  apt: update_cache=yes
+  when: dotdeb_apt_repo_result.changed or dotdeb_apt_key_result.changed
