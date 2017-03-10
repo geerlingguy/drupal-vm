@@ -1,11 +1,12 @@
 ---
-- name: Get software for Python-based control.
+- name: Install required dependencies.
   yum: "name={{ item }} state=installed"
   with_items:
-    - "curl"
-    - "python-pycurl"
-    - "@development"
-    - "unzip"
+    - curl
+    - python-pycurl
+    - unzip
+    - make
+    - gcc
 
 - name: Enable remi repo for MySQL.
   set_fact: mysql_enablerepo="remi"

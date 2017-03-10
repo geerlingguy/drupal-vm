@@ -2,15 +2,15 @@
 - name: Update apt cache if needed.
   apt: update_cache=yes cache_valid_time=86400
 
-- name: Get software for Python-based control.
+- name: Install required dependencies.
   apt: "name={{ item }} state=installed"
   with_items:
     - curl
     - python-apt
     - python-pycurl
-    - build-essential
     - sudo
     - unzip
+    - make
 
 - name: Configure /etc/mailname.
   copy:

@@ -5,6 +5,7 @@
     - gcc
     - libedit-devel
     - initscripts
+    - redhat-rpm-config
 
 - name: Add Varnish repository.
   yum:
