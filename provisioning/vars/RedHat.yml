@@ -10,6 +10,7 @@ php_packages:
   - php-imap
   - php-ldap
   - php-mbstring
+  - php-mcrypt
   - php-opcache
   - php-pdo
   - php-pear
