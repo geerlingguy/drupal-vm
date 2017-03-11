@@ -4,6 +4,7 @@
   vars:
     php_enable_webserver: false
     php_opcache_enable: "0"
+    drush_install_from_source: yes
 
   pre_tasks:
     - name: Enable remi repo for PHP 7.0 (RedHat).
@@ -18,4 +19,6 @@
     - role: geerlingguy.repo-remi
       when: ansible_os_family == 'RedHat'
     - geerlingguy.php
+    - geerlingguy.composer
+    - geerlingguy.git
     - role_under_test
