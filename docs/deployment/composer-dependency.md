@@ -12,7 +12,7 @@ composer require --dev geerlingguy/drupal-vm
 
 Add and configure the `config.yml` anywhere you like, in this example we place it in a `config/` directory.
 
-_Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as `build_makefile`, `local.config.yml` and `Vagrantfile.local`._
+_Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as `drupal_build_makefile`, `local.config.yml` and `Vagrantfile.local`._
 
 ```
 ├── composer.json
@@ -32,8 +32,8 @@ _Note: This will be the directory where Drupal VM looks for other local configur
 Change the [build strategy to use your `composer.json`](composer.md#using-composer-when-drupal-vm-is-a-composer-dependency-itself) file by setting:
 
 ```yaml
-build_composer_project: false
-build_composer: true
+drupal_build_composer_project: false
+drupal_build_composer: true
 drupal_composer_path: false
 drupal_composer_install_dir: "/var/www/drupalvm"
 drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"

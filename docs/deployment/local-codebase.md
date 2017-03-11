@@ -15,17 +15,17 @@ _If you have Drupal VM installed within your codebase, you can also set the `loc
 
 ## Disable the Composer project build and site install
 
-Set all the `build_*` variables and `install_site` to `false`:
+Set all the `drupal_build_*` variables and `install_site` to `false`:
 
 ```yaml
-build_makefile: false
-build_composer: false
-build_composer_project: false
+drupal_build_makefile: false
+drupal_build_composer: false
+drupal_build_composer_project: false
 ...
-install_site: false
+drupal_install_site: false
 ```
 
-If you aren't copying back a database, and want to have Drupal VM run `drush si` for your Drupal site, you can leave `install_site` set to `true` and it will run a site install on your Drupal codebase using the `drupal_*` config variables.
+If you aren't copying back a database, and want to have Drupal VM run `drush si` for your Drupal site, you can leave `drupal_install_site` set to `true` and it will run a site install on your Drupal codebase using the `drupal_*` config variables.
 
 ## Update `drupal_core_path`
 

@@ -2,7 +2,7 @@ Out of the box Drupal VM is configured to use `composer create-project` to build
 
 This is set up with the following variables in `config.yml`:
 
-  - Composer will build the project if `build_composer_project` is `true`, and `build_makefile` and `build_composer` are both `false`.
+  - Composer will build the project if `drupal_build_composer_project` is `true`, and `drupal_build_makefile` and `drupal_build_composer` are both `false`.
   - The Composer package is defined by `drupal_composer_project_package`.
   - Adjust the create-project CLI options in `drupal_composer_project_options` as well as add additional dependencies in `drupal_composer_dependencies`.
   - Ensure that the webroot configured in the Composer package matches the one set in `drupal_core_path`. The default is set to `web/`.
