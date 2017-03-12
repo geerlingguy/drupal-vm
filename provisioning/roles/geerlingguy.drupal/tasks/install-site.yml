@@ -36,7 +36,8 @@
 - name: Install configured modules with drush.
   command: >
     {{ drush_path }} pm-enable -y {{ drupal_enable_modules | join(" ") }}
+    --root={{ drupal_core_path }}
   args:
     chdir: "{{ drupal_core_path }}"
-  when: "'Successful' not in drupal_site_installed.stdout"
+  when: ('Successful' not in drupal_site_installed.stdout) and drupal_enable_modules
   become: no
