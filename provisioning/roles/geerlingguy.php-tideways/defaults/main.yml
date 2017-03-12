@@ -1,0 +1,18 @@
+---
+workspace: /root
+
+tideways_download_url: https://github.com/tideways/php-profiler-extension/archive/master.zip
+tideways_download_folder_name: php-profiler-extension-master
+
+# If you use the Tideways UI, set this variable to your API key. Otherwise the
+# extension can be used along with the XHProf UI to view profiles.
+tideways_api_key: ''
+
+# XHProf UI
+tideways_install_xhprof_ui: yes
+
+__tideways_xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+__tideways_xhprof_download_folder_name: xhprof-master
+
+__php_xhprof_lib_dir: /usr/share/php/xhprof_lib
+__php_xhprof_html_dir: /usr/share/php/xhprof_html

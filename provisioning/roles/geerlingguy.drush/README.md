@@ -6,19 +6,31 @@ Installs [Drush](http://www.drush.org/en/master/), a command line shell and scri
 
 ## Requirements
 
-None.
+PHP must be installed on the system prior to running this role (suggested role: `geerlingguy.php`).
+
+Source installation additionally requires Git and Composer to also be installed on the system (suggested roles: `geerlingguy.git` and `geerlingguy.composer`).
 
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    drush_install_path: /usr/local/share/drush
+    drush_phar_url: https://github.com/drush-ops/drush/releases/download/8.1.10/drush.phar
 
-The location of the entire drush installation (includes all the supporting files, as well as the `drush` executable file.
+The URL from which the Drush phar file will be downloaded.
 
     drush_path: /usr/local/bin/drush
 
 The path where drush will be installed and available to your system. Should be in your user's `$PATH` so you can run commands simply with `drush` instead of the full path.
+
+    drush_config: ~/.drush
+
+Path to the directory where Drush will store its generated config.
+
+### Variables used for source install (Git).
+
+    drush_install_path: /usr/local/share/drush
+
+The location of the entire drush installation (includes all the supporting files, as well as the `drush` executable file.
 
     drush_version: "master"
 
@@ -28,6 +40,10 @@ The version of Drush to install (examples: `"master"` for the bleeding edge, `"7
     drush_force_update: no
 
 Whether to keep Drush up-to-date with the latest revision of the branch specified by `drush_version`, and whether to force the update (e.g. overwrite local modifications to the drush repository).
+
+    drush_force_composer_install: no
+
+Use this if you get an error message when provisioning like `Unable to load autoload.php. Run composer install to fetch dependencies and write this file`. It will force a `composer install` inside the Drush directory.
 
     drush_composer_cli_options: "--prefer-source --no-interaction"
 
@@ -39,9 +55,7 @@ Whether to clone the entire repo (by default), or specify the number of previous
 
 ## Dependencies
 
-  - geerlingguy.git (Installs Git).
-  - geerlingguy.php (Installs PHP).
-  - geerlingguy.composer (Installs Composer).
+None.
 
 ## Example Playbook
 
@@ -57,4 +71,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

@@ -68,3 +68,16 @@
 - name: Ensure daemon is installed (Debian).
   apt: name=daemon state=installed
   when: ansible_os_family == "Debian"
+
+- name: Copy solr systemd unit file into place (for systemd systems).
+  template:
+    src: solr.unit.j2
+    dest: /etc/systemd/system/solr.service
+    owner: root
+    group: root
+    mode: 0755
+  when: >
+    (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04') or
+    (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 8) or
+    (ansible_distribution == 'CentOS' and ansible_distribution_version|int >= 7) or
+    (ansible_distribution == 'Fedora')

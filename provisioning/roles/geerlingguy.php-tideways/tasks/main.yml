@@ -1,0 +1,62 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define php_tideways_module_path.
+  set_fact:
+    php_tideways_module_path: "{{ __php_tideways_module_path }}"
+  when: php_tideways_module_path is not defined
+
+- name: Define php_tideways_config_filename.
+  set_fact:
+    php_tideways_config_filename: "{{ __php_tideways_config_filename }}"
+  when: php_tideways_config_filename is not defined
+
+# Setup/install tasks.
+- name: Ensure dependencies for installing Tideways are present.
+  package: "name={{ item }} state=installed"
+  with_items:
+    - make
+    - gcc
+    - unzip
+
+- name: Download and untar Tideways.
+  unarchive:
+    src: "{{ tideways_download_url }}"
+    dest: "{{ workspace }}"
+    copy: no
+    creates: "{{ workspace }}/{{ tideways_download_folder_name }}"
+
+- name: Build Tideways.
+  shell: >
+    {{ item }}
+    chdir={{ workspace }}/{{ tideways_download_folder_name }}
+    creates={{ workspace }}/{{ tideways_download_folder_name }}/modules/tideways.so
+  with_items:
+    - phpize
+    - ./configure
+    - make
+    - make install
+  notify: restart webserver
+
+- name: Ensure Tideways module path exists.
+  file:
+    path: "{{ php_tideways_module_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Move Tideways module into place.
+  shell: >
+    cp {{ workspace }}/{{ tideways_download_folder_name }}/modules/tideways.so {{ php_tideways_module_path }}/tideways.so
+    creates={{ php_tideways_module_path }}/tideways.so
+  notify: restart webserver
+
+# TODO - Install the Tideways.php file for UI?
+# $ php -r 'echo ini_get("extension_dir")."\n";'
+# $ cp Tideways.php /path/to/php/lib
+
+- include: configure.yml
+- include: xhprof.yml
+  when: tideways_install_xhprof_ui

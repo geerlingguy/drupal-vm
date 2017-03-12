@@ -1,5 +1,79 @@
 # Drupal VM Changelog
 
+## 4.3.0 "Ring Game and Escape" (2017-03-09)
+
+### Breaking Changes
+
+  * No _explicit_ breaking changes; however, you should update any of the changed variables in the 'Updated Drupal-specific variable names' section below.
+
+### New/changed variables in default.config.yml
+
+  * `vagrant_gui: false` added (allows UI to appear after running `vagrant up` - Issue #1175).
+  * Updated Drupal-specific variable names (Issue #1192):
+    * `drupalvm_database` changed to `drupal_db_backend`
+    * `build_makefile` changed to `drupal_build_makefile`
+    * `build_composer` changed to `drupal_build_composer`
+    * `build_composer_project` changed to `drupal_build_composer_project`
+    * `install_site` changed to `drupal_install_site`
+  * `drupal_core_owner` added (defaults to `drupalvm_user` - Issue #1192)
+  * `tideways` added (commented out) to `installed_extras` (Issue #1181)
+
+### Improvements
+
+  * #1192: Move Drupal build and install code into revamped `geerlingguy.drupal` role.
+  * #1175: Add `vagrant_gui` option to allow GUI to show when running `vagrant up`.
+  * #1200: Only install necessary development packages (for faster, lighter builds).
+  * Roles updated to latest version: Composer, Solr, Java, Selenium, Drush, Firewall, and Varnish.
+
+### Bugfixes
+
+  * #1167, #1181, #1168, #1188: Documentation tweaks.
+  * #420: Update Drush role so 'run drush to set it up' doesn't fail.
+  * #1182: Clean up Tideways documentation.
+
+
+## 4.2.1 (2017-02-08)
+
+### Improvements
+
+  * Update Nginx, Java, Composer, and Selenium roles to latest version.
+
+### Bugfixes
+
+  * #1158: Fix Drupal 7 and Nginx breaking install.php access.
+  * #1155: Fix failure installing Chrome on Ubuntu 14.04 (Selenium role).
+  * #1151: PHP docs fix.
+
+
+## 4.2.0 "Theme From Tron" (2017-01-30)
+
+### Breaking Changes
+
+  * N/A
+
+### New/changed variables in default.config.yml
+
+  * `apache_packages_state: latest` added to ensure latest Apache version is installed.
+  * `firewall_disable_firewalld: true` and `firewall_disable_ufw: true` to ensure the system default firewalls are disabled on CentOS and Ubuntu, respectively (we set up our own rules, so this prevents weird problems).
+
+### Improvements
+
+  * #1123: Add Tideways support and updated documentation for use.
+  * #1107: Allow additions to PHP packages via php_packages_extra.
+  * #1092: Docs makeover.
+  * #1134: Make Solr core work out of the box with Drupal 8 Search API Solr more easily.
+  * #1110: Move `cron` example to the Docs.
+  * #649: Document how to use `vagrant-lxc` with Drupal VM.
+  * Update roles to latest versions: firewall, elasticsearch, nodejs, solr, nginx.
+
+### Bugfixes
+
+  * #1093: Upgrade Apache packages on provision so latest release is installed.
+  * #1101: Update Selenium role so it works on systemd systems (e.g. Ubuntu 16.04, CentOS 7).
+  * #1102: Update ruby role to add gem bin directory to `$PATH`.
+  * #1131: Fixes solr < 5 on Ubuntu 16, CentOS 7 with Ansible 2.2.
+
+
 ## 4.1.1 (2016-12-30)
 
 ### Bugfixes

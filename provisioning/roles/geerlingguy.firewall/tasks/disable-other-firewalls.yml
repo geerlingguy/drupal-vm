@@ -1,0 +1,26 @@
+---
+- name: Check firewalld package is installed (on RHEL).
+  shell: yum list installed firewalld
+  register: firewalld_installed
+  ignore_errors: true
+  when: ansible_os_family == "RedHat" and firewall_disable_firewalld
+
+- name: Disable the firewalld service (on RHEL, if configured).
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+  when: ansible_os_family == "RedHat" and firewall_disable_firewalld and firewalld_installed.rc == 0
+
+- name: Check ufw package is installed (on Ubuntu).
+  shell: dpkg -l ufw
+  register: ufw_installed
+  ignore_errors: true
+  when: ansible_distribution == "Ubuntu" and firewall_disable_ufw
+
+- name: Disable the ufw firewall (on Ubuntu, if configured).
+  service:
+    name: ufw
+    state: stopped
+    enabled: no
+  when: ansible_distribution == "Ubuntu" and firewall_disable_ufw and ufw_installed.rc == 0

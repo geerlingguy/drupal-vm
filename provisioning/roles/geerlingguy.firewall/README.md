@@ -50,6 +50,11 @@ See [Iptables Essentials: Common Firewall Rules and Commands](https://www.digita
 
 Whether to log dropped packets to syslog (messages will be prefixed with "Dropped by firewall: ").
 
+    firewall_disable_firewalld: false
+    firewall_disable_ufw: false
+
+Set to `true` to disable firewalld (installed by default on RHEL/CentOS) or ufw (installed by default on Ubuntu), respectively.
+
 ## Dependencies
 
 None.
@@ -80,4 +85,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

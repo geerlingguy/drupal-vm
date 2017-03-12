@@ -25,6 +25,9 @@ installed_extras:
   # - solr
   - varnish
 
+# Disable Apache package upgrades.
+apache_packages_state: installed
+
 # Disable the dashboard page. Also remove any unneeded virtualhosts.
 dashboard_install_dir: ''
 

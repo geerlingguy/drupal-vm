@@ -49,6 +49,10 @@ A list of users who should be added to the sudoers file so they can run any comm
 
 Whether to install/enable `yum-cron` (RedHat-based systems) or `unattended-upgrades` (Debian-based systems). System restarts will not happen automatically in any case, and automatic upgrades are no excuse for sloppy patch and package management, but automatic updates can be helpful as yet another security measure.
 
+    security_autoupdate_blacklist: []
+
+(Debian/Ubuntu only) A listing of packages that should not be automatically updated.
+
     security_autoupdate_mail_to: ""
     security_autoupdate_mail_on_error: true
 
@@ -82,4 +86,4 @@ MIT (Expat) / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

@@ -12,18 +12,25 @@
     solr_filename: "apache-solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] == '3'"
 
+- name: Check if Solr has been installed already.
+  stat:
+    path: "{{ solr_install_path }}"
+  register: solr_install_path_status
+
 - name: Download Solr.
   get_url:
     url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: no
+  when: solr_install_path_status.stat.isdir is not defined
+  register: solr_download_status
 
 - name: Expand Solr.
   unarchive:
     src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
-    creates: "{{ solr_workspace }}/{{ solr_filename }}/CHANGES.txt"
     copy: no
+  when: solr_download_status.changed
 
 # Install Solr < 5.
 - include: install-pre5.yml
@@ -46,3 +53,6 @@
 # Configure solr.
 - include: configure.yml
   when: "solr_version.split('.')[0] >= '5'"
+
+- include: trim-fat.yml
+  static: no

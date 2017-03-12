@@ -1,0 +1,42 @@
+- name: Define xhprof_download_url.
+  set_fact:
+    xhprof_download_url: "{{ __tideways_xhprof_download_url }}"
+  when: xhprof_download_url is not defined
+
+- name: Define xhprof_download_folder_name.
+  set_fact:
+    xhprof_download_folder_name: "{{ __tideways_xhprof_download_folder_name }}"
+  when: xhprof_download_folder_name is not defined
+
+- name: Define php_xhprof_lib_dir.
+  set_fact:
+    php_xhprof_lib_dir: "{{ __php_xhprof_lib_dir }}"
+  when: php_xhprof_lib_dir is not defined
+
+- name: Define php_xhprof_html_dir.
+  set_fact:
+    php_xhprof_html_dir: "{{ __php_xhprof_html_dir }}"
+  when: php_xhprof_html_dir is not defined
+
+- name: Ensure dependencies for the XHProf UI are present.
+  package: "name={{ item }} state=installed"
+  with_items:
+    - graphviz
+
+- name: Download and untar XHProf.
+  unarchive:
+    src: "{{ xhprof_download_url }}"
+    dest: "{{ workspace }}"
+    copy: no
+    creates: "{{ workspace }}/{{ xhprof_download_folder_name }}"
+
+- name: Move XHProf PHP library into place.
+  shell: >
+    cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_lib {{ php_xhprof_lib_dir }}
+    creates={{ php_xhprof_lib_dir }}/utils/xhprof_lib.php
+
+- name: Move XHProf UI into place.
+  shell: >
+    cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_html {{ php_xhprof_html_dir }}
+    creates={{ php_xhprof_html_dir }}/index.php
+- include: configure.yml

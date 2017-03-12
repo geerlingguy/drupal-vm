@@ -4,6 +4,7 @@
 vagrant_box: geerlingguy/ubuntu1604
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
+vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
@@ -43,17 +44,17 @@ force_ansible_local: false
 drupalvm_webserver: apache
 
 # The database system to use. Can be either 'mysql' or 'pgsql'.
-drupalvm_database: mysql
+drupal_db_backend: mysql
 
 # Set this to 'false' if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
-build_makefile: false
+drupal_build_makefile: false
 drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 drush_make_options: "--no-gitinfofile"
 
 # Set 'build_makefile' to 'false' and this to 'true' if you are using a
 # composer based site deployment strategy.
-build_composer: false
+drupal_build_composer: false
 drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
 drupal_composer_install_dir: "/var/www/drupalvm/drupal"
 drupal_composer_dependencies:
@@ -61,16 +62,17 @@ drupal_composer_dependencies:
 
 # Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
 # are using Composer's create-project as a site deployment strategy.
-build_composer_project: true
+drupal_build_composer_project: true
 drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 # Set this to 'false' if you don't need to install drupal (using the drupal_*
 # settings below), but instead copy down a database (e.g. using drush sql-sync).
-install_site: true
+drupal_install_site: true
 
 # Required Drupal settings.
 drupal_core_path: "{{ drupal_composer_install_dir }}/web"
+drupal_core_owner: "{{ drupalvm_user }}"
 drupal_db_user: drupal
 drupal_db_password: drupal
 drupal_db_name: drupal
@@ -90,9 +92,6 @@ drupal_site_install_extra_args: []
 # Cron jobs are added to the vagrant user's crontab. Keys include name
 # (required), minute, hour, day, weekday, month, job (required), and state.
 drupalvm_cron_jobs: []
-  # - name: "Drupal Cron"
-  #   minute: "*/30"
-  #   job: "drush -r {{ drupal_core_path }} core-cron"
 
 # Drupal VM automatically creates a drush alias file in your ~/.drush folder if
 # this variable is 'true'.
@@ -131,6 +130,7 @@ apache_vhosts:
     documentroot: "{{ dashboard_install_dir }}"
     extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
+apache_packages_state: latest
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - expires.load
@@ -206,6 +206,7 @@ installed_extras:
   # - ruby
   # - selenium
   # - solr
+  # - tideways
   # - upload-progress
   - varnish
   # - xdebug
@@ -218,9 +219,7 @@ extra_packages:
 # You can configure almost anything else on the server in the rest of this file.
 extra_security_enabled: false
 
-drush_version: "8.x"
-drush_keep_updated: true
-drush_composer_cli_options: "--prefer-dist --no-interaction"
+drush_version: "8.1.10"
 
 firewall_allowed_tcp_ports:
   - "22"
@@ -235,9 +234,11 @@ firewall_allowed_tcp_ports:
   - "8983"
   - "9200"
 firewall_log_dropped_packets: false
+firewall_disable_firewalld: true
+firewall_disable_ufw: true
 
 # PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
-# See version-specific notes: http://docs.drupalvm.com/en/latest/other/php/
+# See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
 php_version: "7.0"
 php_install_recommends: no
 php_memory_limit: "192M"

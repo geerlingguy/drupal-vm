@@ -6,6 +6,7 @@ solr_user: solr
 
 solr_version: "6.3.0"
 solr_mirror: "https://archive.apache.org/dist"
+solr_remove_cruft: false
 
 solr_service_name: solr
 solr_install_dir: /opt

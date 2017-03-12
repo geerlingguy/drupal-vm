@@ -26,10 +26,12 @@ server {
         return 404;
     }
 
+{% if drupal_major_version == 8 %}
     # Redirect common PHP files to their new locations.
     location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
          return 301 $scheme://$host$1/core/$2$is_args$args;
     }
+{% endif %}
 
     # Use fastcgi for all php files.
     location ~ \.php$|^/update.php {

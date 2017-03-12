@@ -2,7 +2,11 @@
 
 [Drupal VM](https://www.drupalvm.com/) is A VM for local Drupal development, built with Vagrant + Ansible.
 
-Welcome to Drupal VM's documentation site! Please read through the [Quick Start Guide](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started, and then browse the rest of this project's documentation in the sidebar.
+Welcome to Drupal VM's documentation site! Get started by reading the installation instructions for you platform:
+
+- [macOS](getting-started/installation-macos.md)
+- [Windows](getting-started/installation-windows.md)
+- [Linux](getting-started/installation-linux.md)
 
 ## Contributing to Drupal VM
 

@@ -1,7 +1,7 @@
 # Ansible franklinkim.newrelic role
 
 [![Build Status](https://img.shields.io/travis/weareinteractive/ansible-newrelic.svg)](https://travis-ci.org/weareinteractive/ansible-newrelic)
-[![Galaxy](http://img.shields.io/badge/galaxy-franklinkim.apt-blue.svg)](https://galaxy.ansible.com/list#/roles/3917)
+[![Galaxy](http://img.shields.io/badge/galaxy-franklinkim.newrelic-blue.svg)](https://galaxy.ansible.com/franklinkim/newrelic/)
 [![GitHub Tags](https://img.shields.io/github/tag/weareinteractive/ansible-newrelic.svg)](https://github.com/weareinteractive/ansible-newrelic)
 [![GitHub Stars](https://img.shields.io/github/stars/weareinteractive/ansible-newrelic.svg)](https://github.com/weareinteractive/ansible-newrelic)
 
@@ -65,7 +65,11 @@ newrelic_service_state: started
 # use default hostname, set a value to override the default hostname
 newrelic_override_hostname: ~
 # A series of label_type/label_value pairings: label_type:label_value
-newrelic_labels: ~
+newrelic_labels:
+# proxy server to use (i.e. proxy-host:8080)
+newrelic_proxy:
+# Option to fix Docker memory (see: https://discuss.newrelic.com/t/wrong-path-to-cpu-and-memoy-data/36177)
+newrelic_cgroup_style:
 
 ```
 
@@ -93,11 +97,10 @@ This is an example playbook:
 ---
 
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - franklinkim.newrelic
   vars:
-    newrelic_license_key: yes
     newrelic_service_state: started
     newrelic_license_key: ab2fa361cd4d0d373833cad619d7bcc424d27c16
 

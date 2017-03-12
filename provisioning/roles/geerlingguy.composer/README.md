@@ -39,6 +39,14 @@ A list of packages to install globally (using `composer global require`). If you
 
 If `true`, and if there are any configured `composer_global_packages`, the `vendor/bin` directory inside `composer_home_path` will be added to the system's default `$PATH` (for all users).
 
+    composer_project_path: /path/to/project
+
+Path to a composer project.
+
+    composer_add_project_to_path: false
+
+If `true`, and if you have configured a `composer_project_path`, the `vendor/bin` directory inside `composer_project_path` will be added to the system's default `$PATH` (for all users).
+
     composer_github_oauth_token: ''
 
 GitHub OAuth token, used to avoid GitHub API rate limiting errors when building and rebuilding applications using Composer. Follow GitHub's directions to [Create a personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) if you run into these rate limit errors.
@@ -65,4 +73,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

@@ -2,24 +2,20 @@
 - name: Update apt cache if needed.
   apt: update_cache=yes cache_valid_time=86400
 
-- name: Get software for Python-based control.
+- name: Install required dependencies.
   apt: "name={{ item }} state=installed"
   with_items:
     - curl
     - python-apt
     - python-pycurl
-    - build-essential
     - sudo
     - unzip
+    - make
 
 - name: Configure /etc/mailname.
   copy:
     content: "{{ hostname_fqdn }}\n"
     dest: /etc/mailname
-
-- name: Disable the ufw firewall (since we use a simple iptables firewall).
-  service: name=ufw state=stopped
-  when: ansible_distribution == "Ubuntu" and {{ drupalvm_disable_ufw_firewall | default(true) }}
 
 - name: Add repository for Apache 2.4.9+ on Ubuntu 12 and 14.
   apt_repository: repo='ppa:ondrej/apache2'

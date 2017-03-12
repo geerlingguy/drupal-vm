@@ -1,3 +1,49 @@
+<a name="1.6.0"></a>
+## 1.6.0 (2016-11-11)
+
+
+#### Features
+
+*   add `cgroup_style` option to config ([fd806272](https://github.com/weareinteractive/ansible-newrelic/commit/fd80627235dca4c6dad2b4edaa13e3d5ab64174d))
+
+
+
+<a name="1.5.0"></a>
+## 1.5.0 (2016-11-10)
+
+
+#### Features
+
+*   add proxy options ([d8c80eaa](https://github.com/weareinteractive/ansible-newrelic/commit/d8c80eaac222078c918be6ff80ce94f4d444510b))
+
+
+
+<a name="1.4.3"></a>
+### 1.4.3 (2016-11-03)
+
+
+#### Bug Fixes
+
+*   fix readme badge url ([a143bf3e](https://github.com/weareinteractive/ansible-newrelic/commit/a143bf3ee48ee07fa3657186763d857d00083b56))
+
+
+
+<a name="1.4.2"></a>
+### 1.4.2 (2016-09-30)
+
+
+
+
+<a name="1.4.1"></a>
+### 1.4.1 (2016-09-20)
+
+
+#### Bug Fixes
+
+*   remove duplicate newrelic_license_key ([036d2777](https://github.com/weareinteractive/ansible-newrelic/commit/036d27779b7db47b9fb06b9a983d759d2ad196bf))
+
+
+
 <a name="1.4.0"></a>
 ## 1.4.0 (2016-08-05)
 

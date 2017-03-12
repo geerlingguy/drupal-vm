@@ -1,0 +1,18 @@
+---
+- name: Ensure PHP configuration directories exist.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    follow: true
+  with_items: "{{ php_extension_conf_paths }}"
+
+- name: Copy Tideways INI into various other conf folders.
+  template:
+    src: tideways.ini.j2
+    dest: "{{ item }}/{{ php_tideways_config_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ php_extension_conf_paths }}"
+  notify: restart webserver

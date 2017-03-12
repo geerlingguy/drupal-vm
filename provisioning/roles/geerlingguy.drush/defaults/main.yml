@@ -1,9 +1,16 @@
 ---
-drush_install_path: /usr/local/share/drush
+# Install from phar (faster, but less flexible).
+drush_version: "8.1.10"
+drush_phar_url: https://github.com/drush-ops/drush/releases/download/{{ drush_version }}/drush.phar
 drush_path: /usr/local/bin/drush
-drush_version: "master"
+
+# Install from source (git clone + composer-based install).
+drush_install_from_source: no
+drush_install_path: /usr/local/share/drush
+# drush_version: "master"
 drush_keep_updated: no
 drush_force_update: no
+drush_force_composer_install: no
 
 drush_composer_cli_options: "--prefer-dist --no-interaction"
 drush_clone_depth: 1
