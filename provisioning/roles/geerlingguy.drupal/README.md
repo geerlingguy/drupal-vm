@@ -48,6 +48,7 @@ Set this to `true` and `drupal_build_makefile`, `drupal_build_composer` to `fals
     drupal_db_password: drupal
     drupal_db_name: drupal
     drupal_db_backend: mysql
+    drupal_db_host: "127.0.0.1"
 
 Required Drupal settings.
 

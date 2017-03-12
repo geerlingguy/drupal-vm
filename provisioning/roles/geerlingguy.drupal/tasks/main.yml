@@ -15,14 +15,17 @@
 # Build makefile if configured.
 - include: tasks/build-makefile.yml
   when: drupal_build_makefile
+  static: no
 
 # Build with composer if configured.
 - include: tasks/build-composer.yml
   when: drupal_build_composer
+  static: no
 
 # Build a composer project if configured.
 - include: tasks/build-composer-project.yml
   when: drupal_build_composer_project
+  static: no
 
 # Set Drush variables.
 - name: Check if a project specific Drush binary exists.
@@ -38,3 +41,4 @@
 # Install site if configured.
 - include: tasks/install-site.yml
   when: drupal_install_site
+  static: no
