@@ -47,6 +47,7 @@
       set_fact:
         php_webserver_daemon: nginx
       when: drupalvm_webserver == 'nginx'
+      tags: ['webserver', 'database', 'php']
 
     - name: Set the correct XHProf package when PHP 5.5 or 5.6 is used.
       set_fact:
@@ -59,43 +60,50 @@
         path: "/root/php{{ php_version }}"
         state: directory
         mode: 0775
+      tags: ['php']
 
   roles:
     # Essential roles.
-    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat' }
-    - geerlingguy.firewall
-    - geerlingguy.git
-    - geerlingguy.postfix
-    - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }
-    - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache' }
-    - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }
-    - geerlingguy.php
-    - geerlingguy.php-pecl
-    - geerlingguy.composer
-    - { role: geerlingguy.mysql, when: drupal_db_backend == 'mysql' }
-    - { role: geerlingguy.php-mysql, when: drupal_db_backend == 'mysql' }
-    - { role: geerlingguy.postgresql, when: drupal_db_backend == 'pgsql' }
-    - { role: geerlingguy.php-pgsql, when: drupal_db_backend == 'pgsql' }
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat', tags: ['webserver, php'] }
+    - { role: geerlingguy.firewall }
+    - { role: geerlingguy.git }
+    - { role: geerlingguy.postfix }
+    - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache', tags: ['webserver']}
+    - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache', tags: ['webserver'] }
+    - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx', tags: ['webserver'] }
+    - { role: geerlingguy.php, tags: ['php'] }
+    - { role: geerlingguy.php-pecl, tags: ['php'] }
+    - { role: geerlingguy.composer }
+    - { role: geerlingguy.mysql, when: drupal_db_backend == 'mysql', tags: ['database'] }
+    - { role: geerlingguy.php-mysql, when: drupal_db_backend == 'mysql', tags: ['php', 'database'] }
+    - { role: geerlingguy.postgresql, when: drupal_db_backend == 'pgsql', tags: ['database'] }
+    - { role: geerlingguy.php-pgsql, when: drupal_db_backend == 'pgsql', tags: ['php', 'database'] }
 
     # Conditionally-installed roles.
     - { role: geerlingguy.drupal-console, when: 'drupal_major_version > 7 and "drupalconsole" in installed_extras' }
     - { role: geerlingguy.drush, when: '"drush" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
+
     - role: geerlingguy.php-tideways
       workspace: "/root/php{{ php_version }}"
       when: '"tideways" in installed_extras'
+
     - role: geerlingguy.php-xdebug
       workspace: "/root/php{{ php_version }}"
       when: '"xdebug" in installed_extras'
+      tags: ['xdebug']
+
     - role: geerlingguy.php-xhprof
       workspace: "/root/php{{ php_version }}"
       when: '"xhprof" in installed_extras'
+
     - role: thom8.php-upload-progress
       workspace: "/root/php{{ php_version }}"
       when: '"upload-progress" in installed_extras'
+
     - { role: geerlingguy.blackfire, when: '"blackfire" in installed_extras' }
-    - { role: geerlingguy.adminer, when: '"adminer" in installed_extras' }
+    - { role: geerlingguy.adminer, when: '"adminer" in installed_extras', tags: ['database'] }
     - { role: geerlingguy.pimpmylog, when: '"pimpmylog" in installed_extras' }
     - { role: geerlingguy.daemonize, when: '"mailhog" in installed_extras' }
     - { role: geerlingguy.mailhog, when: '"mailhog" in installed_extras' }
@@ -104,12 +112,14 @@
     - { role: geerlingguy.redis, when: '"redis" in installed_extras' }
     - { role: geerlingguy.php-redis, when: '"redis" in installed_extras' }
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
+
     - role: geerlingguy.java
       when: >
         "java" in installed_extras or
         "solr" in installed_extras or
         "selenium" in installed_extras or
         "elasticsearch" in installed_extras
+
     - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.elasticsearch, when: '"elasticsearch" in installed_extras' }
@@ -121,19 +131,27 @@
   tasks:
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
+
     - include: tasks/www.yml
+      tags: ['webserver']
+
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian' and drupal_db_backend == 'mysql'
+      tags: ['database']
 
     # Build and configure the Drupal site.
     - include_role: name=geerlingguy.drupal
       static: no
+      tags: ['drupal']
 
     - include: tasks/drush-aliases.yml
+
     - include: tasks/cron.yml
+      tags: ['cron']
 
     - include: tasks/dashboard.yml
       when: dashboard_install_dir is defined and dashboard_install_dir != ''
+      tags: ['webserver', 'database']
 
     - name: Run configured post-provision shell scripts.
       script: "{{ item }}"

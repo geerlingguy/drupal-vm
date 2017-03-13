@@ -2,7 +2,20 @@
 
 You can specify an additional argument to the `ansible-playbook` command by using the `DRUPALVM_ANSIBLE_ARGS` environment variable. This can be useful when debugging a task failure.
 
-_Currently this feature has two quirks. It's only possible to pass on a single argument. You should not quote a flag's value as you would normally do in the shell._
+> Note the following caveats:
+>
+>   - Passing more than one argument may require special formatting. Read the [Ansible provisioner's `raw_arguments` docs](https://www.vagrantup.com/docs/provisioning/ansible_common.html#raw_arguments) for more info.
+>   - You should not quote a flag's value as you would normally do in the shell.
+
+Run a specific set of tagged tasks:
+
+```sh
+# E.g. xdebug, drupal, webserver, database, cron...
+DRUPALVM_ANSIBLE_ARGS='--tags=xdebug' vagrant provision
+
+# Or combine them (e.g. if adding new databases and virtualhosts).
+DRUPALVM_ANSIBLE_ARGS='--tags=webserver,database' vagrant provision
+```
 
 Display verbose ansible output:
 
