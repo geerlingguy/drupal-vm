@@ -1,5 +1,20 @@
 # Drupal VM Changelog
 
+## 4.3.1 (2017-03-14)
+
+### Improvements
+
+  * #1197: Add PAReview.sh script setup to Drupal VM.
+  * #1213: Add task-specific tags for supercharged reprovisioning.
+  * #1212: Update Drush role and shave a minute or so off every build, ever!
+  * #1215: Add docs on using Drupal Console with `vagrant exec`.
+  * Update roles with bugfixes and improvements: Drush, Drupal.
+
+### Bugfixes
+
+  * #1211: Add mcrypt PHP extension on RedHat-based installs.
+
+
 ## 4.3.0 "Ring Game and Escape" (2017-03-09)
 
 ### Breaking Changes
