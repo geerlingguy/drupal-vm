@@ -2,6 +2,11 @@
 
 ## 4.3.1 (2017-03-14)
 
+### New/changed variables in default.config.yml
+
+  * Removed now-unneccessary `drush_keep_updated` and `drush_composer_cli_options` vars.
+  * Default to Drush version `8.1.10` (since we use the Phar-based install by default now).
+
 ### Improvements
 
   * #1197: Add PAReview.sh script setup to Drupal VM.
