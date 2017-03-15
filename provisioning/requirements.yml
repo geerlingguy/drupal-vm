@@ -67,8 +67,6 @@
   version: 1.0.2
 - src: geerlingguy.redis
   version: 1.4.1
-- src: geerlingguy.repo-dotdeb
-  version: 1.0.2
 - src: geerlingguy.repo-remi
   version: 1.2.0
 - src: geerlingguy.ruby
