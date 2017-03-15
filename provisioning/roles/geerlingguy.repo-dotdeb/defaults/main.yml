@@ -1,0 +1,5 @@
+---
+dotdeb_sources:
+  - "deb http://packages.dotdeb.org {{ ansible_distribution_release }} all"
+  - "deb-src http://packages.dotdeb.org {{ ansible_distribution_release }} all"
+dotdeb_repo_gpg_key_url: https://www.dotdeb.org/dotdeb.gpg

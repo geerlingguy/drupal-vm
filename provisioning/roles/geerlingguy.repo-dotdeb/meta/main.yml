@@ -1,0 +1,15 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: DotDeb repository for Debian.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.0
+  platforms:
+    - name: Debian
+      versions:
+      - all
+  galaxy_tags:
+    - packaging
