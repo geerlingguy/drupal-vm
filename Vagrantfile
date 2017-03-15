@@ -151,6 +151,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       drupalvm_env: drupalvm_env
     }
     ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
+    ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
   end
 
   # VMware Fusion.
