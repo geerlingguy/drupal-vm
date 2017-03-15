@@ -1,19 +1,33 @@
 ---
-# Originally I tried adding to the www group, but because Ansible uses one SSH
-# connection, that broke the initial provisioning, since groups aren't refreshed
-# without a new session or log off/log on.
-- name: Ensure necessary groups exist.
-  group: "name={{ item }} state=present"
-  with_items:
-    - admin
-    - dialout
+- name: Register information about the /vagrant directory.
+  stat:
+    path: /vagrant
+  register: vagrant_directory
+
+- name: Detect if group used to sync directories already exist.
+  shell: "getent group {{ vagrant_directory.stat.gid }} | cut -d':' -f1"
+  register: vagrant_directory_groupname
+  when: vagrant_directory.stat.exists
+
+- name: Ensure a group with the same GID as used to sync directories exist.
+  group:
+    gid: "{{ vagrant_directory.stat.gid }}"
+    name: vagrant_group
+    state: present
+  when: vagrant_directory.stat.exists and vagrant_directory_groupname.stdout == ''
+
+- name: Ensure www-data user is in the same group as the owner of synced directories.
+  user:
+    name: www-data
+    append: yes
+    groups: "{{ vagrant_directory_groupname.stdout|default('vagrant_group') }}"
+  when: vagrant_directory.stat.exists
+
+- name: Ensure admin group exist.
+  group: "name=admin state=present"
 
 - name: Ensure vagrant user is in admin group.
   user: "name={{ vagrant_user }} append=yes groups=admin"
-
-- name: Ensure www-data user is in dialout group (Debian).
-  user: "name=www-data append=yes groups=dialout"
-  when: ansible_os_family == 'Debian'
 
 - name: Set nicer permissions on Apache log directory.
   file:
