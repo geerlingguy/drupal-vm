@@ -64,10 +64,6 @@ ansible_bin = which('ansible-playbook')
 ansible_version = Gem::Version.new(get_ansible_version(ansible_bin)) if ansible_bin
 ansible_version_min = Gem::Version.new(vconfig['drupalvm_ansible_version_min'])
 
-if ansible_bin && ansible_version < ansible_version_min
-  raise "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
-end
-
 provisioner = ansible_bin && !vconfig['force_ansible_local'] ? :ansible : :ansible_local
 if provisioner == :ansible
   playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
@@ -75,6 +71,10 @@ if provisioner == :ansible
 else
   playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = guest_config_dir
+end
+
+if provisioner == :ansible && ansible_version < ansible_version_min
+  raise "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
