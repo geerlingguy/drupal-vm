@@ -200,5 +200,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Allow an untracked Vagrantfile to modify the configurations
-  eval File.read "#{host_config_dir}/Vagrantfile.local" if File.exist?("#{host_config_dir}/Vagrantfile.local")
+  [host_config_dir, host_project_dir].uniq.each do |dir|
+    eval File.read "#{dir}/Vagrantfile.local" if File.exist?("#{dir}/Vagrantfile.local")
+  end
 end
