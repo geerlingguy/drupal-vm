@@ -26,13 +26,11 @@ One scenario where this might be useful is when you are moving generated code fr
 
 ```yaml
 options_override:
-  # Disable the default recursive chown so that the files/ folder won't be affected
-  rsync__chown: false
+  rsync__owner: vagrant
+  rsync__group: www-data
   rsync__args: [
     "--verbose", "--archive", "--delete",
     "--chmod=gu=rwX,o=rX", # 664 for files, 775 for directories
-    "--owner", "--group", # required for the following command
-    "--usermap=*:vagrant", "--groupmap=*:www-data"
   ]
 ```
 
@@ -71,9 +69,9 @@ If you're encountering errors where Drupal or some other software inside the VM 
 vagrant_synced_folders:
   - local_path: .
     destination: /var/www/drupalvm
-    type: nfs
+    type: ""
     create: true
-    mount_options: ["dmode=775,fmode=664"]
+    mount_options: ["dmode=775", "fmode=664"]
     options_override:
       owner: "vagrant"
       group: "www-data"
