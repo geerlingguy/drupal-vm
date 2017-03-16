@@ -36,9 +36,7 @@
 
 - name: Add repository for PHP 5 compatibility packages (Ubuntu).
   apt_repository: repo='ppa:ondrej/php5-compat'
-  when: >
-    (php_version == "5.5" or php_version == "5.6") and
-    ansible_distribution == "Ubuntu"
+  when: php_version == "5.6" and ansible_distribution == "Ubuntu"
 
 # Debian-specific tasks.
 - name: Add dependencies for PHP versions (Debian).
@@ -75,7 +73,6 @@
     force: yes
   when: "'php{{ php_version }}' not in item"
   with_flattened:
-    - "{{ php_packages|regex_replace('php' + php_version, 'php5.5') }}"
     - "{{ php_packages|regex_replace('php' + php_version, 'php5.6') }}"
     - "{{ php_packages|regex_replace('php' + php_version, 'php7.0') }}"
     - "{{ php_packages|regex_replace('php' + php_version, 'php7.1') }}"
