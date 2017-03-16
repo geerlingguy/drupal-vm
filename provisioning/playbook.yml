@@ -5,11 +5,9 @@
   vars_files:
     - vars/main.yml
     - ../default.config.yml
+    - "vars/{{ ansible_os_family }}.yml"
 
   pre_tasks:
-    - name: Include OS-specific variables.
-      include_vars: "{{ ansible_os_family }}.yml"
-
     - name: Define config_dir.
       set_fact:
         config_dir: "{{ playbook_dir }}/.."
