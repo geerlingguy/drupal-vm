@@ -14,7 +14,8 @@
       when: config_dir is not defined
       tags: ['always']
 
-    - include_vars: "{{ item }}"
+    - name: Include optional configuration files.
+      include_vars: "{{ item }}"
       with_fileglob:
         - "{{ config_dir }}/config.yml"
         - "{{ config_dir }}/local.config.yml"
