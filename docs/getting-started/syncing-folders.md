@@ -69,9 +69,9 @@ If you're encountering errors where Drupal or some other software inside the VM 
 vagrant_synced_folders:
   - local_path: .
     destination: /var/www/drupalvm
-    type: nfs
+    type: ""
     create: true
-    mount_options: ["dmode=775,fmode=664"]
+    mount_options: ["dmode=775", "fmode=664"]
     options_override:
       owner: "vagrant"
       group: "www-data"
