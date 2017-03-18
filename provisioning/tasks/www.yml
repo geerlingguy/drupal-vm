@@ -1,4 +1,14 @@
 ---
+- name: Define drupalvm_webserver_user (Debian).
+  set_fact:
+    drupalvm_webserver_user: www-data
+  when: ansible_os_family == 'Debian' and drupalvm_webserver_user is undefined
+
+- name: Define drupalvm_webserver_user (RedHat).
+  set_fact:
+    drupalvm_webserver_user: "{{ (drupalvm_webserver == 'apache') | ternary('httpd', 'nginx') }}"
+  when: ansible_os_family == 'RedHat' and drupalvm_webserver_user is undefined
+
 - name: Register information about the /vagrant directory.
   stat:
     path: /vagrant
@@ -22,7 +32,7 @@
 
 - name: Ensure the webserver user is in the same group as the owner of synced directories (Ansible 2.3+).
   user:
-    name: www-data
+    name: "{{ drupalvm_webserver_user }}"
     append: yes
     groups: "{{ vagrant_directory.stat.gr_name|default('vagrant_group') }}"
   when: >
@@ -52,7 +62,7 @@
 
 - name: Ensure the webserver user is in the same group as the owner of synced directories (Ansible 2.2).
   user:
-    name: www-data
+    name: "{{ drupalvm_webserver_user }}"
     append: yes
     groups: "{{ vagrant_directory_groupname.stdout|default('vagrant_group') }}"
   when: >
