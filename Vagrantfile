@@ -74,7 +74,7 @@ else
 end
 
 if provisioner == :ansible && ansible_version < ansible_version_min
-  raise "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
+  raise Vagrant::Errors::VagrantError.new, "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
