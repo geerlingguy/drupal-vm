@@ -136,7 +136,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
     }
     if synced_folder.include?('options_override')
-      options = options.merge(synced_folder['options_override'])
+      synced_folder['options_override'].each do |key, value|
+        options[key.to_sym] = value
+      end
     end
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'], options
   end
