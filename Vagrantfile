@@ -99,7 +99,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
 
-  unless vconfig['vagrant_skip_post_up_message']
+  if vconfig.include?('vagrant_post_up_message')
+    config.vm.post_up_message = vconfig['vagrant_post_up_message']
+  else
     config.vm.post_up_message = 'Your Drupal VM Vagrant box is ready to use!'\
       "\n* Visit the dashboard for an overview of your site: http://dashboard.#{vconfig['vagrant_hostname']} (or http://#{vconfig['vagrant_ip']})"\
       "\n* You can SSH into your machine with `vagrant ssh`."\
