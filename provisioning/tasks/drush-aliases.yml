@@ -1,10 +1,4 @@
 ---
-# TODO: Deprecate legacy variable & remove shim in next major release.
-- name: Shim for legacy configure_local_drush_aliases variable.
-  set_fact:
-    configure_drush_aliases: "{{ configure_local_drush_aliases }}"
-  when: configure_local_drush_aliases is defined and configure_drush_aliases is undefined
-
 - name: Check if local Drush configuration folder exists.
   stat:
     path: ~/.drush

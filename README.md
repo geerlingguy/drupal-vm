@@ -9,7 +9,7 @@ This project aims to make spinning up a simple local Drupal test/development env
 It will install the following on an Ubuntu 16.04 (by default) linux VM:
 
   - Apache 2.4.x (or Nginx)
-  - PHP 7.0.x (configurable)
+  - PHP 7.1.x (configurable)
   - MySQL 5.7.x (or MariaDB, or PostgreSQL)
   - Drupal 7 or 8
   - Optional:

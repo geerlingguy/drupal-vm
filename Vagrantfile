@@ -64,6 +64,19 @@ ansible_bin = which('ansible-playbook')
 ansible_version = Gem::Version.new(get_ansible_version(ansible_bin)) if ansible_bin
 ansible_version_min = Gem::Version.new(vconfig['drupalvm_ansible_version_min'])
 
+provisioner = ansible_bin && !vconfig['force_ansible_local'] ? :ansible : :ansible_local
+if provisioner == :ansible
+  playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
+  config_dir = host_config_dir
+else
+  playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
+  config_dir = guest_config_dir
+end
+
+if provisioner == :ansible && ansible_version < ansible_version_min
+  raise Vagrant::Errors::VagrantError.new, "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Networking configuration.
   config.vm.hostname = vconfig['vagrant_hostname']
@@ -131,28 +144,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Allow override of the default synced folder type.
   config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
 
-  # Provisioning. Use ansible if it's installed, ansible_local if not or if forced.
-  if ansible_bin && !vconfig['force_ansible_local']
-    if ansible_version < ansible_version_min
-      raise "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
-    end
-    config.vm.provision 'ansible' do |ansible|
-      ansible.playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
-      ansible.extra_vars = {
-        config_dir: host_config_dir,
-        drupalvm_env: drupalvm_env
-      }
-      ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
-    end
-  else
-    config.vm.provision 'ansible_local' do |ansible|
-      ansible.playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
-      ansible.extra_vars = {
-        config_dir: guest_config_dir,
-        drupalvm_env: drupalvm_env
-      }
-      ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
-    end
+  config.vm.provision provisioner do |ansible|
+    ansible.playbook = playbook
+    ansible.extra_vars = {
+      config_dir: config_dir,
+      drupalvm_env: drupalvm_env
+    }
+    ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
+    ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
   end
 
   # VMware Fusion.
