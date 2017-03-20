@@ -26,8 +26,8 @@ One scenario where this might be useful is when you are moving generated code fr
 
 ```yaml
 options_override:
-  rsync__owner: vagrant
-  rsync__group: www-data
+  owner: vagrant
+  group: www-data
   rsync__args: [
     "--verbose", "--archive", "--delete",
     "--chmod=gu=rwX,o=rX", # 664 for files, 775 for directories
