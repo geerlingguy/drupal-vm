@@ -19,7 +19,7 @@ vagrant_public_ip: ""
 
 # A list of synced folders, with the keys 'local_path', 'destination', and
 # a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
-# http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
+# http://docs.drupalvm.com/en/latest/getting-started/syncing-folders/ for more.
 vagrant_synced_folders:
   # The first synced folder will be used for the default Drupal installation, if
   # any of the build_* settings are 'true'. By default the folder is set to
