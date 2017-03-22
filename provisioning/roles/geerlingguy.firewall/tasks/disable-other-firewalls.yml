@@ -3,6 +3,7 @@
   shell: yum list installed firewalld
   register: firewalld_installed
   ignore_errors: true
+  changed_when: false
   when: ansible_os_family == "RedHat" and firewall_disable_firewalld
 
 - name: Disable the firewalld service (on RHEL, if configured).
@@ -16,6 +17,7 @@
   shell: dpkg -l ufw
   register: ufw_installed
   ignore_errors: true
+  changed_when: false
   when: ansible_distribution == "Ubuntu" and firewall_disable_ufw
 
 - name: Disable the ufw firewall (on Ubuntu, if configured).
