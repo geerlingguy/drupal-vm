@@ -41,7 +41,7 @@ If you want to customize the generated alias file you can override the `drush_al
 drush_aliases_host_template: "{{ config_dir }}/templates/drupalvm.aliases.drushrc.php.j2"
 ```
 
-Eg. to only print the alias for your main domain, and not the subdomain you can override the file using a child template.
+Eg. to only print the alias for your main domain, and not the subdomain you can override the file using a [Jinja2 child template](http://jinja.pocoo.org/docs/2.9/templates/#child-template).
 
 ```php
 {% extends 'templates/drupalvm.aliases.drushrc.php.j2' %}
