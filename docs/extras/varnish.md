@@ -35,6 +35,10 @@ If you don't set these values, Drupal will think all requests are coming from `1
 
 If you can't customize via variables because an option isn't exposed, you can extend the base `drupalvm.vcl.j2` through Jinja2 template inheritance.
 
+```yaml
+varnish_default_vcl_template_path: "{{ config_dir }}/templates/drupalvm.vcl.j2"
+```
+
 _If you extend Drupal VM's provided base template, the path referenced should to be relative to the playbook.yml._
 
 ```
