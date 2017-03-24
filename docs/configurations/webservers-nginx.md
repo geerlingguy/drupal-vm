@@ -40,7 +40,7 @@ If you are using Ubuntu as your base OS and you want to get started quickly with
         ssl_ciphers         HIGH:!aNULL:!MD5;
 ```
 
-### Customizing server block configuration
+## Customizing server block configuration
 
 If you can't customize via variables because an option isn't exposed, you can override the template used to generate the the virtualhost configuration file.
 
@@ -48,9 +48,9 @@ If you can't customize via variables because an option isn't exposed, you can ov
 nginx_vhost_template: "{{ config_dir }}/templates/nginx-vhost.conf.j2"
 ```
 
-You can either copy and modify the provided `nginx-vhost.conf.j2` template, or extend it and and override the specific template block you need to change.
+You can either copy and modify the provided `nginx-vhost.conf.j2` template, or extend it and override the specific template block you need to change.
 
-_If you extend Drupal VM's provided base template, the path referenced should to be relative to the playbook.yml._
+_If you extend Drupal VM's provided base template, the path referenced should to be relative to playbook.yml._
 
 ```
 {% extends 'templates/nginx-vhost.conf.j2' %}
