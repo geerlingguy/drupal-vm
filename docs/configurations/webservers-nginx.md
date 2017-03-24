@@ -45,7 +45,7 @@ If you are using Ubuntu as your base OS and you want to get started quickly with
 If you can't customize via variables because an option isn't exposed, you can override the template used to generate the the virtualhost configuration file.
 
 ```yaml
-nginx_vhost_template: "{{ config_dir }}/nginx-vhost.conf.j2"
+nginx_vhost_template: "{{ config_dir }}/templates/nginx-vhost.conf.j2"
 ```
 
 You can either copy and modify the provided `nginx-vhost.conf.j2` template, or extend it and and override the specific template block you need to change.
