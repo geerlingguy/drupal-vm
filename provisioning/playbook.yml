@@ -54,7 +54,7 @@
     - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache', tags: ['webserver']}
     - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache', tags: ['webserver'] }
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx', tags: ['webserver'] }
-    - { role: geerlingguy.php, tags: ['php'] }
+    - { role: geerlingguy.php, tags: ['php', 'drupal'] }
     - { role: geerlingguy.php-pecl, tags: ['php'] }
     - { role: geerlingguy.composer }
     - { role: geerlingguy.mysql, when: drupal_db_backend == 'mysql', tags: ['database'] }
