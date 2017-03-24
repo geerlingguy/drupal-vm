@@ -22,6 +22,7 @@ $aliases['{{ host }}'] = array(
 {% endif -%}
 {% endmacro %}
 
+{% block aliases -%}
 {%- if drupalvm_webserver == 'apache' -%}
   {%- for vhost in apache_vhosts -%}
     {{ alias(vhost.servername, vhost.documentroot) }}
@@ -38,3 +39,4 @@ $aliases['{{ host }}'] = array(
     {%- endfor -%}
   {%- endfor -%}
 {%- endif -%}
+{% endblock %}
