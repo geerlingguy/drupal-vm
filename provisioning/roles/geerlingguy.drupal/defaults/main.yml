@@ -1,7 +1,11 @@
 ---
-# Set this to 'false' if you don't need to install Drupal (using the drupal_*
-# settings below), but instead copy down a database (e.g. using drush sql-sync).
-drupal_install_site: true
+# Set this to 'true' and specify a Git repository if you want to deploy Drupal
+# to your server from an existing repository.
+drupal_deploy: false
+drupal_deploy_repo: ""
+drupal_deploy_version: master
+drupal_deploy_update: true
+drupal_deploy_dir: "/var/www/drupal"
 
 # Set this to 'true' and 'drupal_build_composer*' to 'false' if you would like
 # to build a Drupal make file with Drush.
@@ -13,7 +17,7 @@ drush_make_options: "--no-gitinfofile"
 # Composer-based site deployment strategy.
 drupal_build_composer: false
 drupal_composer_path: "/path/to/drupal.composer.json"
-drupal_composer_install_dir: "/var/www/drupal"
+drupal_composer_install_dir: "{{ drupal_deploy_dir }}"
 drupal_composer_dependencies:
   - "drupal/devel:1.x-dev"
 
@@ -25,7 +29,7 @@ drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 # Required Drupal settings.
-drupal_core_path: "{{ drupal_composer_install_dir }}/web"
+drupal_core_path: "{{ drupal_deploy_dir }}/web"
 drupal_core_owner: "{{ ansible_ssh_user | default(ansible_env.SUDO_USER, true) | default(ansible_env.USER, true) | default(ansible_user_id) }}"
 drupal_db_user: drupal
 drupal_db_password: drupal
@@ -33,10 +37,14 @@ drupal_db_name: drupal
 drupal_db_backend: mysql
 drupal_db_host: "127.0.0.1"
 
+# Set this to 'false' if you don't need to install Drupal (using the drupal_*
+# settings below), but instead copy down a database (e.g. using drush sql-sync).
+drupal_install_site: true
+
 # Settings for installing a Drupal site if 'drupal_install_site:' is 'true'.
 drupal_domain: "drupaltest.dev"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
-drupal_enable_modules: [ 'devel' ]
+drupal_enable_modules: []
 drupal_account_name: admin
 drupal_account_pass: admin

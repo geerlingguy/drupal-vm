@@ -4,6 +4,18 @@
   vars_files:
     - test-vars.yml
 
+  vars:
+    # Deploy from the Drupal VM Prod example project.
+    drupal_deploy: true
+    drupal_deploy_repo: "https://github.com/geerlingguy/drupalvm-live.git"
+    drupal_deploy_dir: /var/www/drupal
+    drupal_domain: "prod.drupalvm.com"
+
+    # Disable Composer-based codebase setup.
+    drupal_build_composer_project: false
+    drupal_build_composer: false
+    drupal_composer_dependencies: []
+
   pre_tasks:
     - include: test-setup.yml
 

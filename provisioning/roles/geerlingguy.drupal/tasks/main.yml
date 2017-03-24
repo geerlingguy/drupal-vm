@@ -12,6 +12,19 @@
   set_fact:
     drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
 
+# Deploy Drupal if configured.
+- include: tasks/deploy.yml
+  when: drupal_deploy
+
+- name: Define drupal_deploy_updated
+  set_fact:
+    drupal_deploy_updated: "{{ drupal_deploy_repo_updated.changed|default(false) }}"
+
+# Run update tasks if Drupal was updated.
+- include: tasks/update.yml
+  when: drupal_deploy_updated and drupal_site_exists
+  static: no
+
 # Build makefile if configured.
 - include: tasks/build-makefile.yml
   when: drupal_build_makefile
