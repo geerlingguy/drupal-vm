@@ -76,4 +76,4 @@
 - src: geerlingguy.solr
   version: 3.5.1
 - src: geerlingguy.varnish
-  version: 1.8.3
+  version: 1.8.4
