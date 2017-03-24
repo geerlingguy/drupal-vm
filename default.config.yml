@@ -165,6 +165,7 @@ nginx_hosts:
 
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
+nginx_vhost_template: "templates/nginx-vhost.conf.j2"
 
 # MySQL databases and users.
 mysql_databases:
