@@ -1,3 +1,4 @@
+require 'json'
 require 'yaml'
 
 # Cross-platform way of finding an executable in the $PATH.
@@ -31,6 +32,16 @@ def resolve_jinja_variables(vconfig)
     end
     value
   end
+end
+
+# Return the drupalvm extra-field from the passed composer.json
+def load_composer_config(path)
+  cconfig = {}
+  composer_conf = JSON.parse(File.read(path))
+  if composer_conf['extra'] && composer_conf['extra']['drupalvm']
+    cconfig = composer_conf['extra']['drupalvm']
+  end
+  cconfig
 end
 
 # Return the combined configuration content all files provided.

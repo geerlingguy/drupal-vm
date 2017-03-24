@@ -3,17 +3,29 @@
 
 require_relative 'lib/drupalvm/vagrant'
 
-# Absolute paths on the host machine.
-host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
-host_project_dir = ENV['DRUPALVM_PROJECT_ROOT'] || host_drupalvm_dir
-host_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "#{host_project_dir}/#{ENV['DRUPALVM_CONFIG_DIR']}" : host_project_dir
-
-# Absolute paths on the guest machine.
-guest_project_dir = '/vagrant'
-guest_drupalvm_dir = ENV['DRUPALVM_DIR'] ? "/vagrant/#{ENV['DRUPALVM_DIR']}" : guest_project_dir
-guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG_DIR']}" : guest_project_dir
-
 drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
+
+# Default paths when the project is based on Drupal VM.
+host_project_dir = host_drupalvm_dir = host_config_dir = __dir__
+guest_project_dir = guest_drupalvm_dir = guest_config_dir = '/vagrant'
+
+if File.exist?("#{host_project_dir}/composer.json")
+  cconfig = load_composer_config("#{host_project_dir}/composer.json")
+
+  # If Drupal VM is a Composer dependency set the correct path.
+  vendor_dir = `composer config vendor-dir`.strip
+  drupalvm_path = "#{vendor_dir}/geerlingguy/drupal-vm"
+  if Dir.exist?("#{host_project_dir}/#{drupalvm_path}")
+    host_drupalvm_dir = "#{host_project_dir}/#{drupalvm_path}"
+    guest_drupalvm_dir = "#{guest_project_dir}/#{drupalvm_path}"
+  end
+
+  # Read config_dir from composer.json if set.
+  if cconfig.include?('config_dir')
+    host_config_dir = "#{host_project_dir}/#{cconfig['config_dir']}"
+    guest_config_dir = "#{guest_project_dir}/#{cconfig['config_dir']}"
+  end
+end
 
 default_config_file = "#{host_drupalvm_dir}/default.config.yml"
 unless File.exist?(default_config_file)
