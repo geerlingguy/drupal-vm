@@ -27,9 +27,11 @@
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
+      tags: ['php', 'drupal']
       static: no
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
+      tags: ['php', 'drupal']
       static: no
 
     - name: Run configured pre-provision shell scripts.
@@ -44,6 +46,7 @@
         - "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - include: tasks/php.yml
+      tags: ['php', 'drupal']
 
   roles:
     # Essential roles.
