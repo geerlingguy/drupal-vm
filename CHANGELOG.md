@@ -1,5 +1,43 @@
 # Drupal VM Changelog
 
+## 4.4.0 "Sea of Simulation" (2017-03-24)
+
+### Breaking Changes
+
+  * No breaking changes.
+
+### New/changed variables in default.config.yml
+
+  * `php_version` now defaults to `"7.1"` (was `"7.0"`).
+
+### Improvements
+
+  * #1252: Allow Drupal to be deployed into Drupal VM from a Git repository.
+  * #1177: Add full and CI-tested support for Debian 8.
+  * #1213: Add `DRUPALVM_ANSIBLE_TAGS` environment variable to specify tags to run.
+  * #1031: Switch default PHP version to `7.1`.
+  * #1211: Add mcrypt PHP extension on RedHat-based installs.
+  * #1215: Document alternative method of running Drupal Console commands.
+  * Removed logic supporting PHP 5.5, as it's no longer supported.
+  * #1233: Tidy up the main Drupal VM playbook.
+  * #1198: Use VAGRANT_HOME to get the SSH `insecure_private_key` directory for Drush.
+  * #1238: Add a configurable intro message for `vagrant up` and `vagrant reload`.
+  * #1230: Allow `Vagrantfile.local` to be either in project _or_ config directory.
+  * #1244: Add support for a `secrets.yml` file for use with Ansible Vault.
+  * #1135: Improve Sublime Text XDebug documentation.
+  * Updated roles: Drush, Drupal, Firewall, Varnish.
+
+### Bugfixes
+
+  * #1199: Make sure `rsync` synced folders' `owner` and `group` are applied correctly.
+  * #1212: Fixes Drush make builds after Drush role installation technique changed.
+  * #1237: Raise a `VagrantError` for clearer error messaging.
+  * #1220: Ensure `www-data` is in the group of the NFS synced directory (file permissions).
+  * #1245: Ensure production `init.yml` playbook works on Ubuntu 16.04.
+  * #1250: Document use of `DRUPALVM_ENV` variable in production docs.
+  * #1253: Ensure `geerlingguy.php` role is run when `drupal` tag is used.
+
+
 ## 4.3.1 (2017-03-14)
 
 ### New/changed variables in default.config.yml
