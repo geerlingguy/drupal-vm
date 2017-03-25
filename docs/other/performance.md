@@ -33,13 +33,11 @@ vagrant_synced_folders:
     type: rsync
     create: true
     excluded_paths:
-      - drupal/private
-      - drupal/public/.git
-      - drupal/public/sites/default/files
-      - drupal/tmp
+      - private
+      - .git
+      - web/sites/default/files
+      - tmp
 ```
-
-_This example assumes that you have Drupal in a directory called `drupal/public`._
 
 ### Mixing synced folder types
 
@@ -49,16 +47,15 @@ You can also mix the synced folder types and use a fast one-way rsync for your p
 vagrant_synced_folders:
   - local_path: .
     destination: /var/www/drupal
-    id: drupal
     type: rsync
     create: true
     excluded_paths:
-      - drupal/private
-      - drupal/public/.git
-      - drupal/public/sites/default/files
-      - drupal/tmp
-      # Exclude the second synced folder (this option is rsync specific).
-      - drupal/config/drupal
+      - private
+      - .git
+      - web/sites/default/files
+      - tmp
+      # Exclude the second synced folder.
+      - config/drupal
   # Use a slower but two-way sync for configuration sync directory.
   - local_path: config/drupal
     destination: /var/www/drupal/config/drupal
