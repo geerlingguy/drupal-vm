@@ -24,6 +24,7 @@
       tags: ['always']
 
     - include: tasks/hostname.yml
+      tags: ['php', 'drupal']
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
