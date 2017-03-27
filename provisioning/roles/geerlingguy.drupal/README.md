@@ -22,15 +22,20 @@ Available variables are listed below, along with default values (see `defaults/m
 
 ### Deploy an existing project with Git
 
-    # Set this to 'true' and specify a Git repository if you want to deploy Drupal
-    # to your server from an existing repository.
     drupal_deploy: false
     drupal_deploy_repo: ""
     drupal_deploy_version: master
     drupal_deploy_update: true
     drupal_deploy_dir: "/var/www/drupal"
+    drupal_deploy_accept_hostkey: no
 
-Set this to `true` and `drupal_build_composer*` to `false` if you would like to deploy Drupal to your server from an existing Git repository.
+Set `drupal_deploy` to `true` and `drupal_build_composer*` to `false` if you would like to deploy Drupal to your server from an existing Git repository. The other options all apply to the Git checkout operation:
+
+  - `repo`: Git repository address
+  - `version`: can be a branch, tag, or commit hash
+  - `update`: whether the repository should be updated to the latest commit, if `version` is a branch
+  - `dir`: The directory into which the repository will be checked out
+  - `accept_hostkey`: Whether to automatically accept the Git server's hostkey on the first connection.
 
 ### Build a project from a Drush Make file
 

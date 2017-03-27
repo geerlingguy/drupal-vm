@@ -15,6 +15,7 @@
     update: "{{ drupal_deploy_update }}"
     force: yes
     dest: "{{ drupal_deploy_dir }}"
+    accept_hostkey: "{{ drupal_deploy_accept_hostkey }}"
   register: drupal_deploy_repo_updated
   notify: restart webserver
   become: no
