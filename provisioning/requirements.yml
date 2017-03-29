@@ -22,7 +22,7 @@
 - src: geerlingguy.drupal-console
   version: 1.0.7
 - src: geerlingguy.drush
-  version: 2.0.0
+  version: 2.0.1
 - src: geerlingguy.elasticsearch
   version: 2.1.3
 - src: geerlingguy.firewall
