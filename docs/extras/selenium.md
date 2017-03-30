@@ -11,7 +11,7 @@ installed_extras:
   - selenium
   [...]
 
-# Make sure the following four packages are in composer_global_packages:
+# Add the following package to composer_global_packages or your Drupal project:
 composer_global_packages:
   - { name: drupal/drupal-extension, release: '*' }
 ```
