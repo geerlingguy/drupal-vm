@@ -19,6 +19,8 @@
   shell: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item }}/"
   when: "'{{ item }}' not in '{{ solr_cores_current.content }}'"
   with_items: "{{ solr_cores }}"
+  become: yes
+  become_user: "{{ solr_user }}"
 
 - name: Create configured cores.
   shell: "{{ solr_install_path }}/bin/solr create -c {{ item }}"
