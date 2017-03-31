@@ -16,17 +16,17 @@ If you're issuing a provision directly through `ansible-playbook` as you would d
 
 ```sh
 # By default it doesn't try to load any other config file.
-ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo --ask-sudo-pass
+ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --become --ask-become-pass
 
 # Loads prod.config.yml if available.
-DRUPALVM_ENV=prod ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo --ask-sudo-pass
+DRUPALVM_ENV=prod ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --become --ask-become-pass
 ```
 
 If you add `DRUPALVM_ENV=prod` to the `/etc/environment` file on your production environment:
 
 ```sh
 # Loads prod.config.yml if available.
-ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo --ask-sudo-pass
+ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --become --ask-become-pass
 ```
 
 _Note: Having the variable set locally takes precedence over having it on the remote machine._
@@ -123,11 +123,11 @@ Once the initialization is complete, you can test your new admin login with `ssh
 
 Run the following command within Drupal VM's root directory (the folder containing the `Vagrantfile`):
 
-    DRUPALVM_ENV=prod ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --sudo --ask-sudo-pass
+    DRUPALVM_ENV=prod ansible-playbook -i examples/prod/inventory provisioning/playbook.yml --become --ask-become-pass
 
 _Note: If you have installed [Drupal VM as a Composer dependency](../deployment/composer-dependency.md) you also need to specify the path of the config directory where you have your `config.yml` located._
 
-    DRUPALVM_ENV=prod ansible-playbook -i config/prod/inventory vendor/geerlingguy/drupal-vm/provisioning/playbook.yml -e "config_dir=$(pwd)/config" --sudo --ask-sudo-pass
+    DRUPALVM_ENV=prod ansible-playbook -i config/prod/inventory vendor/geerlingguy/drupal-vm/provisioning/playbook.yml -e "config_dir=$(pwd)/config" --become --ask-become-pass
 
 Ansible will prompt you for your admin account's `sudo` password (the same as the password you encrypted and saved as `admin_password`). Enter it and press return.
 
