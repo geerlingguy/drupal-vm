@@ -1,5 +1,23 @@
 # Drupal VM Changelog
 
+## 4.4.1 (2017-04-01)
+
+### New/changed variables in default.config.yml
+
+  * N/A
+
+### Improvements
+
+  * Updated Ansible roles: `drupal`, `drush`, and `solr`.
+
+### Bugfixes
+
+  * #1245: Follow-up to make sure VM initial provisioning works as expected.
+  * #1261: Run hostname.yml tasks for `drupal` tag to prevent errors.
+  * Fixed pareview.sh script configuration example.
+  * Tweaked docs for Selenium and Production for clarity.
+
+
 ## 4.4.0 "Sea of Simulation" (2017-03-24)
 
 ### Breaking Changes
