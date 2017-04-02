@@ -26,3 +26,17 @@
     state: stopped
     enabled: no
   when: ansible_distribution == "Ubuntu" and firewall_disable_ufw and ufw_installed.rc == 0
+
+- name: Check ufw package is installed (on Archlinux).
+  command: pacman -Q ufw
+  register: ufw_installed
+  ignore_errors: true
+  changed_when: false
+  when: ansible_distribution == "Archlinux" and firewall_disable_ufw
+
+- name: Disable the ufw firewall (on Archlinux, if configured).
+  service:
+    name: ufw
+    state: stopped
+    enabled: no
+  when: ansible_distribution == "Archlinux" and firewall_disable_ufw and ufw_installed.rc == 0
