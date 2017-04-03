@@ -42,7 +42,7 @@ Full Drupal VM documentation is available at http://docs.drupalvm.com/
 
 There are a couple places where you can customize the VM for your needs:
 
-  - `config.yml`: Override any of the default VM configuration from `default.config.yml`; customize almost any aspect of any software installed in the VM (more about [overriding configurations](http://docs.drupalvm.com/en/latest/other/overriding-configurations/).
+  - `config.yml`: Override any of the default VM configuration from `default.config.yml`; customize almost any aspect of any software installed in the VM (more about [configuring Drupal VM](http://docs.drupalvm.com/en/latest/getting-started/configure-drupalvm/).
   - `drupal.composer.json` or `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (you can build using Composer, Drush make, or your own codebase).
 
 If you want to switch from Drupal 8 (default) to Drupal 7 on the initial install, do the following:
