@@ -4,66 +4,37 @@ services: docker
 env:
   # Test current version of Solr on latest supported OSes.
   - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    solr_major_version: 6
+    playbook: test-solr-6.yml
   - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    solr_major_version: 6
+    playbook: test-solr-6.yml
   - distro: debian8
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    solr_major_version: 6
+    playbook: test-solr-6.yml
 
   # Test older versions of Solr / OSes.
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
-    solr_major_version: 5
+    playbook: test-solr-5.yml
   - distro: ubuntu1204
-    init: /sbin/init
-    run_opts: ""
-    solr_major_version: 5
+    playbook: test-solr-5.yml
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
-    solr_major_version: 4
+    playbook: test-solr-4.yml
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
-    solr_major_version: 3
-
-before_install:
-  # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+    playbook: test-solr-3.yml
 
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
 
-  # Install dependencies.
-  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-solr-${solr_major_version}.yml --syntax-check'
-
-  # Test role.
-  - 'docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-solr-${solr_major_version}.yml'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test-solr-${solr_major_version}.yml | tee -a ${idempotence}
-  - >
-    tail ${idempotence}
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
   # Make sure Solr is running.
   - >
-    sudo docker exec "$(cat ${container_id})" ps -ax | grep -q 'solr'
+    sudo docker exec ${container_id} ps -ax | grep -q 'solr'
     && (echo 'solr is running: pass' && exit 0)
     || (echo 'solr is running: fail' && exit 1)
 
