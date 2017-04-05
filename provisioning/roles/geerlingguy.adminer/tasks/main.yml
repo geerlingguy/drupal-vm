@@ -11,6 +11,7 @@
     url: http://www.adminer.org/latest.php
     dest: "{{ adminer_install_dir }}/{{ adminer_install_filename }}"
     mode: 0644
+    timeout: 60
 
 - name: Symlink Adminer into configured directories.
   file:
