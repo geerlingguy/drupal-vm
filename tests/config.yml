@@ -5,3 +5,25 @@ composer_home_path: "/{{ drupalvm_user }}/.composer"
 # Don't run the 'disable firewall' tasks in tests.
 firewall_disable_firewalld: false
 firewall_disable_ufw: false
+
+installed_extras:
+  - adminer
+  # - blackfire
+  - drupalconsole
+  - drush
+  # - elasticsearch
+  # - java
+  - mailhog
+  # - memcached
+  # - newrelic
+  # - nodejs
+  - pimpmylog
+  # - redis
+  # - ruby
+  # - selenium
+  # - solr
+  # - tideways
+  # - upload-progress
+  - varnish
+  - xdebug
+  # - xhprof
