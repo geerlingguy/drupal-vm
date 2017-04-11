@@ -46,7 +46,8 @@ vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
 # Use optional config.yml and local.config.yml for configuration overrides.
 ['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
   if File.exist?("#{host_config_dir}/#{config_file}")
-    vconfig.merge!(YAML.load_file("#{host_config_dir}/#{config_file}"))
+    optional_config = YAML.load_file("#{host_config_dir}/#{config_file}")
+    vconfig.merge!(optional_config) if optional_config
   end
 end
 
