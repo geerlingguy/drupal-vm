@@ -1,5 +1,24 @@
 # Drupal VM Changelog
 
+## 4.4.2 (2017-04-12)
+
+### New/changed variables in default.config.yml
+
+  * N/A
+
+### Improvements
+
+  * Updated Ansible roles: `firewall`, `mailhog`, `apache`, `git`, `mysql`, `solr`, `adminer`, and `varnish`.
+  * #1289: Update Linux host docs to mention encryption as primary reason for NFS issues.
+
+### Bugfixes
+
+  * #1280: Documentation bugfix for a Quick Start Guide link.
+  * #1275: Update Adminer role to prevent download timeouts.
+  * #1281: Avoid TypeError when a configuration file is empty.
+  * #1291: Teensy tiny docs grammar fix.
+
+
 ## 4.4.1 (2017-04-01)
 
 ### New/changed variables in default.config.yml
