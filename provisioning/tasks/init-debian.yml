@@ -38,6 +38,11 @@
   apt_repository: repo='ppa:ondrej/php5-compat'
   when: php_version == "5.6" and ansible_distribution == "Ubuntu"
 
+- name: Set the correct opcache filename (Ubuntu).
+  set_fact:
+    php_opcache_conf_filename: "10-opcache.ini"
+  when: ansible_distribution == "Ubuntu"
+
 # Debian-specific tasks.
 - name: Add dependencies for PHP versions (Debian).
   apt:
