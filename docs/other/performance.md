@@ -71,3 +71,26 @@ In a custom `Vagrantfile.local`, add user access to Vagrant:
 
     config.winnfsd.uid=900
     config.winnfsd.gid=900
+
+### Better performance: Sharing from Drupal VM to your PC
+
+The fastest option for Drupal VM is to install the Drupal codebase entirely inside Drupal VM, without using a Vagrant shared folder. This method ensures the code runs as fast as it would if it were natively running on your PC, but it requires some other form of codebase synchronization, and means there is at least a tiny bit of lag between saving files in your editor and seeing the changes inside Drupal VM.
+
+If you use one of these techniques, it's recommended you use the [Git deployment technique](../deployment/git.md) to clone your Drupal codebase into Drupal VM from a Git repository.
+
+#### Syncing files via rsync or SSH
+
+If you use an IDE like PhpStorm, you can configure it to synchronize a local codebase with the code inside Drupal VM using SSH (SFTP). There are also tools that mount directories into Windows Explorer using plain SSH and SFTP, though configuring these tools can be difficult.
+
+If at all possible, make sure your IDE is configured to automatically synchronize changes.
+
+#### Share files using Samba inside Drupal VM
+
+Though it's not supported natively by Vagrant, you can mount a Samba share _from the VM guest_ to your host PC. To do this, you have to:
+
+  1. Install Samba inside the VM.
+  2. Configure Samba (through `smb.conf`) to share a directory inside the VM.
+  3. Open firewall ports `137`, `138`, `139`, and `445`.
+  4. Mount the Samba shared folder within Windows Explorer (e.g. visit `\\drupalvm.dev\share_name`)
+
+Read this blog post for further detail in creating a Samba share: [Configure a reverse-mounted Samba shared folder](https://www.jeffgeerling.com/blog/2017/drupal-vm-on-windows-fast-container-blt-project-development#reverse-share).
