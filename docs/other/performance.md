@@ -33,22 +33,44 @@ vagrant_synced_folders:
     type: rsync
     create: true
     excluded_paths:
-      - drupal/private
-      - drupal/public/.git
-      - drupal/public/sites/default/files
-      - drupal/tmp
+      - private
+      - .git
+      - web/sites/default/files
+      - tmp
 ```
 
-_This example assumes that you have Drupal in a directory called `drupal/public`._
+### Mixing synced folder types
 
+You can also mix the synced folder types and use a fast one-way rsync for your primary codebase and then a slower but two-way sync for Drupal's configuration sync directory.
+
+```yaml
+vagrant_synced_folders:
+  - local_path: .
+    destination: /var/www/drupal
+    type: rsync
+    create: true
+    excluded_paths:
+      - private
+      - .git
+      - web/sites/default/files
+      - tmp
+      # Exclude the second synced folder.
+      - config/drupal
+  # Use a slower but two-way sync for configuration sync directory.
+  - local_path: config/drupal
+    destination: /var/www/drupal/config/drupal
+    type: "" # Or smb/nfs if available
+    create: true
+```
 
 ## Improving performance on Windows
 
 By default, if you use the _NFS_ synced folder type, Vagrant will ignore this directive and use the native (usually slow) VirtualBox shared folder system instead. You can get higher performance by doing one of the following (all of these steps require a full VM reload (`vagrant reload`) to take effect):
 
+  1. **Use PhpStorm or a reverse-mounted synced folder for working from inside the VM.** Read [Drupal VM on Windows - a fast container for BLT project development](https://www.jeffgeerling.com/blog/2017/drupal-vm-on-windows-fast-container-blt-project-development) for instructions and recommendations.
   1. **Install the `vagrant-winnfsd` plugin**. See the 'NFS' section later for more details and caveats.
-  2. **Use `smb` for the synced folder's type.**
-  2. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/) or [Cmder](http://cmder.net/).
+  1. **Use `smb` for the synced folder's type.**
+  1. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/) or [Cmder](http://cmder.net/).
 
 ### NFS
 
