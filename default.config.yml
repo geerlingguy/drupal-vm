@@ -319,4 +319,4 @@ selenium_version: 2.53.0
 # Other configuration.
 dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts
-#ssh_home: "{{ drupal_core_path }}"
+ssh_home: "{{ drupal_core_path }}"
