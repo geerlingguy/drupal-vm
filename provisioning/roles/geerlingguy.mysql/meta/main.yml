@@ -18,5 +18,8 @@ galaxy_info:
     - name: Debian
       versions:
       - all
+    - name: Archlinux
+      versions:
+      - all
   galaxy_tags:
     - database

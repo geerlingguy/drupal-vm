@@ -6,6 +6,8 @@ env:
     playbook: centos-7-test.yml
   - distro: centos6
     playbook: test.yml
+  - distro: debian8
+    playbook: test.yml
   - distro: ubuntu1604
     playbook: test.yml
   - distro: ubuntu1404
