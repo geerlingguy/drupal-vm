@@ -14,6 +14,10 @@ guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG
 
 drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
 
+host_os = %w[darwin bsd freebsd linux solaris windows].reduce(nil) do |detected_os, os|
+  detected_os || (Vagrant::Util::Platform.send("#{os}?") ? os : nil)
+end
+
 # Cross-platform way of finding an executable in the $PATH.
 def which(cmd)
   exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
@@ -44,7 +48,7 @@ require 'yaml'
 # Load default VM configurations.
 vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
 # Use optional config.yml and local.config.yml for configuration overrides.
-['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
+['config.yml', 'local.config.yml', "#{host_os}.config.yml", "#{drupalvm_env}.config.yml"].each do |config_file|
   if File.exist?("#{host_config_dir}/#{config_file}")
     optional_config = YAML.load_file("#{host_config_dir}/#{config_file}")
     vconfig.merge!(optional_config) if optional_config
@@ -160,7 +164,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = playbook
     ansible.extra_vars = {
       config_dir: config_dir,
-      drupalvm_env: drupalvm_env
+      drupalvm_env: drupalvm_env,
+      drupalvm_host_os: host_os
     }
     ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
     ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
