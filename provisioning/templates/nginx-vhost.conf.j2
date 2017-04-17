@@ -11,6 +11,9 @@ server {
 
     server_name {{ item.server_name }};
     error_log /var/log/nginx/error.log info;
+{% if item.access_log is defined %}
+    access_log {{ item.access_log }};
+{% endif %}
     root {{ item.root }};
     index index.php index.html index.htm;
 
