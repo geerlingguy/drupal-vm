@@ -4,7 +4,7 @@ __mysql_packages:
   - mysql-common
   - mysql-server
 __mysql_slow_query_log_file: /var/log/mysql/mysql-slow.log
-__mysql_log_error: /var/log/mysql.err
+__mysql_log_error: /var/log/mysql/mysql.err
 __mysql_syslog_tag: mysql
 __mysql_pid_file: /var/run/mysqld/mysqld.pid
 __mysql_config_file: /etc/mysql/my.cnf

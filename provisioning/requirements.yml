@@ -36,11 +36,11 @@
 - src: geerlingguy.memcached
   version: 1.0.7
 - src: geerlingguy.mysql
-  version: 2.7.0
+  version: 2.7.2
 - src: geerlingguy.nginx
   version: 2.0.0
 - src: geerlingguy.nodejs
-  version: 4.0.0
+  version: 4.1.0
 - src: geerlingguy.php
   version: 3.4.4
 - src: geerlingguy.php-memcached

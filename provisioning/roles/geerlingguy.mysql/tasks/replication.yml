@@ -4,7 +4,7 @@
     name: "{{ mysql_replication_user.name }}"
     host: "{{ mysql_replication_user.host | default('%') }}"
     password: "{{ mysql_replication_user.password }}"
-    priv: "{{ mysql_replication_user.priv | default('*.*:REPLICATION SLAVE') }}"
+    priv: "{{ mysql_replication_user.priv | default('*.*:REPLICATION SLAVE,REPLICATION CLIENT') }}"
     state: present
   when: >
     (mysql_replication_role == 'master')
@@ -12,7 +12,10 @@
     and (mysql_replication_master != '')
 
 - name: Check slave replication status.
-  mysql_replication: mode=getslave
+  mysql_replication:
+    mode: getslave
+    login_user: "{{ mysql_replication_user.name }}"
+    login_password: "{{ mysql_replication_user.password }}"
   ignore_errors: true
   register: slave
   when: >

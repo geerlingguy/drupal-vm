@@ -59,7 +59,7 @@ mysql_read_buffer_size: "1M"
 mysql_read_rnd_buffer_size: "4M"
 mysql_myisam_sort_buffer_size: "64M"
 mysql_thread_cache_size: "8"
-mysql_query_cache_type: "1"
+mysql_query_cache_type: "0"
 mysql_query_cache_size: "16M"
 mysql_query_cache_limit: "1M"
 mysql_max_connections: "151"
@@ -93,7 +93,7 @@ mysql_mysqldump_max_allowed_packet: "64M"
 # Logging settings.
 mysql_log: ""
 # The following variables have a default value depending on operating system.
-# mysql_log_error: /var/log/mysql.err
+# mysql_log_error: /var/log/mysql/mysql.err
 # mysql_syslog_tag: mysql
 
 mysql_config_include_files: []

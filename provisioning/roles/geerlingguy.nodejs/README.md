@@ -12,17 +12,17 @@ Requires the EPEL repository on RedHat/CentOS (you can install it by simply addi
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    nodejs_version: "0.12"
+    nodejs_version: "6.x"
 
-The Node.js version to install. "0.12" is the default and works on all supported OSes. Other versions such as "0.10", "4.x", "5.x", and "6.x" should work on the latest versions of Debian/Ubuntu and RHEL/CentOS.
+The Node.js version to install. "6.x" is the default and works on most supported OSes. Other versions such as "0.12", "4.x", "5.x", "6.x", etc. should work on the latest versions of Debian/Ubuntu and RHEL/CentOS.
 
     nodejs_install_npm_user: "{{ ansible_ssh_user }}"
 
-The user for whom the npm packages will be installed can be set here, this defaults to ansible_user
+The user for whom the npm packages will be installed can be set here, this defaults to `ansible_user`.
 
     npm_config_prefix: "~/.npm-global"
 
-The global installation directory. This should be writeable by the nodejs_install_npm_user.
+The global installation directory. This should be writeable by the `nodejs_install_npm_user`.
 
     npm_config_unsafe_perm: "false"
 
@@ -30,7 +30,7 @@ Set to true to suppress the UID/GID switching when running package scripts. If s
 
     nodejs_npm_global_packages: []
 
-Add a list of npm packages with a `name` and (optional) `version` to be installed globally. For example:
+A list of npm packages with a `name` and (optional) `version` to be installed globally. For example:
 
     nodejs_npm_global_packages:
       # Install a specific version of a package.
@@ -38,6 +38,11 @@ Add a list of npm packages with a `name` and (optional) `version` to be installe
         version: 0.9.3
       # Install the latest stable release of a package.
       - name: node-sass
+<!-- code block separator -->
+
+    nodejs_package_json_path: ""
+
+Set a path pointing to a particular `package.json` (e.g. `"/var/www/app/package.json"`). This will install all of the defined packages globally using Ansible's `npm` module.
 
 ## Dependencies
 
@@ -63,4 +68,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
