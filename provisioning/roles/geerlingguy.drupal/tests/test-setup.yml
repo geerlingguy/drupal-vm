@@ -8,6 +8,7 @@
   with_items:
     - curl
     - unzip
+    - sendmail
 
 - name: Add repository for Apache 2.4.9+ (Ubuntu 14).
   apt_repository: repo='ppa:ondrej/apache2'

@@ -17,7 +17,7 @@
     dest: "{{ drupal_deploy_dir }}"
     accept_hostkey: "{{ drupal_deploy_accept_hostkey }}"
   register: drupal_deploy_repo_updated
-  notify: restart webserver
+  notify: clear opcache
   become: no
 
 - name: Check if a composer.json file is present.

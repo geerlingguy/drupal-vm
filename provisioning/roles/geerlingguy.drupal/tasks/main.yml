@@ -8,7 +8,12 @@
   register: drupal_site
   ignore_errors: true
 
-- name: Define drupal_site_exists
+- name: Define drush_path if it's not already defined.
+  set_fact:
+    drush_path: drush
+  when: drush_path is not defined
+
+- name: Define drupal_site_exists.
   set_fact:
     drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
 
