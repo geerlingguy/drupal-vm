@@ -9,3 +9,28 @@ backend default {
   .host = "{{ varnish_default_backend_host }}";
   .port = "{{ varnish_default_backend_port }}";
 }
+
+{% if varnish_backends is defined %}
+# Other backend servers.
+{% for backend, value in varnish_backends.iteritems() %}
+backend {{ backend }} {
+  .host = "{{ value.host }}";
+  .port = "{{ value.port }}";
+}
+{% endfor %}
+{% endif %}
+
+sub vcl_recv {
+{% if varnish_vhosts is defined %}
+  # Varnish vhosts.
+{% for vhost, value in varnish_vhosts.iteritems() if varnish_vhosts is defined %}
+  {% if loop.first %}
+  if (req.http.host == "{{ vhost }}" || req.http.host == "www.{{ vhost }}") {
+  {% else %}
+  elseif (req.http.host == "{{ vhost }}" || req.http.host == "www.{{ vhost }}") {
+  {% endif %}
+    set req.backend_hint = {{ value.backend }};
+  }
+{% endfor %}
+{% endif %}
+}
