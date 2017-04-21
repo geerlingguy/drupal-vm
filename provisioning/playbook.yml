@@ -31,11 +31,11 @@
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
-      tags: ['php', 'drupal']
+      tags: ['php']
       static: no
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
-      tags: ['php', 'drupal']
+      tags: ['php']
       static: no
 
     - name: Run configured pre-provision shell scripts.
@@ -50,7 +50,7 @@
         - "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - include: tasks/php.yml
-      tags: ['php', 'drupal']
+      tags: ['php']
 
   roles:
     # Essential roles.
@@ -61,7 +61,7 @@
     - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache', tags: ['webserver']}
     - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache', tags: ['webserver'] }
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx', tags: ['webserver'] }
-    - { role: geerlingguy.php, tags: ['php', 'drupal'] }
+    - { role: geerlingguy.php, tags: ['php'] }
     - { role: geerlingguy.php-pecl, tags: ['php'] }
     - { role: geerlingguy.composer }
     - { role: geerlingguy.mysql, when: drupal_db_backend == 'mysql', tags: ['database'] }
