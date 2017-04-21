@@ -16,7 +16,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Varnish package name you want to install. See `apt-cache policy varnish` or `yum list varnish` for a listing of available candidates.
 
-    varnish_version: "4.1"
+    varnish_version: "5.0.0"
 
 Varnish version that should be installed. See `https://repo.varnish-cache.org/redhat/` for a listing of available versions (e.g. `3.0`, `4.0`, `4.1`). _Note: Ubuntu 16.04 "Xenial" defaults to 4.1 from the universe repoistory_
 
