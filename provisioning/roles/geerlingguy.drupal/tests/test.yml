@@ -18,5 +18,4 @@
     - geerlingguy.php-mysql
     - geerlingguy.git
     - geerlingguy.composer
-    - geerlingguy.drush
     - role_under_test
