@@ -113,6 +113,8 @@
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.elasticsearch, when: '"elasticsearch" in installed_extras' }
     - { role: geerlingguy.varnish, when: '"varnish" in installed_extras' }
+    - { role: drupalvm.www, tags: ['webserver'] }
+    - { role: geerlingguy.drupal, tags: ['drupal'] }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }
@@ -121,17 +123,9 @@
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
 
-    - include: tasks/www.yml
-      tags: ['webserver']
-
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian' and drupal_db_backend == 'mysql'
       tags: ['database']
-
-    # Build and configure the Drupal site.
-    - include_role: name=geerlingguy.drupal
-      static: no
-      tags: ['drupal']
 
     - include: tasks/drush-aliases.yml
 
@@ -152,18 +146,3 @@
         loop_var: outer_item
       with_fileglob:
         - "{{ post_provision_tasks_dir|default(omit) }}"
-
-  # Re-define geerlingguy.drupal `clear opcache` handler because of Ansible
-  # bug https://github.com/ansible/ansible/issues/18411
-  handlers:
-    - name: clear opcache
-      command: >
-        {{ drush_path }} eval
-          "if (function_exists('apc_clear_cache')) {
-            apc_clear_cache();
-          }
-          if (function_exists('opcache_reset')) {
-            opcache_reset();
-          }"
-      args:
-        chdir: "{{ drupal_core_path }}"
