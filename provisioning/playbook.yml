@@ -26,13 +26,7 @@
         - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
       tags: ['always']
 
-    - include: tasks/init-debian.yml
-      when: ansible_os_family == 'Debian'
-      tags: ['php']
-      static: no
-    - include: tasks/init-redhat.yml
-      when: ansible_os_family == 'RedHat'
-      tags: ['php']
+    - include: "tasks/init-{{ ansible_os_family }}.yml"
       static: no
 
     - name: Run configured pre-provision shell scripts.
