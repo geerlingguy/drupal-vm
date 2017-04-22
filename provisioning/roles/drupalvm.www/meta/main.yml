@@ -28,4 +28,4 @@ galaxy_info:
     - vagrant
 
 dependencies:
-  - geerlingguy.nginx
+  - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }

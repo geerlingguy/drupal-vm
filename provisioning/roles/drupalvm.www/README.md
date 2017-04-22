@@ -12,7 +12,7 @@ There are a few defaults defined, but you shouldn't really need to worry about t
 
 ## Dependencies
 
-  - geerlingguy.nginx
+  - geerlingguy.nginx if `drupalvm_webserver` is set to `nginx`.
 
 ## Example Playbook
 
