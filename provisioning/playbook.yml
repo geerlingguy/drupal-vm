@@ -50,7 +50,6 @@
         - "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - include: tasks/php.yml
-      tags: ['php']
 
   roles:
     # Essential roles.
@@ -61,6 +60,7 @@
     - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache', tags: ['webserver']}
     - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache', tags: ['webserver'] }
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx', tags: ['webserver'] }
+    - { role: drupalvm.php-versions, tags: ['php', 'xdebug'] }
     - { role: geerlingguy.php, tags: ['php'] }
     - { role: geerlingguy.php-pecl, tags: ['php'] }
     - { role: geerlingguy.composer }
