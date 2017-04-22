@@ -49,24 +49,27 @@
     - { role: geerlingguy.drupal-console, when: 'drupal_major_version > 7 and "drupalconsole" in installed_extras' }
     - { role: geerlingguy.drush, when: '"drush" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
-    - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
+    - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras', tags: ['php'] }
 
     - role: geerlingguy.php-tideways
       workspace: "/root/php{{ php_version }}"
       when: '"tideways" in installed_extras'
+      tags: ['php']
 
     - role: geerlingguy.php-xdebug
       workspace: "/root/php{{ php_version }}"
       when: '"xdebug" in installed_extras'
-      tags: ['xdebug']
+      tags: ['php', 'xdebug']
 
     - role: geerlingguy.php-xhprof
       workspace: "/root/php{{ php_version }}"
       when: '"xhprof" in installed_extras'
+      tags: ['php']
 
     - role: thom8.php-upload-progress
       workspace: "/root/php{{ php_version }}"
       when: '"upload-progress" in installed_extras'
+      tags: ['php']
 
     - { role: geerlingguy.blackfire, when: '"blackfire" in installed_extras' }
     - { role: geerlingguy.adminer, when: '"adminer" in installed_extras', tags: ['database'] }
@@ -76,7 +79,7 @@
     - { role: franklinkim.newrelic, when: '"newrelic" in installed_extras' }
     - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
     - { role: geerlingguy.redis, when: '"redis" in installed_extras' }
-    - { role: geerlingguy.php-redis, when: '"redis" in installed_extras' }
+    - { role: geerlingguy.php-redis, when: '"redis" in installed_extras', tags: ['php'] }
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
 
     - role: geerlingguy.java
@@ -111,7 +114,7 @@
 
     - include: tasks/dashboard.yml
       when: dashboard_install_dir is defined and dashboard_install_dir != ''
-      tags: ['webserver', 'database']
+      tags: ['webserver', 'database', 'php']
 
     - name: Run configured post-provision shell scripts.
       script: "{{ item }}"

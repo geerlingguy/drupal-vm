@@ -10,4 +10,4 @@
     path: "/root/php{{ php_version }}"
     state: directory
     mode: 0775
-  tags: ['xdebug']
+  tags: ['php', 'xdebug']
