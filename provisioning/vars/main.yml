@@ -5,5 +5,4 @@ _devtool_docroots:
   - "{{ php_xhprof_html_dir }}"
   - "{{ dashboard_install_dir|default('') }}"
 
-hostname_fqdn: "{{ vagrant_hostname }}"
 drupalvm_user: "{{ ansible_env.SUDO_USER | default(ansible_env.USER, true) | default(ansible_user_id, true) }}"
