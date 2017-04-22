@@ -5,12 +5,6 @@
   when: drupalvm_webserver == 'nginx'
   tags: ['webserver', 'database', 'php']
 
-- name: Set the correct opcache filename (Ubuntu).
-  set_fact:
-    php_opcache_conf_filename: "10-opcache.ini"
-  when: ansible_distribution == "Ubuntu"
-  tags: ['php']
-
 - name: Ensure PHP version -specific workspace directory exists.
   file:
     path: "/root/php{{ php_version }}"
