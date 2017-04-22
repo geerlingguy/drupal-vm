@@ -28,7 +28,7 @@
 
   roles:
     # Essential roles.
-    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat', tags: ['webserver, php'] }
+    - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat', tags: ['webserver', 'php'] }
     - { role: drupalvm.hostname }
     - { role: geerlingguy.firewall }
     - { role: geerlingguy.git }
