@@ -1,5 +1,22 @@
 # Drupal VM Changelog
 
+## 4.4.4 (2017-04-22)
+
+### New/changed variables in default.config.yml
+
+  * N/A
+
+### Improvements
+
+  * #1271: Don't run PHP role for 'drupal' tag.
+  * Updated Ansible roles: `postgresql`, `drupal`.
+  * #1323: Default synced folder type to `vagrant_synced_folder_default_type` if unset.
+
+### Bugfixes
+
+  * #1324: Only depend on `geerlingguy.nginx` when `drupalvm_webserver` is `nginx`.
+
+
 ## 4.4.3 (2017-04-20)
 
 ### New/changed variables in default.config.yml
