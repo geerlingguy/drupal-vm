@@ -74,20 +74,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Synced folders.
   vconfig['vagrant_synced_folders'].each do |synced_folder|
     options = {
-      type: synced_folder.include?('type') ? synced_folder['type'] : vconfig['vagrant_synced_folder_default_type'],
+      type: synced_folder.fetch('type', vconfig['vagrant_synced_folder_default_type']),
       rsync__auto: 'true',
       rsync__exclude: synced_folder['excluded_paths'],
       rsync__args: ['--verbose', '--archive', '--delete', '-z', '--chmod=ugo=rwX'],
       id: synced_folder['id'],
-      create: synced_folder.include?('create') ? synced_folder['create'] : false,
-      mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
+      create: synced_folder.fetch('create', false),
+      mount_options: synced_folder.fetch('mount_options', [])
     }
     if synced_folder.include?('options_override')
       synced_folder['options_override'].each do |key, value|
         options[key.to_sym] = value
       end
     end
-    config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'], options
+    config.vm.synced_folder synced_folder.fetch('local_path'), synced_folder.fetch('destination'), options
   end
 
   # Allow override of the default synced folder type.
