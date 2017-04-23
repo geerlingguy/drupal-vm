@@ -72,3 +72,4 @@ pages:
     - 'Drupal 6 Notes': 'other/drupal-6.md'
     - 'Drupal VM Management Tools': 'other/management-tools.md'
     - 'Deploying to a production environment': 'other/production.md'
+    - 'Wordpress or other applications': 'other/wordpress-other-applications.md'
