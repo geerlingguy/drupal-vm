@@ -1,6 +1,5 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-VAGRANTFILE_API_VERSION = '2' unless defined? VAGRANTFILE_API_VERSION
 
 require './lib/drupalvm/vagrant'
 
@@ -36,19 +35,19 @@ end
 require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
 Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure('2') do |config|
+  # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
+  config.vm.define vconfig['vagrant_machine_name']
+
   # Networking configuration.
   config.vm.hostname = vconfig['vagrant_hostname']
-  if vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
-    config.vm.network :private_network, ip: vconfig['vagrant_ip'], auto_network: true
-  else
-    config.vm.network :private_network, ip: vconfig['vagrant_ip']
-  end
+  config.vm.network :private_network,
+    ip: vconfig['vagrant_ip'],
+    auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
 
-  if !vconfig['vagrant_public_ip'].empty? && vconfig['vagrant_public_ip'] == '0.0.0.0'
-    config.vm.network :public_network
-  elsif !vconfig['vagrant_public_ip'].empty?
-    config.vm.network :public_network, ip: vconfig['vagrant_public_ip']
+  if !vconfig['vagrant_public_ip'].empty?
+    config.vm.network :public_network,
+      ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
   end
 
   # SSH options.
@@ -132,9 +131,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     p.cpus = vconfig['vagrant_cpus']
     p.update_guest_tools = true
   end
-
-  # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
-  config.vm.define vconfig['vagrant_machine_name']
 
   # Cache packages and dependencies if vagrant-cachier plugin is present.
   if Vagrant.has_plugin?('vagrant-cachier')
