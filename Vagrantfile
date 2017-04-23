@@ -79,17 +79,14 @@ Vagrant.configure('2') do |config|
   vconfig['vagrant_synced_folders'].each do |synced_folder|
     options = {
       type: synced_folder.fetch('type', vconfig['vagrant_synced_folder_default_type']),
-      rsync__auto: 'true',
       rsync__exclude: synced_folder['excluded_paths'],
-      rsync__args: ['--verbose', '--archive', '--delete', '-z', '--chmod=ugo=rwX'],
+      rsync__args: ['--verbose', '--archive', '--delete', '-z', '--copy-links', '--chmod=ugo=rwX'],
       id: synced_folder['id'],
       create: synced_folder.fetch('create', false),
       mount_options: synced_folder.fetch('mount_options', [])
     }
-    if synced_folder.include?('options_override')
-      synced_folder['options_override'].each do |key, value|
-        options[key.to_sym] = value
-      end
+    synced_folder.fetch('options_override', {}).each do |key, value|
+      options[key.to_sym] = value
     end
     config.vm.synced_folder synced_folder.fetch('local_path'), synced_folder.fetch('destination'), options
   end
