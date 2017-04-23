@@ -57,9 +57,35 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 
         if (file_exists($source)) {
             if (!file_exists($target) || md5_file($source) != md5_file($target)) {
+                $isLegacy = $this->isLegacyVagrantfile($target);
+
                 copy($source, $target);
+
+                $extra = $this->composer->getPackage()->getExtra();
+                if ($isLegacy && !isset($extra['drupalvm']['config_dir'])) {
+                    $this->io->writeError(
+                        '<warning>'
+                        . 'Drupal VM has been updated and consequently written over your Vagrantfile which from now on will be managed by Drupal VM. '
+                        . 'Due to this change, you are required to set the `config_dir` location in your composer.json file:'
+                        . "\n"
+                        . "\n  $ composer config extra.drupalvm.config_dir <sub-directory>"
+                        . "\n"
+                        . '</warning>'
+                    );
+                }
             }
         }
     }
 
+    /**
+     * Return if the parent project is using the < 5.0.0 delegating Vagrantfile.
+     *
+     * @return bool
+     */
+    private function isLegacyVagrantfile($vagrantfile) {
+        if (!file_exists($vagrantfile)) {
+            return false;
+        }
+        return strpos(file_get_contents($vagrantfile), '# Load the real Vagrantfile') !== false;
+    }
 }
