@@ -2,6 +2,8 @@
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = '2' unless defined? VAGRANTFILE_API_VERSION
 
+require './lib/drupalvm/vagrant'
+
 # Absolute paths on the host machine.
 host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
 host_project_dir = ENV['DRUPALVM_PROJECT_ROOT'] || host_drupalvm_dir
@@ -14,58 +16,14 @@ guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG
 
 drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
 
-# Cross-platform way of finding an executable in the $PATH.
-def which(cmd)
-  exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
-  ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
-    exts.each do |ext|
-      exe = File.join(path, "#{cmd}#{ext}")
-      return exe if File.executable?(exe) && !File.directory?(exe)
-    end
-  end
-  nil
-end
+vconfig = load_config([
+  "#{host_drupalvm_dir}/default.config.yml",
+  "#{host_config_dir}/config.yml",
+  "#{host_config_dir}/local.config.yml",
+  "#{host_config_dir}/#{drupalvm_env}.config.yml",
+])
 
-def get_ansible_version(exe)
-  /^[^\s]+ (.+)$/.match(`#{exe} --version`) { |match| return match[1] }
-end
-
-def walk(obj, &fn)
-  if obj.is_a?(Array)
-    obj.map { |value| walk(value, &fn) }
-  elsif obj.is_a?(Hash)
-    obj.each_pair { |key, value| obj[key] = walk(value, &fn) }
-  else
-    obj = yield(obj)
-  end
-end
-
-require 'yaml'
-# Load default VM configurations.
-vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
-# Use optional config.yml and local.config.yml for configuration overrides.
-['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
-  if File.exist?("#{host_config_dir}/#{config_file}")
-    optional_config = YAML.load_file("#{host_config_dir}/#{config_file}")
-    vconfig.merge!(optional_config) if optional_config
-  end
-end
-
-# Replace jinja variables in config.
-vconfig = walk(vconfig) do |value|
-  while value.is_a?(String) && value.match(/{{ .* }}/)
-    value = value.gsub(/{{ (.*?) }}/) { vconfig[Regexp.last_match(1)] }
-  end
-  value
-end
-
-Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
-
-ansible_bin = which('ansible-playbook')
-ansible_version = Gem::Version.new(get_ansible_version(ansible_bin)) if ansible_bin
-ansible_version_min = Gem::Version.new(vconfig['drupalvm_ansible_version_min'])
-
-provisioner = ansible_bin && !vconfig['force_ansible_local'] ? :ansible : :ansible_local
+provisioner = vconfig['force_ansible_local'] ? :ansible_local : get_provisioner
 if provisioner == :ansible
   playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = host_config_dir
@@ -74,9 +32,9 @@ else
   config_dir = guest_config_dir
 end
 
-if provisioner == :ansible && ansible_version < ansible_version_min
-  raise Vagrant::Errors::VagrantError.new, "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
-end
+# Verify version requirements.
+require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
+Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Networking configuration.
@@ -100,32 +58,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
 
-  if vconfig.include?('vagrant_post_up_message')
-    config.vm.post_up_message = vconfig['vagrant_post_up_message']
-  else
-    config.vm.post_up_message = 'Your Drupal VM Vagrant box is ready to use!'\
-      "\n* Visit the dashboard for an overview of your site: http://dashboard.#{vconfig['vagrant_hostname']} (or http://#{vconfig['vagrant_ip']})"\
-      "\n* You can SSH into your machine with `vagrant ssh`."\
-      "\n* Find out more in the Drupal VM documentation at http://docs.drupalvm.com"
-  end
+  # Display an introduction message after `vagrant up` and `vagrant provision`.
+  config.vm.post_up_message = vconfig.fetch('vagrant_post_up_message', get_default_post_up_message(vconfig))
 
   # If a hostsfile manager plugin is installed, add all server names as aliases.
-  aliases = []
-  if vconfig['drupalvm_webserver'] == 'apache'
-    vconfig['apache_vhosts'].each do |host|
-      aliases.push(host['servername'])
-      aliases.concat(host['serveralias'].split) if host['serveralias']
-    end
-  else
-    vconfig['nginx_hosts'].each do |host|
-      aliases.concat(host['server_name'].split)
-      aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
-    end
-  end
-  aliases = aliases.uniq - [config.vm.hostname, vconfig['vagrant_ip']]
-  # Remove wildcard subdomains.
-  aliases.delete_if { |vhost| vhost.include?('*') }
-
+  aliases = get_vhost_aliases(vconfig) - [config.vm.hostname]
   if Vagrant.has_plugin?('vagrant-hostsupdater')
     config.hostsupdater.aliases = aliases
   elsif Vagrant.has_plugin?('vagrant-hostmanager')
