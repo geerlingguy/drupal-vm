@@ -15,14 +15,19 @@ guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG
 
 drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
 
+default_config_file = "#{host_drupalvm_dir}/default.config.yml"
+unless File.exist?(default_config_file)
+  raise_message "Configuration file not found! Expected in #{default_config_file}"
+end
+
 vconfig = load_config([
-  "#{host_drupalvm_dir}/default.config.yml",
+  default_config_file,
   "#{host_config_dir}/config.yml",
   "#{host_config_dir}/local.config.yml",
-  "#{host_config_dir}/#{drupalvm_env}.config.yml",
+  "#{host_config_dir}/#{drupalvm_env}.config.yml"
 ])
 
-provisioner = vconfig['force_ansible_local'] ? :ansible_local : get_provisioner
+provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
 if provisioner == :ansible
   playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = host_config_dir
@@ -45,7 +50,7 @@ Vagrant.configure('2') do |config|
     ip: vconfig['vagrant_ip'],
     auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
 
-  if !vconfig['vagrant_public_ip'].empty?
+  unless vconfig['vagrant_public_ip'].empty?
     config.vm.network :public_network,
       ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
   end

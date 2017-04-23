@@ -45,43 +45,57 @@ def load_config(files)
   resolve_jinja_variables(vconfig)
 end
 
+# Return the path to the ansible-playbook executable.
+def ansible_bin
+  @ansible_bin ||= which('ansible-playbook')
+end
 
 # Return the ansible version parsed from running the executable path provided.
-def get_ansible_version(exe)
-  /^[^\s]+ (.+)$/.match(`#{exe} --version`) { |match| return match[1] }
+def ansible_version
+  /^[^\s]+ (.+)$/.match(`#{ansible_bin} --version`) { |match| return match[1] }
 end
 
 # Require that if installed, the ansible version meets the requirements.
 def require_ansible_version(requirement)
-  if !(ansible_bin = which('ansible-playbook'))
-    return
-  end
-  ansible_version = get_ansible_version(ansible_bin)
+  return unless ansible_bin
   req = Gem::Requirement.new(requirement)
-  if req.satisfied_by?(Gem::Version.new(ansible_version))
-    return
-  end
-  raise Vagrant::Errors::VagrantError.new, "You must install an Ansible version #{requirement} to use this version of Drupal VM."
+  return if req.satisfied_by?(Gem::Version.new(ansible_version))
+  raise_message "You must install an Ansible version #{requirement} to use this version of Drupal VM."
+end
+
+def raise_message(msg)
+  raise Vagrant::Errors::VagrantError.new, msg
 end
 
 # Return which Vagrant provisioner to use.
-def get_provisioner
-  which('ansible-playbook') ? :ansible : :ansible_local
+def vagrant_provisioner
+  ansible_bin ? :ansible : :ansible_local
+end
+
+def get_apache_vhosts(vhosts)
+  aliases = []
+  vhosts.each do |host|
+    aliases.push(host['servername'])
+    aliases.concat(host['serveralias'].split) if host['serveralias']
+  end
+  aliases
+end
+
+def get_nginx_vhosts(vhosts)
+  aliases = []
+  vhosts.each do |host|
+    aliases.push(host['server_name'])
+    aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
+  end
+  aliases
 end
 
 # Return a list of all virtualhost server names and aliases from a config hash.
 def get_vhost_aliases(vconfig)
-  aliases = []
   if vconfig['drupalvm_webserver'] == 'apache'
-    vconfig['apache_vhosts'].each do |host|
-      aliases.push(host['servername'])
-      aliases.concat(host['serveralias'].split) if host['serveralias']
-    end
+    aliases = get_apache_vhosts(vconfig['apache_vhosts'])
   else
-    vconfig['nginx_hosts'].each do |host|
-      aliases.concat(host['server_name'].split)
-      aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
-    end
+    aliases = get_nginx_vhosts(vconfig['nginx_hosts'])
   end
   aliases = aliases.uniq - [vconfig['vagrant_ip']]
   # Remove wildcard subdomains.
