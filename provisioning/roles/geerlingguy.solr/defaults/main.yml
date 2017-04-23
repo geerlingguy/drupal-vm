@@ -11,7 +11,8 @@ solr_remove_cruft: false
 solr_service_name: solr
 solr_install_dir: /opt
 solr_install_path: "/opt/{{ solr_service_name }}"
-solr_home: /var/solr
+solr_home: "/var/{{ solr_service_name }}"
+solr_connect_host: localhost
 solr_port: "8983"
 
 solr_xms: "256M"
@@ -22,7 +23,10 @@ solr_timezone: "UTC"
 solr_cores:
   - collection1
 
-solr_config_file: /etc/default/solr.in.sh
+solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
+
+# Enable restart solr handler
+solr_restart_handler_enabled: true
 
 # Used only for Solr < 5.
 solr_log_file_path: /var/log/solr.log

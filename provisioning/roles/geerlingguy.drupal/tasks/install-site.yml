@@ -29,7 +29,7 @@
     {{ drupal_site_install_extra_args | default([]) | join(" ") }}
   args:
     chdir: "{{ drupal_core_path }}"
-  notify: restart webserver
+  notify: clear opcache
   when: "'Successful' not in drupal_site_installed.stdout"
   become: no
 

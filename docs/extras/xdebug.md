@@ -23,6 +23,23 @@ To use XDebug with Sublime Text, change the `php_xdebug_idekey` variable as show
 php_xdebug_idekey: sublime.xdebug
 ```
 
+To configure a Sublime Text project to use XDebug when debugging, add the following `settings` key to your project's `.sublime-project` file:
+
+```json
+ "settings": {
+   "xdebug": {
+     "path_mapping": {
+       "/var/www/projectname/docroot" : "/Users/geerlingguy/Sites/projectname/docroot",
+     },
+     "url": "http://local.projectname.com/",
+     "super_globals": true,
+     "close_on_stop": true
+   }
+ }
+```
+
+This assumes you have already installed [SublimeTextXdebug](https://github.com/martomo/SublimeTextXdebug) via Package Control.
+
 ### NetBeans and XDebug with Drupal VM
 
 To use XDebug with NetBeans, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.

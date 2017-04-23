@@ -30,7 +30,7 @@
     warn=no
   changed_when: false
   failed_when: false
-  always_run: yes
+  check_mode: no
   register: git_installed_version
 
 - name: Force git install if the version numbers do not match

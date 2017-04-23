@@ -6,7 +6,7 @@ galaxy_info:
   description: MySQL server for RHEL/CentOS and Debian/Ubuntu.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.9
+  min_ansible_version: 2.2
   platforms:
     - name: EL
       versions:
@@ -16,6 +16,9 @@ galaxy_info:
       versions:
       - all
     - name: Debian
+      versions:
+      - all
+    - name: Archlinux
       versions:
       - all
   galaxy_tags:

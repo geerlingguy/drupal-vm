@@ -1,0 +1,45 @@
+---
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=86400
+  when: ansible_os_family == 'Debian'
+
+- name: Install dependencies.
+  package: name={{ item }}
+  with_items:
+    - curl
+    - unzip
+    - sendmail
+
+- name: Add repository for Apache 2.4.9+ (Ubuntu 14).
+  apt_repository: repo='ppa:ondrej/apache2'
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
+
+- name: Add repository for PHP 7.0 (Ubuntu).
+  apt_repository: repo='ppa:ondrej/php'
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version != "16.04"
+
+- name: Set php_packages for PHP 7.0 Debian 8 install.
+  set_fact:
+    php_packages:
+      - php7.0-common
+      - php7.0-cli
+      - php7.0-dev
+      - php7.0-fpm
+      - libpcre3-dev
+      - php7.0-opcache
+      - php7.0-apcu
+      - php7.0-xml
+      - php7.0-zip
+      - php7.0-mbstring
+      - php7.0-json
+      - php7.0-gd
+  when: ansible_distribution == 'Debian'
+
+- name: Copy initctl_faker into place for Ubuntu 14.04.
+  copy:
+    src: initctl_faker
+    dest: /sbin/initctl
+    mode: 0755
+    force: yes
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
+  changed_when: false

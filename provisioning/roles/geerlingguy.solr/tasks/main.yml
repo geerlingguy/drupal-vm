@@ -46,13 +46,13 @@
     state: started
     enabled: yes
 
-# Create cores, if any are configured.
-- include: cores.yml
-  when: "solr_cores and solr_version.split('.')[0] >= '5'"
-
 # Configure solr.
 - include: configure.yml
   when: "solr_version.split('.')[0] >= '5'"
+
+# Create cores, if any are configured.
+- include: cores.yml
+  when: "solr_cores and solr_version.split('.')[0] >= '5'"
 
 - include: trim-fat.yml
   static: no

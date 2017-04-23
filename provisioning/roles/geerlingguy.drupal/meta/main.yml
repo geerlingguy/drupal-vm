@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: geerlingguy
-  description: Install Drupal - a world class CMS
+  description: Deploy or install Drupal on your servers.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 2.0

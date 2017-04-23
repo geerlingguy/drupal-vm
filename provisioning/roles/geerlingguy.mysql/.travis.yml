@@ -3,73 +3,52 @@ services: docker
 
 env:
   - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: centos-7-test.yml
   - distro: centos6
-    init: /sbin/init
-    run_opts: ""
+    playbook: test.yml
+  - distro: debian8
     playbook: test.yml
   - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
     playbook: test.yml
 
-services:
-  - docker
-
-before_install:
-  # Pull container
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
-
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
 
-  # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Test role.
-  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
-  - >
-    tail ${idempotence}
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
   # Some MySQL debugging (show all the logs).
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /var/log
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log || true
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err || true
+  - docker exec --tty ${container_id} env TERM=xterm ls -lah /var/log
+  - docker exec --tty ${container_id} env TERM=xterm cat /var/log/mysql/error.log || true
+  - docker exec --tty ${container_id} env TERM=xterm cat /var/log/mysql.err || true
 
   # Check to make sure we can connect to MySQL via Unix socket.
   - >
-    sudo docker exec "$(cat ${container_id})" mysql -u root -proot -e 'show databases;'
+    sudo docker exec ${container_id} mysql -u root -proot -e 'show databases;'
     | grep -q 'information_schema'
     && (echo 'MySQL running normally' && exit 0)
     || (echo 'MySQL not running' && exit 1)
 
   # Check to make sure we can connect to MySQL via TCP.
   - >
-    sudo docker exec "$(cat ${container_id})" mysql -u root -proot -h 127.0.0.1 -e 'show databases;'
+    sudo docker exec ${container_id} mysql -u root -proot -h 127.0.0.1 -e 'show databases;'
     | grep -q 'information_schema'
     && (echo 'MySQL running normally' && exit 0)
     || (echo 'MySQL not running' && exit 1)
 
 after_failure:
   # Check MySQL settings.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql/error.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.err'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/mysql.log'
+  - 'docker exec --tty ${container_id} env TERM=xterm cat /var/log/mysql/error.log'
+  - 'docker exec --tty ${container_id} env TERM=xterm cat /var/log/mysql.err'
+  - 'docker exec --tty ${container_id} env TERM=xterm cat /var/log/mysql.log'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

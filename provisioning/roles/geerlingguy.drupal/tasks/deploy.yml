@@ -1,0 +1,32 @@
+---
+- name: Ensure drupal_deploy_dir directory exists.
+  file:
+    path: "{{ drupal_deploy_dir }}"
+    state: directory
+    mode: 0775
+    owner: "{{ drupal_core_owner }}"
+    group: "{{ drupal_core_owner }}"
+  when: drupal_composer_path and not drupal_site_exists
+
+- name: Check out Drupal to the docroot.
+  git:
+    repo: "{{ drupal_deploy_repo }}"
+    version: "{{ drupal_deploy_version }}"
+    update: "{{ drupal_deploy_update }}"
+    force: yes
+    dest: "{{ drupal_deploy_dir }}"
+    accept_hostkey: "{{ drupal_deploy_accept_hostkey }}"
+  register: drupal_deploy_repo_updated
+  notify: clear opcache
+  become: no
+
+- name: Check if a composer.json file is present.
+  stat: "path={{ drupal_deploy_dir }}/composer.json"
+  register: drupal_deploy_composer_file
+
+- name: Run composer install if composer.json is present.
+  composer:
+    command: install
+    working_dir: "{{ drupal_deploy_dir }}"
+  when: drupal_deploy_composer_file.stat.exists == true
+  become: no

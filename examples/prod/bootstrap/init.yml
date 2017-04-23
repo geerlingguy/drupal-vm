@@ -1,8 +1,17 @@
 ---
 - hosts: drupalvm
+  gather_facts: no
 
   vars_files:
     - vars.yml
+
+  pre_tasks:
+    # See: https://github.com/geerlingguy/drupal-vm/issues/1245
+    - name: Install Python if it's not available.
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      register: output
+      changed_when: output.stdout != ""
+    - action: setup
 
   tasks:
     - name: Create admin user account.

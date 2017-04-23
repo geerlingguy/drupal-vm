@@ -1,0 +1,34 @@
+---
+- hosts: all
+
+  vars_files:
+    - test-vars.yml
+
+  vars:
+    # Deploy from the Drupal VM Prod example project.
+    drupal_deploy: true
+    drupal_deploy_repo: "https://github.com/geerlingguy/drupalvm-live.git"
+    drupal_deploy_dir: /var/www/drupal
+    drupal_domain: "prod.drupalvm.com"
+
+    # Disable Composer-based codebase setup.
+    drupal_build_composer_project: false
+    drupal_build_composer: false
+    drupal_composer_dependencies: []
+
+  pre_tasks:
+    - include: test-setup.yml
+
+  roles:
+    - name: geerlingguy.repo-remi
+      when: ansible_os_family == "RedHat"
+    - role: geerlingguy.repo-dotdeb
+      when: ansible_distribution == 'Debian'
+    - geerlingguy.apache
+    - geerlingguy.mysql
+    - geerlingguy.php
+    - geerlingguy.php-mysql
+    - geerlingguy.git
+    - geerlingguy.composer
+    - geerlingguy.drush
+    - role_under_test

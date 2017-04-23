@@ -1,0 +1,32 @@
+---
+php_enable_webserver: false
+php_enablerepo: "remi,remi-php71"
+php_enable_php_fpm: true
+php_fpm_listen: "127.0.0.1:9000"
+
+apache_mods_enabled:
+  - expires.load
+  - ssl.load
+  - rewrite.load
+  - proxy.load
+  - proxy_fcgi.load
+apache_remove_default_vhost: true
+apache_vhosts:
+  - servername: "{{ drupal_domain }}"
+    serveralias: "www.{{ drupal_domain }}"
+    documentroot: "{{ drupal_core_path }}"
+    extra_parameters: |
+          <FilesMatch \.php$>
+            SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
+          </FilesMatch>
+
+mysql_enablerepo: "remi"
+mysql_databases:
+  - name: "{{ drupal_db_name }}"
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci
+mysql_users:
+  - name: "{{ drupal_db_user }}"
+    host: "%"
+    password: "{{ drupal_db_password }}"
+    priv: "{{ drupal_db_name }}.*:ALL"

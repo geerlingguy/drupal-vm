@@ -63,7 +63,9 @@ stdin: is not a tty
 mount.nfs: Connection timed out
 ```
 
-If you get this message, then it's likely that either NFS isn't running correctly on your host, certain ports are protocols are being blocked by the system firewall, or you need to add additional mount options to your `vagrant_synced_folders` configuration. Try the following fixes:
+If the directory you are trying to mount is within an encrypted folder or volume, NFS will very often fail with the above message as well as `exportfs: /home/myusername/Sites/drupalvm does not support NFS export`. There is no workaround other than sharing a directory that is not encrypted.
+
+If encryption is not the issue then it's likely that either NFS isn't running correctly on your host, certain ports or protocols are being blocked by the system firewall, or you need to add additional mount options to your `vagrant_synced_folders` configuration. Try the following fixes:
 
   1. On Ubuntu, if you get a message like `It appears your machine doesn't support NFS`, run `sudo apt-get install -y nfs-server`.
   2. Install the `vagrant-vbguest` plugin, which will make sure you are running the latest version of the VirualBox Guest Additions inside the VM (this can solve many different problems!).

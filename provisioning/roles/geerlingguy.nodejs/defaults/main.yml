@@ -19,3 +19,6 @@ nodejs_npm_global_packages: []
 #    version: 0.9.3
 #  # Install the latest stable release of a package.
 #  - name: node-sass
+
+# The path of a package.json file used to install packages globally.
+nodejs_package_json_path: ""

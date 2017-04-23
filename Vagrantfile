@@ -46,7 +46,8 @@ vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
 # Use optional config.yml and local.config.yml for configuration overrides.
 ['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
   if File.exist?("#{host_config_dir}/#{config_file}")
-    vconfig.merge!(YAML.load_file("#{host_config_dir}/#{config_file}"))
+    optional_config = YAML.load_file("#{host_config_dir}/#{config_file}")
+    vconfig.merge!(optional_config) if optional_config
   end
 end
 
@@ -99,6 +100,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
 
+  if vconfig.include?('vagrant_post_up_message')
+    config.vm.post_up_message = vconfig['vagrant_post_up_message']
+  else
+    config.vm.post_up_message = 'Your Drupal VM Vagrant box is ready to use!'\
+      "\n* Visit the dashboard for an overview of your site: http://dashboard.#{vconfig['vagrant_hostname']} (or http://#{vconfig['vagrant_ip']})"\
+      "\n* You can SSH into your machine with `vagrant ssh`."\
+      "\n* Find out more in the Drupal VM documentation at http://docs.drupalvm.com"
+  end
+
   # If a hostsfile manager plugin is installed, add all server names as aliases.
   aliases = []
   if vconfig['drupalvm_webserver'] == 'apache'
@@ -127,7 +137,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Synced folders.
   vconfig['vagrant_synced_folders'].each do |synced_folder|
     options = {
-      type: synced_folder['type'],
+      type: synced_folder.include?('type') ? synced_folder['type'] : vconfig['vagrant_synced_folder_default_type'],
       rsync__auto: 'true',
       rsync__exclude: synced_folder['excluded_paths'],
       rsync__args: ['--verbose', '--archive', '--delete', '-z', '--chmod=ugo=rwX'],
@@ -136,13 +146,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
     }
     if synced_folder.include?('options_override')
-      options = options.merge(synced_folder['options_override'])
+      synced_folder['options_override'].each do |key, value|
+        options[key.to_sym] = value
+      end
     end
     config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'], options
   end
 
   # Allow override of the default synced folder type.
-  config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
+  config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig['vagrant_synced_folder_default_type']
 
   config.vm.provision provisioner do |ansible|
     ansible.playbook = playbook
@@ -195,10 +207,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Cache the composer directory.
     config.cache.enable :generic, cache_dir: '/home/vagrant/.composer/cache'
     config.cache.synced_folder_opts = {
-      type: vconfig.include?('vagrant_synced_folder_default_type') ? vconfig['vagrant_synced_folder_default_type'] : 'nfs'
+      type: vconfig['vagrant_synced_folder_default_type']
     }
   end
 
   # Allow an untracked Vagrantfile to modify the configurations
-  eval File.read "#{host_config_dir}/Vagrantfile.local" if File.exist?("#{host_config_dir}/Vagrantfile.local")
+  [host_config_dir, host_project_dir].uniq.each do |dir|
+    eval File.read "#{dir}/Vagrantfile.local" if File.exist?("#{dir}/Vagrantfile.local")
+  end
 end

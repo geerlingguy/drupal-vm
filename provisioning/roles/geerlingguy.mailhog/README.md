@@ -24,7 +24,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
 The directory into which the MailHog binary will be installed.
 
-    mailhog_binary_url: https://github.com/mailhog/MailHog/releases/download/v0.2.0/MailHog_linux_amd64
+    mailhog_binary_url: https://github.com/mailhog/MailHog/releases/download/v0.2.1/MailHog_linux_amd64
 
 The MailHog binary that will be installed. You can find the latest version or a 32-bit version by visiting the [MailHog project releases page](https://github.com/mailhog/MailHog/releases).
 
@@ -52,4 +52,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

@@ -39,6 +39,7 @@ mysql_port: "3306"
 mysql_bind_address: '0.0.0.0'
 mysql_skip_name_resolve: no
 mysql_datadir: /var/lib/mysql
+mysql_sql_mode: ''
 # The following variables have a default value depending on operating system.
 # mysql_pid_file: /var/run/mysqld/mysqld.pid
 # mysql_socket: /var/lib/mysql/mysql.sock
@@ -58,15 +59,19 @@ mysql_read_buffer_size: "1M"
 mysql_read_rnd_buffer_size: "4M"
 mysql_myisam_sort_buffer_size: "64M"
 mysql_thread_cache_size: "8"
+mysql_query_cache_type: "0"
 mysql_query_cache_size: "16M"
 mysql_query_cache_limit: "1M"
 mysql_max_connections: "151"
 mysql_tmp_table_size: "16M"
 mysql_max_heap_table_size: "16M"
+mysql_group_concat_max_len: "1024"
+mysql_join_buffer_size: "262144"
 
 # Other settings.
 mysql_lower_case_table_names: "0"
 mysql_wait_timeout: "28800"
+mysql_event_scheduler_state: "OFF"
 
 # InnoDB settings.
 mysql_innodb_file_per_table: "1"
@@ -88,7 +93,7 @@ mysql_mysqldump_max_allowed_packet: "64M"
 # Logging settings.
 mysql_log: ""
 # The following variables have a default value depending on operating system.
-# mysql_log_error: /var/log/mysql.err
+# mysql_log_error: /var/log/mysql/mysql.err
 # mysql_syslog_tag: mysql
 
 mysql_config_include_files: []

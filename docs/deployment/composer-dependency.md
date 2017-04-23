@@ -12,7 +12,7 @@ composer require --dev geerlingguy/drupal-vm
 
 Add and configure the `config.yml` anywhere you like, in this example we place it in a `config/` directory.
 
-_Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as `drupal_build_makefile`, `local.config.yml` and `Vagrantfile.local`._
+_Note: This will be the directory where Drupal VM looks for other local configuration files as well. Such as `drupal_build_makefile` and `local.config.yml`._
 
 ```
 ├── composer.json

@@ -21,3 +21,19 @@ varnish_pidfile: /run/varnishd.pid
 
 varnish_enabled_services:
   - varnish
+
+# Optionally define additional backends.
+# varnish_backends:
+#   apache:
+#     host: 10.0.2.2
+#     port: 80
+#   nodejs:
+#     host: 10.0.2.3
+#     port: 80
+
+# Optionally define vhosts pointed at different backends.
+# varnish_vhosts:
+#   example.com:
+#     backend: apache
+#   nodejs.example.com:
+#     backend: nodejs

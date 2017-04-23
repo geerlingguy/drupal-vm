@@ -27,6 +27,11 @@ NPROCS="unlimited"
 # use Alternative 3, Advanced configuration, below
 RELOAD_VCL=1
 
+{% if varnish_pidfile %}
+# Varnish PID file
+PIDFILE="{{ varnish_pidfile }}"
+{% endif %}
+
 # This file contains 4 alternatives, please use only one.
 
 ## Alternative 1, Minimal configuration, no VCL
@@ -96,9 +101,6 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
              -f ${VARNISH_VCL_CONF} \
              -T ${VARNISH_ADMIN_LISTEN_ADDRESS}:${VARNISH_ADMIN_LISTEN_PORT} \
              -t ${VARNISH_TTL} \
-{% if varnish_pidfile %}
-             -P {{ varnish_pidfile }} \
-{% endif %}
              -p thread_pool_min=${VARNISH_MIN_THREADS} \
              -p thread_pool_max=${VARNISH_MAX_THREADS} \
              -p thread_pool_timeout=${VARNISH_THREAD_TIMEOUT} \

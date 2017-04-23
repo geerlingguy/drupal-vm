@@ -5,9 +5,12 @@
   vars_files:
     - vars/main.yml
     - ../default.config.yml
-    - "vars/{{ ansible_os_family }}.yml"
 
   pre_tasks:
+    - name: Include OS-specific variables.
+      include_vars: "{{ ansible_os_family }}.yml"
+      tags: ['always']
+
     - name: Define config_dir.
       set_fact:
         config_dir: "{{ playbook_dir }}/.."
@@ -19,16 +22,20 @@
       with_fileglob:
         - "{{ config_dir }}/config.yml"
         - "{{ config_dir }}/local.config.yml"
+        - "{{ config_dir }}/secrets.yml"
         - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
       tags: ['always']
 
     - include: tasks/hostname.yml
+      tags: ['php', 'drupal']
 
     - include: tasks/init-debian.yml
       when: ansible_os_family == 'Debian'
+      tags: ['php']
       static: no
     - include: tasks/init-redhat.yml
       when: ansible_os_family == 'RedHat'
+      tags: ['php']
       static: no
 
     - name: Run configured pre-provision shell scripts.
@@ -43,6 +50,7 @@
         - "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - include: tasks/php.yml
+      tags: ['php']
 
   roles:
     # Essential roles.
@@ -106,6 +114,8 @@
     - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
     - { role: geerlingguy.elasticsearch, when: '"elasticsearch" in installed_extras' }
     - { role: geerlingguy.varnish, when: '"varnish" in installed_extras' }
+    - { role: drupalvm.www, tags: ['webserver'] }
+    - { role: geerlingguy.drupal, tags: ['drupal'] }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }
@@ -114,17 +124,9 @@
     - include: tasks/sshd.yml
     - include: tasks/extras.yml
 
-    - include: tasks/www.yml
-      tags: ['webserver']
-
     - include: tasks/apparmor.yml
       when: ansible_os_family == 'Debian' and drupal_db_backend == 'mysql'
       tags: ['database']
-
-    # Build and configure the Drupal site.
-    - include_role: name=geerlingguy.drupal
-      static: no
-      tags: ['drupal']
 
     - include: tasks/drush-aliases.yml
 

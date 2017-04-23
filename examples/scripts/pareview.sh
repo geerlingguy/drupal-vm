@@ -14,7 +14,7 @@
 #    
 #     nodejs_version: "6.x"
 #     nodejs_npm_global_packages:
-#       eslint
+#       - name: eslint
 #     ```
 #
 # After running `vagrant provision`, `pareview.sh` should be available anywhere

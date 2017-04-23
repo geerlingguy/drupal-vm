@@ -26,6 +26,7 @@ pages:
     - 'Using composer.json': 'deployment/composer.md'
     - 'Using a Drush Make file': 'deployment/drush-make.md'
     - 'Drupal VM as a Composer Dependency': 'deployment/composer-dependency.md'
+    - 'Deploying Drupal via Git': 'deployment/git.md'
   - Basic configurations:
     - 'Using different base OSes': 'configurations/base-os.md'
     - 'Using a different PHP version': 'configurations/php.md'

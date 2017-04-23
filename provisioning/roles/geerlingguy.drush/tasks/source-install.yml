@@ -31,6 +31,7 @@
     src: "{{ drush_install_path }}/drush"
     dest: "{{ drush_path }}"
     state: link
+    force: yes
 
 - name: Run drush to finish setting it up.
   command: "{{ drush_path }}"

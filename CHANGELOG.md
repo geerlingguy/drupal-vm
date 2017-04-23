@@ -1,5 +1,120 @@
 # Drupal VM Changelog
 
+## 4.4.4 (2017-04-22)
+
+### New/changed variables in default.config.yml
+
+  * N/A
+
+### Improvements
+
+  * #1271: Don't run PHP role for 'drupal' tag.
+  * Updated Ansible roles: `postgresql`, `drupal`.
+  * #1323: Default synced folder type to `vagrant_synced_folder_default_type` if unset.
+
+### Bugfixes
+
+  * #1324: Only depend on `geerlingguy.nginx` when `drupalvm_webserver` is `nginx`.
+
+
+## 4.4.3 (2017-04-20)
+
+### New/changed variables in default.config.yml
+
+  * Added `ssh_home: "{{ drupal_core_path }}"` so `vagrant ssh` drops you directly into the core path by default.
+
+### Improvements
+
+  * Updated Ansible roles: `mysql`, `solr`, `nodejs`, `drupal`, `varnish`.
+  * #1177: Mention the availability of the `geerlingguy/debian8` base box.
+  * #1265: Document reverse-mount shares. Also scaffolds Issue #1258.
+  * #1272: Set ssh_home by default since it's really helpful.
+  * #1259: Update some performance-related docs.
+  * #1317: Remove duplicate handler and extract www tasks into new role.
+
+### Bugfixes
+
+  * #1294: Fix 'Cannot load Zend OPcache' notice.
+  * #1306: Fix Ansible 2.3-related bug with jinja2 inside when statement.
+  * #1302: Remove `ansible_ssh_user` variable to avoid upstream bugs.
+  * #1314: Revert "Move simple `include_vars` statement to `vars_files`"
+
+
+## 4.4.2 (2017-04-12)
+
+### New/changed variables in default.config.yml
+
+  * N/A
+
+### Improvements
+
+  * Updated Ansible roles: `firewall`, `mailhog`, `apache`, `git`, `mysql`, `solr`, `adminer`, and `varnish`.
+  * #1289: Update Linux host docs to mention encryption as primary reason for NFS issues.
+
+### Bugfixes
+
+  * #1280: Documentation bugfix for a Quick Start Guide link.
+  * #1275: Update Adminer role to prevent download timeouts.
+  * #1281: Avoid TypeError when a configuration file is empty.
+  * #1291: Teensy tiny docs grammar fix.
+
+
+## 4.4.1 (2017-04-01)
+
+### New/changed variables in default.config.yml
+
+  * N/A
+
+### Improvements
+
+  * Updated Ansible roles: `drupal`, `drush`, and `solr`.
+
+### Bugfixes
+
+  * #1245: Follow-up to make sure VM initial provisioning works as expected.
+  * #1261: Run hostname.yml tasks for `drupal` tag to prevent errors.
+  * Fixed pareview.sh script configuration example.
+  * Tweaked docs for Selenium and Production for clarity.
+
+
+## 4.4.0 "Sea of Simulation" (2017-03-24)
+
+### Breaking Changes
+
+  * No breaking changes.
+
+### New/changed variables in default.config.yml
+
+  * `php_version` now defaults to `"7.1"` (was `"7.0"`).
+
+### Improvements
+
+  * #1252: Allow Drupal to be deployed into Drupal VM from a Git repository.
+  * #1177: Add full and CI-tested support for Debian 8.
+  * #1213: Add `DRUPALVM_ANSIBLE_TAGS` environment variable to specify tags to run.
+  * #1031: Switch default PHP version to `7.1`.
+  * #1211: Add mcrypt PHP extension on RedHat-based installs.
+  * #1215: Document alternative method of running Drupal Console commands.
+  * Removed logic supporting PHP 5.5, as it's no longer supported.
+  * #1233: Tidy up the main Drupal VM playbook.
+  * #1198: Use VAGRANT_HOME to get the SSH `insecure_private_key` directory for Drush.
+  * #1238: Add a configurable intro message for `vagrant up` and `vagrant reload`.
+  * #1230: Allow `Vagrantfile.local` to be either in project _or_ config directory.
+  * #1244: Add support for a `secrets.yml` file for use with Ansible Vault.
+  * #1135: Improve Sublime Text XDebug documentation.
+  * Updated roles: Drush, Drupal, Firewall, Varnish.
+
+### Bugfixes
+
+  * #1199: Make sure `rsync` synced folders' `owner` and `group` are applied correctly.
+  * #1212: Fixes Drush make builds after Drush role installation technique changed.
+  * #1237: Raise a `VagrantError` for clearer error messaging.
+  * #1220: Ensure `www-data` is in the group of the NFS synced directory (file permissions).
+  * #1245: Ensure production `init.yml` playbook works on Ubuntu 16.04.
+  * #1250: Document use of `DRUPALVM_ENV` variable in production docs.
+  * #1253: Ensure `geerlingguy.php` role is run when `drupal` tag is used.
+
+
 ## 4.3.1 (2017-03-14)
 
 ### New/changed variables in default.config.yml

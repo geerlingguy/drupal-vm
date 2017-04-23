@@ -33,22 +33,44 @@ vagrant_synced_folders:
     type: rsync
     create: true
     excluded_paths:
-      - drupal/private
-      - drupal/public/.git
-      - drupal/public/sites/default/files
-      - drupal/tmp
+      - private
+      - .git
+      - web/sites/default/files
+      - tmp
 ```
 
-_This example assumes that you have Drupal in a directory called `drupal/public`._
+### Mixing synced folder types
 
+You can also mix the synced folder types and use a fast one-way rsync for your primary codebase and then a slower but two-way sync for Drupal's configuration sync directory.
+
+```yaml
+vagrant_synced_folders:
+  - local_path: .
+    destination: /var/www/drupal
+    type: rsync
+    create: true
+    excluded_paths:
+      - private
+      - .git
+      - web/sites/default/files
+      - tmp
+      # Exclude the second synced folder.
+      - config/drupal
+  # Use a slower but two-way sync for configuration sync directory.
+  - local_path: config/drupal
+    destination: /var/www/drupal/config/drupal
+    type: "" # Or smb/nfs if available
+    create: true
+```
 
 ## Improving performance on Windows
 
 By default, if you use the _NFS_ synced folder type, Vagrant will ignore this directive and use the native (usually slow) VirtualBox shared folder system instead. You can get higher performance by doing one of the following (all of these steps require a full VM reload (`vagrant reload`) to take effect):
 
+  1. **Use PhpStorm or a reverse-mounted synced folder for working from inside the VM.** Read [Drupal VM on Windows - a fast container for BLT project development](https://www.jeffgeerling.com/blog/2017/drupal-vm-on-windows-fast-container-blt-project-development) for instructions and recommendations.
   1. **Install the `vagrant-winnfsd` plugin**. See the 'NFS' section later for more details and caveats.
-  2. **Use `smb` for the synced folder's type.**
-  2. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/) or [Cmder](http://cmder.net/).
+  1. **Use `smb` for the synced folder's type.**
+  1. **Use `rsync` for the synced folder's type.** This requires that you have `rsync` available on your Windows workstation, which you can get if you install a substitute CLI like [Cygwin](https://www.cygwin.com/) or [Cmder](http://cmder.net/).
 
 ### NFS
 
@@ -71,3 +93,26 @@ In a custom `Vagrantfile.local`, add user access to Vagrant:
 
     config.winnfsd.uid=900
     config.winnfsd.gid=900
+
+### Better performance: Sharing from Drupal VM to your PC
+
+The fastest option for Drupal VM is to install the Drupal codebase entirely inside Drupal VM, without using a Vagrant shared folder. This method ensures the code runs as fast as it would if it were natively running on your PC, but it requires some other form of codebase synchronization, and means there is at least a tiny bit of lag between saving files in your editor and seeing the changes inside Drupal VM.
+
+If you use one of these techniques, it's recommended you use the [Git deployment technique](../deployment/git.md) to clone your Drupal codebase into Drupal VM from a Git repository.
+
+#### Syncing files via rsync or SSH
+
+If you use an IDE like PhpStorm, you can configure it to synchronize a local codebase with the code inside Drupal VM using SSH (SFTP). There are also tools that mount directories into Windows Explorer using plain SSH and SFTP, though configuring these tools can be difficult.
+
+If at all possible, make sure your IDE is configured to automatically synchronize changes.
+
+#### Share files using Samba inside Drupal VM
+
+Though it's not supported natively by Vagrant, you can mount a Samba share _from the VM guest_ to your host PC. To do this, you have to:
+
+  1. Install Samba inside the VM.
+  2. Configure Samba (through `smb.conf`) to share a directory inside the VM.
+  3. Open firewall ports `137`, `138`, `139`, and `445`.
+  4. Mount the Samba shared folder within Windows Explorer (e.g. visit `\\drupalvm.dev\share_name`)
+
+Read this blog post for further detail in creating a Samba share: [Configure a reverse-mounted Samba shared folder](https://www.jeffgeerling.com/blog/2017/drupal-vm-on-windows-fast-container-blt-project-development#reverse-share).

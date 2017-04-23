@@ -4,3 +4,4 @@
     name: "{{ solr_service_name }}"
     state: restarted
     sleep: 5
+  when: solr_restart_handler_enabled

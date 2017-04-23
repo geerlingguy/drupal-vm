@@ -1,4 +1,4 @@
-Please read through the [Quick Start Guiden the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
+Please read through the [Quick Start Guide in the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mNio_aXMLos" frameborder="0" allowfullscreen></iframe>
 

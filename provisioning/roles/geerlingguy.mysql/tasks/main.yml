@@ -11,9 +11,15 @@
   when: ansible_os_family == 'Debian'
   static: no
 
+- include: setup-Archlinux.yml
+  when: ansible_os_family == 'Archlinux'
+  static: no
+
 - name: Check if MySQL packages were installed.
   set_fact:
-    mysql_install_packages: "{{ (rh_mysql_install_packages is defined and rh_mysql_install_packages.changed) or (deb_mysql_install_packages is defined and deb_mysql_install_packages.changed) }}"
+    mysql_install_packages: "{{ (rh_mysql_install_packages is defined and rh_mysql_install_packages.changed)
+      or (deb_mysql_install_packages is defined and deb_mysql_install_packages.changed)
+      or (arch_mysql_install_packages is defined and arch_mysql_install_packages.changed) }}"
 
 # Configure MySQL.
 - include: configure.yml
