@@ -2,30 +2,30 @@ Drupal VM allows you to run extra shell scripts and ansible task files in the be
 
 ## Shell scripts
 
-To use an extra script, configure the path to the script (relative to `provisioning/playbook.yml`) in `config.yml`:
+To use an extra script, configure the path to the script (relative to `provisioning/playbook.yml`) in `config.yml`. You can use the `{{ config_dir }}` variable to point to the directory where your `config.yml` is located.
 
 ```yaml
 pre_provision_scripts:
-  - "../scripts/pre-provision.sh"
+  - "{{ config_dir }}/scripts/pre-provision.sh"
 post_provision_scripts:
-  - "../scripts/post-provision.sh"
+  - "{{ config_dir }}/scripts/post-provision.sh"
 ```
 
 The above example results in a `pre-provision.sh` script running before the provisioning starts and a `post-provision.sh` script running after the main Drupal VM setup is complete. Pre and post provision scripts run after the first `vagrant up`, and then any time you run Vagrant provisioning (e.g. `vagrant provision` or `vagrant up --provision`).
 
 _Note: The pre provision scripts run before any other packages are installed. If you want to use commands such as `git`, you need to install the packages yourself._
 
-You can define as many scripts as you would like, and any arguments after the path will be passed to the shell script itself (e.g. `"- "../scripts/setup-paths.sh --option"`).
+You can define as many scripts as you would like, and any arguments after the path will be passed to the shell script itself (e.g. `- "{{ config_dir }}/scripts/setup-paths.sh --option"`).
 
 Place your pre and post provision scripts inside a `scripts` directory in the root of your Drupal VM project directory; this directory is gitignored, so you can continue to update Drupal VM without overwriting your scripts.
 
 ## Ansible task files
 
-To use an extra ansible task file, configure the path to the file (relative to `provisioning/playbook.yml`) in `config.yml`:
+To use an extra ansible task file, configure the path to the file in `config.yml`:
 
 ```yaml
-pre_provision_tasks_dir: "../scripts/pre/*"
-post_provision_tasks_dir: "../scripts/post-provision.yml"
+pre_provision_tasks_dir: "{{ config_dir }}/scripts/pre/*"
+post_provision_tasks_dir: "{{ config_dir }}/scripts/post-provision.yml"
 ```
 
 The path will be evaluated as a [glob pattern](https://docs.python.org/2/library/glob.html) so you can point to a single file or a directory matching a set of files.
