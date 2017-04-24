@@ -1,5 +1,21 @@
 # Drupal VM Changelog
 
+## 4.4.5 (2017-04-24)
+
+### New/changed variables in default.config.yml
+
+  * `drupalconsole` is no longer enabled globally by default (see #1335 and #1338).
+
+### Improvements
+
+  * #1333: Add docs on using Drupal VM with Wordpress and other PHP apps.
+
+### Bugfixes
+
+  * #1335: Update Drupal Console Role so it works correctly with rc17 and beyond.
+  * #1338: Remove drupalconsole from default installed_extras list.
+
+
 ## 4.4.4 (2017-04-22)
 
 ### New/changed variables in default.config.yml
