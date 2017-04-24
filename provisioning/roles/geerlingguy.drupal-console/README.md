@@ -6,7 +6,7 @@ Installs [Drupal Console](http://drupalconsole.com/) on any Linux or UNIX system
 
 ## Requirements
 
-`php` (version 5.4+) should be installed and working.
+`php` (version 5.6+) should be installed and working.
 
 ## Role Variables
 
@@ -32,7 +32,7 @@ The path to the Drupal Console configuration file.
 
     - hosts: servers
       roles:
-        - { role: geerlingguy.drupal-console }
+        - role: geerlingguy.drupal-console
 
 After the playbook runs, `drupal` will be placed in `/usr/local/bin/drupal` (this location is configurable), and will be accessible via normal system accounts.
 
@@ -42,4 +42,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2015 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
