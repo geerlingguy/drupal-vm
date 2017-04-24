@@ -21,12 +21,14 @@ pages:
     - 'Configuring Drupal VM': 'getting-started/configure-drupalvm.md'
     - 'Syncing Folders': 'getting-started/syncing-folders.md'
   - Building your codebase:
-    - 'Using a local Drupal codebase': 'deployment/local-codebase.md'
-    - 'Using a composer package': 'deployment/composer-package.md'
-    - 'Using composer.json': 'deployment/composer.md'
-    - 'Using a Drush Make file': 'deployment/drush-make.md'
-    - 'Drupal VM as a Composer Dependency': 'deployment/composer-dependency.md'
-    - 'Deploying Drupal via Git': 'deployment/git.md'
+    - 'Overview': 'deployment/overview.md'
+    - Add your project to Drupal VM:
+      - 'Using a local Drupal codebase': 'deployment/local-codebase.md'
+      - 'Using a composer package': 'deployment/composer-package.md'
+      - 'Using composer.json': 'deployment/composer.md'
+      - 'Using a Drush Make file': 'deployment/drush-make.md'
+      - 'Deploying Drupal via Git': 'deployment/git.md'
+    - 'Add Drupal VM to your project using Composer': 'deployment/composer-dependency.md'
   - Basic configurations:
     - 'Using different base OSes': 'configurations/base-os.md'
     - 'Using a different PHP version': 'configurations/php.md'

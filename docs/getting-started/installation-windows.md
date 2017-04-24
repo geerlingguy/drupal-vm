@@ -1,5 +1,7 @@
 Please read through the [Quick Start Guide in the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
 
+_Note that there are two methods of using Drupal VM; either you [download Drupal VM and configure the project for your site](../deployment/overview.md#download-drupal-vm-and-integrate-your-project), or you require it as a [Composer dependency in an existing project](../deployment/overview.md#add-drupal-vm-as-a-composer-depedency-to-an-existing-project)._
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mNio_aXMLos" frameborder="0" allowfullscreen></iframe>
 
 _In this video, Jeff Geerling walk you through getting a Drupal 8 website built on your Windows 10 laptop using Drupal VM 3._
