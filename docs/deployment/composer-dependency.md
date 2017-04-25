@@ -32,3 +32,7 @@ _Note that `drupal_core_path` needs to match your `composer.json` configuration.
 If you placed the `config.yml` file in a subdirectory, tell Drupal VM where by adding the location to your `composer.json`. If not, Drupal VM will look for all configuration files in the root of your project.
 
     composer config extra.drupalvm.config_dir 'vm'
+
+## Patching Drupal VM
+
+If you need to patch something in Drupal VM that you're otherwise unable to configure, you can do so with the help of the `composer-patches` plugin. Read the [documentation on how to create and apply patches](../extending/patching.md).

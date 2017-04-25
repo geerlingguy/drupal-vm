@@ -64,6 +64,7 @@ pages:
     - 'Adding Vagrant plugins Vagrantfile.local': 'extending/vagrantfile.md'
     - 'Passing on CLI arguments to ansible': 'extending/ansible-args.md'
     - 'Pre- and Post-Provision Scripts': 'extending/scripts.md'
+    - 'Patching Drupal VM': 'extending/patching.md'
   - Other Information:
     - 'Networking Notes': 'other/networking.md'
     - 'Vagrant and VirtualBox': 'other/vagrant-virtualbox.md'
