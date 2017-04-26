@@ -66,6 +66,16 @@ def ansible_version
   /^[^\s]+ (.+)$/.match(`#{ansible_bin} --version`) { |match| return match[1] }
 end
 
+# Return the path to the composer executable
+def composer_bin
+  @composer_bin ||= which('composer')
+end
+
+# Return Composer's vendor directory.
+def vendor_dir
+  @vendor_dir ||= composer_bin ? `#{composer_bin} config vendor-dir`.strip : 'vendor'
+end
+
 # Require that if installed, the ansible version meets the requirements.
 def require_ansible_version(requirement)
   return unless ansible_bin

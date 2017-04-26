@@ -13,7 +13,6 @@ if File.exist?("#{host_project_dir}/composer.json")
   cconfig = load_composer_config("#{host_project_dir}/composer.json")
 
   # If Drupal VM is a Composer dependency set the correct path.
-  vendor_dir = `composer config vendor-dir`.strip
   drupalvm_path = "#{vendor_dir}/geerlingguy/drupal-vm"
   if Dir.exist?("#{host_project_dir}/#{drupalvm_path}")
     host_drupalvm_dir = "#{host_project_dir}/#{drupalvm_path}"
