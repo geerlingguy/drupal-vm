@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-VAGRANTFILE_API_VERSION = '2' unless defined? VAGRANTFILE_API_VERSION
+
+require './lib/drupalvm/vagrant'
 
 # Absolute paths on the host machine.
 host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
@@ -14,58 +15,19 @@ guest_config_dir = ENV['DRUPALVM_CONFIG_DIR'] ? "/vagrant/#{ENV['DRUPALVM_CONFIG
 
 drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
 
-# Cross-platform way of finding an executable in the $PATH.
-def which(cmd)
-  exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
-  ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
-    exts.each do |ext|
-      exe = File.join(path, "#{cmd}#{ext}")
-      return exe if File.executable?(exe) && !File.directory?(exe)
-    end
-  end
-  nil
+default_config_file = "#{host_drupalvm_dir}/default.config.yml"
+unless File.exist?(default_config_file)
+  raise_message "Configuration file not found! Expected in #{default_config_file}"
 end
 
-def get_ansible_version(exe)
-  /^[^\s]+ (.+)$/.match(`#{exe} --version`) { |match| return match[1] }
-end
+vconfig = load_config([
+  default_config_file,
+  "#{host_config_dir}/config.yml",
+  "#{host_config_dir}/local.config.yml",
+  "#{host_config_dir}/#{drupalvm_env}.config.yml"
+])
 
-def walk(obj, &fn)
-  if obj.is_a?(Array)
-    obj.map { |value| walk(value, &fn) }
-  elsif obj.is_a?(Hash)
-    obj.each_pair { |key, value| obj[key] = walk(value, &fn) }
-  else
-    obj = yield(obj)
-  end
-end
-
-require 'yaml'
-# Load default VM configurations.
-vconfig = YAML.load_file("#{host_drupalvm_dir}/default.config.yml")
-# Use optional config.yml and local.config.yml for configuration overrides.
-['config.yml', 'local.config.yml', "#{drupalvm_env}.config.yml"].each do |config_file|
-  if File.exist?("#{host_config_dir}/#{config_file}")
-    optional_config = YAML.load_file("#{host_config_dir}/#{config_file}")
-    vconfig.merge!(optional_config) if optional_config
-  end
-end
-
-# Replace jinja variables in config.
-vconfig = walk(vconfig) do |value|
-  while value.is_a?(String) && value.match(/{{ .* }}/)
-    value = value.gsub(/{{ (.*?) }}/) { vconfig[Regexp.last_match(1)] }
-  end
-  value
-end
-
-Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
-
-ansible_bin = which('ansible-playbook')
-ansible_version = Gem::Version.new(get_ansible_version(ansible_bin)) if ansible_bin
-ansible_version_min = Gem::Version.new(vconfig['drupalvm_ansible_version_min'])
-
-provisioner = ansible_bin && !vconfig['force_ansible_local'] ? :ansible : :ansible_local
+provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
 if provisioner == :ansible
   playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = host_config_dir
@@ -74,23 +36,23 @@ else
   config_dir = guest_config_dir
 end
 
-if provisioner == :ansible && ansible_version < ansible_version_min
-  raise Vagrant::Errors::VagrantError.new, "You must update Ansible to at least #{ansible_version_min} to use this version of Drupal VM."
-end
+# Verify version requirements.
+require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
+Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure('2') do |config|
+  # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
+  config.vm.define vconfig['vagrant_machine_name']
+
   # Networking configuration.
   config.vm.hostname = vconfig['vagrant_hostname']
-  if vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
-    config.vm.network :private_network, ip: vconfig['vagrant_ip'], auto_network: true
-  else
-    config.vm.network :private_network, ip: vconfig['vagrant_ip']
-  end
+  config.vm.network :private_network,
+    ip: vconfig['vagrant_ip'],
+    auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
 
-  if !vconfig['vagrant_public_ip'].empty? && vconfig['vagrant_public_ip'] == '0.0.0.0'
-    config.vm.network :public_network
-  elsif !vconfig['vagrant_public_ip'].empty?
-    config.vm.network :public_network, ip: vconfig['vagrant_public_ip']
+  unless vconfig['vagrant_public_ip'].empty?
+    config.vm.network :public_network,
+      ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
   end
 
   # SSH options.
@@ -100,32 +62,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
 
-  if vconfig.include?('vagrant_post_up_message')
-    config.vm.post_up_message = vconfig['vagrant_post_up_message']
-  else
-    config.vm.post_up_message = 'Your Drupal VM Vagrant box is ready to use!'\
-      "\n* Visit the dashboard for an overview of your site: http://dashboard.#{vconfig['vagrant_hostname']} (or http://#{vconfig['vagrant_ip']})"\
-      "\n* You can SSH into your machine with `vagrant ssh`."\
-      "\n* Find out more in the Drupal VM documentation at http://docs.drupalvm.com"
-  end
+  # Display an introduction message after `vagrant up` and `vagrant provision`.
+  config.vm.post_up_message = vconfig.fetch('vagrant_post_up_message', get_default_post_up_message(vconfig))
 
   # If a hostsfile manager plugin is installed, add all server names as aliases.
-  aliases = []
-  if vconfig['drupalvm_webserver'] == 'apache'
-    vconfig['apache_vhosts'].each do |host|
-      aliases.push(host['servername'])
-      aliases.concat(host['serveralias'].split) if host['serveralias']
-    end
-  else
-    vconfig['nginx_hosts'].each do |host|
-      aliases.concat(host['server_name'].split)
-      aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
-    end
-  end
-  aliases = aliases.uniq - [config.vm.hostname, vconfig['vagrant_ip']]
-  # Remove wildcard subdomains.
-  aliases.delete_if { |vhost| vhost.include?('*') }
-
+  aliases = get_vhost_aliases(vconfig) - [config.vm.hostname]
   if Vagrant.has_plugin?('vagrant-hostsupdater')
     config.hostsupdater.aliases = aliases
   elsif Vagrant.has_plugin?('vagrant-hostmanager')
@@ -137,20 +78,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Synced folders.
   vconfig['vagrant_synced_folders'].each do |synced_folder|
     options = {
-      type: synced_folder.include?('type') ? synced_folder['type'] : vconfig['vagrant_synced_folder_default_type'],
-      rsync__auto: 'true',
+      type: synced_folder.fetch('type', vconfig['vagrant_synced_folder_default_type']),
       rsync__exclude: synced_folder['excluded_paths'],
-      rsync__args: ['--verbose', '--archive', '--delete', '-z', '--chmod=ugo=rwX'],
+      rsync__args: ['--verbose', '--archive', '--delete', '-z', '--copy-links', '--chmod=ugo=rwX'],
       id: synced_folder['id'],
-      create: synced_folder.include?('create') ? synced_folder['create'] : false,
-      mount_options: synced_folder.include?('mount_options') ? synced_folder['mount_options'] : []
+      create: synced_folder.fetch('create', false),
+      mount_options: synced_folder.fetch('mount_options', [])
     }
-    if synced_folder.include?('options_override')
-      synced_folder['options_override'].each do |key, value|
-        options[key.to_sym] = value
-      end
+    synced_folder.fetch('options_override', {}).each do |key, value|
+      options[key.to_sym] = value
     end
-    config.vm.synced_folder synced_folder['local_path'], synced_folder['destination'], options
+    config.vm.synced_folder synced_folder.fetch('local_path'), synced_folder.fetch('destination'), options
   end
 
   # Allow override of the default synced folder type.
@@ -195,9 +133,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     p.cpus = vconfig['vagrant_cpus']
     p.update_guest_tools = true
   end
-
-  # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
-  config.vm.define vconfig['vagrant_machine_name']
 
   # Cache packages and dependencies if vagrant-cachier plugin is present.
   if Vagrant.has_plugin?('vagrant-cachier')
