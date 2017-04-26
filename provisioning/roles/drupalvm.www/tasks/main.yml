@@ -88,7 +88,7 @@
 
 - name: Copy Nginx vhosts into place.
   template:
-    src: ../templates/nginx-vhost.conf.j2
+    src: "{{ nginx_vhost_template }}"
     dest: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
     force: yes
     owner: root

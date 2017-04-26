@@ -39,3 +39,43 @@ If you are using Ubuntu as your base OS and you want to get started quickly with
         ssl_protocols       TLSv1.1 TLSv1.2;
         ssl_ciphers         HIGH:!aNULL:!MD5;
 ```
+
+## Customizing server block configuration
+
+If you can't customize via variables because an option isn't exposed, you can override the template used to generate the the virtualhost configuration file.
+
+```yaml
+nginx_vhost_template: "{{ config_dir }}/templates/nginx-vhost.conf.j2"
+```
+
+You can either copy and modify the provided `nginx-vhost.conf.j2` template, or extend it and override the specific template block you need to change.
+
+_If you extend Drupal VM's provided base template, the path referenced should to be relative to playbook.yml._
+
+```
+{% extends 'templates/nginx-vhost.conf.j2' %}
+
+{% block location_primary %}
+location / {
+    try_files $uri @rewrite; # For Drupal <= 6
+}
+{% endblock %}
+
+{% block location_image_styles %}
+location ~ ^/sites/.*/files/imagecache/ {
+    try_files $uri @rewrite; # For Drupal <= 6
+}
+{% endblock %}
+```
+
+If you need to append or prepend content to a block, you can use the `{{ super() }}` Jinja2 function to return the original block content from the base template.
+
+```
+{% block location_deny %}
+{{ super() }}
+location ~* \.(txt|log)$ {
+    allow 192.168.0.0/16;
+    deny all;
+}
+{% endblock %}
+```
