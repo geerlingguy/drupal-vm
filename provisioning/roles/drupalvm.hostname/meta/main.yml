@@ -1,0 +1,28 @@
+---
+galaxy_info:
+  author: Jeff Geerling
+  description: A role to set the hostname and FQDN on Drupal VM.
+  company: Midwestern Mac, LLC
+  issue_tracker_url: https://github.com/geerlingguy/drupal-vm/issues
+  license: MIT
+  min_ansible_version: 2.2
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - precise
+        - raring
+        - saucy
+        - trusty
+        - xenial
+
+  galaxy_tags:
+    - drupal
+    - vm
+    - hostname

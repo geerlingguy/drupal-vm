@@ -1,0 +1,5 @@
+---
+hostname_fqdn: "{{ inventory_hostname }}"
+hostname_short: "{{ hostname_fqdn|regex_replace('^([^.]+).*$', '\\1') }}"
+
+hostname_unsafe_writes: "{{ (ansible_virtualization_type == 'docker')|ternary('yes', 'no')|bool }}"

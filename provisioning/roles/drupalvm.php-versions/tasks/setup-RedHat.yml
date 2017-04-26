@@ -1,0 +1,12 @@
+---
+- name: Enable remi repo for PHP 5.6.
+  set_fact: php_enablerepo="remi,remi-php56"
+  when: php_version == "5.6"
+
+- name: Enable remi repo for PHP 7.0.
+  set_fact: php_enablerepo="remi,remi-php70"
+  when: php_version == "7.0"
+
+- name: Enable remi repo for PHP 7.1.
+  set_fact: php_enablerepo="remi,remi-php71"
+  when: php_version == "7.1"
