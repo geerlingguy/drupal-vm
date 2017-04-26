@@ -3,6 +3,18 @@
 
   vars:
     nginx_use_ppa: true
+    nginx_remove_default_vhost: true
+    nginx_vhosts:
+      - server_name: "test.dev"
+        root: "/var/www/test"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=86400
+      when: ansible_os_family == 'Debian'
+
+    - name: Install dependencies.
+      package: name=curl
 
   roles:
     - role_under_test

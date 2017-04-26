@@ -21,6 +21,9 @@
 - include: setup-FreeBSD.yml
   when: ansible_os_family == 'FreeBSD'
 
+- include: setup-OpenBSD.yml
+  when: ansible_os_family == 'OpenBSD'
+
 # Vhost configuration.
 - include: vhosts.yml
 

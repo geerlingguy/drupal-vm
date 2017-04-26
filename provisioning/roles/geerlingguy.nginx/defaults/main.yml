@@ -50,7 +50,6 @@ nginx_extra_http_options: ""
 #      proxy_set_header   Host $http_host;
 
 nginx_remove_default_vhost: false
-nginx_vhosts_filename: "vhosts.conf"
 nginx_vhosts: []
 # Example vhost below, showing all available options:
 # - listen: "80 default_server" # default: "80 default_server"
@@ -63,6 +62,7 @@ nginx_vhosts: []
 #   access_log: ""
 #   error_log: ""
 #   extra_parameters: "" # Can be used to add extra config blocks (multiline).
+#   state: "absent" # To remove the vhost configuration.
 
 nginx_upstreams: []
 # - name: myapp1

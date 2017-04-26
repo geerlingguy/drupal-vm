@@ -1,0 +1,10 @@
+---
+- name: Ensure nginx is installed.
+  openbsd_pkg:
+    name: "{{ nginx_package_name }}"
+    state: present
+
+- name: Create logs directory.
+  file:
+    path: /var/log/nginx
+    state: directory

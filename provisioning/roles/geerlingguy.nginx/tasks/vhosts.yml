@@ -12,17 +12,28 @@
     state: directory
   notify: reload nginx
 
-- name: Add managed vhost config file (if any vhosts are configured).
+- name: Add managed vhost config files.
   template:
-    src: vhosts.j2
-    dest: "{{ nginx_vhost_path }}/{{ nginx_vhosts_filename }}"
+    src: vhost.j2
+    dest: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
+    force: yes
+    owner: root
+    group: root
     mode: 0644
-  when: nginx_vhosts|length > 0
+  when: item.state|default('present') != 'absent'
+  with_items: "{{ nginx_vhosts }}"
   notify: reload nginx
 
-- name: Remove managed vhost config file (if no vhosts are configured).
+- name: Remove managed vhost config files.
   file:
-    path: "{{ nginx_vhost_path }}/{{ nginx_vhosts_filename }}"
+    path: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
     state: absent
-  when: nginx_vhosts|length == 0
+  when: item.state|default('present') == 'absent'
+  with_items: "{{ nginx_vhosts }}"
+  notify: reload nginx
+
+- name: Remove legacy vhosts.conf file.
+  file:
+    path: "{{ nginx_vhost_path }}/vhosts.conf"
+    state: absent
   notify: reload nginx

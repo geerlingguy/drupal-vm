@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-nginx)
 
-Installs Nginx on RedHat/CentOS or Debian/Ubuntu Linux, or FreeBSD servers.
+Installs Nginx on RedHat/CentOS or Debian/Ubuntu Linux, FreeBSD or OpenBSD servers.
 
-This role installs and configures the latest version of Nginx from the Nginx yum repository (on RedHat-based systems) or via apt (on Debian-based systems) or pkgng (on FreeBSD systems). You will likely need to do extra setup work after this role has installed Nginx, like adding your own [virtualhost].conf file inside `/etc/nginx/conf.d/`, describing the location and options to use for your particular website.
+This role installs and configures the latest version of Nginx from the Nginx yum repository (on RedHat-based systems) or via apt (on Debian-based systems) or pkgng (on FreeBSD systems) or pkg_add (on OpenBSD systems). You will likely need to do extra setup work after this role has installed Nginx, like adding your own [virtualhost].conf file inside `/etc/nginx/conf.d/`, describing the location and options to use for your particular website.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
     nginx_vhosts: []
 
-A list of vhost definitions (server blocks) for Nginx virtual hosts. If left empty, you will need to supply your own virtual host configuration. See the commented example in `defaults/main.yml` for available server options. If you have a large number of customizations required for your server definition(s), you're likely better off managing the vhost configuration file yourself, leaving this variable set to `[]`.
+A list of vhost definitions (server blocks) for Nginx virtual hosts. Each entry will create a separate config file named by `server_name`. If left empty, you will need to supply your own virtual host configuration. See the commented example in `defaults/main.yml` for available server options. If you have a large number of customizations required for your server definition(s), you're likely better off managing the vhost configuration file yourself, leaving this variable set to `[]`.
 
     nginx_vhosts:
       - listen: "80 default_server"
@@ -26,6 +26,7 @@ A list of vhost definitions (server blocks) for Nginx virtual hosts. If left emp
         error_page: ""
         access_log: ""
         error_log: ""
+        state: "present"
         extra_parameters: |
           location ~ \.php$ {
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -43,17 +44,13 @@ Please take note of the indentation in the above block. The first line should be
 
 Whether to remove the 'default' virtualhost configuration supplied by Nginx. Useful if you want the base `/` URL to be directed at one of your own virtual hosts configured in a separate .conf file.
 
-    nginx_vhosts_filename: "vhosts.conf"
-
-The filename to use to store vhosts configuration. If you run the role multiple times (e.g. include the role with `with_items`), you can change the name for each run, effectively creating a separate vhosts file per vhost configuration.
-
     nginx_upstreams: []
 
 If you are configuring Nginx as a load balancer, you can define one or more upstream sets using this variable. In addition to defining at least one upstream, you would need to configure one of your server blocks to proxy requests through the defined upstream (e.g. `proxy_pass http://myapp1;`). See the commented example in `defaults/main.yml` for more information.
 
     nginx_user: "nginx"
 
-The user under which Nginx will run. Defaults to `nginx` for RedHat, and `www-data` for Debian.
+The user under which Nginx will run. Defaults to `nginx` for RedHat, `www-data` for Debian and `www` on FreeBSD and OpenBSD.
 
     nginx_worker_processes: "{{ ansible_processor_vcpus|default(ansible_processor_count) }}"
     nginx_worker_connections: "1024"
