@@ -34,16 +34,6 @@ def resolve_jinja_variables(vconfig)
   end
 end
 
-# Return the drupalvm extra-field from the passed composer.json
-def load_composer_config(path)
-  cconfig = {}
-  composer_conf = JSON.parse(File.read(path))
-  if composer_conf['extra'] && composer_conf['extra']['drupalvm']
-    cconfig = composer_conf['extra']['drupalvm']
-  end
-  cconfig
-end
-
 # Return the combined configuration content all files provided.
 def load_config(files)
   vconfig = {}
@@ -64,16 +54,6 @@ end
 # Return the ansible version parsed from running the executable path provided.
 def ansible_version
   /^[^\s]+ (.+)$/.match(`#{ansible_bin} --version`) { |match| return match[1] }
-end
-
-# Return the path to the composer executable
-def composer_bin
-  @composer_bin ||= which('composer')
-end
-
-# Return Composer's vendor directory.
-def vendor_dir
-  @vendor_dir ||= composer_bin ? `#{composer_bin} config vendor-dir`.strip : 'vendor'
 end
 
 # Require that if installed, the ansible version meets the requirements.
