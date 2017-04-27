@@ -6,7 +6,7 @@
  * @see example.aliases.drushrc.php.
  */
 
-{% macro alias(host, root) %}
+{% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
 $aliases['{{ host }}'] = array(
   'uri' => '{{ host }}',
@@ -14,7 +14,7 @@ $aliases['{{ host }}'] = array(
 );
 
 {% endif -%}
-{% endmacro %}
+{% endmacro -%}
 
 {% block aliases -%}
 {%- if drupalvm_webserver == 'apache' -%}
@@ -33,4 +33,4 @@ $aliases['{{ host }}'] = array(
     {%- endfor -%}
   {%- endfor -%}
 {%- endif -%}
-{% endblock %}
+{%- endblock %}

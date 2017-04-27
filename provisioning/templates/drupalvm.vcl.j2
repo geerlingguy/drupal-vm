@@ -11,6 +11,7 @@ backend default {
     .port = "{{ varnish_default_backend_port }}";
     .first_byte_timeout = 300s;
     {% endblock %}
+
 }
 
 # Access control list for PURGE requests.
@@ -18,6 +19,7 @@ acl purge {
     {% block acl_purge -%}
     "127.0.0.1";
     {% endblock %}
+
 }
 
 # Respond to incoming requests.
@@ -124,6 +126,7 @@ sub vcl_recv {
         }
     }
     {% endblock %}
+
 }
 
 # Set a header to track a cache HITs and MISSes.
@@ -141,6 +144,7 @@ sub vcl_deliver {
         set resp.http.X-Varnish-Cache = "MISS";
     }
     {% endblock %}
+
 }
 
 # Instruct Varnish what to do in the case of certain backend responses (beresp).
@@ -172,4 +176,5 @@ sub vcl_backend_response {
     # Allow items to remain in cache up to 6 hours past their cache expiration.
     set beresp.grace = 6h;
     {% endblock %}
+
 }

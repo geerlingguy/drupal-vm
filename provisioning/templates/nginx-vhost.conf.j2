@@ -1,5 +1,5 @@
-{% block server_redirect %}
-{% if item.server_name_redirect is defined %}
+{% block server_redirect -%}
+{% if item.server_name_redirect is defined -%}
 server {
     listen       80;
     server_name  {{ item.server_name_redirect }};
@@ -9,7 +9,7 @@ server {
 {% endblock %}
 
 server {
-    {% block server_begin %}{% endblock %}
+    {% block server_begin -%}{% endblock %}
 
     {% block server_basic -%}
     listen {{ item.listen | default('80') }};
@@ -19,9 +19,9 @@ server {
     {% endblock %}
 
     {% block server_logs -%}
-    {% if item.access_log is defined -%}
+    {%- if item.access_log is defined -%}
     access_log {{ item.access_log }};
-    {% endif %}
+    {%- endif -%}
     error_log {{ item.error_log|default('/var/log/nginx/error.log') }} info;
     {% endblock %}
 
@@ -45,7 +45,7 @@ server {
     {% endblock %}
 
     {% block location_drupal_legacy -%}
-    {% if drupal_major_version == 8 %}
+    {% if drupal_major_version == 8 -%}
     # Redirect common PHP files to their new locations.
     location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
          return 301 $scheme://$host$1/core/$2$is_args$args;
@@ -128,9 +128,9 @@ server {
     gzip_min_length 512;
     {% endblock %}
 
-    {% block server_end %}{% endblock %}
+    {% block server_end -%}{% endblock %}
 
-{% if item.extra_parameters is defined %}
+{% if item.extra_parameters is defined -%}
     {{ item.extra_parameters|indent(4) }}
-{% endif %}
+{%- endif %}
 }
