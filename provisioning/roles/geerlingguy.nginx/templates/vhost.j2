@@ -1,4 +1,16 @@
+{% block server_redirect %}
+{% if item.server_name_redirect is defined %}
+    listen       {{ item.listen | default('80') }};
+    server_name  {{ item.server_name_redirect }};
+    return       301 $scheme://{{ item.server_name.split(' ')[0] }}$request_uri;
+}
+{% endif %}
+{% endblock %}
+
 server {
+    {% block server_begin %}{% endblock %}
+
+    {% block server_basic -%}
     listen {{ item.listen | default('80') }};
 
 {% if item.server_name is defined %}
@@ -24,6 +36,9 @@ server {
 {% if item.return is defined %}
     return {{ item.return }};
 {% endif %}
+    {% endblock %}
+
+    {% block server_end %}{% endblock %}
 
 {% if item.extra_parameters is defined %}
     {{ item.extra_parameters|indent(4) }}

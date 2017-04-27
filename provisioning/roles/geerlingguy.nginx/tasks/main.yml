@@ -30,7 +30,7 @@
 # Nginx setup.
 - name: Copy nginx configuration in place.
   template:
-    src: nginx.conf.j2
+    src: "{{ nginx_conf_template }}"
     dest: "{{ nginx_conf_file_path }}"
     owner: root
     group: "{{ root_group }}"

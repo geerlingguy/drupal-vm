@@ -27,6 +27,7 @@ A list of vhost definitions (server blocks) for Nginx virtual hosts. Each entry 
         access_log: ""
         error_log: ""
         state: "present"
+        template: "{{ nginx_vhost_template }}"
         extra_parameters: |
           location ~ \.php$ {
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -120,6 +121,73 @@ Configures Nginx's [`log_format`](http://nginx.org/en/docs/http/ngx_http_log_mod
     nginx_yum_repo_enabled: true
 
 (For RedHat/CentOS only) Set this to `false` to disable the installation of the `nginx` yum repository. This could be necessary if you want the default OS stable packages, or if you use Satellite.
+
+## Overriding configuration templates
+
+If you can't customize via variables because an option isn't exposed, you can override the template used to generate the virtualhost configuration files or the `nginx.conf` file.
+
+```yaml
+nginx_conf_template: "nginx.conf.j2"
+nginx_vhost_template: "vhost.j2"
+```
+
+If necessary you can also set the template on a per vhost basis.
+
+```yaml
+nginx_vhosts:
+  - listen: "80 default_server"
+    server_name: "site1.example.com"
+    root: "/var/www/site1.example.com"
+    index: "index.php index.html index.htm"
+    template: "{{ playbook_dir }}/templates/site1.example.com.vhost.j2"
+  - server_name: "site2.example.com"
+    root: "/var/www/site2.example.com"
+    index: "index.php index.html index.htm"
+    template: "{{ playbook_dir }}/templates/site2.example.com.vhost.j2"
+```
+
+You can either copy and modify the provided template, or extend it with [Jinja2 template inheritance](http://jinja.pocoo.org/docs/2.9/templates/#template-inheritance) and override the specific template block you need to change.
+
+### Example: Configure gzip in nginx configuration
+
+Set the `nginx_conf_template` to point to a template file in your playbook directory.
+
+```yaml
+nginx_conf_template: "{{ playbook_dir }}/templates/nginx.conf.j2"
+```
+
+Create the child template in the path you configured above and extend `geerlingguy.nginx` template file relative to your `playbook.yml`.
+
+```
+{% extends 'roles/geerlingguy.nginx/templates/nginx.conf.j2' %}
+
+{% block http_gzip %}
+    gzip on;
+    gzip_proxied any;
+    gzip_static on;
+    gzip_http_version 1.0;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/x-javascript
+        application/json
+        application/xml
+        application/xml+rss
+        application/xhtml+xml
+        application/x-font-ttf
+        application/x-font-opentype
+        image/svg+xml
+        image/x-icon;
+    gzip_buffers 16 8k;
+    gzip_min_length 512;
+{% endblock %}
+```
 
 ## Dependencies
 

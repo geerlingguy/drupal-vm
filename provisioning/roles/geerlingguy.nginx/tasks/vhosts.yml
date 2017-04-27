@@ -14,7 +14,7 @@
 
 - name: Add managed vhost config files.
   template:
-    src: vhost.j2
+    src: "{{ item.template|default(nginx_vhost_template) }}"
     dest: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
     force: yes
     owner: root
