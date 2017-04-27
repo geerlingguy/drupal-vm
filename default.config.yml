@@ -96,6 +96,8 @@ drupalvm_cron_jobs: []
 # Drupal VM automatically creates a drush alias file in your ~/.drush folder if
 # this variable is 'true'.
 configure_drush_aliases: true
+drush_aliases_host_template: "templates/drupalvm.aliases.drushrc.php.j2"
+drush_aliases_guest_template: "templates/drupalvm-local.aliases.drushrc.php.j2"
 
 # Helper variable to configure the PHP-FPM connection for each Apache
 # VirtualHost in the `apache_vhosts` list.
@@ -165,6 +167,7 @@ nginx_hosts:
 
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
+nginx_vhost_template: "templates/nginx-vhost.conf.j2"
 
 # MySQL databases and users.
 mysql_databases:

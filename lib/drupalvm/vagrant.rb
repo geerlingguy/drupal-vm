@@ -95,7 +95,8 @@ def get_vhost_aliases(vconfig)
   if vconfig['drupalvm_webserver'] == 'apache'
     aliases = get_apache_vhosts(vconfig['apache_vhosts'])
   else
-    aliases = get_nginx_vhosts(vconfig['nginx_hosts'])
+    # @todo shim for `nginx_hosts`.
+    aliases = get_nginx_vhosts(vconfig.fetch('nginx_hosts', vconfig['nginx_vhosts']))
   end
   aliases = aliases.uniq - [vconfig['vagrant_ip']]
   # Remove wildcard subdomains.

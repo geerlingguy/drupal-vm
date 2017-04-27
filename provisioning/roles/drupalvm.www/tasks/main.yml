@@ -85,15 +85,3 @@
     mode: 0755
     recurse: true
   when: drupalvm_webserver == 'apache'
-
-- name: Copy Nginx vhosts into place.
-  template:
-    src: ../templates/nginx-vhost.conf.j2
-    dest: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
-    force: yes
-    owner: root
-    group: root
-    mode: 0644
-  with_items: "{{ nginx_hosts }}"
-  notify: restart nginx
-  when: drupalvm_webserver == 'nginx'

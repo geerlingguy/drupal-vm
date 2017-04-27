@@ -18,7 +18,7 @@
 # Note that this doesn't work for Windows, since Ansible's running in the VM.
 - name: Configure host machine drush aliases.
   template:
-    src: ../templates/drupalvm.aliases.drushrc.php.j2
+    src: "{{ drush_aliases_host_template }}"
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   delegate_to: 127.0.0.1
   become: no
@@ -30,7 +30,7 @@
 
 - name: Configure drush aliases for vagrant user inside VM.
   template:
-    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
+    src: "{{ drush_aliases_guest_template }}"
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   become: no
   when: configure_drush_aliases
@@ -40,6 +40,6 @@
 
 - name: Configure drush aliases for root user inside VM.
   template:
-    src: ../templates/drupalvm-local.aliases.drushrc.php.j2
+    src: "{{ drush_aliases_guest_template }}"
     dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
   when: configure_drush_aliases
