@@ -10,6 +10,10 @@
     - include: tasks/config.yml
       tags: ['always']
 
+    - include: tasks/backwards-compatibility.yml
+      tags: ['always']
+      static: no
+
     - include: "tasks/init-{{ ansible_os_family }}.yml"
       static: no
 
