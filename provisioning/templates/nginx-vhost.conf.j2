@@ -1,26 +1,28 @@
-{% block redirect %}
+{% block server_redirect %}
 {% if item.server_name_redirect is defined %}
 server {
     listen       80;
     server_name  {{ item.server_name_redirect }};
-    return       301 http://{{ item.server_name.split(' ')[0] }}$request_uri;
+    return       301 $scheme://{{ item.server_name.split(' ')[0] }}$request_uri;
 }
 {% endif %}
 {% endblock %}
 
 server {
-    {% block server_id -%}
-    listen {{ item.listen | default("80") }};
+    {% block server_begin %}{% endblock %}
+
+    {% block server_basic -%}
+    listen {{ item.listen | default('80') }};
     server_name {{ item.server_name }};
+    root {{ item.root }};
+    index {{ item.index | default('index.php index.html index.htm') }};
     {% endblock %}
 
     {% block server_logs -%}
-    error_log /var/log/nginx/error.log info;
-    {% endblock %}
-
-    {% block server_basics -%}
-    root {{ item.root }};
-    index index.php index.html index.htm;
+    {% if item.access_log is defined -%}
+    access_log {{ item.access_log }};
+    {% endif %}
+    error_log {{ item.error_log|default('/var/log/nginx/error.log') }} info;
     {% endblock %}
 
 {% if item.is_php is defined and item.is_php %}
@@ -99,7 +101,7 @@ server {
     {% endblock %}
 {% endif %}
 
-    {% block compression -%}
+    {% block server_compression -%}
     gzip on;
     gzip_proxied any;
     gzip_static on;
@@ -126,7 +128,9 @@ server {
     gzip_min_length 512;
     {% endblock %}
 
+    {% block server_end %}{% endblock %}
+
 {% if item.extra_parameters is defined %}
-    {{ item.extra_parameters }}
+    {{ item.extra_parameters|indent(4) }}
 {% endif %}
 }
