@@ -3,7 +3,7 @@
 drupal_domain: "drupalvm.dev"
 vagrant_hostname: "{{ drupal_domain }}"
 
-# Add only the `apache_vhosts` or `nginx_hosts` you need. If installing a
+# Add only the `apache_vhosts` or `nginx_vhosts` you need. If installing a
 # single Drupal site, the variable should look like this (Apache):
 apache_vhosts:
   - servername: "{{ drupal_domain }}"

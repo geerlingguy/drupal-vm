@@ -33,7 +33,7 @@
           {%- endif -%}
         {%- endfor -%}
       {%- elif drupalvm_webserver == 'nginx' -%}
-        {%- for host in nginx_hosts -%}
+        {%- for host in nginx_vhosts -%}
           {%- if host.root == path -%}
             {{ host.server_name }}
           {%- endif -%}
@@ -73,7 +73,7 @@
 
           {%- endfor -%}
         {%- elif drupalvm_webserver == 'nginx' -%}
-          {%- for host in nginx_hosts -%}
+          {%- for host in nginx_vhosts -%}
 
             {% for server_name in host.server_name.split(' ') -%}
               {{ printHostsEntry(vagrant_ip, server_name) }}
@@ -107,7 +107,7 @@
               {%- endif -%}
             {%- endfor -%}
           {%- elif drupalvm_webserver == 'nginx' -%}
-            {%- for host in nginx_hosts -%}
+            {%- for host in nginx_vhosts -%}
               {%- if host.root is defined -%}
                 {%- for hostname in host.server_name.split() -%}
                   {{ printSite(hostname, host.root) }}
