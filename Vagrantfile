@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require './lib/drupalvm/vagrant'
+require_relative 'lib/drupalvm/vagrant'
 
 # Absolute paths on the host machine.
 host_drupalvm_dir = File.dirname(File.expand_path(__FILE__))
