@@ -14,6 +14,11 @@ To use XDebug with PHPStorm, change the `php_xdebug_idekey` variable as shown be
 ```yaml
 php_xdebug_idekey: PHPSTORM
 ```
+In order to pass the Web Server Debug Validation, you'll need to also add the following your `config.yml`
+
+```yaml
+php_xdebug_remote_host: "{{ vagrant_hostname }}"
+```
 
 ### Sublime Text and XDebug with Drupal VM
 
