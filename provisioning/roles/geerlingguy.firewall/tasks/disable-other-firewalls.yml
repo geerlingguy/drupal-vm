@@ -1,6 +1,8 @@
 ---
-- name: Check firewalld package is installed (on RHEL).
+- name: Check if firewalld package is installed (on RHEL).
   shell: yum list installed firewalld
+  args:
+    warn: no
   register: firewalld_installed
   ignore_errors: true
   changed_when: false
@@ -13,8 +15,10 @@
     enabled: no
   when: ansible_os_family == "RedHat" and firewall_disable_firewalld and firewalld_installed.rc == 0
 
-- name: Check ufw package is installed (on Ubuntu).
-  shell: dpkg -l ufw
+- name: Check if ufw package is installed (on Ubuntu).
+  shell: service ufw status
+  args:
+    warn: no
   register: ufw_installed
   ignore_errors: true
   changed_when: false
@@ -27,8 +31,10 @@
     enabled: no
   when: ansible_distribution == "Ubuntu" and firewall_disable_ufw and ufw_installed.rc == 0
 
-- name: Check ufw package is installed (on Archlinux).
+- name: Check if ufw package is installed (on Archlinux).
   command: pacman -Q ufw
+  args:
+    warn: no
   register: ufw_installed
   ignore_errors: true
   changed_when: false
