@@ -20,5 +20,11 @@
         "source": "https://github.com/geerlingguy/drupal-vm",
         "docs": "http://docs.drupalvm.com"
     },
-    "require": {}
+    "require": {},
+    "config": {
+        "process-timeout": 1800
+    },
+    "scripts": {
+        "run-tests": "./tests/run-tests.sh"
+    }
 }

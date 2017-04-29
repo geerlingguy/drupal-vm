@@ -154,10 +154,21 @@ Drupal VM runs on almost any modern computer that can run VirtualBox and Vagrant
   - Find out more about local development with Vagrant + VirtualBox + Ansible in this presentation: [Local Development Environments - Vagrant, VirtualBox and Ansible](http://www.slideshare.net/geerlingguy/local-development-on-virtual-machines-vagrant-virtualbox-and-ansible).
   - Learn about how Ansible can accelerate your ability to innovate and manage your infrastructure by reading [Ansible for DevOps](http://www.ansiblefordevops.com/).
 
+## Tests
+
+To run basic integration tests using Docker:
+
+  1. [Install Docker](https://docs.docker.com/engine/installation/).
+  2. In this project directory, run: `composer run-tests`
+
+> Note: If you're on a Mac, and want to use Docker's `cached` volume option (or `delegated`, once it's available) for faster local filesystem access, you need to install [Docker's Edge release](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac).
+
+The project's automated tests are run via Travis CI, and the more comprehensive test suite covers multiple Linux distributions and many different Drupal VM use cases and deployment techniques.
+
 ## License
 
 This project is licensed under the MIT open source license.
 
 ## About the Author
 
-[Jeff Geerling](http://www.jeffgeerling.com/) created Drupal VM in 2014 for a more efficient Drupal site and core/contrib development workflow. This project is featured as an example in [Ansible for DevOps](http://www.ansiblefordevops.com/).
+[Jeff Geerling](https://www.jeffgeerling.com/) created Drupal VM in 2014 for a more efficient Drupal site and core/contrib development workflow. This project is featured as an example in [Ansible for DevOps](https://www.ansiblefordevops.com/).
