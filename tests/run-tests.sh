@@ -152,15 +152,15 @@ if [ $TEST_INSTALLED_EXTRAS = true ]; then
 fi
 
 # Dashboard.
-docker exec $CONTAINER_ID curl -s --header Host:$IP localhost
-  | grep -q "<li>$IP $HOSTNAME</li>"
-  && (echo 'Dashboard install pass' && exit 0)
+docker exec $CONTAINER_ID curl -s --header Host:$IP localhost \
+  | grep -q "<li>$IP $HOSTNAME</li>" \
+  && (echo 'Dashboard install pass' && exit 0) \
   || (echo 'Dashboard install fail' && exit 1)
 
 # Drush.
-docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status
-  | grep -q 'Drupal bootstrap.*Successful'
-  && (echo 'Drush install pass' && exit 0)
+docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status \
+  | grep -q 'Drupal bootstrap.*Successful' \
+  && (echo 'Drush install pass' && exit 0) \
   || (echo 'Drush install fail' && exit 1)
 
 # Remove test container.
