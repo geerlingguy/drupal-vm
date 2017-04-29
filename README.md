@@ -161,7 +161,7 @@ To run basic integration tests using Docker:
   1. [Install Docker](https://docs.docker.com/engine/installation/).
   2. In this project directory, run: `composer run-tests`
 
-> Note: If you're on a Mac, and want to use Docker's `cached` volume option (or `delegated`, once it's available) for faster local filesystem access, you need to install [Docker's Edge release](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac).
+> Note: If you're on a Mac, you need to use [Docker's Edge release](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac), at least until [this issue](https://github.com/docker/for-mac/issues/77) is resolved.
 
 The project's automated tests are run via Travis CI, and the more comprehensive test suite covers multiple Linux distributions and many different Drupal VM use cases and deployment techniques.
 

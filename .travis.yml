@@ -1,4 +1,6 @@
 ---
+language: php
+php: '7.1'
 services: docker
 
 env:
@@ -12,64 +14,53 @@ env:
       DRUPALVM_DIR: /var/www/drupalvm
       DRUSH_BIN: drush
       TEST_INSTALLED_EXTRAS: true
+      CONTAINER_ID: dvm-test
 
   matrix:
     # Defaults - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
-      init: /sbin/init
-      run_opts: "--privileged"
-    # # Defaults - Ubuntu 14.04.
-    # - type: defaults
-    #   distro: ubuntu1404
-    #   init: /sbin/init
-    #   run_opts: "--privileged"
-    # # PHP 5.6 - Ubuntu 16.04.
-    # - type: defaults
-    #   distro: ubuntu1604
-    #   init: /sbin/init
-    #   run_opts: "--privileged"
-    #   local_config: tests/ubuntu-16-php56.config.yml
-    #   DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
-    #   TEST_INSTALLED_EXTRAS: false
-    # # Nginx and Drush make file test - Ubuntu 16.04.
-    # - type: nginx-drush-make
-    #   distro: ubuntu1604
-    #   init: /sbin/init
-    #   run_opts: "--privileged"
-    #   local_config: tests/ubuntu-16-nginx.config.yml
-    #   config_dir: /var/www/drupalvm/config
-    # # PostgreSQL - Ubuntu 16.04.
-    # - type: postgresql
-    #   distro: ubuntu1604
-    #   init: /sbin/init
-    #   run_opts: "--privileged"
-    #   local_config: tests/ubuntu-16-postgresql.config.yml
-    #   config_dir: /var/www/drupalvm/config
-    #   DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
-    #   TEST_INSTALLED_EXTRAS: false
-    # # Defaults - CentOS 7.
-    # - type: centos
-    #   distro: centos7
-    #   init: /usr/lib/systemd/systemd
-    #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    # # Defaults - Debian 8.
-    # - type: debian
-    #   distro: debian8
-    #   init: /lib/systemd/systemd
-    #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    # Defaults - Ubuntu 14.04.
+    - type: defaults
+      distro: ubuntu1404
+    # Defaults - CentOS 7.
+    - type: centos
+      distro: centos7
+    # Defaults - Debian 8.
+    - type: debian
+      distro: debian8
+
+    # PHP 5.6 - Ubuntu 16.04.
+    - type: defaults
+      distro: ubuntu1604
+      local_config: tests/ubuntu-16-php56.config.yml
+      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
+      TEST_INSTALLED_EXTRAS: false
+
+    # Nginx and Drush make file test - Ubuntu 16.04.
+    - type: nginx-drush-make
+      distro: ubuntu1604
+      local_config: tests/ubuntu-16-nginx.config.yml
+      config_dir: /var/www/drupalvm/config
+
+    # PostgreSQL - Ubuntu 16.04.
+    - type: postgresql
+      distro: ubuntu1604
+      local_config: tests/ubuntu-16-postgresql.config.yml
+      config_dir: /var/www/drupalvm/config
+      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
+      TEST_INSTALLED_EXTRAS: false
 
 before_install:
   # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - docker pull geerlingguy/docker-${distro}-ansible:latest
 
   # Install lint tools.
-  - 'gem install rubocop'
+  - gem install rubocop
 
 script:
   # Vagrantfile syntax check.
   - 'rubocop ./Vagrantfile ./lib/drupalvm --except LineLength,Eval,MutableConstant,BlockLength,ConditionalAssignment,IndentArray,AlignParameters'
 
-  # Try something quite radical.
+  # Run tests.
   - composer run-tests
-
