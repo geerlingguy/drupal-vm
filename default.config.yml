@@ -281,8 +281,8 @@ mysql_wait_timeout: 300
 adminer_install_filename: index.php
 
 # Node.js configuration (if enabled above).
-# Valid examples: "0.10", "0.12", "4.x", "5.x".
-nodejs_version: "0.12"
+# Valid examples: "0.10", "0.12", "4.x", "5.x", "6.x".
+nodejs_version: "6.x"
 nodejs_npm_global_packages: []
 nodejs_install_npm_user: "{{ drupalvm_user }}"
 npm_config_prefix: "/home/{{ drupalvm_user }}/.npm-global"
