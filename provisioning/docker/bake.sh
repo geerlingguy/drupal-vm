@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# Bake a Docker container with Drupal VM.
+
+# Exit on any individual command failure.
+set -e
 
 # Set variables.
 DRUPALVM_MACHINE_NAME="${DRUPALVM_MACHINE_NAME:-drupal-vm}"

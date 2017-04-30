@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  drupal-vm:
+    image: drupal-vm
+    container_name: drupal-vm
+    ports:
+      - 8080:80
+      - 8443:443
+    privileged: true
+    volumes:
+      - ./:/var/www/drupalvm/:rw,cached
+    command: /lib/systemd/systemd
+    networks:
+      drupalvm:
+        ipv4_address: 192.168.88.88
+
+networks:
+
+  drupalvm:
+    driver: bridge
+    driver_opts:
+      ip: 192.168.88.1
+    ipam:
+      config:
+        - subnet: "192.168.88.0/16"
