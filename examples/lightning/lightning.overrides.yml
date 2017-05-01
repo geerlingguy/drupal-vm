@@ -1,0 +1,13 @@
+---
+local_path: ~/LIGHTNING/lightning-8.x-1.0-beta1
+destination: /var/www
+vagrant_memory: 2048
+drupalvm_webserver: nginx
+drush_makefile_path: /var/www/profiles/lightning/build-lightning.make.yml
+drupal_core_path: "/var/www"
+drupal_install_profile: lightning
+nginx_hosts:
+  server_name: "drupal.192.168.88.88.xip.io	{{ drupal_domain }}"
+  server_name: "adminer.192.168.88.88.xip.io"
+  server_name: "xhprof.192.168.88.88.xip.io"
+  server_name: "pimpmylog.192.168.88.88.xip.io"
