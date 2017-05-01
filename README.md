@@ -153,6 +153,7 @@ Drupal VM runs on almost any modern computer that can run VirtualBox and Vagrant
   - You can change the installed version of Drupal or drush, or any other configuration options, by editing the variables within `config.yml`.
   - Find out more about local development with Vagrant + VirtualBox + Ansible in this presentation: [Local Development Environments - Vagrant, VirtualBox and Ansible](http://www.slideshare.net/geerlingguy/local-development-on-virtual-machines-vagrant-virtualbox-and-ansible).
   - Learn about how Ansible can accelerate your ability to innovate and manage your infrastructure by reading [Ansible for DevOps](http://www.ansiblefordevops.com/).
+  - Sometimes you want to be faster when provisioning often on the same VM. It can make sense to [skip repeated downloading ansible roles](https://github.com/geerlingguy/drupal-vm/issues/655#issuecomment-221106065) on each `vagrant provision`.
 
 ## Tests
 
