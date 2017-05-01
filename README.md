@@ -82,7 +82,8 @@ Notes:
   2. (Optional) Copy `default.config.yml` to `config.yml` and modify it to your liking.
   3. Create a local directory where Drupal will be installed and configure the path to that directory in `config.yml` (`local_path`, inside `vagrant_synced_folders`).
   4. Open Terminal, `cd` to this directory (containing the `Vagrantfile` and this README file).
-  5. Type in `vagrant up`, and let Vagrant do its magic.
+  5. Execute `ansible-galaxy install -r provisioning/requirements.yml`
+  6. Type in `vagrant up`, and let Vagrant do its magic.
 
 Once the process is complete, you will have a Drupal codebase available inside the `drupal/` directory of the project.
 
