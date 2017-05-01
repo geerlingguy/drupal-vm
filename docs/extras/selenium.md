@@ -52,7 +52,7 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupalv
               blackbox: ~
               api_driver: 'drupal'
               drupal:
-                drupal_root: '/var/www/drupalvm/drupal'
+                drupal_root: '/var/www/drupalvm/drupal/web'
               region_map:
                 content: "#content"
 
