@@ -310,6 +310,7 @@ php_xdebug_remote_connect_back: 1
 # Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
 php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
+php_xdebug_remote_host: "{{ ansible_default_ipv4.gateway }}"
 
 # Solr Configuration (if enabled above).
 solr_version: "5.5.3"
