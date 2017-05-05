@@ -20,10 +20,18 @@ red='\033[0;31m'
 green='\033[0;32m'
 neutral='\033[0m'
 
-# Set variables.
-container_name=$(parse_yaml config.yml docker_container_name)
-image_name=$(parse_yaml config.yml docker_image_name)
-image_path=$(parse_yaml config.yml docker_image_path)
+# Set variables, read from config.yml if available.
+# TODO: This could definitely be more intelligent!
+if [ -f 'config.yml' ]; then
+  container_name=$(parse_yaml config.yml docker_container_name)
+  image_name=$(parse_yaml config.yml docker_image_name)
+  image_path=$(parse_yaml config.yml docker_image_path)
+else
+  container_name=$(parse_yaml default.config.yml docker_container_name)
+  image_name=$(parse_yaml default.config.yml docker_image_name)
+  image_path=$(parse_yaml default.config.yml docker_image_path)
+fi
+
 image_full_path="$image_path/$image_name.tar.gz"
 image_full_path="${image_full_path/#\~/$HOME}" # Expand ~ to $HOME.
 

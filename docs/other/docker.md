@@ -1,9 +1,62 @@
-Drupal VM can be used to bake and share [Docker](https://www.docker.com) images.
+Drupal VM can be used to bake and share [Docker](https://www.docker.com) images containing a custom prebuilt copy of Drupal VM.
 
-While building a single Docker container with the entire LAMP/LEMP/LAPP stack is not necessarily the best way to manage Docker-based infrastructure, it works.
+Drupal VM includes a few `composer` scripts and an example `docker-compose.yml` file which allow you to 'bake' a new Docker image using the current Drupal VM configuration, then use this image to quickly build or rebuild your Drupal development environment (or share the image with your development team for _immediate_ environment setup).
 
-TODO:
+> **Docker support is currently experimental**, so you may want to wait until Docker support is more finalized unless you're already familiar with Docker, and okay with potentially backwards-incompatible changes when upgrading Drupal VM.
 
-  - composer docker-bake
-  - composer docker-save-image
-  - composer docker-load-image
+## Building ('baking') a Docker container with Drupal VM
+
+After you've configured your Drupal VM settings in `config.yml` and other configuration files, run the following command to create and provision a new Docker container:
+
+    composer docker-bake
+
+This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
+
+```
+PLAY RECAP *********************************************************************
+localhost                  : ok=210  changed=94   unreachable=0    failed=0
+
+
+...done!
+
+Visit the Drupal VM dashboard: http://localhost:8080
+```
+
+Once the build is complete, you could view the dashboard by visiting the URL provided.
+
+## Saving the Docker container to an image
+
+If you are happy with the way the container was built, you can run the following command to convert the container into an image:
+
+    composer docker-save-image
+
+You can override the default values for the image creation by overriding the following three variables inside `config.yml`:
+
+    docker_container_name: drupal-vm
+    docker_image_name: drupal-vm
+    docker_image_path: ~/Downloads
+
+Using the default settings, this command will tag your current version of the container as `drupal-vm:latest` (on your local computer), then store an archive of the image in an archive file, in the path "`docker_image_path`/`docker_image_name`.tar.gz".
+
+## Loading the Docker container from an image
+
+On someone else's computer (or your own, if you have deleted the existing `drupal-vm` image), you can load an image archive by placing it in the path defined by "`docker_image_path`/`docker_image_name`.tar.gz" in your `config.yml` file. To do this, run the command:
+
+    composer docker-load-image
+
+## Using Drupal VM with `docker-compose.yml`
+
+Drupal VM includes an `example.docker-compose.yml` file. To use the file, copy it to `docker-compose.yml` and customize as you see fit. Once you've configured the exposed ports and settings as you like, run the following command to bring up the network and container(s) according to the compose file:
+
+    docker-compose up -d
+
+(The `-d` tells `docker-compose` to start the containers and run in the background.) You can stop the containers with `docker-compose stop`, or remove all their configuration with `docker-compose down`.
+
+> If you're using Docker for Mac, you need to perform two manual steps prior to running `docker-compose up` to ensure you can access Drupal VM using a unique IP address:
+> 
+>   1. Run `sudo nano /etc/hosts` and add a line for Drupal VM in Docker (e.g. `192.168.88.88  drupalvm.dev` using the defaults).
+>   2. Add an alias IP address on the loopback interface: `sudo ifconfig lo0 alias 192.168.88.88/24`
+> 
+> Note that you'll have to create the alias again after restarting your computer. And if you don't know what any of this means, you might want to hold off on running Drupal VM inside Docker for now :)
+> 
+> See [this Docker (moby) issue](https://github.com/moby/moby/issues/22753#issuecomment-246054946) for more details.
