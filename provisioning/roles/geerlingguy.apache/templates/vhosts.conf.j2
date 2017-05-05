@@ -8,7 +8,7 @@
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
 {% if vhost.documentroot is defined %}
-  DocumentRoot {{ vhost.documentroot }}
+  DocumentRoot "{{ vhost.documentroot }}"
 {% endif %}
 
 {% if vhost.serveradmin is defined %}
@@ -42,7 +42,7 @@
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
 {% if vhost.documentroot is defined %}
-  DocumentRoot {{ vhost.documentroot }}
+  DocumentRoot "{{ vhost.documentroot }}"
 {% endif %}
 
   SSLEngine on
