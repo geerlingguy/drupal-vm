@@ -4,11 +4,27 @@ Drupal VM includes a few `composer` scripts and an example `docker-compose.yml` 
 
 > **Docker support is currently experimental**, so you may want to wait until Docker support is more finalized unless you're already familiar with Docker, and okay with potentially backwards-incompatible changes when upgrading Drupal VM.
 
+## Managing your hosts file
+
+Before using Docker to run Drupal VM, you should [edit your hosts file](https://support.rackspace.com/how-to/modify-your-hosts-file/) and add the following line:
+
+    192.168.88.88  drupalvm.dev
+
+...but substituting the IP address and domain name you'd like to use to access your Drupal VM container.
+
+> If you're using Docker for Mac, you need to perform one additional step to ensure you can access Drupal VM using a unique IP address:
+>
+>   1. Add an alias IP address on the loopback interface: `sudo ifconfig lo0 alias 192.168.88.88/24`
+>
+> Note that you'll have to create the alias again after restarting your computer. See [this Docker (moby) issue](https://github.com/moby/moby/issues/22753#issuecomment-246054946) for more details.
+
 ## Building ('baking') a Docker container with Drupal VM
 
 After you've configured your Drupal VM settings in `config.yml` and other configuration files, run the following command to create and provision a new Docker container:
 
-    composer docker-bake
+    [OPTIONS] composer docker-bake
+
+Look at the variables defined in the `provisioning/docker/bake.sh` file for all the currently-available options (e.g. `DRUPALVM_IP_ADDRESS`, `DISTRO`, etc.). You can use Drupal VM's defaults by running the `composer docker-bake` command without any options.
 
 This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
 
@@ -51,12 +67,3 @@ Drupal VM includes an `example.docker-compose.yml` file. To use the file, copy i
     docker-compose up -d
 
 (The `-d` tells `docker-compose` to start the containers and run in the background.) You can stop the containers with `docker-compose stop`, or remove all their configuration with `docker-compose down`.
-
-> If you're using Docker for Mac, you need to perform two manual steps prior to running `docker-compose up` to ensure you can access Drupal VM using a unique IP address:
-> 
->   1. Run `sudo nano /etc/hosts` and add a line for Drupal VM in Docker (e.g. `192.168.88.88  drupalvm.dev` using the defaults).
->   2. Add an alias IP address on the loopback interface: `sudo ifconfig lo0 alias 192.168.88.88/24`
-> 
-> Note that you'll have to create the alias again after restarting your computer. And if you don't know what any of this means, you might want to hold off on running Drupal VM inside Docker for now :)
-> 
-> See [this Docker (moby) issue](https://github.com/moby/moby/issues/22753#issuecomment-246054946) for more details.
