@@ -319,6 +319,11 @@ solr_xmx: "128M"
 # Selenium configuration.
 selenium_version: 2.53.0
 
+# Docker configuration.
+docker_container_name: drupal-vm
+docker_image_name: drupal-vm
+docker_image_path: ~/Downloads
+
 # Other configuration.
 dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts
