@@ -25,7 +25,7 @@
 
 - name: Ensure npm global packages are installed.
   npm:
-    name: "{{ item.name }}"
+    name: "{{ item.name | default(item) }}"
     version: "{{ item.version | default('latest') }}"
     global: yes
     state: latest

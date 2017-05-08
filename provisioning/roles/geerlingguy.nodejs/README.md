@@ -38,6 +38,8 @@ A list of npm packages with a `name` and (optional) `version` to be installed gl
         version: 0.9.3
       # Install the latest stable release of a package.
       - name: node-sass
+      # This shorthand syntax also works (same as previous example).
+      - node-sass
 <!-- code block separator -->
 
     nodejs_package_json_path: ""

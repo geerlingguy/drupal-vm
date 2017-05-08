@@ -7,7 +7,7 @@
     npm_config_prefix: /root/.npm-global
     npm_config_unsafe_perm: "true"
     nodejs_npm_global_packages:
-      - name: node-sass
+      - node-sass
       - name: jslint
         version: 0.9.6
       - name: yo
