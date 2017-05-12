@@ -35,7 +35,7 @@ localhost                  : ok=210  changed=94   unreachable=0    failed=0
 
 ...done!
 
-Visit the Drupal VM dashboard: http://localhost:8080
+Visit the Drupal VM dashboard: http://192.168.88.88:80
 ```
 
 Once the build is complete, you could view the dashboard by visiting the URL provided.
