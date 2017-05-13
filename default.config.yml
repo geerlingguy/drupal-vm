@@ -127,8 +127,7 @@ apache_vhosts:
     documentroot: "{{ pimpmylog_install_dir }}"
     extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
-  - servername: "{{ vagrant_ip }}"
-    serveralias: "dashboard.{{ vagrant_hostname }}"
+  - servername: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
     extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
@@ -161,7 +160,7 @@ nginx_hosts:
     root: "{{ pimpmylog_install_dir }}"
     is_php: true
 
-  - server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"
+  - server_name: "dashboard.{{ vagrant_hostname }}"
     root: "{{ dashboard_install_dir }}"
     is_php: true
 
