@@ -19,8 +19,7 @@
     dest: /etc/hostname
     unsafe_writes: "{{ hostname_unsafe_writes }}"
   register: set_hostname
-  when: hostname_fqdn
 
 - name: Set the hostname for current session.
   shell: hostname --file /etc/hostname
-  when: hostname_fqdn and set_hostname.changed
+  when: set_hostname.changed

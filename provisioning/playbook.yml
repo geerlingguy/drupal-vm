@@ -33,7 +33,7 @@
   roles:
     # Essential roles.
     - { role: geerlingguy.repo-remi, when: ansible_os_family == 'RedHat', tags: ['webserver', 'php'] }
-    - { role: drupalvm.hostname }
+    - { role: drupalvm.hostname, when: hostname_configure }
     - { role: geerlingguy.firewall, when: firewall_enabled }
     - { role: geerlingguy.git }
     - { role: geerlingguy.postfix }
