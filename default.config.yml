@@ -220,10 +220,11 @@ extra_packages:
   - sqlite
 
 # You can configure almost anything else on the server in the rest of this file.
-extra_security_enabled: false
-
 drush_version: "8.1.10"
 
+extra_security_enabled: false
+
+firewall_enabled: true
 firewall_allowed_tcp_ports:
   - "22"
   - "25"

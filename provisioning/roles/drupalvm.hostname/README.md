@@ -14,7 +14,7 @@ Available variables are listed below:
 hostname_fqdn: "{{ inventory_hostname }}"
 ```
 
-The fully qualified domain name.
+The fully qualified domain name. If left blank, the `hostname` command will not be run (this can be useful if running the role within a Docker container).
 
 ```yaml
 hostname_short: "{{ hostname_fqdn|regex_replace('^([^.]+).*$', '\\1') }}"
