@@ -10,6 +10,7 @@ services:
       - 80:80
       - 443:443
     privileged: true
+    # Use of the `cached` option requires the Docker Edge release as of May '17.
     volumes:
       - ./:/var/www/drupalvm/:rw,cached
     command: /lib/systemd/systemd

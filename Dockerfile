@@ -3,7 +3,7 @@ MAINTAINER Jeff Geerling
 
 # Copy provisioning directory and vars files into container.
 COPY ./ /etc/ansible/drupal-vm
-COPY ./provisioning/docker/vars/overrides.yml /etc/ansible/drupal-vm/local.config.yml
+COPY ./provisioning/docker/vars/docker-hub-overrides.yml /etc/ansible/drupal-vm/local.config.yml
 
 # Provision Drupal VM inside Docker.
 RUN ansible-playbook /etc/ansible/drupal-vm/provisioning/playbook.yml

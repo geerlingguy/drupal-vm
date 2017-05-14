@@ -1,9 +1,0 @@
----
-hostname_configure: false
-firewall_enabled: false
-installed_extras:
-  - adminer
-  - drush
-  - mailhog
-  - pimpmylog
-  # - varnish
