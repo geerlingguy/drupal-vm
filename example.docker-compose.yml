@@ -3,11 +3,12 @@ version: "3"
 services:
 
   drupal-vm:
+    # Switch the image to `geerlingguy/drupal-vm` if not using your own image.
     image: drupal-vm
     container_name: drupal-vm
     ports:
-      - 8080:80
-      - 8443:443
+      - 80:80
+      - 443:443
     privileged: true
     volumes:
       - ./:/var/www/drupalvm/:rw,cached

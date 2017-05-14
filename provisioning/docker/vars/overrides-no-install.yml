@@ -1,0 +1,15 @@
+---
+hostname_configure: false
+firewall_enabled: false
+installed_extras:
+  - adminer
+  - drush
+  - mailhog
+  - pimpmylog
+  # - varnish
+
+# Don't build or install Drupal inside the container.
+drupal_build_makefile: false
+drupal_build_composer: false
+drupal_build_composer_project: false
+drupal_install_site: false
