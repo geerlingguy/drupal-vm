@@ -54,14 +54,18 @@ php_max_execution_time: "60"
 php_max_input_time: "60"
 php_max_input_vars: "1000"
 php_realpath_cache_size: "32K"
+
+php_file_uploads: "On"
 php_upload_max_filesize: "64M"
+php_max_file_uploads: "20"
+
 php_post_max_size: "32M"
 php_date_timezone: "America/Chicago"
 php_allow_url_fopen: "On"
 
 php_sendmail_path: "/usr/sbin/sendmail -t -i"
 php_output_buffering: "4096"
-php_short_open_tag: false
+php_short_open_tag: "Off"
 php_disable_functions: []
 
 php_session_cookie_lifetime: 0
