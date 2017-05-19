@@ -1,0 +1,3 @@
+---
+# The PHP version to be installed.
+php_version: '7.1'
