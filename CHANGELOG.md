@@ -1,5 +1,53 @@
 # Drupal VM Changelog
 
+## 4.5.0 "Break In (For Strings, Flutes, and Celesta)" (2017-05-24)
+
+### Breaking Changes
+
+  * The default `nodejs_version` is now set to `6.x`; if you need to stay on `0.12` or some other version, be sure to set the version explicitly in your own `config.yml`.
+
+### New/changed variables in default.config.yml
+
+  * Changed variables:
+    * `nodejs_version: "6.x"` (was `0.12`)
+  * New variables:
+    * Reconfigurable templates for Drush Aliases:
+      * `drush_aliases_host_template: "templates/drupalvm.aliases.drushrc.php.j2"`
+      * `drush_aliases_guest_template: "templates/drupalvm-local.aliases.drushrc.php.j2"`
+    * Reconfigurable template for Nginx hosts:
+      * `nginx_vhost_template: "templates/nginx-vhost.conf.j2"`
+    * `firewall_enabled: true` (allows the disabling of Drupal VM's default firewall, e.g. for Docker usage)
+    * `php_xdebug_remote_host: "{{ ansible_default_ipv4.gateway }}"` (prevents warnings when using Xdebug)
+    * New Docker configuration options:
+      * `docker_container_name: drupal-vm`
+      * `docker_image_name: drupal-vm`
+      * `docker_image_path: ~/Downloads`
+    * New hostname configuration options:
+      * `hostname_configure: true`
+      * `hostname_fqdn: "{{ vagrant_hostname }}"`
+
+### Improvements
+
+  * #1206: Add instructions for running Drupal VM inside Docker.
+  * #1356: Add an official geerlingguy/drupal-vm image on Docker Hub.
+  * #1366: Make Drupal VM Docker image easier to use for single-site installations.
+  * #1377: Extract php-versions (version switching tasks) into standalone role so anyone can use it.
+  * #1353: Update default Node.js version to 6.x.
+  * #1327: Refactor task includes into drupalvm Ansible roles.
+  * #1329: Update Nginx role, allowing use of extensible Nginx templates.
+  * #1254: Refactor Drupal VM's Nginx templates to allow for extensibility.
+  * #1349: Make it easier to install Node.js global packages by name.
+  * #1258: Finalize documentation for Git-based deployment.
+  * Updated roles: Firewall, Nginx, Node.js, Apache, Selenium.
+
+### Bugfixes
+
+  * #1351: Fix documentation bug concerning paths in example.drupal.composer.json.
+  * #1304: Fix documentation bug concerning Behat paths.
+  * #1350: Set the `php_xdebug_remote_host` to prevent Xdebug warnings.
+  * #1347: Fix LoadError message on vagrant up/down.
+
+
 ## 4.4.5 (2017-04-24)
 
 ### New/changed variables in default.config.yml
