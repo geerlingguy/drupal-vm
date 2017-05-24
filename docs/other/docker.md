@@ -25,6 +25,8 @@ You can also add other subdomains if you're using other built-in services, e.g. 
 
 The [`geerlingguy/drupal-vm`](https://hub.docker.com/r/geerlingguy/drupal-vm/) image on Docker Hub contains a pre-built copy of Drupal VM, with all the latest Drupal VM defaults. If you need to quickly run your site in a container, or don't need to customize any of the components of Drupal VM, you can use this image.
 
+> For a reference installation that has configuration for running the local environment on _either_ Vagrant or Docker, see the [Drupal VM Live Site Repository](https://github.com/geerlingguy/drupalvm-live).
+
 ### (Optional) Add a `Dockerfile` for customization
 
 If you need to make small changes to the official `drupal-vm` image (instead of baking your own fully-custom image), you can create a `Dockerfile` to make those changes. In one site's example, ImageMagick was required for some media handling functionality, and so the following `Dockerfile` was places in the project's root directory (alongside the `docker-compose.yml` file):
@@ -43,9 +45,10 @@ You can customize the official image in many other ways, but if you end up doing
 
 Copy the `example.docker-compose.yml` file out of Drupal VM (or grab a copy from GitHub [here](https://github.com/geerlingguy/drupal-vm/blob/master/example.docker-compose.yml)), rename it `docker-compose.yml`, and place it in your project root.
 
-_If you are using your own `Dockerfile` to further customize Drupal VM_, comment out the `image: drupal-vm` line, and uncomment the `build: .` line (this tells Docker Compose to build a new image based on your own `Dockerfile`).
+  - _If you are using your own `Dockerfile` to further customize Drupal VM_, comment out the `image: drupal-vm` line, and uncomment the `build: .` line (this tells Docker Compose to build a new image based on your own `Dockerfile`).
+  - _If you're not using your own `Dockerfile`_, change the `image` line to: `image: geerlingguy/drupal-vm`.
 
-For the `volume:` definition in `docker-compose.yml`, Drupal VM's default site docroot is `/var/www/drupalvm/drupal/web`, which follows the convention of a typical Drupal project built with Composer. If you don't get your site when you attempt to access Drupal VM, you will either need to modify the `volume:` definition to match your project's structure, or use a custom `Dockerfile` and copy in a customized Apache `vhosts.conf` file.
+For the `volume:` definition in `docker-compose.yml`, Drupal VM's default docroot is `/var/www/drupalvm/drupal/web`, which follows the convention of a typical Drupal project built with Composer. If you don't get your site when you attempt to access Drupal VM, you will either need to modify the `volume:` definition to match your project's structure, or use a custom `Dockerfile` and copy in a customized Apache `vhosts.conf` file.
 
 ### Run Drupal VM
 
@@ -61,6 +64,12 @@ After the Drupal VM container is running, you should be able to see the Dashboar
 > Note: If you see Drupal's installer appear when accessing the site, that means the codebase was found, but either the database connection details are not in your local site configuration, or they are, but you don't have the default database populated yet. You may need to load in the database either via `drush sql-sync` or by importing a dump into the container. The default credentials are `drupal` and `drupal` for username and password, and `drupal` for the database name.
 
 You can stop the containers with `docker-compose stop`, or remove all their configuration with `docker-compose down`.
+
+### Using Drush inside Docker
+
+Currently, the easiest way to use Drupal VM's `drush` inside a Docker container is to use `docker exec` to run `drush` internally. There are a few other ways you can try to get Drush working with a codebase running on a container, but the easiest way is to run a command like:
+
+    docker exec drupal-vm bash -c "drush --uri=drupalvm.dev --root=/var/www/drupalvm/drupal/web status"
 
 ## Method 2: 'Bake and Share' a custom Drupal VM Docker image
 
