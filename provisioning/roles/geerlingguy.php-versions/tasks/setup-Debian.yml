@@ -1,8 +1,7 @@
 ---
-- name: Set the correct opcache filename (Ubuntu).
+- name: Set the correct opcache filename (Ubuntu/Debian).
   set_fact:
     php_opcache_conf_filename: "10-opcache.ini"
-  when: ansible_distribution == "Ubuntu"
 
 - name: Add repository for PHP versions (Ubuntu).
   apt_repository: repo='ppa:ondrej/php'
