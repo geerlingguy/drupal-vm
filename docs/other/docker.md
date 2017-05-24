@@ -63,7 +63,7 @@ After the Drupal VM container is running, you should be able to see the Dashboar
 
 > Note: If you see Drupal's installer appear when accessing the site, that means the codebase was found, but either the database connection details are not in your local site configuration, or they are, but you don't have the default database populated yet. You may need to load in the database either via `drush sql-sync` or by importing a dump into the container. The default credentials are `drupal` and `drupal` for username and password, and `drupal` for the database name.
 
-You can stop the containers with `docker-compose stop`, or remove all their configuration with `docker-compose down`.
+You can stop the container with `docker-compose stop` (and start it again with `docker-compose start`), or remove all the configuration with `docker-compose down` (warning: this will also wipe out the database and other local container modifications).
 
 ### Using Drush inside Docker
 
@@ -123,4 +123,4 @@ Drupal VM includes an `example.docker-compose.yml` file. To use the file, copy i
 
     docker-compose up -d
 
-(The `-d` tells `docker-compose` to start the containers and run in the background.) You can stop the containers with `docker-compose stop`, or remove all their configuration with `docker-compose down`.
+(The `-d` tells `docker-compose` to start the containers and run in the background.) You can stop the container with `docker-compose stop` (and start it again with `docker-compose start`), or remove all the configuration with `docker-compose down` (warning: this will also wipe out the database and other local container modifications).
