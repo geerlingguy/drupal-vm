@@ -23,6 +23,8 @@ post_provision_scripts:
  - "../examples/scripts/configure-solr.sh"
 ```
 
+Note that for Drupal 8, this script will create a new search core named `d8` (rather than modifying the default core `collection1`).
+
 ## Extra Solr configuration
 
 You can add extra configuration for Solr, like the minimum and maximum memory allocation for the JVM (`solr_xms` and `solr_xmx`), and even the `solr_version`, by setting the appropriate variables inside `config.yml` before you build Drupal VM.
