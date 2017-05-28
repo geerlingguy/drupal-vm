@@ -1,12 +1,9 @@
-- name: Define fully qualified domain name.
-  set_fact:
-    hostname_fqdn: "{{ vagrant_hostname }}"
-  when: hostname_fqdn is undefined
-
-- name: Define short hostname.
-  set_fact:
-    hostname_short: "{{ hostname_fqdn|regex_replace('^([^.]+).*$', '\\1') }}"
-  when: hostname_short is undefined
+---
+- name: Configure /etc/mailname (Debian).
+  copy:
+    content: "{{ hostname_fqdn }}\n"
+    dest: /etc/mailname
+  when: ansible_os_family == 'Debian'
 
 - name: Add hostname to /etc/hosts.
   lineinfile:
@@ -14,13 +11,13 @@
     regexp: '.*\t{{ hostname_short }}$'
     line: "127.0.0.1\t{{ hostname_fqdn }}\t{{ hostname_short }}"
     state: present
-    unsafe_writes: "{{ (ansible_virtualization_type == 'docker')|ternary('yes', 'no')|bool }}"
+    unsafe_writes: "{{ hostname_unsafe_writes }}"
 
 - name: Configure hostname.
   copy:
     content: "{{ (ansible_os_family == 'Debian') | ternary(hostname_short, hostname_fqdn) }}\n"
     dest: /etc/hostname
-    unsafe_writes: "{{ (ansible_virtualization_type == 'docker')|ternary('yes', 'no')|bool }}"
+    unsafe_writes: "{{ hostname_unsafe_writes }}"
   register: set_hostname
 
 - name: Set the hostname for current session.

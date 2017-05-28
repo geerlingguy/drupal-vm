@@ -63,7 +63,7 @@ If you're using Apache, you can easily get it configured to work with PHP-FPM us
     php_fpm_pm_min_spare_servers: 5
     php_fpm_pm_max_spare_servers: 5
 
-Specific settings inside the default `www.conf` PHP-FPM pool. If you'd like to manage additional settings, you can do so either by replacing the file with your own template or using `lineinfile` like this role does inside `tasks/configure.yml`.
+Specific settings inside the default `www.conf` PHP-FPM pool. If you'd like to manage additional settings, you can do so either by replacing the file with your own template or using `lineinfile` like this role does inside `tasks/configure-fpm.yml`.
 
 ### php.ini settings
 
@@ -76,7 +76,9 @@ By default, all the extra defaults below are applied through the php.ini include
     php_max_input_time: "60"
     php_max_input_vars: "1000"
     php_realpath_cache_size: "32K"
+    php_file_uploads: "On"
     php_upload_max_filesize: "64M"
+    php_max_file_uploads: "20"
     php_post_max_size: "32M"
     php_date_timezone: "America/Chicago"
     php_allow_url_fopen: "On"
@@ -214,4 +216,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

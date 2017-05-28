@@ -1,4 +1,6 @@
-Drupal VM has _experimental_ support for deploying Drupal VM to a production environment. The security of your servers is _your_ responsibility.
+Drupal VM supports deploying Drupal VM to a production environment. The security of your servers is _your_ responsibility.
+
+(See companion blog post to this documentation: [Soup to Nuts: Using Drupal VM to build local and prod](https://www.jeffgeerling.com/blog/2017/soup-nuts-using-drupal-vm-build-local-and-prod).)
 
 ## Production specific overrides.
 
@@ -143,11 +145,11 @@ After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configu
       $ sudo chmod -R 0700 /var/www/drupalvm/drupal/sites/default/files
       ```
 
-  - You can't synchronize folders between your host machine and DigitalOcean (at least not in any sane way); so you'll need to either have Drupal VM install a site from a given Drush make file or composer.json, or deploy your site yourself.
+  - You can't synchronize folders between your host machine and DigitalOcean (at least not in any sane way); so you'll need to either have Drupal VM install a site from a given Drush make file or composer.json, or deploy the site via Git, using the `geerlingguy.drupal` role's git deployment options.
   - Drupal VM doesn't include any kind of backup system. You should use one if you have any kind of important data on your server!
 
 ### Go Further
 
-You can use Ubuntu 12.04, Ubuntu 14.04, Ubuntu 16.04, CentOS 6 or CentOS 7 when you build the DigitalOcean Droplet. Just like with Drupal VM running locally, you can customize almost every aspect of the server!
+You can use Ubuntu 14.04, Ubuntu 16.04, Debian 8, CentOS 6 or CentOS 7 when you build the DigitalOcean Droplet. Just like with Drupal VM running locally, you can customize almost every aspect of the server!
 
 You may want to customize your configuration even further, to make sure Drupal VM is tuned for your specific Drupal site's needs, or you may want to change things and make the server configuration more flexible, etc. For all that, the book [Ansible for DevOps](http://ansiblefordevops.com/) will give you a great introduction to using Ansible to make Drupal VM and the included Ansible configuration do exactly what you need!

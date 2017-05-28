@@ -21,13 +21,16 @@
 - include: setup-FreeBSD.yml
   when: ansible_os_family == 'FreeBSD'
 
+- include: setup-OpenBSD.yml
+  when: ansible_os_family == 'OpenBSD'
+
 # Vhost configuration.
 - include: vhosts.yml
 
 # Nginx setup.
 - name: Copy nginx configuration in place.
   template:
-    src: nginx.conf.j2
+    src: "{{ nginx_conf_template }}"
     dest: "{{ nginx_conf_file_path }}"
     owner: root
     group: "{{ root_group }}"

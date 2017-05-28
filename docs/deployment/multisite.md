@@ -1,4 +1,4 @@
-For multisite installations, make the changes outlined in the [Local Drupal codebase](local-codebase.md) guide, but, using the `apache_vhosts` variable (or `nginx_hosts` if using Nginx), configure as many domains pointing to the same docroot as you need:
+For multisite installations, make the changes outlined in the [Local Drupal codebase](local-codebase.md) guide, but, using the `apache_vhosts` variable (or `nginx_vhosts` if using Nginx), configure as many domains pointing to the same docroot as you need:
 
 ```yaml
 drupal_core_path: "/var/www/my-drupal-site"

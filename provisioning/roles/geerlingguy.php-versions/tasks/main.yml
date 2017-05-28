@@ -1,0 +1,13 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup tasks.
+- include: "setup-{{ ansible_os_family }}.yml"
+  static: no
+
+- name: Set the correct XHProf package when PHP 5.6 is used.
+  set_fact:
+    xhprof_download_url: https://github.com/phacility/xhprof/archive/master.tar.gz
+    xhprof_download_folder_name: xhprof-master
+  when: php_version == '5.6'

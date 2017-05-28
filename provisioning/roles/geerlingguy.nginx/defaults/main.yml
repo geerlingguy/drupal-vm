@@ -12,6 +12,9 @@ nginx_ppa_version: stable
 # The name of the nginx apt/yum package to install.
 nginx_package_name: "nginx"
 
+nginx_conf_template: "nginx.conf.j2"
+nginx_vhost_template: "vhost.j2"
+
 nginx_worker_processes: "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
 nginx_worker_connections: "1024"
 nginx_multi_accept: "off"
@@ -50,7 +53,6 @@ nginx_extra_http_options: ""
 #      proxy_set_header   Host $http_host;
 
 nginx_remove_default_vhost: false
-nginx_vhosts_filename: "vhosts.conf"
 nginx_vhosts: []
 # Example vhost below, showing all available options:
 # - listen: "80 default_server" # default: "80 default_server"
@@ -63,6 +65,8 @@ nginx_vhosts: []
 #   access_log: ""
 #   error_log: ""
 #   extra_parameters: "" # Can be used to add extra config blocks (multiline).
+#   template: "" # Can be used to override the `nginx_vhost_template` per host.
+#   state: "absent" # To remove the vhost configuration.
 
 nginx_upstreams: []
 # - name: myapp1

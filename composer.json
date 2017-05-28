@@ -20,5 +20,14 @@
         "source": "https://github.com/geerlingguy/drupal-vm",
         "docs": "http://docs.drupalvm.com"
     },
-    "require": {}
+    "require": {},
+    "config": {
+        "process-timeout": 1800
+    },
+    "scripts": {
+        "run-tests": "./tests/run-tests.sh",
+        "docker-bake": "./provisioning/docker/bake.sh",
+        "docker-save-image": "./provisioning/docker/save-image.sh",
+        "docker-load-image": "./provisioning/docker/load-image.sh"
+    }
 }

@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-nginx)
 
-Installs Nginx on RedHat/CentOS or Debian/Ubuntu Linux, or FreeBSD servers.
+Installs Nginx on RedHat/CentOS or Debian/Ubuntu Linux, FreeBSD or OpenBSD servers.
 
-This role installs and configures the latest version of Nginx from the Nginx yum repository (on RedHat-based systems) or via apt (on Debian-based systems) or pkgng (on FreeBSD systems). You will likely need to do extra setup work after this role has installed Nginx, like adding your own [virtualhost].conf file inside `/etc/nginx/conf.d/`, describing the location and options to use for your particular website.
+This role installs and configures the latest version of Nginx from the Nginx yum repository (on RedHat-based systems) or via apt (on Debian-based systems) or pkgng (on FreeBSD systems) or pkg_add (on OpenBSD systems). You will likely need to do extra setup work after this role has installed Nginx, like adding your own [virtualhost].conf file inside `/etc/nginx/conf.d/`, describing the location and options to use for your particular website.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
     nginx_vhosts: []
 
-A list of vhost definitions (server blocks) for Nginx virtual hosts. If left empty, you will need to supply your own virtual host configuration. See the commented example in `defaults/main.yml` for available server options. If you have a large number of customizations required for your server definition(s), you're likely better off managing the vhost configuration file yourself, leaving this variable set to `[]`.
+A list of vhost definitions (server blocks) for Nginx virtual hosts. Each entry will create a separate config file named by `server_name`. If left empty, you will need to supply your own virtual host configuration. See the commented example in `defaults/main.yml` for available server options. If you have a large number of customizations required for your server definition(s), you're likely better off managing the vhost configuration file yourself, leaving this variable set to `[]`.
 
     nginx_vhosts:
       - listen: "80 default_server"
@@ -26,6 +26,8 @@ A list of vhost definitions (server blocks) for Nginx virtual hosts. If left emp
         error_page: ""
         access_log: ""
         error_log: ""
+        state: "present"
+        template: "{{ nginx_vhost_template }}"
         extra_parameters: |
           location ~ \.php$ {
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -43,17 +45,13 @@ Please take note of the indentation in the above block. The first line should be
 
 Whether to remove the 'default' virtualhost configuration supplied by Nginx. Useful if you want the base `/` URL to be directed at one of your own virtual hosts configured in a separate .conf file.
 
-    nginx_vhosts_filename: "vhosts.conf"
-
-The filename to use to store vhosts configuration. If you run the role multiple times (e.g. include the role with `with_items`), you can change the name for each run, effectively creating a separate vhosts file per vhost configuration.
-
     nginx_upstreams: []
 
 If you are configuring Nginx as a load balancer, you can define one or more upstream sets using this variable. In addition to defining at least one upstream, you would need to configure one of your server blocks to proxy requests through the defined upstream (e.g. `proxy_pass http://myapp1;`). See the commented example in `defaults/main.yml` for more information.
 
     nginx_user: "nginx"
 
-The user under which Nginx will run. Defaults to `nginx` for RedHat, and `www-data` for Debian.
+The user under which Nginx will run. Defaults to `nginx` for RedHat, `www-data` for Debian and `www` on FreeBSD and OpenBSD.
 
     nginx_worker_processes: "{{ ansible_processor_vcpus|default(ansible_processor_count) }}"
     nginx_worker_connections: "1024"
@@ -123,6 +121,73 @@ Configures Nginx's [`log_format`](http://nginx.org/en/docs/http/ngx_http_log_mod
     nginx_yum_repo_enabled: true
 
 (For RedHat/CentOS only) Set this to `false` to disable the installation of the `nginx` yum repository. This could be necessary if you want the default OS stable packages, or if you use Satellite.
+
+## Overriding configuration templates
+
+If you can't customize via variables because an option isn't exposed, you can override the template used to generate the virtualhost configuration files or the `nginx.conf` file.
+
+```yaml
+nginx_conf_template: "nginx.conf.j2"
+nginx_vhost_template: "vhost.j2"
+```
+
+If necessary you can also set the template on a per vhost basis.
+
+```yaml
+nginx_vhosts:
+  - listen: "80 default_server"
+    server_name: "site1.example.com"
+    root: "/var/www/site1.example.com"
+    index: "index.php index.html index.htm"
+    template: "{{ playbook_dir }}/templates/site1.example.com.vhost.j2"
+  - server_name: "site2.example.com"
+    root: "/var/www/site2.example.com"
+    index: "index.php index.html index.htm"
+    template: "{{ playbook_dir }}/templates/site2.example.com.vhost.j2"
+```
+
+You can either copy and modify the provided template, or extend it with [Jinja2 template inheritance](http://jinja.pocoo.org/docs/2.9/templates/#template-inheritance) and override the specific template block you need to change.
+
+### Example: Configure gzip in nginx configuration
+
+Set the `nginx_conf_template` to point to a template file in your playbook directory.
+
+```yaml
+nginx_conf_template: "{{ playbook_dir }}/templates/nginx.conf.j2"
+```
+
+Create the child template in the path you configured above and extend `geerlingguy.nginx` template file relative to your `playbook.yml`.
+
+```
+{% extends 'roles/geerlingguy.nginx/templates/nginx.conf.j2' %}
+
+{% block http_gzip %}
+    gzip on;
+    gzip_proxied any;
+    gzip_static on;
+    gzip_http_version 1.0;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/x-javascript
+        application/json
+        application/xml
+        application/xml+rss
+        application/xhtml+xml
+        application/x-font-ttf
+        application/x-font-opentype
+        image/svg+xml
+        image/x-icon;
+    gzip_buffers 16 8k;
+    gzip_min_length 512;
+{% endblock %}
+```
 
 ## Dependencies
 

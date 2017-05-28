@@ -4,79 +4,68 @@ services: docker
 env:
   # Test package install on all supported OSes.
   - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     php_version: 7.0
   - distro: fedora24
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     php_version: 5.6
+  - distro: debian8
+    playbook: test.yml
+    php_version: 7.0
   - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     php_version: 7.0
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
     playbook: test.yml
     php_version: 7.0
   - distro: ubuntu1204
-    init: /sbin/init
-    run_opts: ""
     playbook: test.yml
     php_version: 5.6
 
   # Only test source install on latest supported OSes.
   - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
     php_version: 7.0.13
   - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
     php_version: 7.0.13
 
-before_install:
-  # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
-
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
 
-  # Install dependencies.
-  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
-
-  # Test role.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
-  - >
-    tail ${idempotence}
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
   # Ensure PHP is installed and at the right version.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which php'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x /usr/bin/php'
+  - 'docker exec --tty ${container_id} env TERM=xterm which php'
+  - 'docker exec --tty ${container_id} env TERM=xterm test -x /usr/bin/php'
 
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm php --version'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/php --version | grep -qF "PHP ${php_version}"'
+  - 'docker exec --tty ${container_id} env TERM=xterm php --version'
+  - 'docker exec --tty ${container_id} env TERM=xterm /usr/bin/php --version | grep -qF "PHP ${php_version}"'
 
   # Ensure PHP configurations have taken effect.
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm php -i | grep 'memory_limit.*192'
+  - docker exec --tty ${container_id} env TERM=xterm php -i | grep 'memory_limit.*192'
+
+  # Check the status of PHP-FPM.
+  - |
+    if [ "${playbook}" == "test.yml" ]; then
+      case "${distro}" in
+        "centos7"|"fedora24")
+          docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php-fpm status
+          docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php-fpm status | grep -qF "fpm.service; enabled"
+          ;;
+        "debian8"|"ubuntu1604")
+          docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php${php_version}-fpm status
+          docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php${php_version}-fpm status | grep -qF "fpm.service; enabled"
+          ;;
+      esac
+    fi
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+
+  drupal-vm:
+
+    # Switch the image to `geerlingguy/drupal-vm` to use Drupal VM defaults.
+    image: drupal-vm
+    # Comment out 'image' and uncomment the line below if customizing Drupal VM
+    # with a project-specific Dockerfile in the same directory as this file.
+    # build: .
+
+    # Set this to your project's machine name (e.g. example-com)
+    container_name: drupal-vm
+
+    ports:
+      - 80:80
+      - 443:443
+      - 3306:3306
+      - 8025:8025
+
+    # Not strictly required, but custom DNS settings can help with stability.
+    dns:
+      - '8.8.8.8'
+      - '8.8.4.4'
+
+    # Use of the `delegated` option currently requires the Docker Edge release.
+    volumes:
+      - ./:/var/www/drupalvm/:rw,delegated
+
+    privileged: true
+    command: /lib/systemd/systemd
+
+    networks:
+      drupalvm:
+        # Set this IP address to something different if you already have another
+        # service running on the default IP address. If you change the subnet,
+        # you need to also change the bridge network IP and subnet below.
+        ipv4_address: 192.168.88.88
+
+networks:
+
+  # This custom network allows Drupal VM to be accessed on an IP address.
+  drupalvm:
+    driver: bridge
+    driver_opts:
+      ip: 192.168.88.1
+    ipam:
+      config:
+        - subnet: "192.168.88.0/16"

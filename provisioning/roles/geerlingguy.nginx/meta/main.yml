@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: geerlingguy
-  description: Nginx installation for Linux and FreeBSD.
+  description: Nginx installation for Linux, FreeBSD and OpenBSD.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 1.8
@@ -25,6 +25,10 @@ galaxy_info:
       - 10.1
       - 10.0
       - 9.3
+    - name: OpenBSD
+      versions:
+      - 5.9
+      - 6.0
   galaxy_tags:
     - development
     - web

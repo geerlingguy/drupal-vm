@@ -1,5 +1,5 @@
 ---
-# Defaults set by `ansible-role-php` with the addition of `php-pecl-yaml`.
+# Defaults set by `ansible-role-php` with the addition of `php-pecl-yaml` and `php-mcrypt`.
 php_packages:
   - php
   - php-cli

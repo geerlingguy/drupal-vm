@@ -1,4 +1,6 @@
 ---
+language: php
+php: '7.1'
 services: docker
 
 env:
@@ -12,146 +14,53 @@ env:
       DRUPALVM_DIR: /var/www/drupalvm
       DRUSH_BIN: drush
       TEST_INSTALLED_EXTRAS: true
+      CONTAINER_ID: dvm-test
 
   matrix:
     # Defaults - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
-      init: /sbin/init
-      run_opts: "--privileged"
     # Defaults - Ubuntu 14.04.
     - type: defaults
       distro: ubuntu1404
-      init: /sbin/init
-      run_opts: "--privileged"
+    # Defaults - CentOS 7.
+    - type: centos
+      distro: centos7
+    # Defaults - Debian 8.
+    - type: debian
+      distro: debian8
+
     # PHP 5.6 - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
-      init: /sbin/init
-      run_opts: "--privileged"
       local_config: tests/ubuntu-16-php56.config.yml
       DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
       TEST_INSTALLED_EXTRAS: false
+
     # Nginx and Drush make file test - Ubuntu 16.04.
     - type: nginx-drush-make
       distro: ubuntu1604
-      init: /sbin/init
-      run_opts: "--privileged"
       local_config: tests/ubuntu-16-nginx.config.yml
       config_dir: /var/www/drupalvm/config
+
     # PostgreSQL - Ubuntu 16.04.
     - type: postgresql
       distro: ubuntu1604
-      init: /sbin/init
-      run_opts: "--privileged"
       local_config: tests/ubuntu-16-postgresql.config.yml
       config_dir: /var/www/drupalvm/config
       DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
       TEST_INSTALLED_EXTRAS: false
-    # Defaults - CentOS 7.
-    - type: centos
-      distro: centos7
-      init: /usr/lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    # Defaults - Debian 8.
-    - type: debian
-      distro: debian8
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
   # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - docker pull geerlingguy/docker-${distro}-ansible:latest
 
   # Install lint tools.
-  - 'gem install rubocop'
+  - gem install rubocop
 
 script:
-  # Run container in detached state and store the id.
-  - 'tmpfile=$(mktemp)'
-  - 'docker run --detach --add-host "${HOSTNAME}$(echo -e "\t")${MACHINE_NAME}":127.0.0.1 --volume="${PWD}":${DRUPALVM_DIR}/:rw ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${tmpfile}"'
-  - 'container_id=$(cat ${tmpfile})'
-
-  # Setup directories.
-  - 'docker exec ${container_id} mkdir -p ${DRUPALVM_DIR}/drupal'
-
-  # Setup config directory.
-  - '[[ ! -z "${config_dir}" ]] && docker exec ${container_id} mkdir -p ${config_dir} || true'
-
-  # Copy configuration files into place.
-  - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${CONFIG} ${config_dir:-$DRUPALVM_DIR}/config.yml'
-  - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${MAKEFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.make.yml'
-  - 'docker exec ${container_id} cp ${DRUPALVM_DIR}/${COMPOSERFILE} ${config_dir:-$DRUPALVM_DIR}/drupal.composer.json'
-
-  - '[[ ! -z "${DRUPALVM_ENV}" ]] && docker exec ${container_id} bash -c "cp ${DRUPALVM_DIR}/tests/${DRUPALVM_ENV}.config.yml ${config_dir:-$DRUPALVM_DIR}/${DRUPALVM_ENV}.config.yml" || true'
-
-  # Override configuration variables.
-  - '[[ ! -z "${local_config}" ]] && docker exec ${container_id} bash -c "cp ${DRUPALVM_DIR}/${local_config} ${config_dir:-$DRUPALVM_DIR}/local.config.yml" || true'
-
   # Vagrantfile syntax check.
-  - 'rubocop ./Vagrantfile --except LineLength,Eval,MutableConstant,BlockLength'
+  - 'rubocop ./Vagrantfile ./lib/drupalvm --except LineLength,Eval,MutableConstant,BlockLength,ConditionalAssignment,IndentArray,AlignParameters'
 
-  # Ansible syntax check.
-  - 'docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --syntax-check'
-
-  # Run the test setup playbook with ansible-playbook.
-  - 'docker exec --tty ${container_id} env TERM=xterm ansible-playbook ${DRUPALVM_DIR}/tests/test-setup.yml'
-
-  # Run the playbook with ansible-playbook.
-  - >
-    if [ ! -z "${config_dir}" ]; then
-      docker exec ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml --extra-vars="config_dir=${config_dir}";
-    else
-      docker exec ${container_id} env TERM=xterm DRUPALVM_ENV=${DRUPALVM_ENV} ansible-playbook ${DRUPALVM_DIR}/provisioning/playbook.yml;
-    fi
-
-  # Run integration tests.
-  - >
-    docker exec ${container_id} curl -s --header Host:${HOSTNAME} localhost
-    | grep -q '<title>Welcome to Drupal'
-    && (echo 'Drupal install pass' && exit 0)
-    || (echo 'Drupal install fail' && exit 1)
-
-  - >
-    if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s --header Host:adminer.${HOSTNAME} localhost \
-      | grep -q '<title>Login - Adminer' \
-      && (echo 'Adminer install pass' && exit 0) \
-      || (echo 'Adminer install fail' && exit 1)
-    fi
-
-  - >
-    if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s --header Host:pimpmylog.${HOSTNAME} localhost \
-      | grep -q '<title>Pimp my Log' \
-      && (echo 'Pimp my Log install pass' && exit 0) \
-      || (echo 'Pimp my Log install fail' && exit 1)
-    fi
-
-  - >
-    if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -s localhost:8025 \
-      | grep -q '<title>MailHog' \
-      && (echo 'MailHog install pass' && exit 0) \
-      || (echo 'MailHog install fail' && exit 1)
-    fi
-
-  - >
-    if [ $TEST_INSTALLED_EXTRAS = true ]; then
-      docker exec ${container_id} curl -sI --header Host:${HOSTNAME} localhost:81 \
-      | grep -q 'Via: .* varnish' \
-      && (echo 'Varnish install pass' && exit 0) \
-      || (echo 'Varnish install fail' && exit 1)
-    fi
-
-  - >
-    docker exec ${container_id} curl -s --header Host:${IP} localhost
-    | grep -q "<li>${IP} ${HOSTNAME}</li>"
-    && (echo 'Dashboard install pass' && exit 0)
-    || (echo 'Dashboard install fail' && exit 1)
-
-  - >
-    docker exec ${container_id} ${DRUSH_BIN} @${MACHINE_NAME}.${HOSTNAME} status
-    | grep -q 'Drupal bootstrap.*Successful'
-    && (echo 'Drush install pass' && exit 0)
-    || (echo 'Drush install fail' && exit 1)
+  # Run tests.
+  - composer run-tests

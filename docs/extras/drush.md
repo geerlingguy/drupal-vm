@@ -35,6 +35,22 @@ $ drush @drupalvm.dev status
 
 Drupal VM automatically generates a drush alias file in `~/.drush/drupalvm.aliases.drushrc.php` with an alias for every site you have defined in the `apache_vhosts` variable.
 
+If you want to customize the generated alias file you can override the `drush_aliases_host_template` and `drush_aliases_guest_template` variables in your `config.yml`.
+
+```yaml
+drush_aliases_host_template: "{{ config_dir }}/templates/drupalvm.aliases.drushrc.php.j2"
+```
+
+Eg. to only print the alias for your main domain, and not the subdomain you can override the file using a [Jinja2 child template](http://jinja.pocoo.org/docs/2.9/templates/#child-template).
+
+```php
+{% extends 'templates/drupalvm.aliases.drushrc.php.j2' %}
+
+{% block aliases %}
+{{ alias('drupalvm.dev', drupal_core_path) }}
+{% endblock %}
+```
+
 You can disable Drupal VM's automatic Drush alias file management if you want to manage drush aliases on your own. Just set the `configure_drush_aliases` variable in `config.yml` to `false`.
 
 ## Using sql-sync

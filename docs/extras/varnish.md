@@ -31,4 +31,34 @@ $settings['reverse_proxy_addresses'] = array('127.0.0.1');
 
 If you don't set these values, Drupal will think all requests are coming from `127.0.0.1`. There are other settings you can change to make Drupal not store copies of cached pages in the Database (since Varnish is caching everything, this is redundant), but those other settings are not covered here.
 
+## Extending the base `drupalvm.vcl.j2` template
+
+If you can't customize via variables because an option isn't exposed, you can extend the base `drupalvm.vcl.j2` through [Jinja2 template inheritance](http://jinja.pocoo.org/docs/2.9/templates/#template-inheritance).
+
+```yaml
+varnish_default_vcl_template_path: "{{ config_dir }}/templates/drupalvm.vcl.j2"
+```
+
+Either copy the `drupalvm.vcl.j2` and modify it to your liking, or extend it and override the blocks you need to adjust.
+
+_If you extend Drupal VM's provided base template, the path referenced should to be relative to playbook.yml._
+
+```
+{% extends 'templates/drupalvm.vcl.j2' %}
+
+{% block backend -%}
+{{ super() }}
+.connect_timeout = 1s;
+{% endblock %}
+
+{% block vcl_deliver -%}
+unset resp.http.X-Url;
+unset resp.http.X-Host;
+unset resp.http.Purge-Cache-Tags;
+# Do not set X-Varnish-Cache headers.
+{% endblock %}
+```
+
+The [`{{ super() }}` Jinja2 function](http://jinja.pocoo.org/docs/2.9/templates/#super-blocks) returns the original block content from the base template.
+
 For a list of available role variables, see the [`geerlingguy.varnish` Ansible role's README](https://github.com/geerlingguy/ansible-role-varnish#readme).

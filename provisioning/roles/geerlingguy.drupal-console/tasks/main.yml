@@ -9,11 +9,6 @@
     path: "{{ drupal_console_path }}"
     mode: 0755
 
-- name: Run Drupal Console init.
-  shell: >
-    php {{ drupal_console_path }} init
-    creates={{ drupal_console_config }}
-
 - name: Update Drupal Console to latest version (if configured).
   shell: >
     php {{ drupal_console_path }} self-update

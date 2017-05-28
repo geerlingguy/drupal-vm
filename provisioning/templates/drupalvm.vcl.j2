@@ -1,21 +1,30 @@
+{% block version -%}
 vcl 4.0;
+{% endblock %}
 
 # This Varnish VCL has been adapted from the Four Kitchens VCL for Varnish 3.
 
 # Default backend definition. Points to Apache, normally.
 backend default {
+    {% block backend -%}
     .host = "{{ varnish_default_backend_host }}";
     .port = "{{ varnish_default_backend_port }}";
     .first_byte_timeout = 300s;
+    {% endblock %}
+
 }
 
 # Access control list for PURGE requests.
 acl purge {
+    {% block acl_purge -%}
     "127.0.0.1";
+    {% endblock %}
+
 }
 
 # Respond to incoming requests.
 sub vcl_recv {
+    {% block http_header -%}
     # Add an X-Forwarded-For header with the client IP address.
     if (req.restarts == 0) {
         if (req.http.X-Forwarded-For) {
@@ -25,7 +34,9 @@ sub vcl_recv {
             set req.http.X-Forwarded-For = client.ip;
         }
     }
+    {% endblock %}
 
+    {% block method_purge -%}
     # Only allow PURGE requests from IP addresses in the 'purge' ACL.
     if (req.method == "PURGE") {
         if (!client.ip ~ purge) {
@@ -33,7 +44,9 @@ sub vcl_recv {
         }
         return (purge);
     }
+    {% endblock %}
 
+    {% block method_ban -%}
     # Only allow BAN requests from IP addresses in the 'purge' ACL.
     if (req.method == "BAN") {
         # Same ACL check as above:
@@ -53,12 +66,16 @@ sub vcl_recv {
         # Throw a synthetic page so the request won't go to the backend.
         return (synth(200, "Ban added."));
     }
+    {% endblock %}
 
+    {% block pass_post -%}
     # Only cache GET and HEAD requests (pass through POST requests).
     if (req.method != "GET" && req.method != "HEAD") {
         return (pass);
     }
+    {% endblock %}
 
+    {% block pass_admin -%}
     # Pass through any administrative or AJAX-related paths.
     if (req.url ~ "^/status\.php$" ||
         req.url ~ "^/update\.php$" ||
@@ -69,7 +86,9 @@ sub vcl_recv {
         req.url ~ "^.*/ahah/.*$") {
            return (pass);
     }
+    {% endblock %}
 
+    {% block cookies -%}
     # Removing cookies for static content so Varnish caches these files.
     if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?.*)?$") {
         unset req.http.Cookie;
@@ -106,10 +125,13 @@ sub vcl_recv {
             return (pass);
         }
     }
+    {% endblock %}
+
 }
 
 # Set a header to track a cache HITs and MISSes.
 sub vcl_deliver {
+    {% block vcl_deliver -%}
     # Remove ban-lurker friendly custom headers when delivering to client.
     unset resp.http.X-Url;
     unset resp.http.X-Host;
@@ -121,10 +143,13 @@ sub vcl_deliver {
     else {
         set resp.http.X-Varnish-Cache = "MISS";
     }
+    {% endblock %}
+
 }
 
 # Instruct Varnish what to do in the case of certain backend responses (beresp).
 sub vcl_backend_response {
+    {% block vcl_backend_response -%}
     # Set ban-lurker friendly custom headers.
     set beresp.http.X-Url = bereq.url;
     set beresp.http.X-Host = bereq.http.host;
@@ -150,4 +175,6 @@ sub vcl_backend_response {
 
     # Allow items to remain in cache up to 6 hours past their cache expiration.
     set beresp.grace = 6h;
+    {% endblock %}
+
 }

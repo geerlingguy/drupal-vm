@@ -96,6 +96,8 @@ drupalvm_cron_jobs: []
 # Drupal VM automatically creates a drush alias file in your ~/.drush folder if
 # this variable is 'true'.
 configure_drush_aliases: true
+drush_aliases_host_template: "templates/drupalvm.aliases.drushrc.php.j2"
+drush_aliases_guest_template: "templates/drupalvm-local.aliases.drushrc.php.j2"
 
 # Helper variable to configure the PHP-FPM connection for each Apache
 # VirtualHost in the `apache_vhosts` list.
@@ -165,6 +167,7 @@ nginx_hosts:
 
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
+nginx_vhost_template: "templates/nginx-vhost.conf.j2"
 
 # MySQL databases and users.
 mysql_databases:
@@ -193,7 +196,7 @@ postgresql_users:
 installed_extras:
   - adminer
   # - blackfire
-  - drupalconsole
+  # - drupalconsole
   - drush
   # - elasticsearch
   # - java
@@ -217,10 +220,11 @@ extra_packages:
   - sqlite
 
 # You can configure almost anything else on the server in the rest of this file.
-extra_security_enabled: false
-
 drush_version: "8.1.10"
 
+extra_security_enabled: false
+
+firewall_enabled: true
 firewall_allowed_tcp_ports:
   - "22"
   - "25"
@@ -278,8 +282,8 @@ mysql_wait_timeout: 300
 adminer_install_filename: index.php
 
 # Node.js configuration (if enabled above).
-# Valid examples: "0.10", "0.12", "4.x", "5.x".
-nodejs_version: "0.12"
+# Valid examples: "0.10", "0.12", "4.x", "5.x", "6.x".
+nodejs_version: "6.x"
 nodejs_npm_global_packages: []
 nodejs_install_npm_user: "{{ drupalvm_user }}"
 npm_config_prefix: "/home/{{ drupalvm_user }}/.npm-global"
@@ -307,6 +311,7 @@ php_xdebug_remote_connect_back: 1
 # Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
 php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
+php_xdebug_remote_host: "{{ ansible_default_ipv4.gateway }}"
 
 # Solr Configuration (if enabled above).
 solr_version: "5.5.3"
@@ -316,7 +321,14 @@ solr_xmx: "128M"
 # Selenium configuration.
 selenium_version: 2.53.0
 
+# Docker configuration.
+docker_container_name: drupal-vm
+docker_image_name: drupal-vm
+docker_image_path: ~/Downloads
+
 # Other configuration.
 dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts
+hostname_configure: true
+hostname_fqdn: "{{ vagrant_hostname }}"
 ssh_home: "{{ drupal_core_path }}"

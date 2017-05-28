@@ -1,0 +1,16 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define config_dir.
+  set_fact:
+    config_dir: "{{ playbook_dir }}/.."
+  when: config_dir is not defined
+
+- name: Include optional configuration files.
+  include_vars: "{{ item }}"
+  with_fileglob:
+    - "{{ config_dir }}/config.yml"
+    - "{{ config_dir }}/local.config.yml"
+    - "{{ config_dir }}/secrets.yml"
+    - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"

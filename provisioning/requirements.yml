@@ -1,6 +1,6 @@
 ---
 - src: arknoll.selenium
-  version: 2.2.0
+  version: 2.2.1
 - src: thom8.php-upload-progress
   version: 1.0.1
 - src: franklinkim.newrelic
@@ -8,7 +8,7 @@
 - src: geerlingguy.adminer
   version: 1.1.1
 - src: geerlingguy.apache
-  version: 2.1.0
+  version: 2.1.1
 - src: geerlingguy.apache-php-fpm
   version: 1.0.2
 - src: geerlingguy.blackfire
@@ -20,13 +20,13 @@
 - src: geerlingguy.drupal
   version: 2.2.1
 - src: geerlingguy.drupal-console
-  version: 1.0.7
+  version: 1.1.0
 - src: geerlingguy.drush
   version: 2.0.1
 - src: geerlingguy.elasticsearch
   version: 2.1.3
 - src: geerlingguy.firewall
-  version: 2.2.0
+  version: 2.2.1
 - src: geerlingguy.git
   version: 1.3.0
 - src: geerlingguy.java
@@ -38,11 +38,11 @@
 - src: geerlingguy.mysql
   version: 2.7.2
 - src: geerlingguy.nginx
-  version: 2.0.0
+  version: 2.2.1
 - src: geerlingguy.nodejs
-  version: 4.1.0
+  version: 4.1.1
 - src: geerlingguy.php
-  version: 3.4.4
+  version: 3.4.5
 - src: geerlingguy.php-memcached
   version: 2.0.0
 - src: geerlingguy.php-mysql
@@ -55,6 +55,8 @@
   version: 3.1.0
 - src: geerlingguy.php-tideways
   version: 1.1.0
+- src: geerlingguy.php-versions
+  version: 1.0.1
 - src: geerlingguy.php-xdebug
   version: 2.3.1
 - src: geerlingguy.php-xhprof

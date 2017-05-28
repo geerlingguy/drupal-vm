@@ -1,0 +1,5 @@
+---
+- name: nginx_hosts shim
+  set_fact:
+    nginx_vhosts: "{{ nginx_hosts }}"
+  when: nginx_hosts is defined

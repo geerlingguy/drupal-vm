@@ -3,18 +3,25 @@ user  {{ nginx_user }};
 error_log  {{ nginx_error_log }};
 pid        {{ nginx_pidfile }};
 
+{% block worker %}
 worker_processes  {{ nginx_worker_processes }};
+{% endblock %}
 
+{% block events %}
 events {
     worker_connections  {{ nginx_worker_connections }};
     multi_accept {{ nginx_multi_accept }};
 }
+{% endblock %}
 
 {% if nginx_extra_conf_options %}
 {{ nginx_extra_conf_options }}
 {% endif %}
 
 http {
+    {% block http_begin %}{% endblock %}
+
+{% block http_basic %}
     include       {{ nginx_mime_file_path }};
     default_type  application/octet-stream;
 
@@ -34,16 +41,20 @@ http {
     keepalive_requests {{ nginx_keepalive_requests }};
 
     server_tokens {{ nginx_server_tokens }};
-    #gzip  on;
-
 {% if nginx_proxy_cache_path %}
     proxy_cache_path {{ nginx_proxy_cache_path }};
 {% endif %}
+{% endblock %}
+
+{% block http_gzip %}
+    # gzip on;
+{% endblock %}
 
 {% if nginx_extra_http_options %}
     {{ nginx_extra_http_options|indent(4, False) }}
 {% endif %}
 
+{% block http_upstream %}
 {% for upstream in nginx_upstreams %}
     upstream {{ upstream.name }} {
 {% if upstream.strategy is defined %}
@@ -57,9 +68,14 @@ http {
 {% endif %}
     }
 {% endfor %}
+{% endblock %}
 
+{% block http_includes %}
     include {{ nginx_conf_path }}/*.conf;
 {% if nginx_conf_path != nginx_vhost_path %}
     include {{ nginx_vhost_path }}/*;
 {% endif %}
+{% endblock %}
+
+    {% block http_end %}{% endblock %}
 }
