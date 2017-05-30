@@ -75,6 +75,14 @@ Vagrant.configure('2') do |config|
     config.hostmanager.aliases = aliases
   end
 
+  # Sync the project root directory to /vagrant
+  unless vconfig['vagrant_synced_folders'].any? { |synced_folder| synced_folder['destination'] == '/vagrant' }
+    vconfig['vagrant_synced_folders'].push(
+      'local_path' => host_project_dir,
+      'destination' => '/vagrant'
+    )
+  end
+
   # Synced folders.
   vconfig['vagrant_synced_folders'].each do |synced_folder|
     options = {
@@ -90,9 +98,6 @@ Vagrant.configure('2') do |config|
     end
     config.vm.synced_folder synced_folder.fetch('local_path'), synced_folder.fetch('destination'), options
   end
-
-  # Allow override of the default synced folder type.
-  config.vm.synced_folder host_project_dir, '/vagrant', type: vconfig['vagrant_synced_folder_default_type']
 
   config.vm.provision provisioner do |ansible|
     ansible.playbook = playbook
