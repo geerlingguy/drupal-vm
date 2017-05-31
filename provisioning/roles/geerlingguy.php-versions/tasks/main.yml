@@ -2,6 +2,27 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Define PHP variables.
+  set_fact: "{{ item.key }}={{ hostvars[inventory_hostname][item.value] }}"
+  when:
+    - hostvars[inventory_hostname][item.key] is undefined
+    - hostvars[inventory_hostname][item.value] is defined
+  with_dict:
+    php_conf_paths: __php_conf_paths
+    php_extension_conf_paths: __php_extension_conf_paths
+    php_fpm_daemon: __php_fpm_daemon
+    php_fpm_conf_path: __php_fpm_conf_path
+    php_fpm_pool_conf_path: __php_fpm_pool_conf_path
+    php_mysql_package: __php_mysql_package
+    php_redis_package: __php_redis_package
+    php_memcached_package: __php_memcached_package
+    php_pgsql_package: __php_pgsql_package
+    php_tideways_module_path: __php_tideways_module_path
+    php_uploadprogress_module_path: __php_uploadprogress_module_path
+    php_xdebug_module_path: __php_xdebug_module_path
+    php_xhprof_module_path: __php_xhprof_module_path
+    php_packages: __php_packages
+
 # Setup tasks.
 - include: "setup-{{ ansible_os_family }}.yml"
   static: no
