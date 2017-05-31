@@ -40,6 +40,8 @@ end
 require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
 Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
+ensure_plugins(vconfig['vagrant_plugins'])
+
 Vagrant.configure('2') do |config|
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
   config.vm.define vconfig['vagrant_machine_name']
