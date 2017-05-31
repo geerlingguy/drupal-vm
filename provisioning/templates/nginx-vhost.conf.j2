@@ -76,6 +76,9 @@ server {
     location ~ ^/sites/.*/files/styles/ {
         try_files $uri @rewrite;
     }
+    location ~ ^(/[a-z\-]+)?/system/files/ {
+        try_files $uri /index.php?$query_string;
+    }
     {% endblock %}
 
     {% block location_favicon -%}
