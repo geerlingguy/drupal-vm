@@ -1,5 +1,5 @@
 ---
-php_tideways_module_path: "/usr/lib64/php{{ php_version }}/modules"
-php_uploadprogress_module_path: "/usr/lib64/php{{ php_version }}/modules"
-php_xdebug_module_path: "/usr/lib64/php{{ php_version }}/modules"
-php_xhprof_module_path: "/usr/lib64/php{{ php_version }}/modules"
+__php_tideways_module_path: "/usr/lib64/php{{ php_version }}/modules"
+__php_uploadprogress_module_path: "/usr/lib64/php{{ php_version }}/modules"
+__php_xdebug_module_path: "/usr/lib64/php{{ php_version }}/modules"
+__php_xhprof_module_path: "/usr/lib64/php{{ php_version }}/modules"
