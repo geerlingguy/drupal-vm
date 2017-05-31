@@ -14,6 +14,17 @@ config.vm.provider :virtualbox do |v|
 end
 ```
 
+### Automatically install Vagrant plugins
+
+Drupal VM can be configured to ensure Vagrant plugins are installed by adding them to the `vagrant_plugins` list in your `config.yml` file.
+
+```yaml
+vagrant_plugins:
+ - name: vagrant-vbguest
+ - name: vagrant-hostsupdater
+ - name: vagrant-aws
+```
+
 ### Example: Using the `vagrant-aws` provider
 
 Add the following variables to your `config.yml`.

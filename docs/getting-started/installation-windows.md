@@ -67,7 +67,7 @@ If you are running Windows 7 and `vagrant up` hangs, you may need to upgrade Pow
 
 ## Hosts file updates
 
-If you install either the `vagrant-hostsupdater` or `vagrant-hostmanager` plugin, you might get a permissions error when Vagrant tries changing the hosts file. On a macOS or Linux workstation, you're prompted for a sudo password so the change can be made, but on Windows, you have to do one of the following to make sure hostsupdater works correctly:
+If you install either the `vagrant-hostsupdater` (installed by default unless removed from `vagrant_plugins` in your `config.yml`) or `vagrant-hostmanager` plugin, you might get a permissions error when Vagrant tries changing the hosts file. On a macOS or Linux workstation, you're prompted for a sudo password so the change can be made, but on Windows, you have to do one of the following to make sure hostsupdater works correctly:
 
   1. Run PowerShell or whatever CLI you use with Vagrant as an administrator. Right click on the application and select 'Run as administrator', then proceed with `vagrant` commands as normal.
   2. Change the permissions on the hosts file so your account has permission to edit the file (this has security implications, so it's best to use option 1 unless you know what you're doing). To do this, open `%SystemRoot%\system32\drivers\etc` in Windows Explorer, right-click the `hosts` file, and under Security, add your account and give yourself full access to the file.

@@ -64,7 +64,6 @@ pages:
     - 'Pre- and Post-Provision Scripts': 'extending/scripts.md'
   - Other Information:
     - 'Networking Notes': 'other/networking.md'
-    - 'Vagrant and VirtualBox': 'other/vagrant-virtualbox.md'
     - 'Vagrant LXC provider': 'other/vagrant-lxc.md'
     - 'Improving Performance': 'other/performance.md'
     - 'Docker': 'other/docker.md'
