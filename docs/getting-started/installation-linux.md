@@ -74,6 +74,30 @@ If encryption is not the issue then it's likely that either NFS isn't running co
 
 After attempting any of the above fixes, run `vagrant reload --provision` to restart the VM and attempt mounting the synced folder again, or `vagrant destroy -f && vagrant up` to rebuild the VM from scratch.
 
+### NFS shares are slow or hang due to UDP protocol
+
+If the default transport protocol UDP is causing slowness or failures to mount NFS shared folders, you can switch to NFSv4 and TCP by configuring your `vagrant_synced_folders` like the example below:
+
+```
+vagrant_synced_folders:
+  # The default share.
+  - local_path: .
+    destination: /var/www/drupalvm
+    type: nfs
+    create: true
+    options_override:
+      nfs_version: 4
+      nfs_udp: false
+
+  # Manually specify the /vagrant share to override the defaults
+  - local_path: .
+    destination: /vagrant
+    type: nfs
+    options_override:
+      nfs_version: 4
+      nfs_udp: false
+```
+
 ## Intel VT-x virtualization support
 
 On some laptops, Intel VT-x virtualization (which is built into most modern Intel processors) is enabled by default. This allows VirtualBox to run virtual machines efficiently using the CPU itself instead of software CPU emulation. If you get a message like "VT-x is disabled in the bios for both all cpu modes" or something similar, you may need to enter your computer's BIOS or UEFI settings and enable this virtualization support.
