@@ -37,6 +37,18 @@ The directories (usually one, but can be multiple) where PostgreSQL's socket wil
 
 Global configuration options that will be set in `postgresql.conf`. Note that for RHEL/CentOS 6 (or very old versions of PostgreSQL), you need to at least override this variable and set the `option` to `unix_socket_directory`.
 
+    postgresql_hba_entries:
+      - type: host # required; local, host, hostssl or hostnossl
+        database: exampledb # required
+        user: jdoe # required
+        address: 192.0.2.0/24 # either this or ip_address / ip_mask are required unless type is 'local'
+        ip_address: # alternative to 'address'
+        ip_mask: # alternative to 'address'
+        auth_method: # required
+        auth_options: # optional
+
+Configure [host based authentication](https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html) entries to be set in the `pg_hba.conf`. 
+
     postgresql_locales:
       - 'en_US.UTF-8'
 
