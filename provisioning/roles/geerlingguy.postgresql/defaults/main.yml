@@ -13,6 +13,13 @@ postgresql_global_config_options:
   - option: unix_socket_directories
     value: '{{ postgresql_unix_socket_directories | join(",") }}'
 
+# Host based authentication (hba) entries to be added to the pg_hba.conf.
+postgresql_hba_entries:
+  - type: local
+    database: all
+    user: all
+    auth_method: trust
+
 # Debian only. Used to generate the locales used by PostgreSQL databases.
 postgresql_locales:
   - 'en_US.UTF-8'
