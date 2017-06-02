@@ -2,7 +2,7 @@ There are two supported methods of integrating Drupal VM with your site. You can
 
 ## Download Drupal VM and integrate your project.
 
-The easiest way to get started with Drupal VM is to download the [latest relase](https://www.drupalvm.com/), open the terminal, `cd` to the directory, and type `vagrant up`.
+The easiest way to get started with Drupal VM is to download the [latest release](https://www.drupalvm.com/), open the terminal, `cd` to the directory, and type `vagrant up`.
 
 Using this method you have various options of how your site will be built, or if it will be built by Drupal VM at all:
 
