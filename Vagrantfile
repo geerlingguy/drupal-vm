@@ -39,6 +39,7 @@ end
 # Verify version requirements.
 require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
 Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
+require_virtualbox_version ">= #{vconfig['drupalvm_virtualbox_version_min']}"
 
 Vagrant.configure('2') do |config|
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134

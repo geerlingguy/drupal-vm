@@ -55,12 +55,27 @@ def ansible_version
   /^[^\s]+ (.+)$/.match(`#{ansible_bin} --version`) { |match| return match[1] }
 end
 
+def virtualbox_version
+  virtualbox = VagrantPlugins::ProviderVirtualBox::Driver::Meta.new
+  virtualbox.version
+rescue Vagrant::Errors::VirtualBoxNotDetected
+  nil
+end
+
 # Require that if installed, the ansible version meets the requirements.
 def require_ansible_version(requirement)
   return unless ansible_bin
   req = Gem::Requirement.new(requirement)
   return if req.satisfied_by?(Gem::Version.new(ansible_version))
   raise_message "You must install an Ansible version #{requirement} to use this version of Drupal VM."
+end
+
+# Require that if installed, the VirtualBox version meets the requirements.
+def require_virtualbox_version(requirement)
+  return unless virtualbox_version
+  req = Gem::Requirement.new(requirement)
+  return if req.satisfied_by?(Gem::Version.new(virtualbox_version))
+  raise_message "You must install a VirtualBox version #{requirement} to use this version of Drupal VM."
 end
 
 def raise_message(msg)
