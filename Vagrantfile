@@ -15,7 +15,7 @@ if File.exist?("#{host_project_dir}/composer.json")
   end
 
   # If Drupal VM is a Composer dependency set the correct path.
-  vendor_dir = ENV['COMPOSER_VENDOR_DIR'] || composer_conf.fetch('extra', {}).fetch('vendor-dir', 'vendor')
+  vendor_dir = ENV['COMPOSER_VENDOR_DIR'] || composer_conf.fetch('config', {}).fetch('vendor-dir', 'vendor')
   drupalvm_path = "#{vendor_dir}/geerlingguy/drupal-vm"
   if Dir.exist?("#{host_project_dir}/#{drupalvm_path}")
     host_drupalvm_dir = "#{host_project_dir}/#{drupalvm_path}"
