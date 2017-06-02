@@ -92,7 +92,7 @@ Note: *If there are any errors during the course of running `vagrant up`, and it
 
 Open your browser and access [http://drupalvm.dev/](http://drupalvm.dev/). The default login for the admin account is `admin` for both the username and password.
 
-Note: *By default Drupal VM is configured to use `192.168.88.88` as it's IP, if you're running multiple VM's the `auto_network` plugin (`vagrant plugin install vagrant-auto_network`) can help with IP address management if you set `vagrant_ip` to `0.0.0.0` inside `config.yml`.*
+Note: *By default Drupal VM is configured to use `192.168.88.88` as its IP, if you're running multiple VM's the `auto_network` plugin (`vagrant plugin install vagrant-auto_network`) can help with IP address management if you set `vagrant_ip` to `0.0.0.0` inside `config.yml`.*
 
 ## Extra software/utilities
 
