@@ -33,4 +33,4 @@ Re-install the Drupal VM package to apply the patch:
     composer remove --dev geerlingguy/drupal-vm
     composer require --dev geerlingguy/drupal-vm:5.0.0
 
-Your Drupal VM version is now been patched!
+Your Drupal VM version is now patched!
