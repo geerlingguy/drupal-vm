@@ -60,7 +60,7 @@ before_install:
 
 script:
   # Vagrantfile syntax check.
-  - 'rubocop ./Vagrantfile ./lib/drupalvm --except LineLength,Eval,MutableConstant,BlockLength,ConditionalAssignment,IndentArray,AlignParameters'
+  - 'rubocop ./Vagrantfile ./lib/drupalvm --except LineLength,Eval,MutableConstant,BlockLength,MethodLength,ConditionalAssignment,IndentArray,AlignParameters'
 
   # Run tests.
   - composer run-tests
