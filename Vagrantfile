@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'json'
+
 drupalvm_env = ENV['DRUPALVM_ENV'] || 'vagrant'
 
 # Default paths when the project is based on Drupal VM.

@@ -1,4 +1,3 @@
-require 'json'
 require 'yaml'
 
 # Cross-platform way of finding an executable in the $PATH.
