@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 daemonize yes
 pidfile /var/run/redis/{{ redis_daemon }}.pid
 port {{ redis_port }}
@@ -42,4 +44,12 @@ no-appendfsync-on-rewrite no
 
 {% for include in redis_includes %}
 include {{ include }}
+{% endfor %}
+
+{% if redis_requirepass %}
+requirepass {{ redis_requirepass }}
+{% endif %}
+
+{% for redis_disabled_command in redis_disabled_commands %}
+rename-command {{ redis_disabled_command }} ""
 {% endfor %}
