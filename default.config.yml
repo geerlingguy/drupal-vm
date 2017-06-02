@@ -33,7 +33,8 @@ vagrant_synced_folders:
 vagrant_memory: 2048
 vagrant_cpus: 1
 
-# Ensure vagrant plugins are installed.
+# Ensure vagrant plugins are installed. To exclude a plugin, add this to your
+# config and omit the options you want to exclude.
 vagrant_plugins:
   - name: vagrant-vbguest
   - name: vagrant-hostsupdater
