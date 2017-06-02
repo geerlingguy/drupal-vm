@@ -31,3 +31,23 @@ redis_appendfsync: "everysec"
 
 # Add extra include files for local configuration/overrides.
 redis_includes: []
+
+# Require authentication to Redis with a password.
+redis_requirepass: ""
+
+# Disable certain Redis commands for security reasons.
+redis_disabled_commands: []
+#  - FLUSHDB
+#  - FLUSHALL
+#  - KEYS
+#  - PEXPIRE
+#  - DEL
+#  - CONFIG
+#  - SHUTDOWN
+#  - BGREWRITEAOF
+#  - BGSAVE
+#  - SAVE
+#  - SPOP
+#  - SREM
+#  - RENAME
+#  - DEBUG
