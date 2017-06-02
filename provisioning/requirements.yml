@@ -66,7 +66,7 @@
 - src: geerlingguy.postfix
   version: 1.1.0
 - src: geerlingguy.postgresql
-  version: 1.1.0
+  version: 1.2.0
 - src: geerlingguy.redis
   version: 1.5.0
 - src: geerlingguy.repo-remi

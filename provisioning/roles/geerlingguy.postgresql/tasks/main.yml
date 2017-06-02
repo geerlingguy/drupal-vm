@@ -22,5 +22,5 @@
     enabled: yes
 
 # Configure PostgreSQL.
-- include: users.yml
 - include: databases.yml
+- include: users.yml
