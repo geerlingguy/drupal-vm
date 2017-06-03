@@ -15,7 +15,7 @@
 - name: Add managed vhost config files.
   template:
     src: "{{ item.template|default(nginx_vhost_template) }}"
-    dest: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
+    dest: "{{ nginx_vhost_path }}/{{ item.filename|default(item.server_name.split(' ')[0] ~ '.conf') }}"
     force: yes
     owner: root
     group: root
@@ -26,7 +26,7 @@
 
 - name: Remove managed vhost config files.
   file:
-    path: "{{ nginx_vhost_path }}/{{ item.server_name.split(' ')[0] }}.conf"
+    path: "{{ nginx_vhost_path }}/{{ item.filename|default(item.server_name.split(' ')[0] ~ '.conf') }}"
     state: absent
   when: item.state|default('present') == 'absent'
   with_items: "{{ nginx_vhosts }}"

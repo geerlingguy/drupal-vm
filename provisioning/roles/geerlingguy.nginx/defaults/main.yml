@@ -55,12 +55,14 @@ nginx_extra_http_options: ""
 nginx_remove_default_vhost: false
 nginx_vhosts: []
 # Example vhost below, showing all available options:
-# - listen: "80 default_server" # default: "80 default_server"
+# - listen: "80" # default: "80"
 #   server_name: "example.com" # default: N/A
 #   root: "/var/www/example.com" # default: N/A
 #   index: "index.html index.htm" # default: "index.html index.htm"
+#   filename: "example.com.conf" # Can be used to set the filename of the vhost file.
 #
 #   # Properties that are only added if defined:
+#   server_name_redirect: "www.example.com" # default: N/A
 #   error_page: ""
 #   access_log: ""
 #   error_log: ""
