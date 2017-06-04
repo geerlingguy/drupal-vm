@@ -11,7 +11,7 @@
 # See: https://www.drupal.org/node/2569365#comment-11680807
 - name: Configure database correctly if using PostgreSQL.
   command: psql -c "ALTER DATABASE {{ drupal_db_name }} SET bytea_output = 'escape';"
-  when: "('Successful' not in drupal_site_installed.stdout) and (drupal_db_backend == 'pgsql')"
+  when: "('Drupal bootstrap' not in drupal_site_installed.stdout) and (drupal_db_backend == 'pgsql')"
   become: yes
   become_user: "{{ postgresql_user }}"
   # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
@@ -30,7 +30,7 @@
   args:
     chdir: "{{ drupal_core_path }}"
   notify: clear opcache
-  when: "'Successful' not in drupal_site_installed.stdout"
+  when: "'Drupal bootstrap' not in drupal_site_installed.stdout"
   become: no
 
 - name: Install configured modules with drush.
@@ -39,5 +39,5 @@
     --root={{ drupal_core_path }}
   args:
     chdir: "{{ drupal_core_path }}"
-  when: ('Successful' not in drupal_site_installed.stdout) and drupal_enable_modules
+  when: ('Drupal bootstrap' not in drupal_site_installed.stdout) and drupal_enable_modules
   become: no
