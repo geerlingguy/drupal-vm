@@ -1,5 +1,6 @@
 {% block server_redirect %}
 {% if item.server_name_redirect is defined %}
+server {
     listen       {{ item.listen | default('80') }};
     server_name  {{ item.server_name_redirect }};
     return       301 $scheme://{{ item.server_name.split(' ')[0] }}$request_uri;
