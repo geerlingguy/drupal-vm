@@ -271,6 +271,7 @@ composer_home_path: "/home/{{ drupalvm_user }}/.composer"
 composer_home_owner: "{{ drupalvm_user }}"
 composer_home_group: "{{ drupalvm_user }}"
 composer_global_packages:
+  - { name: drupal/console, release: '~1.0' }
   - { name: hirak/prestissimo, release: '^0.3' }
 
 # Run specified scripts before or after VM is provisioned. Path is relative to
