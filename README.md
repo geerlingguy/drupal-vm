@@ -79,7 +79,7 @@ Notes:
 ### 2 - Build the Virtual Machine
 
   1. Download this project and put it wherever you want.
-  2. (Optional) Copy `default.config.yml` to `config.yml` and modify it to your liking.
+  2. (Optional) Copy `default.config.yml` to `config.yml` and modify it to your liking.  If using a git clone, note config.yml is in the `.gitignore` file, so you don't need a new branch.
   3. Create a local directory where Drupal will be installed and configure the path to that directory in `config.yml` (`local_path`, inside `vagrant_synced_folders`).
   4. Open Terminal, `cd` to this directory (containing the `Vagrantfile` and this README file).
   5. Type in `vagrant up`, and let Vagrant do its magic.
