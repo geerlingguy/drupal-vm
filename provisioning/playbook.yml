@@ -40,7 +40,7 @@
     - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache', tags: ['webserver']}
     - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache', tags: ['webserver'] }
     - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx', tags: ['webserver'] }
-    - { role: geerlingguy.php-versions, tags: ['php', 'xdebug', 'database'] }
+    - { role: geerlingguy.php-versions, when: php_version != '', tags: ['php', 'xdebug', 'database'] }
     - { role: geerlingguy.php, tags: ['php'] }
     - { role: geerlingguy.php-pecl, tags: ['php'] }
     - { role: geerlingguy.composer }
