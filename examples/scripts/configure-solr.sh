@@ -4,7 +4,7 @@
 #
 # This script configures the default Apache Solr search core to use one of the
 # Drupal Solr module's configurations. This shell script presumes you have
-# `solr` in the `installed_extras`, and is currently set up for the D7 versions
+# `solr` in the `installed_extras`, and is currently set up for the D8 versions
 # of Apache Solr Search or Search API Solr.
 
 SOLR_CORE_NAME="d8"
