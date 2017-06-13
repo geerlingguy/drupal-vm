@@ -1,6 +1,7 @@
 Drupal VM can be used with [Docker](https://www.docker.com) instead of or in addition to Vagrant:
 
-  - You can build a local instance using Docker, pulling the official [`geerlingguy/drupal-vm`](https://hub.docker.com/r/geerlingguy/drupal-vm/) image.
+  - You can quickly install a Drupal site (any version) using the official [`geerlingguy/drupal-vm`](https://hub.docker.com/r/geerlingguy/drupal-vm/) image.
+  - You can build a customized local instance using Docker, pulling the official [`geerlingguy/drupal-vm`](https://hub.docker.com/r/geerlingguy/drupal-vm/) image.
   - You can 'bake your own' customized Drupal VM Docker image and reuse it or share it with your team.
 
 > **Docker support is currently experimental**, so unless you're already familiar with Docker, it might be best to wait until later versions of Drupal VM are released with more stable support.
@@ -21,7 +22,41 @@ You can also add other subdomains if you're using other built-in services, e.g. 
 >
 > Note that you'll have to create the alias again after restarting your computer. See [this Docker (moby) issue](https://github.com/moby/moby/issues/22753#issuecomment-246054946) for more details.
 
-## Method 1: Build a default Drupal VM instance with Docker
+## Method 1: Get a quick Drupal site installed with Drupal VM's Docker image
+
+If you just want a quick, easy Drupal site for testing, you can run an instance of Drupal VM and install Drupal inside using the provided script.
+
+  1. Run an instance of Drupal VM: `docker run -d -p 80:80 -p 443:443 --name=drupalvm --privileged dvmtest`
+  2. Install Drupal on this instance: `docker exec drupalvm install-drupal` (you can choose a version using `install-drupal [version]`, using versions like `8.4.x`, `7.55`, `7.x`, etc.).
+
+You should be able to access the Drupal site at `http://localhost`. If you need to share a host directory into the VM, you can do so by adding another `-v` parameter, like `-v /path/on/host:/path/in/container.
+
+If you only need a simple container to run your site, and you want to package up the container configuration with your project, you can add a simple Docker Compose file to your project's docroot like the following:
+
+    ```yaml
+    version: "3"
+    
+    services:
+    
+      myproject:
+        image: geerlingguy/drupal-vm
+        container_name: myproject
+        ports:
+          - 80:80
+          - 443:443
+        privileged: true
+        volumes:
+          - ./:/var/www/drupalvm/drupal/web/:rw,delegated
+        command: /lib/systemd/systemd
+    ```
+
+Then, run `docker-compose up -d` to bring up the container.
+
+For an example use of the simple approach for a contributed module's local development environment, see the Honeypot module, where this approach was added in [Add local test environment configuration](https://www.drupal.org/node/2885488).
+
+If you need more flexibility, though, you use one of the other Docker container methods on this page.
+
+## Method 2: Build a default Drupal VM instance with Docker
 
 The [`geerlingguy/drupal-vm`](https://hub.docker.com/r/geerlingguy/drupal-vm/) image on Docker Hub contains a pre-built copy of Drupal VM, with all the latest Drupal VM defaults. If you need to quickly run your site in a container, or don't need to customize any of the components of Drupal VM, you can use this image.
 
@@ -71,7 +106,7 @@ Currently, the easiest way to use Drupal VM's `drush` inside a Docker container 
 
     docker exec drupal-vm bash -c "drush --uri=drupalvm.dev --root=/var/www/drupalvm/drupal/web status"
 
-## Method 2: 'Bake and Share' a custom Drupal VM Docker image
+## Method 3: 'Bake and Share' a custom Drupal VM Docker image
 
 If you need a more customized Drupal VM instance, it's best to build your own with Drupal VM's built-in Docker scripts.
 
