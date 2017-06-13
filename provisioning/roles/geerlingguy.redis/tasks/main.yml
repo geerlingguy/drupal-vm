@@ -15,6 +15,9 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- include: setup-Archlinux.yml
+  when: ansible_os_family == 'Archlinux'
+
 - name: Ensure Redis is configured.
   template:
     src: redis.conf.j2

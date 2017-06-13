@@ -1,0 +1,5 @@
+---
+- name: Ensure Redis is installed.
+  pacman:
+    name: "{{ redis_package }}"
+    state: present

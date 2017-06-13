@@ -21,6 +21,9 @@ galaxy_info:
     - name: Ubuntu
       versions:
       - all
+    - name: Archlinux
+      versions:
+      - all
   galaxy_tags:
     - database
     - development
