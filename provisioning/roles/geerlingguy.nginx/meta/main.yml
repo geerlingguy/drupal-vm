@@ -18,6 +18,9 @@ galaxy_info:
     - name: Ubuntu
       versions:
       - all
+    - name: Archlinux
+      versions:
+      - all
     - name: FreeBSD
       versions:
       - 10.3
