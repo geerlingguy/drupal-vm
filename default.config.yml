@@ -17,6 +17,15 @@ vagrant_ip: 192.168.88.88
 # See: https://docs.vagrantup.com/v2/networking/public_network.html
 vagrant_public_ip: ""
 
+# Configure proxy if needed. To use this function you should install the plugin.
+# https://github.com/tmatilai/vagrant-proxyconf . The proxy is disabled by default.
+# A suggestion is to have the following configuration in your local.config.yml
+vagrant_proxy_enabled: false
+vagrant_proxy_http: "http://proxy.company.com:8080"
+vagrant_proxy_https: "http://proxy.company.com:8080"
+vagrant_proxy_ftp: "http://proxy.company.com:8080"
+vagrant_noproxy: "localhost,127.0.0.1"
+
 # A list of synced folders, with the keys 'local_path', 'destination', and
 # a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
 # http://docs.drupalvm.com/en/latest/getting-started/syncing-folders/ for more.
@@ -37,6 +46,7 @@ vagrant_cpus: 1
 vagrant_plugins:
   - name: vagrant-vbguest
   - name: vagrant-hostsupdater
+  - name: vagrant-proxyconf
 
 # Minimum required versions.
 drupalvm_vagrant_version_min: '1.8.6'
