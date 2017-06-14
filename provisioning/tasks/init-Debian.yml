@@ -11,13 +11,7 @@
     - sudo
     - unzip
     - make
-
-# Ubuntu-specific tasks.
-- name: Add repository for Apache 2.4.9+ (Ubuntu 12/14).
-  apt_repository: repo='ppa:ondrej/apache2'
-  when: >
-    (ansible_distribution_release == "precise" or ansible_distribution_release == "trusty") and
-    ansible_distribution == "Ubuntu"
+    - libapache2-mod-fastcgi
 
 - name: Define php_xhprof_html_dir.
   set_fact:

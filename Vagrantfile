@@ -57,6 +57,14 @@ Vagrant.configure('2') do |config|
       ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
   end
 
+  # Configure proxy if it exists
+  if Vagrant.has_plugin?('vagrant-proxyconf')
+      config.proxy.enabled = vconfig['vagrant_proxy_enabled']
+      config.proxy.http = vconfig['vagrant_proxy_http']
+      config.proxy.https = vconfig['vagrant_proxy_http']
+      config.proxy.no_proxy = vconfig['vagrant_noproxy']
+  end
+
   # SSH options.
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
