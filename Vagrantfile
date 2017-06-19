@@ -152,6 +152,10 @@ Vagrant.configure('2') do |config|
       type: vconfig['vagrant_synced_folder_default_type']
     }
   end
+  
+  if Vagrant.has_plugin?('vagrant-exec')
+    config.exec.commands '*', directory: vconfig['drupal_composer_install_dir']
+  end
 
   # Allow an untracked Vagrantfile to modify the configurations
   [host_config_dir, host_project_dir].uniq.each do |dir|
