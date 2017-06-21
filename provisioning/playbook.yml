@@ -25,8 +25,7 @@
       include: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
-      with_fileglob:
-        - "{{ pre_provision_tasks_dir|default(omit) }}"
+      with_fileglob: "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - include: tasks/php.yml
 
@@ -128,5 +127,4 @@
       include: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
-      with_fileglob:
-        - "{{ post_provision_tasks_dir|default(omit) }}"
+      with_fileglob: "{{ post_provision_tasks_dir|default(omit) }}"
