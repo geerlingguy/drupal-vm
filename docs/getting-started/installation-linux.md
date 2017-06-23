@@ -33,10 +33,10 @@ Periodically, when you upgrade your system's Linux kernel, you might need to run
 
 ### Arch Linux
 
-Arch Linux uses Python 3 as the default while Ansible requires Python 2. To get around parse errors you need to specify that the `python2` binary should be used instead of the default `python`. Add the following to your `config.yml`:
+Arch Linux uses Python 3 as the default while Ansible requires Python 2. To get around parse errors you need to specify that the `python2` binary should be used instead of the default `python`. Create a [`Vagrantfile.local`](../extending/vagrantfile.md) with:
 
 ```
-ansible_python_interpreter: "/usr/bin/env python2"
+config.vm.provisioners[0].config.extra_vars[:ansible_python_interpreter] = '/usr/bin/env python2'
 ```
 
 ## Troubleshooting Vagrant Synced Folders
