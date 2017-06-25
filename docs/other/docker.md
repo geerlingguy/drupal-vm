@@ -64,24 +64,23 @@ The [`geerlingguy/drupal-vm`](https://hub.docker.com/r/geerlingguy/drupal-vm/) i
 
 ### (Optional) Add a `Dockerfile` for customization
 
-If you need to make small changes to the official `drupal-vm` image (instead of baking your own fully-custom image), you can create a `Dockerfile` to make those changes. In one site's example, ImageMagick was required for some media handling functionality, and so the following `Dockerfile` was places in the project's root directory (alongside the `docker-compose.yml` file):
+If you need to make small changes to the official `drupal-vm` image (instead of baking your own fully-custom image), you can create a `Dockerfile` to make those changes. In one site's example, ImageMagick was required for some media handling functionality, and so the following `Dockerfile` was placed in the project's root directory (alongside the `docker-compose.yml` file):
 
     FROM geerlingguy/drupal-vm:latest
-    MAINTAINER Jeff Geerling
+    LABEL maintainer="Jeff Geerling"
     
     # Install imagemagick.
     RUN apt-get install -y imagemagick
     
     EXPOSE 80 443 3306 8025
 
-You can customize the official image in many other ways, but if you end up doing more than a step or two in a `Dockerfile`, it's probably a better idea to 'bake you own' Drupal VM Docker image.
+You can customize the official image in many other ways, but if you end up doing more than a step or two in a `Dockerfile`, it's probably a better idea to 'bake your own' Drupal VM Docker image.
 
 ### Add a `docker-compose.yml` file
 
 Copy the `example.docker-compose.yml` file out of Drupal VM (or grab a copy from GitHub [here](https://github.com/geerlingguy/drupal-vm/blob/master/example.docker-compose.yml)), rename it `docker-compose.yml`, and place it in your project root.
 
   - _If you are using your own `Dockerfile` to further customize Drupal VM_, comment out the `image: drupal-vm` line, and uncomment the `build: .` line (this tells Docker Compose to build a new image based on your own `Dockerfile`).
-  - _If you're not using your own `Dockerfile`_, change the `image` line to: `image: geerlingguy/drupal-vm`.
 
 For the `volume:` definition in `docker-compose.yml`, Drupal VM's default docroot is `/var/www/drupalvm/drupal/web`, which follows the convention of a typical Drupal project built with Composer. If you don't get your site when you attempt to access Drupal VM, you will either need to modify the `volume:` definition to match your project's structure, or use a custom `Dockerfile` and copy in a customized Apache `vhosts.conf` file.
 
@@ -130,7 +129,7 @@ localhost                  : ok=210  changed=94   unreachable=0    failed=0
 Visit the Drupal VM dashboard: http://192.168.88.88:80
 ```
 
-Once the build is complete, you could view the dashboard by visiting the URL provided.
+Once the build is complete, you can view the dashboard by visiting the URL provided.
 
 ### Saving the Docker container to an image
 
@@ -154,7 +153,7 @@ On someone else's computer (or your own, if you have deleted the existing `drupa
 
 ### Using a baked Drupal VM image with `docker-compose.yml`
 
-Drupal VM includes an `example.docker-compose.yml` file. To use the file, copy it to `docker-compose.yml` and customize as you see fit. Once you've configured the exposed ports and settings as you like, run the following command to bring up the network and container(s) according to the compose file:
+Drupal VM includes an `example.docker-compose.yml` file. To use the file, copy it to `docker-compose.yml` and customize as you see fit, making sure to change the `image` to the value of `docker_image_name` (the default is `drupal-vm`). Once you've configured the exposed ports and settings as you like, run the following command to bring up the network and container(s) according to the compose file:
 
     docker-compose up -d
 
