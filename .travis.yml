@@ -26,6 +26,9 @@ env:
     # Defaults - CentOS 7.
     - type: centos
       distro: centos7
+    # Defaults - Debian 9.
+    - type: debian
+      distro: debian9
     # Defaults - Debian 8.
     - type: debian
       distro: debian8
