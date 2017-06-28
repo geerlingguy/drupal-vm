@@ -113,9 +113,11 @@ If you need a more customized Drupal VM instance, it's best to build your own wi
 
 After you've configured your Drupal VM settings in `config.yml` and other configuration files, run the following command to create and provision a new Docker container:
 
-    [OPTIONS] composer docker-bake
+    composer docker-bake
 
-Look at the variables defined in the `provisioning/docker/bake.sh` file for all the currently-available options (e.g. `DRUPALVM_IP_ADDRESS`, `DISTRO`, etc.). You can use Drupal VM's defaults by running the `composer docker-bake` command without any options.
+This will bake a Docker images using Drupal VM's default settings for distro, IP address, hostname, etc. You can override these options (all are listed in the `provisioning/docker/bake.sh` file) by prepending them to the `composer` command:
+
+    DRUPALVM_IP_ADDRESS='192.168.88.9' DISTRO='debian9' composer docker-bake
 
 This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
 
