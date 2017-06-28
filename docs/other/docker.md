@@ -10,7 +10,7 @@ Drupal VM can be used with [Docker](https://www.docker.com) instead of or in add
 
 Before using Docker to run Drupal VM, you should [edit your hosts file](https://support.rackspace.com/how-to/modify-your-hosts-file/) and add the following line:
 
-    192.168.88.88  drupalvm.dev
+    192.168.89.89  drupalvm.dev
 
 (Substitute the IP address and domain name you'd like to use to access your Drupal VM container.)
 
@@ -18,9 +18,10 @@ You can also add other subdomains if you're using other built-in services, e.g. 
 
 > If you're using Docker for Mac, you need to perform one additional step to ensure you can access Drupal VM using a unique IP address:
 >
->   1. Add an alias IP address on the loopback interface: `sudo ifconfig lo0 alias 192.168.88.88/24`
+>   1. Add an alias IP address on the loopback interface: `sudo ifconfig lo0 alias 192.168.89.89/24`
+>   2. When you're finished using the container, delete the alias: `sudo ifconfig lo0 -alias 192.168.89.89` (or restart your Mac).
 >
-> Note that you'll have to create the alias again after restarting your computer. See [this Docker (moby) issue](https://github.com/moby/moby/issues/22753#issuecomment-246054946) for more details.
+> You'll have to create the alias again after restarting your Mac. See [this Docker (moby) issue](https://github.com/moby/moby/issues/22753#issuecomment-246054946) for more details.
 
 ## Method 1: Get a quick Drupal site installed with Drupal VM's Docker image
 
@@ -90,10 +91,10 @@ Run the command `docker-compose up -d` (the `-d` tells `docker-compose` to start
 
 This command takes the instructions in the Docker Compose file and does two things:
 
-  1. Creates a custom Docker network that exposes Drupal VM on the IP address you have configured in `docker-compose.yml` (by default, `192.168.88.88`).
+  1. Creates a custom Docker network that exposes Drupal VM on the IP address you have configured in `docker-compose.yml` (by default, `192.168.89.89`).
   2. Runs Drupal VM using the configuration in `docker-compose.yml`.
 
-After the Drupal VM container is running, you should be able to see the Dashboard page at the VM's IP address (e.g. `http://192.168.88.88`), and you should be able to access your site at the hostname you have configured in your hosts file (e.g. `http://drupalvm.dev/`).
+After the Drupal VM container is running, you should be able to see the Dashboard page at the VM's IP address (e.g. `http://192.168.89.89`), and you should be able to access your site at the hostname you have configured in your hosts file (e.g. `http://drupalvm.dev/`).
 
 > Note: If you see Drupal's installer appear when accessing the site, that means the codebase was found, but either the database connection details are not in your local site configuration, or they are, but you don't have the default database populated yet. You may need to load in the database either via `drush sql-sync` or by importing a dump into the container. The default credentials are `drupal` and `drupal` for username and password, and `drupal` for the database name.
 
@@ -117,7 +118,7 @@ After you've configured your Drupal VM settings in `config.yml` and other config
 
 This will bake a Docker images using Drupal VM's default settings for distro, IP address, hostname, etc. You can override these options (all are listed in the `provisioning/docker/bake.sh` file) by prepending them to the `composer` command:
 
-    DRUPALVM_IP_ADDRESS='192.168.88.9' DISTRO='debian9' composer docker-bake
+    DRUPALVM_IP_ADDRESS='192.168.89.90' DISTRO='debian9' composer docker-bake
 
 This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
 
@@ -128,7 +129,7 @@ localhost                  : ok=210  changed=94   unreachable=0    failed=0
 
 ...done!
 
-Visit the Drupal VM dashboard: http://192.168.88.88:80
+Visit the Drupal VM dashboard: http://192.168.89.89:80
 ```
 
 Once the build is complete, you can view the dashboard by visiting the URL provided.

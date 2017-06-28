@@ -36,7 +36,7 @@ services:
         # Set this IP address to something different if you already have another
         # service running on the default IP address. If you change the subnet,
         # you need to also change the bridge network IP and subnet below.
-        ipv4_address: 192.168.88.88
+        ipv4_address: 192.168.89.89
 
 networks:
 
@@ -44,7 +44,7 @@ networks:
   drupalvm:
     driver: bridge
     driver_opts:
-      ip: 192.168.88.1
+      ip: 192.168.89.1
     ipam:
       config:
-        - subnet: "192.168.88.0/16"
+        - subnet: "192.168.89.0/16"
