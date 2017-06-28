@@ -3,21 +3,18 @@
   apt:
     name: apt-transport-https
     state: installed
-  when: ansible_distribution_release != "xenial"
 
-- name: Add Varnish apt key.
+- name: Add packagecloud.io Varnish apt key.
   apt_key:
-    url: https://repo.varnish-cache.org/GPG-key.txt
+    url: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/gpgkey
     state: present
-  when: ansible_distribution_release != "xenial"
 
-- name: Add Varnish apt repository.
+- name: Add packagecloud.io Varnish apt repository.
   apt_repository:
-    repo: "deb https://repo.varnish-cache.org/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} varnish-{{ varnish_version }}"
+    repo: "deb https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main"
     state: present
-  when: ansible_distribution_release != "xenial"
 
-- name: Install Varnish.
+- name: Ensure Varnish is installed.
   apt:
     name: "{{ varnish_package_name }}"
     state: present
