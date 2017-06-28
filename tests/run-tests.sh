@@ -37,6 +37,10 @@ elif [ $distro = 'ubuntu1404' ]; then
 elif [ $distro = 'ubuntu1204' ]; then
   init="/sbin/init"
   opts="--privileged"
+# Debian 9
+elif [ $distro = 'debian9' ]; then
+  init="/lib/systemd/systemd"
+  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Debian 8
 elif [ $distro = 'debian8' ]; then
   init="/lib/systemd/systemd"
