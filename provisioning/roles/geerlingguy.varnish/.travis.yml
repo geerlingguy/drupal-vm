@@ -6,7 +6,17 @@ env:
   - distro: centos6
   - distro: ubuntu1604
   - distro: ubuntu1404
+  # See: https://github.com/varnishcache/pkg-varnish-cache/issues/78
+  # - distro: debian9
   - distro: debian8
+
+  # Also test installing older versions.
+  - distro: centos7
+    playbook: test-41.yml
+    varnish_version: "4.1"
+  - distro: ubuntu1604
+    varnish_version: "4.1"
+    playbook: test-41.yml
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
@@ -22,6 +32,11 @@ script:
 
   # Make sure Varnish is running.
   - 'docker exec --tty ${container_id} env TERM=xterm varnishd -V'
+
+  # Test the version of Varnish installed (default to the main.yml default).
+  - |
+    varnish_version="${varnish_version:-5.1}"
+    docker exec --tty ${container_id} env TERM=xterm varnishd -V | grep "${varnish_version}"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

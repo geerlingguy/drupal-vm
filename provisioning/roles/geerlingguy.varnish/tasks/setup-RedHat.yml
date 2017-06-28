@@ -2,28 +2,29 @@
 - name: Ensure Varnish dependencies are installed.
   yum: name={{ item }} state=present
   with_items:
-    - gcc
-    - libedit-devel
-    - initscripts
-    - redhat-rpm-config
+    - yum-utils
+    - pygpgme
 
-- name: Add Varnish repository.
-  yum:
-    name: https://repo.varnish-cache.org/redhat/varnish-{{ varnish_version }}.el6.rpm
-    state: present
-  when: ansible_distribution_major_version|int < 7
+- name: Add Varnish packagecloud.io yum repo.
+  yum_repository:
+    name: varnishcache_{{ varnish_packagecloud_repo }}
+    description: Varnish Cache packagecloud.io repository.
+    baseurl: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/el/{{ ansible_distribution_major_version|int }}/$basearch
+    repo_gpgcheck: no
+    gpgcheck: no
+    enabled: yes
+    gpgkey: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/gpgkey
+    sslverify: 1
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+  register: varnish_packagecloud_repo_addition
 
-- name: Set a string for the varnish repository identifier.
-  set_fact:
-    varnish_yum_repo: "varnish-{{ varnish_version }},epel"
+- name: Refresh yum metadata cache if repo changed.
+  command: >
+    yum clean metadata
+    warn=no
+  when: varnish_packagecloud_repo_addition.changed
 
-- name: Set repo fact appropriately.
-  set_fact:
-    varnish_yum_enablerepo: "{{ varnish_yum_repo if (ansible_distribution_major_version|int < 7) else 'epel' }}"
-
-- name: Install Varnish.
+- name: Ensure Varnish is installed.
   yum:
     name: "{{ varnish_package_name }}"
     state: installed
-    enablerepo: "{{ varnish_yum_enablerepo }}"
-    disablerepo: "*"
