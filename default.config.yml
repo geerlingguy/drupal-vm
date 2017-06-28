@@ -1,7 +1,14 @@
 ---
-# `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
-# geerlingguy/debian8, geerlingguy/ubuntu1404, geerlingguy/ubuntu1204, etc.
+# Available `vagrant_box` values include:
+#   - geerlingguy/centos7
+#   - geerlingguy/centos6
+#   - geerlingguy/debian9
+#   - geerlingguy/debian8
+#   - geerlingguy/ubuntu1604
+#   - geerlingguy/ubuntu1404
+#   - geerlingguy/ubuntu1204
 vagrant_box: geerlingguy/ubuntu1604
+
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
 vagrant_gui: false
