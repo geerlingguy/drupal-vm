@@ -1,5 +1,45 @@
 # Drupal VM Changelog
 
+## 4.6.0 "TODO" (2017-06-28)
+
+### Breaking Changes
+
+  * If you have `varnish` in your `installed_extras`, then the newest version of the Varnish role included in this release changes the Varnish package repository (on all OSes) to use the latest supported Varnish packages from Varnish's official packagecloud.io repos. This allows you to specify Varnish versions anywhere from the latest (currently 5.1) to early 2.x versions (and everything in-between)... but you might either have to uninstall Varnish before updating existing VMs, or just rebuild your VM to take advantage of the latest role version.
+
+### New/changed variables in default.config.yml
+
+  * `vagrant_box` still defaults to Ubuntu 16.04, but you can now use Debian 9 ('Stretch') if you set the variable to `geerlingguy/debian9`.
+  * `vagrant_plugins` was added (see #1378), and contains a list of Vagrant plugins that—if not already installed—will be installed for use by Vagrant.
+
+### Improvements
+
+  * #1455: Update Varnish role to allow for Varnish 5.1, 5.0, and any older version.
+  * #1451: Document the availability of `geerlingguy/debian9` base box (and Docker base container).
+  * #1378: Automatically install a configurable list of Vagrant plugins (`hostsupdater` and `vbguest` by default).
+  * #1423: Add documentation on using the official Docker image for quick Drupal testing environments.
+  * #1388, #1389: Use `geerlingguy/drupal-vm` docker image by default in Docker Compose file.
+  * #1437: Allow list of paths in `pre_provision_tasks_dir` and `post_provision_tasks_dir` (used to just be one path maximum).
+  * #1443: Add IRC badge linking to `#drupal-vm` freenode IRC room on Riot.
+  * #1171: Support using XDebug to debug Drush commands inside Drupal VM.
+  * #1368: Ensure private filesystem works correctly when using Nginx.
+  * #1375: Allow /vagrant default synced folder to be managed like other synced folders.
+  * #1406: Minor doc improvement for using Tideways instead of XHprof when using PHP 7+.
+  * #1431: Minor doc improvement for `composer docker-bake` command.
+  * #1386: Remove dated Acquia example and point to BLT's configuration instead.
+  * #1418: Allow PHP configuration to be overridden so default system packages can be used instead of Ondrej Sury's repo (allowing PHP 5.3, 5.4, and 5.5 to be used when absolutely necessary).
+  * #1424: Add support for RFC 5785 (`.well-known`) when using Nginx.
+  * #1451: Use 192.168.89.89 for default Docker Drupal VM IP.
+  * Updated roles: PostgreSQL, PHP Versions, Redis, Nginx, Varnish.
+
+### Bugfixes
+
+  * #1403: Ensure PostgreSQL works correctly on all supported OSes.
+  * #1399: Fix bug where Drupal would reinstall on reprovision if not using English as the default language.
+  * #1384, #1420: Update docs in Solr example for more clarity concerning use with Drupal 8.
+  * #1444: Fix outdated comment for `drupal_install_site` variable.
+  * #1411: Fix `.gitignore` file applying rules to files in subdirectories.
+
+
 ## 4.5.0 "Break In (For Strings, Flutes, and Celesta)" (2017-05-24)
 
 ### Breaking Changes
