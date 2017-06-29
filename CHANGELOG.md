@@ -1,6 +1,6 @@
 # Drupal VM Changelog
 
-## 4.6.0 "TODO" (2017-06-28)
+## 4.6.0 "Water, Music, and Tronaction" (2017-06-28)
 
 ### Breaking Changes
 
