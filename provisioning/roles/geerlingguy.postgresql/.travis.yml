@@ -17,6 +17,9 @@ env:
   - distro: debian8
     postgresql_bin_dir: /usr/lib/postgresql/9.4/bin
     postgresql_data_dir: /var/lib/postgresql/9.4/main
+  - distro: debian9
+    postgresql_bin_dir: /usr/lib/postgresql/9.6/bin
+    postgresql_data_dir: /var/lib/postgresql/9.6/main
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
