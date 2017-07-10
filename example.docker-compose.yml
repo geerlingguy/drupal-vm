@@ -24,7 +24,6 @@ services:
       - '8.8.8.8'
       - '8.8.4.4'
 
-    # Use of the `delegated` option currently requires the Docker Edge release.
     volumes:
       - ./:/var/www/drupalvm/:rw,delegated
 
