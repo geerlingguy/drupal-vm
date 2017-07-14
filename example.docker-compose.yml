@@ -25,7 +25,7 @@ services:
       - '8.8.4.4'
 
     volumes:
-      - ./:/var/www/drupalvm/:rw,delegated
+      - ./:/var/www/drupalvm/drupal:rw,delegated
 
     privileged: true
     command: /lib/systemd/systemd
