@@ -7,16 +7,16 @@ pid        {{ nginx_pidfile }};
 worker_processes  {{ nginx_worker_processes }};
 {% endblock %}
 
+{% if nginx_extra_conf_options %}
+{{ nginx_extra_conf_options }}
+{% endif %}
+
 {% block events %}
 events {
     worker_connections  {{ nginx_worker_connections }};
     multi_accept {{ nginx_multi_accept }};
 }
 {% endblock %}
-
-{% if nginx_extra_conf_options %}
-{{ nginx_extra_conf_options }}
-{% endif %}
 
 http {
     {% block http_begin %}{% endblock %}

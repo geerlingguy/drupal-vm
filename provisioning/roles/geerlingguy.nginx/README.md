@@ -49,7 +49,7 @@ Please take note of the indentation in the above block. The first line should be
 
       - listen: "80"
         server_name: "example.com www.example.com"
-        return "301 https://example.com$request_uri;"
+        return: "301 https://example.com$request_uri"
         filename: "example.com.80.conf"
 
 An example of a secondary vhost which will redirect to the one shown above.
