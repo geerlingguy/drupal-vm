@@ -94,7 +94,7 @@ Vagrant.configure('2') do |config|
       id: synced_folder['id'],
       create: synced_folder.fetch('create', false),
       mount_options: synced_folder.fetch('mount_options', []),
-      nfs_udp: synced.folder.fetch('nfs_udp', false)
+      nfs_udp: synced_folder.fetch('nfs_udp', false)
     }
     synced_folder.fetch('options_override', {}).each do |key, value|
       options[key.to_sym] = value
