@@ -25,9 +25,9 @@
   when: not drupal_site_exists
   failed_when: false
 
-- name: Move Drupal project files to drupal_composer_install_dir
+- name: Move Drupal project files to drupal_composer_install_dir.
   command: >
-    cp -r /tmp/drupal-project/ {{ drupal_composer_install_dir }}/
+    cp -r /tmp/drupal-project/. {{ drupal_composer_install_dir }}/
     creates={{ drupal_core_path }}/index.php
   become: no
   when: not drupal_site_exists
