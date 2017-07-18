@@ -4,11 +4,21 @@
   vars:
     php_enable_webserver: false
     php_enablerepo: "remi,remi-php70"
+    php_pecl_extensions:
+      - redis
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=yes
+      apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
+
+    - name: Install development tools (Debian).
+      apt: name=build-essential state=present
+      when: ansible_os_family == 'Debian'
+
+    - name: Install development tools (RedHat).
+      yum: name="@Development tools" state=present
+      when: ansible_os_family == 'RedHat'
 
   roles:
     - role: geerlingguy.repo-remi
