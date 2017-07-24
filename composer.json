@@ -1,6 +1,6 @@
 {
     "name": "geerlingguy/drupal-vm",
-    "type": "vm",
+    "type": "composer-plugin",
     "description": "A VM for local Drupal development, built with Vagrant + Ansible",
     "keywords": ["vagrant", "vm", "virtual machine", "drupal"],
     "homepage": "https://www.drupalvm.com",
@@ -20,9 +20,19 @@
         "source": "https://github.com/geerlingguy/drupal-vm",
         "docs": "http://docs.drupalvm.com"
     },
-    "require": {},
+    "require": {
+        "composer-plugin-api": "^1.0"
+    },
     "config": {
         "process-timeout": 1800
+    },
+    "autoload": {
+        "psr-4": {
+            "JJG\\DrupalVM\\": "composer/src/"
+        }
+    },
+    "extra": {
+        "class": "JJG\\DrupalVM\\Plugin"
     },
     "scripts": {
         "run-tests": "./tests/run-tests.sh",
