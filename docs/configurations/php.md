@@ -1,4 +1,4 @@
-Drupal VM defaults to PHP 7.1, but you can also install and use 5.6 or 7.1.
+Drupal VM defaults to PHP 7.1, but you can also install and use 5.6 or 7.0.
 
 ## Ubuntu
 
