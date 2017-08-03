@@ -1,4 +1,4 @@
-FROM geerlingguy/docker-debian8-ansible:latest
+FROM geerlingguy/docker-debian9-ansible:latest
 LABEL maintainer="Jeff Geerling"
 
 # Copy provisioning directory, variable overrides, and scripts into container.
