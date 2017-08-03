@@ -48,6 +48,7 @@ If you only need a simple container to run your site, and you want to package up
         privileged: true
         volumes:
           - ./:/var/www/drupalvm/drupal/web/:rw,delegated
+          - /var/lib/mysql
         command: /lib/systemd/systemd
     ```
 
@@ -84,6 +85,8 @@ Copy the `example.docker-compose.yml` file out of Drupal VM (or grab a copy from
   - _If you are using your own `Dockerfile` to further customize Drupal VM_, comment out the `image: drupal-vm` line, and uncomment the `build: .` line (this tells Docker Compose to build a new image based on your own `Dockerfile`).
 
 For the `volume:` definition in `docker-compose.yml`, Drupal VM's default docroot is `/var/www/drupalvm/drupal/web`, which follows the convention of a typical Drupal project built with Composer. If you don't get your site when you attempt to access Drupal VM, you will either need to modify the `volume:` definition to match your project's structure, or use a custom `Dockerfile` and copy in a customized Apache `vhosts.conf` file.
+
+You should also add a volume for MySQL data, otherwise MySQL may not start up correctly. By default, you should have a volume for `/var/lib/mysql` (no need to sync it locally). See Drupal VM's example docker-compose file for reference.
 
 ### Run Drupal VM
 
