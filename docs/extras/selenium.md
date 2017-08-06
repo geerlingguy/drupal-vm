@@ -47,6 +47,10 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupalv
               javascript_session: selenium2
               selenium2:
                 wd_host: http://drupalvm.dev:4444/wd/hub
+                capabilities:
+                  chrome:
+                    switches: ['no-sandbox']
+              browser_name: chrome
               base_url: http://drupalvm.dev
             Drupal\DrupalExtension:
               blackbox: ~
