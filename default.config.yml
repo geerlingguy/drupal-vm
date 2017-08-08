@@ -88,6 +88,7 @@ drupal_core_owner: "{{ drupalvm_user }}"
 drupal_db_user: drupal
 drupal_db_password: drupal
 drupal_db_name: drupal
+drupal_db_host: localhost
 
 # Settings for installing a Drupal site if 'drupal_install_site:' is 'true'.
 drupal_major_version: 8
@@ -233,7 +234,7 @@ extra_packages:
   - sqlite
 
 # You can configure almost anything else on the server in the rest of this file.
-drush_version: "8.1.10"
+drush_version: "8.1.12"
 
 extra_security_enabled: false
 

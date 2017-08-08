@@ -15,3 +15,6 @@
   with_items:
     - logrotate
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '7'
+
+- name: Ensure curl is installed.
+  package: 'name=curl state=present'
