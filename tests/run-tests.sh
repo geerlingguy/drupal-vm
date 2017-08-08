@@ -40,7 +40,7 @@ elif [ $distro = 'ubuntu1204' ]; then
 # Debian 9
 elif [ $distro = 'debian9' ]; then
   init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume=/var/lib/mysql"
+  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Debian 8
 elif [ $distro = 'debian8' ]; then
   init="/lib/systemd/systemd"
