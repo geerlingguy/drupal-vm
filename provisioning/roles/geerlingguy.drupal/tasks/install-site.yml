@@ -26,7 +26,7 @@
     --account-name={{ drupal_account_name }}
     --account-pass={{ drupal_account_pass }}
     --db-url={{ drupal_db_backend }}://{{ drupal_db_user }}:{{ drupal_db_password }}@{{ drupal_db_host }}/{{ drupal_db_name }}
-    {{ drupal_site_install_extra_args | default([]) | join(" ") }}
+    {{ drupal_site_install_extra_args | join(" ") }}
   args:
     chdir: "{{ drupal_core_path }}"
   notify: clear opcache

@@ -84,11 +84,12 @@ Set this to `false` if you don't need to install Drupal (using the `drupal_*` se
     drupal_domain: "drupaltest.dev"
     drupal_site_name: "Drupal"
     drupal_install_profile: standard
+    drupal_site_install_extra_args: []
     drupal_enable_modules: []
     drupal_account_name: admin
     drupal_account_pass: admin
 
-Settings for installing a Drupal site if `drupal_install_site` is `true`.
+Settings for installing a Drupal site if `drupal_install_site` is `true`. If you need to pass additional arguments to the `drush site-install` command, you can pass them in as a list to the `drupal_site_install_extra_args` variable.
 
 ## Dependencies
 

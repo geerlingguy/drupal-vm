@@ -5,7 +5,7 @@
     state: absent
   when: not drupal_site_exists
 
-- name: Generate Drupal project with composer package in /tmp/composer-project.
+- name: Generate Drupal project with composer package in /tmp/composer-project (this may take a while).
   command: >
     {{ composer_path }} create-project
     {{ drupal_composer_project_package }} /tmp/composer-project
@@ -25,14 +25,14 @@
   when: not drupal_site_exists
   failed_when: false
 
-- name: Move Drupal project files to drupal_composer_install_dir.
+- name: Move Drupal project files to drupal_composer_install_dir (this may take a while).
   command: >
     cp -r /tmp/composer-project/. {{ drupal_composer_install_dir }}/
     creates={{ drupal_core_path }}/index.php
   become: no
   when: not drupal_site_exists
 
-- name: Install dependencies with composer require.
+- name: Install dependencies with composer require (this may take a while).
   composer:
     command: require
     arguments: "{{ item }}"

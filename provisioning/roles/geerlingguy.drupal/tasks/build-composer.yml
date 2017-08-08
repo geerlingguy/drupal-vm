@@ -21,14 +21,14 @@
   when: drupal_composer_path and not drupal_site_exists
   become: no
 
-- name: Run composer install.
+- name: Run composer install (this may take a while).
   composer:
     command: install
     working_dir: "{{ drupal_composer_install_dir }}"
   when: not drupal_site_exists
   become: no
 
-- name: Install dependencies with composer require.
+- name: Install dependencies with composer require (this may take a while).
   composer:
     command: require
     arguments: "{{ item }}"
