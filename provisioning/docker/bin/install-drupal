@@ -25,7 +25,7 @@ drush dl drupal-$DRUPAL_VERSION \
 # Install Drupal with Drush.
 echo "Installing Drupal"
 drush si standard --root=$PROJECT_PATH/web -y \
-  --db-url='mysql://drupal:drupal@127.0.0.1/drupal' \
+  --db-url='mysql://drupal:drupal@localhost/drupal' \
   --site-name='Drupal VM' \
   --account-name=admin --account-pass=admin
 
