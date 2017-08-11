@@ -4,88 +4,64 @@ services: docker
 env:
   # Package install on all OSes.
   - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     ruby_version: 2.0.0
     ruby_path_prefix: /usr
   - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     ruby_version: 2.3.1
     ruby_path_prefix: /usr
   - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
     playbook: test.yml
     ruby_version: 1.9.3
     ruby_path_prefix: /usr
   - distro: debian8
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     ruby_version: 2.1.5
     ruby_path_prefix: /usr
 
   # Source install on latest OSes.
   - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
     ruby_version: 2.3.0
     ruby_path_prefix: /usr/local
   - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
     ruby_version: 2.3.0
     ruby_path_prefix: /usr/local
 
-before_install:
-  # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
-
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
 
-  # Install dependencies.
-  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
-
-  # Test role.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} | tee -a ${idempotence}
-  - >
-    tail ${idempotence}
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
   # Make sure ruby is installed and at the correct version.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which ruby'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x ${ruby_path_prefix}/bin/ruby'
+  - 'docker exec --tty ${container_id} env TERM=xterm which ruby'
+  - 'docker exec --tty ${container_id} env TERM=xterm test -x ${ruby_path_prefix}/bin/ruby'
 
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ruby --version'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ${ruby_path_prefix}/bin/ruby --version | grep -qF ${ruby_version}'
+  - 'docker exec --tty ${container_id} env TERM=xterm ruby --version'
+  - 'docker exec --tty ${container_id} env TERM=xterm ${ruby_path_prefix}/bin/ruby --version | grep -qF ${ruby_version}'
 
   # Make sure bundler is installed.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /usr/local/bin'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which bundle'
+  - 'docker exec --tty ${container_id} env TERM=xterm ls -lah /usr/local/bin'
+  - 'docker exec --tty ${container_id} env TERM=xterm which bundle'
 
   # Make sure user installed gems are available.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm bash --login -c "which sass"'
+  - |
+    if [ "${distro}" != "ubuntu1404" ]; then
+      docker exec --tty ${container_id} env TERM=xterm bash --login -c "which sass"
+    fi
 
 after_failure:
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm which ruby'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ruby --version'
+  - 'docker exec --tty ${container_id} env TERM=xterm which ruby'
+  - 'docker exec --tty ${container_id} env TERM=xterm ruby --version'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

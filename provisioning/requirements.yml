@@ -72,7 +72,7 @@
 - src: geerlingguy.repo-remi
   version: 1.2.0
 - src: geerlingguy.ruby
-  version: 2.4.2
+  version: 2.4.3
 - src: geerlingguy.security
   version: 1.5.0
 - src: geerlingguy.solr

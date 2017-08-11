@@ -1,14 +1,18 @@
 ---
 # Include OS-specific installation tasks.
 - include: setup-RedHat.yml
-  when: (ruby_install_from_source == false) and (ansible_os_family == 'RedHat')
+  when:
+    - ruby_install_from_source == False
+    - ansible_os_family == 'RedHat'
 
 - include: setup-Debian.yml
-  when: (ruby_install_from_source == false) and (ansible_os_family == 'Debian')
+  when:
+    - ruby_install_from_source == False
+    - ansible_os_family == 'Debian'
 
 # Install ruby from source when ruby_install_from_source is true.
 - include: install-from-source.yml
-  when: ruby_install_from_source == true
+  when: ruby_install_from_source == True
 
 - name: Add user installed RubyGems bin directory to global $PATH.
   copy:
@@ -22,7 +26,9 @@
   when: ruby_install_bundler
 
 - name: Install configured gems.
-  gem: "name={{ item }} state=present"
+  gem:
+    name: "{{ item }}"
+    state: present
   become: yes
   become_user: "{{ ruby_install_gems_user }}"
   with_items: "{{ ruby_install_gems }}"
