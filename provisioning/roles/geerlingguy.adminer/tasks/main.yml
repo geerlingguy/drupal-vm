@@ -8,7 +8,7 @@
 
 - name: Download Adminer to configured directory.
   get_url:
-    url: http://www.adminer.org/latest.php
+    url: https://www.adminer.org/latest.php
     dest: "{{ adminer_install_dir }}/{{ adminer_install_filename }}"
     mode: 0644
     timeout: 60
