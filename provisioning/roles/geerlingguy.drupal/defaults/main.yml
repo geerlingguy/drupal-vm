@@ -7,6 +7,7 @@ drupal_deploy_version: master
 drupal_deploy_update: true
 drupal_deploy_dir: "/var/www/drupal"
 drupal_deploy_accept_hostkey: no
+drupal_deploy_composer_install: yes
 
 # Set this to 'true' and 'drupal_build_composer*' to 'false' if you would like
 # to build a Drupal make file with Drush.

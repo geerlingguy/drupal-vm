@@ -37,6 +37,10 @@ Set `drupal_deploy` to `true` and `drupal_build_composer*` to `false` if you wou
   - `dir`: The directory into which the repository will be checked out
   - `accept_hostkey`: Whether to automatically accept the Git server's hostkey on the first connection.
 
+You can also control whether a `composer install` is run after the git clone is finished using the following variable:
+
+    drupal_deploy_composer_install: yes
+
 ### Build a project from a Drush Make file
 
     drupal_build_makefile: false
