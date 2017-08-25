@@ -2,7 +2,6 @@
 - hosts: all
 
   vars:
-    nodejs_version: "5.x"
     nodejs_install_npm_user: root
     npm_config_prefix: /root/.npm-global
     npm_config_unsafe_perm: "true"
