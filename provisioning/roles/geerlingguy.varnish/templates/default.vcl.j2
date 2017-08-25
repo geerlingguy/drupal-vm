@@ -1,4 +1,6 @@
+{% if varnish_version | version_compare('4.0', '>=') %}
 vcl 4.0;
+{% endif %}
 
 # This is a basic VCL configuration file for varnish.  See the vcl(7)
 # man page for details on VCL syntax and semantics.
