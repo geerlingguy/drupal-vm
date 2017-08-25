@@ -124,7 +124,7 @@ Vagrant.configure('2') do |config|
 
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
-    v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
+    v.linked_clone = true
     v.name = vconfig['vagrant_hostname']
     v.memory = vconfig['vagrant_memory']
     v.cpus = vconfig['vagrant_cpus']
