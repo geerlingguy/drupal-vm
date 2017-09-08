@@ -121,7 +121,7 @@ After you've configured your Drupal VM settings in `config.yml` and other config
 
 This will bake a Docker images using Drupal VM's default settings for distro, IP address, hostname, etc. You can override these options (all are listed in the `provisioning/docker/bake.sh` file) by prepending them to the `composer` command:
 
-    DRUPALVM_IP_ADDRESS='192.168.89.90' DISTRO='debian9' composer docker-bake
+    DRUPALVM_IP_ADDRESS='192.168.89.89' DISTRO='debian9' composer docker-bake
 
 This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
 
