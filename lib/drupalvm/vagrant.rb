@@ -77,26 +77,60 @@ def ensure_plugins(plugins)
   installed = false
 
   plugins.each do |plugin|
-    plugin_name = plugin['name']
-    manager = Vagrant::Plugin::Manager.instance
+    if plugin.key?('alternatives')
+      if ensure_any_plugin(plugin['alternatives'])
+        installed = true
+      end
+    else
+      plugin_name = plugin['name']
+      manager = Vagrant::Plugin::Manager.instance
 
-    next if manager.installed_plugins.key?(plugin_name)
+      next if manager.installed_plugins.key?(plugin_name)
 
-    logger.warn("Installing plugin #{plugin_name}")
+      logger.warn("Installing plugin #{plugin_name}")
 
-    manager.install_plugin(
-      plugin_name,
-      sources: plugin.fetch('source', %w[https://rubygems.org/ https://gems.hashicorp.com/]),
-      version: plugin['version']
-    )
+      manager.install_plugin(
+        plugin_name,
+        sources: plugin.fetch('source', %w[https://rubygems.org/ https://gems.hashicorp.com/]),
+        version: plugin['version']
+      )
 
-    installed = true
+      installed = true
+    end
   end
 
   return unless installed
 
   logger.warn('`vagrant up` must be re-run now that plugins are installed')
   exit
+end
+
+def ensure_any_plugin(plugins)
+  logger = Vagrant::UI::Colored.new
+  found = false
+  installed = false
+  manager = Vagrant::Plugin::Manager.instance
+
+  plugins.each do |plugin|
+    plugin_name = plugin['name']
+    if manager.installed_plugins.key?(plugin_name)
+      found = true
+      break
+    end
+  end
+
+  if !found
+    plugin = plugins[0]
+    plugin_name = plugin['name']
+    logger.warn("Installing plugin #{plugin_name}")
+    manager.install_plugin(
+      plugin_name,
+      sources: plugin.fetch('source', %w[https://rubygems.org/ https://gems.hashicorp.com/]),
+      version: plugin['version']
+    )
+  end
+
+  return !found
 end
 
 def get_apache_vhosts(vhosts)
