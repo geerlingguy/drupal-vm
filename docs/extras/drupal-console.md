@@ -33,7 +33,7 @@ dev:
 
 Execute from host machine using the `--target` option.
 
-    drupal --target=drupalvm.dev site:status
+    drupal --target=drupalvm.test site:status
 
 For more details, see [Drupal Console's documentation](https://hechoendrupal.gitbooks.io/drupal-console/content/en/using/how-to-use-drupal-console-in-a-remote-installation.html)
 

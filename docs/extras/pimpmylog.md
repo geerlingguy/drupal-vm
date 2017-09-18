@@ -1,8 +1,8 @@
-[Pimp my Log](http://pimpmylog.com/) is a PHP-based web GUI for viewing log files on a given server. By default, it is installed on Drupal VM, and you can access it at the URL [http://pimpmylog.drupalvm.dev/](http://pimpmylog.drupalvm.dev) (as long as you have a hosts entry for that URL pointing at Drupal VM's IP address!).
+[Pimp my Log](http://pimpmylog.com/) is a PHP-based web GUI for viewing log files on a given server. By default, it is installed on Drupal VM, and you can access it at the URL [http://pimpmylog.drupalvm.test/](http://pimpmylog.drupalvm.test) (as long as you have a hosts entry for that URL pointing at Drupal VM's IP address!).
 
 By default, it will find the default Apache 2 `access.log` and `error.log` files, but it will not find other logs, like MySQL or extra Apache virtualhost logs.
 
-When configuring Pimp my Log (on the first visit to [pimpmylog.drupalvm.dev](http://pimpmylog.drupalvm.dev)), you can add extra paths in the UI, or you can add them after the fact by manually editing the configuration file, which by default is stored at `/usr/share/php/pimpmylog/config.user.php`. You can also delete that file and re-configure Pimp my Log via the web UI.
+When configuring Pimp my Log (on the first visit to [pimpmylog.drupalvm.test](http://pimpmylog.drupalvm.test)), you can add extra paths in the UI, or you can add them after the fact by manually editing the configuration file, which by default is stored at `/usr/share/php/pimpmylog/config.user.php`. You can also delete that file and re-configure Pimp my Log via the web UI.
 
 Some log files you may be interested in monitoring:
 

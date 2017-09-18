@@ -6,7 +6,7 @@
 CONFIG="${CONFIG:-tests/config.yml}"
 MAKEFILE="${MAKEFILE:-example.drupal.make.yml}"
 COMPOSERFILE="${COMPOSERFILE:-example.drupal.composer.json}"
-HOSTNAME="${HOSTNAME:-drupalvm.dev}"
+HOSTNAME="${HOSTNAME:-drupalvm.test}"
 MACHINE_NAME="${MACHINE_NAME:-drupalvm}"
 IP="${IP:-192.168.88.88}"
 DRUPALVM_DIR="${DRUPALVM_DIR:-/var/www/drupalvm}"

@@ -1,6 +1,6 @@
 ---
 # Normally, this would be set to the hostname of your DigitalOcean Droplet.
-drupal_domain: "drupalvm.dev"
+drupal_domain: "drupalvm.test"
 vagrant_hostname: "{{ drupal_domain }}"
 
 # Add only the `apache_vhosts` or `nginx_vhosts` you need. If installing a

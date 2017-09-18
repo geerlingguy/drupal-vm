@@ -15,8 +15,7 @@ vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
-# rfc2606 limits to only use one of .test, .example, .invalid, or .localhost
-vagrant_hostname: drupalvm.localhost
+vagrant_hostname: drupalvm.test
 vagrant_machine_name: drupalvm
 vagrant_ip: 192.168.88.88
 
