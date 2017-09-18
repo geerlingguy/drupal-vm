@@ -43,7 +43,9 @@ vagrant_cpus: 1
 # Ensure vagrant plugins are installed.
 vagrant_plugins:
   - name: vagrant-vbguest
-  - name: vagrant-hostsupdater
+  - alternatives:
+    - name: vagrant-hostsupdater
+    - name: vagrant-hostmanager
 
 # Minimum required versions.
 drupalvm_vagrant_version_min: '1.8.6'
