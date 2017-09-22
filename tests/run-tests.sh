@@ -33,10 +33,6 @@ elif [ $distro = 'ubuntu1604' ]; then
 elif [ $distro = 'ubuntu1404' ]; then
   init="/sbin/init"
   opts="--privileged"
-# Ubuntu 12.04
-elif [ $distro = 'ubuntu1204' ]; then
-  init="/sbin/init"
-  opts="--privileged"
 # Debian 9
 elif [ $distro = 'debian9' ]; then
   init="/lib/systemd/systemd"
