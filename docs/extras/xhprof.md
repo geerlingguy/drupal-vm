@@ -1,6 +1,6 @@
 [XHProf](http://xhprof.io/) allows easy code profiling and can be used in many different ways. Ensure `xhprof` is in the list of `installed_extras` inside `config.yml`.
 
-_Note: XHProf does currently not work with PHP 7.1. The PHP extension has barely been maintained since Facebook abandoned the project around 2015, so it's difficult to get it running under newer versions of PHP. If you require support for PHP 7.1 you should use [Tideways](tideways.md) instead._
+_Note: XHProf does currently not work with PHP 7.1+. The PHP extension has barely been maintained since Facebook abandoned the project around 2015, so it's difficult to get it running under newer versions of PHP. If you require support for PHP 7.1 or newer, you should use [Tideways](tideways.md) instead._
 
 ### XHProf module
 
