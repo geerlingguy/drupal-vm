@@ -18,17 +18,14 @@ env:
   - distro: ubuntu1404
     playbook: test.yml
     php_version: 7.0
-  - distro: ubuntu1204
-    playbook: test.yml
-    php_version: 5.6
 
   # Only test source install on latest supported OSes.
   - distro: centos7
     playbook: test-source.yml
-    php_version: 7.0.13
+    php_version: 7.1.9
   - distro: ubuntu1604
     playbook: test-source.yml
-    php_version: 7.0.13
+    php_version: 7.1.9
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
