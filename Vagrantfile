@@ -29,13 +29,13 @@ vconfig = load_config([
 
 provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
 if provisioner == :ansible
-  playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
+  provisioning_dir = "#{host_drupalvm_dir}/provisioning"
   config_dir = host_config_dir
 
   # Verify Ansible version requirement.
   require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
 else
-  playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
+  provisioning_dir = "#{guest_drupalvm_dir}/provisioning"
   config_dir = guest_config_dir
 end
 
@@ -106,7 +106,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision 'drupalvm', type: provisioner do |ansible|
     ansible.compatibility_mode = '2.0'
-    ansible.playbook = playbook
+    ansible.playbook = "#{provisioning_dir}/playbook.yml"
     ansible.extra_vars = {
       config_dir: config_dir,
       drupalvm_env: drupalvm_env
@@ -114,6 +114,9 @@ Vagrant.configure('2') do |config|
     ansible.raw_arguments = Shellwords.shellsplit(ENV['DRUPALVM_ANSIBLE_ARGS']) if ENV['DRUPALVM_ANSIBLE_ARGS']
     ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
     ansible.verbose = ENV['DRUPALVM_DEBUG']
+    unless ENV['ANSIBLE_CONFIG']
+      ansible.config_file = "#{provisioning_dir}/ansible#{'.debug' if ENV['DRUPALVM_DEBUG']}.cfg"
+    end
     # Use pip to get the latest Ansible version when using ansible_local.
     provisioner == :ansible_local && ansible.install_mode = 'pip'
   end
