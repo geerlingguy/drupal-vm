@@ -11,6 +11,6 @@
   include_vars: "{{ item }}"
   with_fileglob:
     - "{{ config_dir }}/config.yml"
-    - "{{ config_dir }}/local.config.yml"
     - "{{ config_dir }}/secrets.yml"
     - "{{ config_dir }}/{{ lookup('env', 'DRUPALVM_ENV')|default(drupalvm_env, true)|default(ansible_env.DRUPALVM_ENV)|default(omit) }}.config.yml"
+    - "{{ config_dir }}/local.config.yml"
