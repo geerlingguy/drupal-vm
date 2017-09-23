@@ -114,7 +114,7 @@ fi
 
 # Drupal.
 printf "\n"${green}"Running functional tests..."${neutral}"\n"
-docker exec $CONTAINER_ID curl -s --header Host:$HOSTNAME localhost \
+docker exec $CONTAINER_ID curl -sSi --header Host:$HOSTNAME localhost \
   | tee /tmp/dvm-test \
   | grep -q '<title>Welcome to Drupal' \
   && (echo 'Drupal install pass' && exit 0) \
@@ -122,7 +122,7 @@ docker exec $CONTAINER_ID curl -s --header Host:$HOSTNAME localhost \
 
 # Adminer.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -s --header Host:adminer.$HOSTNAME localhost \
+  docker exec $CONTAINER_ID curl -sSi --header Host:adminer.$HOSTNAME localhost \
     | tee /tmp/dvm-test \
     | grep -q '<title>Login - Adminer' \
     && (echo 'Adminer install pass' && exit 0) \
@@ -131,7 +131,7 @@ fi
 
 # Pimp My Log.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -s --header Host:pimpmylog.$HOSTNAME localhost \
+  docker exec $CONTAINER_ID curl -sSi --header Host:pimpmylog.$HOSTNAME localhost \
     | tee /tmp/dvm-test \
     | grep -q '<title>Pimp my Log' \
     && (echo 'Pimp my Log install pass' && exit 0) \
@@ -140,7 +140,7 @@ fi
 
 # MailHog.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -s localhost:8025 \
+  docker exec $CONTAINER_ID curl -sSi localhost:8025 \
     | tee /tmp/dvm-test \
     | grep -q '<title>MailHog' \
     && (echo 'MailHog install pass' && exit 0) \
@@ -149,7 +149,7 @@ fi
 
 # Varnish.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -sI --header Host:$HOSTNAME localhost:81 \
+  docker exec $CONTAINER_ID curl -sSI --header Host:$HOSTNAME localhost:81 \
     | tee /tmp/dvm-test \
     | grep -q 'Via: .* varnish' \
     && (echo 'Varnish install pass' && exit 0) \
@@ -157,7 +157,7 @@ if [ $TEST_INSTALLED_EXTRAS = true ]; then
 fi
 
 # Dashboard.
-docker exec $CONTAINER_ID curl -s --header Host:$IP localhost \
+docker exec $CONTAINER_ID curl -sSi --header Host:$IP localhost \
   | tee /tmp/dvm-test \
   | grep -q "<li>$IP $HOSTNAME</li>" \
   && (echo 'Dashboard install pass' && exit 0) \
