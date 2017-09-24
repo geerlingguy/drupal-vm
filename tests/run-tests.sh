@@ -15,6 +15,7 @@ TEST_INSTALLED_EXTRAS="${TEST_INSTALLED_EXTRAS:-true}"
 CONTAINER_ID="${CONTAINER_ID:-dvm-test}"
 type="${type:-tests/defaults}"
 distro="${distro:-ubuntu1604}"
+cleanup="${cleanup:-true}"
 
 ## Set up vars for Docker setup.
 # CentOS 7
@@ -171,6 +172,11 @@ docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status \
   || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
 
 # Remove test container.
-printf "\n"${green}"Cleaning up..."${neutral}"\n"
-docker rm -f $CONTAINER_ID
-printf ${green}"...done!"${neutral}"\n\n"
+if [ $cleanup = true ]; then
+  printf "\n"${green}"Cleaning up..."${neutral}"\n"
+  docker rm -f $CONTAINER_ID
+  printf ${green}"...done!"${neutral}"\n\n"
+else
+  printf "\n"${green}"Skipping cleanup for container id: ${CONTAINER_ID}!"${neutral}"\n"
+  printf ${green}"Done!"${neutral}"\n\n"
+fi
