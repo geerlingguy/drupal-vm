@@ -28,11 +28,11 @@ DRUPALVM_ANSIBLE_ARGS='--verbose' vagrant provision
 Begin the provisioning at a particular task:
 
 ```sh
-DRUPALVM_ANSIBLE_ARGS='--start-at-task=*post-provision shell*' vagrant provision
+DRUPALVM_ANSIBLE_ARGS="--start-at-task '*post-provision shell*'" vagrant provision
 ```
 
 Override a config variable:
 
 ```sh
-DRUPALVM_ANSIBLE_ARGS='--extra-vars=drupal_db_backend=pgsql' vagrant provision
+DRUPALVM_ANSIBLE_ARGS='--extra-vars "drupal_db_backend=pgsql"' vagrant provision
 ```
