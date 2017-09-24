@@ -20,7 +20,7 @@ vagrant_machine_name: my_custom_site
 php_version: "5.6"
 ```
 
-### 3. vagrant.config.yml
+#### 3. vagrant.config.yml
 
 Environment specific overrides. When you run Drupal VM through _Vagrant_, the environment will be set to `vagrant` and this file is loaded when available. If you're doing something more advanced, such as running Drupal VM on a [production environment](../other/production.md), you can use a different environment configuration file, eg `prod.config.yml`.
 
