@@ -51,10 +51,15 @@ fi
 # Set OS-specific options.
 if [[ "$OSTYPE" == "darwin"* ]]; then
   volume_opts='rw,cached'
-  xargs_command='xargs'
 else
   volume_opts='rw'
+fi
+
+# Use correct xargs command depending if it's GNU or BSD.
+if xargs --version 2>&1 | grep -s GNU >/dev/null; then
   xargs_command='xargs -r'
+else
+  xargs_command='xargs'
 fi
 
 # Exit on any individual command failure.
