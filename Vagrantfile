@@ -23,8 +23,8 @@ end
 vconfig = load_config([
   default_config_file,
   "#{host_config_dir}/config.yml",
-  "#{host_config_dir}/local.config.yml",
-  "#{host_config_dir}/#{drupalvm_env}.config.yml"
+  "#{host_config_dir}/#{drupalvm_env}.config.yml",
+  "#{host_config_dir}/local.config.yml"
 ])
 
 provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
