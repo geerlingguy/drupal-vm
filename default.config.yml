@@ -233,7 +233,7 @@ extra_packages:
   - sqlite
 
 # You can configure almost anything else on the server in the rest of this file.
-drush_version: "8.1.12"
+drush_version: "8.1.14"
 
 extra_security_enabled: false
 
