@@ -1,3 +1,4 @@
 ---
 php_version: "5.6"
+php_sendmail_path: "/usr/sbin/sendmail -t -i"
 installed_extras: []
