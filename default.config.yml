@@ -192,7 +192,7 @@ mysql_users:
   - name: "{{ drupal_db_user }}"
     host: "%"
     password: "{{ drupal_db_password }}"
-    priv: "{{ drupal_db_name }}.*:ALL"
+    priv: "{{ drupal_db_name }}%.*:ALL"
 
 # PostgreSQL databases and users.
 postgresql_databases:
