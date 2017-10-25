@@ -5,7 +5,6 @@ php_xdebug_version: 2.5.0
 
 php_xdebug_coverage_enable: 1
 php_xdebug_default_enable: 1
-php_xdebug_cli_enable: 1
 
 php_xdebug_remote_enable: "false"
 php_xdebug_remote_connect_back: "false"
@@ -18,3 +17,5 @@ php_xdebug_idekey: sublime.xdebug
 
 php_xdebug_max_nesting_level: 256
 
+# Only used on Debian/Ubuntu.
+php_xdebug_cli_disable: no
