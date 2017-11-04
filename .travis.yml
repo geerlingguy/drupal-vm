@@ -8,7 +8,7 @@ env:
     - CONFIG: tests/config.yml
       MAKEFILE: example.drupal.make.yml
       COMPOSERFILE: example.drupal.composer.json
-      HOSTNAME: drupalvm.dev
+      HOSTNAME: drupalvm.test
       MACHINE_NAME: drupalvm
       IP: 192.168.88.88
       DRUPALVM_DIR: /var/www/drupalvm

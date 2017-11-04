@@ -20,7 +20,15 @@ galaxy_info:
     - all
   - name: Ubuntu
     versions:
-    - all
+    - trusty
+    - xenial
   galaxy_tags:
     - development
     - web
+    - php
+    - language
+    - fpm
+    - drupal
+    - wordpress
+    - joomla
+    - magento

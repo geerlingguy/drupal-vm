@@ -2,11 +2,19 @@
 services: docker
 
 env:
+  # Defaults.
   - distro: centos7
   - distro: centos6
   - distro: ubuntu1604
   - distro: ubuntu1404
-  - distro: ubuntu1204
+  - distro: debian9
+  - distro: debian8
+
+  # Latest release.
+  - distro: centos7
+    playbook: test-latest.yml
+  - distro: ubuntu1604
+    playbook: test-latest.yml
 
 script:
   # Configure test script so we can run extra tests after playbook is run.

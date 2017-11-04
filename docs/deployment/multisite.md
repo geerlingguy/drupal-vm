@@ -6,7 +6,7 @@ drupal_core_path: "/var/www/my-drupal-site"
 ...
 
 apache_vhosts:
-  # Drupal VM's default domain, evaluating to whatever `vagrant_hostname` is set to (drupalvm.dev by default).
+  # Drupal VM's default domain, evaluating to whatever `vagrant_hostname` is set to (drupalvm.test by default).
   - servername: "{{ drupal_domain }}"
     serveralias: "www.{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"

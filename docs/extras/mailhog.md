@@ -1,4 +1,4 @@
-By default, Drupal VM redirects all PHP emails to [MailHog](https://github.com/mailhog/MailHog) (instead of sending them to the outside world). You can access the MailHog UI at [http://drupalvm.dev:8025/](http://drupalvm.dev:8025) (or whatever domain you have configured in `config.yml`).
+By default, Drupal VM redirects all PHP emails to [MailHog](https://github.com/mailhog/MailHog) (instead of sending them to the outside world). You can access the MailHog UI at [http://drupalvm.test:8025/](http://drupalvm.test:8025) (or whatever domain you have configured in `config.yml`).
 
 ## Disable MailHog
 

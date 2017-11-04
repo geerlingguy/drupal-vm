@@ -1,5 +1,56 @@
 # Drupal VM Changelog
 
+## 4.7.0 "Water, Music, and Tronaction" (2017-10-06)
+
+### Breaking Changes
+
+  * In Issue #1520, the precedence of configuration override files was changed slightly. Previously, `[environment].config.yml` overrode all other configuration files, including `local.config.yml`. The intention of the local config file is that it is always the final override. The order of config file precedence (from lowest to highest) is now:
+    1. `config.yml`
+    2. `secrets.yml`
+    3. `[environment].config.yml`
+    4. `local.config.yml`
+
+### New/changed variables in default.config.yml
+
+  * Removed `geerlingguy/ubuntu1204` support (LTS support ended in April).
+  * Default `vagrant_hostname` is now `drupalvm.test` (Google owns `.dev` and some DNS issues have forced us to switch to `.test` as the default).
+  * Added `drupal_db_host: localhost` to fix a DB connection issue with Debian 9 'Stretch'.
+  * Added `headers.load` to `apache_mods_enabled`.
+  * Updated `drush_version` to `8.1.14`.
+  * Updated example `post_provision_scripts` path to include the full `playbook_dir`-based path.
+
+### Improvements
+
+  * #1551: Add PHP 7.2 support via php-versions role.
+  * #1427: Use drupalvm.test for local development default.
+  * #1521: Remove Ubuntu 12.04 support, officially.
+  * #1521: Install Ansible with pip if provisioning inside the VM.
+  * #1527: Revamp dashboard for better layout, especially on mobile.
+  * #1476: Update Drupal role to speed up initial Drupal project generation.
+  * #1487: Install mod_headers for Apache by default.
+  * #1528: ALways enable linked clones in VirtualBox.
+  * #1520: Let local.config.yml override environment.config.yml.
+  * #1564: Allow spaces in `DRUPALVM_ANSIBLE_ARGS` to make it more useful.
+  * #1560, #1558: Various improvements to test scripts.
+  * #1451: Bump the Drupal VM Docker image base to Debian 9 'Stretch'.
+  * #1451: Add full support and automated tests for Debian 9 'Stretch'.
+  * #1504: Display (this may take a while) for long-running Composer tasks.
+  * #1507: Use https URL to download Adminer.
+  * #1495: Update Drupal role so composer install can be skipped on deploy.
+  * #1573: Update default Drupal version to 8.4.x, Drush to 8.1.14.
+  * Updated roles: postgresql, firewall, nginx, php-pecl, mysql, varnish, ruby, adminer, nodejs, php, php-versions.
+
+### Bugfixes
+
+  * #1456: Default Docker example uses incorrect image.
+  * #1481: Use absolute paths for example post_provision_scripts.
+  * #1468: Fix various Linux issues with NFS by defaulting to TCP.
+  * #1508: Switch to using localhost for MySQL so install-drupal works on Debian 9.
+  * #1540: Fix incorrect IP address in some docs.
+  * #1558: Update Daemonize role to work on Ubuntu 14.04 with Ansible 2.4.
+  * #1572: Fix broken link to Drupal Console documentation.
+
+
 ## 4.6.0 "Water, Music, and Tronaction" (2017-06-28)
 
 ### Breaking Changes

@@ -23,8 +23,8 @@ end
 vconfig = load_config([
   default_config_file,
   "#{host_config_dir}/config.yml",
-  "#{host_config_dir}/local.config.yml",
-  "#{host_config_dir}/#{drupalvm_env}.config.yml"
+  "#{host_config_dir}/#{drupalvm_env}.config.yml",
+  "#{host_config_dir}/local.config.yml"
 ])
 
 provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
@@ -108,8 +108,10 @@ Vagrant.configure('2') do |config|
       config_dir: config_dir,
       drupalvm_env: drupalvm_env
     }
-    ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
+    ansible.raw_arguments = Shellwords.shellsplit(ENV['DRUPALVM_ANSIBLE_ARGS']) if ENV['DRUPALVM_ANSIBLE_ARGS']
     ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
+    # Use pip to get the latest Ansible version when using ansible_local.
+    provisioner == :ansible_local && ansible.install_mode = 'pip'
   end
 
   # VMware Fusion.
@@ -124,7 +126,7 @@ Vagrant.configure('2') do |config|
 
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
-    v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
+    v.linked_clone = true
     v.name = vconfig['vagrant_hostname']
     v.memory = vconfig['vagrant_memory']
     v.cpus = vconfig['vagrant_cpus']

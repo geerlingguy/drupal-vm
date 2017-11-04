@@ -45,7 +45,8 @@
     purge: yes
     force: yes
   when: "'php' + php_version not in item"
-  with_flattened:
-    - "{{ php_packages|regex_replace('php' + php_version, 'php5.6') }}"
-    - "{{ php_packages|regex_replace('php' + php_version, 'php7.0') }}"
-    - "{{ php_packages|regex_replace('php' + php_version, 'php7.1') }}"
+  with_items:
+    - php5.6-common
+    - php7.0-common
+    - php7.1-common
+    - php7.2-common

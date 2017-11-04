@@ -6,7 +6,7 @@
 CONFIG="${CONFIG:-tests/config.yml}"
 MAKEFILE="${MAKEFILE:-example.drupal.make.yml}"
 COMPOSERFILE="${COMPOSERFILE:-example.drupal.composer.json}"
-HOSTNAME="${HOSTNAME:-drupalvm.dev}"
+HOSTNAME="${HOSTNAME:-drupalvm.test}"
 MACHINE_NAME="${MACHINE_NAME:-drupalvm}"
 IP="${IP:-192.168.88.88}"
 DRUPALVM_DIR="${DRUPALVM_DIR:-/var/www/drupalvm}"
@@ -15,6 +15,7 @@ TEST_INSTALLED_EXTRAS="${TEST_INSTALLED_EXTRAS:-true}"
 CONTAINER_ID="${CONTAINER_ID:-dvm-test}"
 type="${type:-tests/defaults}"
 distro="${distro:-ubuntu1604}"
+cleanup="${cleanup:-true}"
 
 ## Set up vars for Docker setup.
 # CentOS 7
@@ -31,10 +32,6 @@ elif [ $distro = 'ubuntu1604' ]; then
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Ubuntu 14.04
 elif [ $distro = 'ubuntu1404' ]; then
-  init="/sbin/init"
-  opts="--privileged"
-# Ubuntu 12.04
-elif [ $distro = 'ubuntu1204' ]; then
   init="/sbin/init"
   opts="--privileged"
 # Debian 9
@@ -54,10 +51,15 @@ fi
 # Set OS-specific options.
 if [[ "$OSTYPE" == "darwin"* ]]; then
   volume_opts='rw,cached'
-  xargs_command='xargs'
 else
   volume_opts='rw'
+fi
+
+# Use correct xargs command depending if it's GNU or BSD.
+if xargs --version 2>&1 | grep -s GNU >/dev/null; then
   xargs_command='xargs -r'
+else
+  xargs_command='xargs'
 fi
 
 # Exit on any individual command failure.
@@ -118,56 +120,68 @@ fi
 
 # Drupal.
 printf "\n"${green}"Running functional tests..."${neutral}"\n"
-docker exec $CONTAINER_ID curl -s --header Host:$HOSTNAME localhost \
+docker exec $CONTAINER_ID curl -sSi --header Host:$HOSTNAME localhost \
+  | tee /tmp/dvm-test \
   | grep -q '<title>Welcome to Drupal' \
   && (echo 'Drupal install pass' && exit 0) \
-  || (echo 'Drupal install fail' && exit 1)
+  || (echo 'Drupal install fail' && cat /tmp/dvm-test && exit 1)
 
 # Adminer.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -s --header Host:adminer.$HOSTNAME localhost \
+  docker exec $CONTAINER_ID curl -sSi --header Host:adminer.$HOSTNAME localhost \
+    | tee /tmp/dvm-test \
     | grep -q '<title>Login - Adminer' \
     && (echo 'Adminer install pass' && exit 0) \
-    || (echo 'Adminer install fail' && exit 1)
+    || (echo 'Adminer install fail' && cat /tmp/dvm-test && exit 1)
 fi
 
 # Pimp My Log.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -s --header Host:pimpmylog.$HOSTNAME localhost \
+  docker exec $CONTAINER_ID curl -sSi --header Host:pimpmylog.$HOSTNAME localhost \
+    | tee /tmp/dvm-test \
     | grep -q '<title>Pimp my Log' \
     && (echo 'Pimp my Log install pass' && exit 0) \
-    || (echo 'Pimp my Log install fail' && exit 1)
+    || (echo 'Pimp my Log install fail' && cat /tmp/dvm-test && exit 1)
 fi
 
 # MailHog.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -s localhost:8025 \
+  docker exec $CONTAINER_ID curl -sSi localhost:8025 \
+    | tee /tmp/dvm-test \
     | grep -q '<title>MailHog' \
     && (echo 'MailHog install pass' && exit 0) \
-    || (echo 'MailHog install fail' && exit 1)
+    || (echo 'MailHog install fail' && cat /tmp/dvm-test && exit 1)
 fi
 
 # Varnish.
 if [ $TEST_INSTALLED_EXTRAS = true ]; then
-  docker exec $CONTAINER_ID curl -sI --header Host:$HOSTNAME localhost:81 \
+  docker exec $CONTAINER_ID curl -sSI --header Host:$HOSTNAME localhost:81 \
+    | tee /tmp/dvm-test \
     | grep -q 'Via: .* varnish' \
     && (echo 'Varnish install pass' && exit 0) \
-    || (echo 'Varnish install fail' && exit 1)
+    || (echo 'Varnish install fail' && cat /tmp/dvm-test && exit 1)
 fi
 
 # Dashboard.
-docker exec $CONTAINER_ID curl -s --header Host:$IP localhost \
+docker exec $CONTAINER_ID curl -sSi --header Host:$IP localhost \
+  | tee /tmp/dvm-test \
   | grep -q "<li>$IP $HOSTNAME</li>" \
   && (echo 'Dashboard install pass' && exit 0) \
-  || (echo 'Dashboard install fail' && exit 1)
+  || (echo 'Dashboard install fail' && cat /tmp/dvm-test && exit 1)
 
 # Drush.
 docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status \
+  | tee /tmp/dvm-test \
   | grep -q 'Drupal bootstrap.*Successful' \
   && (echo 'Drush install pass' && exit 0) \
-  || (echo 'Drush install fail' && exit 1)
+  || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
 
 # Remove test container.
-printf "\n"${green}"Cleaning up..."${neutral}"\n"
-docker rm -f $CONTAINER_ID
-printf ${green}"...done!"${neutral}"\n\n"
+if [ $cleanup = true ]; then
+  printf "\n"${green}"Cleaning up..."${neutral}"\n"
+  docker rm -f $CONTAINER_ID
+  printf ${green}"...done!"${neutral}"\n\n"
+else
+  printf "\n"${green}"Skipping cleanup for container id: ${CONTAINER_ID}!"${neutral}"\n"
+  printf ${green}"Done!"${neutral}"\n\n"
+fi

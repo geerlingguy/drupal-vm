@@ -4,13 +4,13 @@
 #
 # Usage:
 #   install-drupal [version]
-# [version] is optional, defaults to 8.3.x. Try 7.x, 7.55, 8.4.x, 8.3.2, etc.
+# [version] is optional, defaults to 8.4.x. Try 7.x, 7.55, 8.5.x, 8.3.2, etc.
 
 # Exit on any individual command failure.
 set -e
 
 # Setup.
-DRUPAL_VERSION="${1:-8.3.x}"
+DRUPAL_VERSION="${1:-8.4.x}"
 PROJECT_PATH='/var/www/drupalvm/drupal'
 
 # Create Drupal project directory.

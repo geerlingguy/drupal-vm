@@ -1,6 +1,9 @@
 ---
 - name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ item }}"
+  with_fileglob:
+    - "../vars/{{ ansible_os_family }}.yml"
+    - "../vars/{{ ansible_os_family }}-php{{ php_version }}.yml"
 
 - name: Define PHP variables.
   set_fact: "{{ item.key }}={{ hostvars[inventory_hostname][item.value] }}"

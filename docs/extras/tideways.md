@@ -8,7 +8,7 @@ To use Tideways make sure `tideways` is in the list of `installed_extras`.
 
 To enable profiling of Drupal pages using the Tideways PHP Extension, follow the directions for [configuring the XHProf and the XHProf module](xhprof.md#xhprof-module), but choose the _Tideways_ extension under the _Profiling settings_ section.
 
-As with the XHProf extension, you can view callgraphs (and a listing of all stored runs) using Drupal VM's own XHProf UI installation by visiting [http://xhprof.drupalvm.dev/](http://xhprof.drupalvm.dev) and clicking on the relevant run, then clicking the _[View Full Callgraph]_ link.
+As with the XHProf extension, you can view callgraphs (and a listing of all stored runs) using Drupal VM's own XHProf UI installation by visiting [http://xhprof.drupalvm.test/](http://xhprof.drupalvm.test) and clicking on the relevant run, then clicking the _[View Full Callgraph]_ link.
 
 ### Profiling with the Tideways module
 

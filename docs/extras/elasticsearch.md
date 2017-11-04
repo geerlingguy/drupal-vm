@@ -12,7 +12,7 @@ To access Elasticsearch from the host computer requires changing the IP address 
 
 The Elasticsearch server can then be accessed at the configured domain:
 
-    http://drupalvm.dev:9200
+    http://drupalvm.test:9200
 
 ## Elasticsearch configuration
 

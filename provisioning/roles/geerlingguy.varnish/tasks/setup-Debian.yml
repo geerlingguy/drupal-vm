@@ -18,3 +18,9 @@
   apt:
     name: "{{ varnish_package_name }}"
     state: present
+
+- name: Ensure old role-managed Varnish systemd unit file is removed.
+  file:
+    path: /etc/systemd/system/varnish.service
+    state: absent
+  when: varnish_systemd_config_path != '/etc/systemd/system'

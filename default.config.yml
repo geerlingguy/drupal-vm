@@ -6,7 +6,6 @@
 #   - geerlingguy/debian8
 #   - geerlingguy/ubuntu1604
 #   - geerlingguy/ubuntu1404
-#   - geerlingguy/ubuntu1204
 vagrant_box: geerlingguy/ubuntu1604
 
 vagrant_user: vagrant
@@ -15,7 +14,7 @@ vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
-vagrant_hostname: drupalvm.dev
+vagrant_hostname: drupalvm.test
 vagrant_machine_name: drupalvm
 vagrant_ip: 192.168.88.88
 
@@ -234,7 +233,7 @@ extra_packages:
   - sqlite
 
 # You can configure almost anything else on the server in the rest of this file.
-drush_version: "8.1.12"
+drush_version: "8.1.14"
 
 extra_security_enabled: false
 
@@ -255,7 +254,7 @@ firewall_log_dropped_packets: false
 firewall_disable_firewalld: true
 firewall_disable_ufw: true
 
-# PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
+# PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1, 7.2.
 # See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
 php_version: "7.1"
 php_install_recommends: no

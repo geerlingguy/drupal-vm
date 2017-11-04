@@ -17,9 +17,6 @@ galaxy_info:
       - all
     - name: Ubuntu
       versions:
-      - precise
-      - raring
-      - saucy
       - trusty
       - xenial
   galaxy_tags:

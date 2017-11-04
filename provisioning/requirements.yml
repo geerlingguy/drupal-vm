@@ -16,7 +16,7 @@
 - src: geerlingguy.composer
   version: 1.6.1
 - src: geerlingguy.daemonize
-  version: 1.1.1
+  version: 1.2.0
 - src: geerlingguy.drupal
   version: 2.4.0
 - src: geerlingguy.drupal-console
@@ -40,9 +40,9 @@
 - src: geerlingguy.nginx
   version: 2.4.0
 - src: geerlingguy.nodejs
-  version: 4.1.1
+  version: 4.1.2
 - src: geerlingguy.php
-  version: 3.4.5
+  version: 3.5.0
 - src: geerlingguy.php-memcached
   version: 2.0.0
 - src: geerlingguy.php-mysql
@@ -56,9 +56,9 @@
 - src: geerlingguy.php-tideways
   version: 1.1.0
 - src: geerlingguy.php-versions
-  version: 1.1.0
+  version: 2.0.0
 - src: geerlingguy.php-xdebug
-  version: 2.3.1
+  version: 2.4.0
 - src: geerlingguy.php-xhprof
   version: 2.2.2
 - src: geerlingguy.pimpmylog
@@ -78,4 +78,4 @@
 - src: geerlingguy.solr
   version: 3.5.5
 - src: geerlingguy.varnish
-  version: 2.0.2
+  version: 2.1.1
