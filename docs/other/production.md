@@ -43,7 +43,15 @@ First, you'd create an Ansible Vault encrypted file:
 
     $ ansible-vault create secrets.yml
 
-Create the file inside your VM's configuration directory, add any plaintext passwords, and save it. Ansible Vault will encrypt the file, and you can edit the file using `ansible-vault edit`.
+Create the file inside your VM's configuration directory, and save the following inside (replacing the actual passwords with your own secure ones!):
+
+```
+drupal_account_pass: add-your-secure-password-1-here
+drupal_db_password: add-your-secure-password-2-here                                                                  
+mysql_root_password: add-your-secure-password-3-here
+```
+
+Ansible Vault will encrypt the file, and you can edit the file using `ansible-vault edit`.
 
 When running `vagrant` commands, make sure you tell the Ansible provisioner to use `--ask-vault-pass`, e.g.:
 
