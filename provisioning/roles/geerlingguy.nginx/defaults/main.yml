@@ -9,7 +9,7 @@ nginx_yum_repo_enabled: true
 nginx_ppa_use: false
 nginx_ppa_version: stable
 
-# The name of the nginx apt/yum package to install.
+# The name of the nginx package to install.
 nginx_package_name: "nginx"
 
 nginx_conf_template: "nginx.conf.j2"

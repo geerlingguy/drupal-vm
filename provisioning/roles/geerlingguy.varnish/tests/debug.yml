@@ -1,0 +1,9 @@
+---
+- name: Check what version of Varnish was installed.
+  command: varnishd -V
+  register: varnish_version
+  changed_when: no
+
+- name: Display the installed Varnish version.
+  debug: var=varnish_version
+  changed_when: no

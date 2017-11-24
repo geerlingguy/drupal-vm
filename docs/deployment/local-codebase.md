@@ -39,7 +39,7 @@ This variable will be used for the document root of the webserver.
 
 ## Set the domain
 
-By default the domain of your site will be `drupalvm.dev` but you can change it by setting `drupal_domain` to the domain of your choice:
+By default the domain of your site will be `drupalvm.test` but you can change it by setting `drupal_domain` to the domain of your choice:
 
 ```yaml
 drupal_domain: "local.my-drupal-site.com"

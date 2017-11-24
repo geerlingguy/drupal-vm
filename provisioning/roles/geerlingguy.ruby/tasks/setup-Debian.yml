@@ -7,8 +7,10 @@
     ruby_rubygems_package_name: rubygems-integration
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
-- name: Install ruby and rubygems.
+- name: Install ruby, rubygems, and build-essential.
   apt: "name={{ item }} state=present"
   with_items:
     - ruby-full
+    - ruby-dev
     - "{{ ruby_rubygems_package_name }}"
+    - build-essential

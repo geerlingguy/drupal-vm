@@ -1,6 +1,6 @@
 [Drupal Console](https://drupalconsole.com/) is a modern CLI for interacting with Drupal and scaffolding a site. It works only with Drupal 8+, and is built on top of the Symfony Console component.
 
-Drupal VM will automatically install Drupal Console if you install Drupal 8 or later in your VM (this is based on the value of the `drupal_major_version` variable inside `config.yml`.
+To have Drupal Console installed globally inside Drupal VM, make sure `drupalconsole` is in the list of `installed_extras` in your `config.yml` file. If you're adding it to an existing Drupal VM, run `vagrant provision` so it gets installed. You also (or instead) might want to add Drupal Console as a dependency of your Drupal project—if you do this, you may not need to add `drupalconsole` to Drupal VM globally.
 
 To use Drupal Console with a Drupal 8 site (in this case, using the default configuration that ships with Drupal VM):
 
@@ -33,9 +33,9 @@ dev:
 
 Execute from host machine using the `--target` option.
 
-    drupal --target=drupalvm.dev site:status
+    drupal --target=drupalvm.test site:status
 
-For more details, see [Drupal Console's documentation](https://hechoendrupal.gitbooks.io/drupal-console/content/en/using/how-to-use-drupal-console-in-a-remote-installation.html)
+For more details, see [Drupal Console's documentation](https://docs.drupalconsole.com/en/alias/how-to-use-drupal-console-in-a-remote-installation.html)
 
 For a list of available role variables, see the [`geerlingguy.drupal-console` Ansible role's README](https://github.com/geerlingguy/ansible-role-drupal-console#readme).
 

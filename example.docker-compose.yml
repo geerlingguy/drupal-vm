@@ -4,8 +4,8 @@ services:
 
   drupal-vm:
 
-    # Switch the image to `geerlingguy/drupal-vm` to use Drupal VM defaults.
-    image: drupal-vm
+    # If using a custom baked image, change the name below to your image's name.
+    image: geerlingguy/drupal-vm
     # Comment out 'image' and uncomment the line below if customizing Drupal VM
     # with a project-specific Dockerfile in the same directory as this file.
     # build: .
@@ -24,9 +24,9 @@ services:
       - '8.8.8.8'
       - '8.8.4.4'
 
-    # Use of the `delegated` option currently requires the Docker Edge release.
     volumes:
       - ./:/var/www/drupalvm/:rw,delegated
+      - /var/lib/mysql
 
     privileged: true
     command: /lib/systemd/systemd
@@ -36,7 +36,7 @@ services:
         # Set this IP address to something different if you already have another
         # service running on the default IP address. If you change the subnet,
         # you need to also change the bridge network IP and subnet below.
-        ipv4_address: 192.168.88.88
+        ipv4_address: 192.168.89.89
 
 networks:
 
@@ -44,7 +44,7 @@ networks:
   drupalvm:
     driver: bridge
     driver_opts:
-      ip: 192.168.88.1
+      ip: 192.168.89.1
     ipam:
       config:
-        - subnet: "192.168.88.0/16"
+        - subnet: "192.168.89.0/16"

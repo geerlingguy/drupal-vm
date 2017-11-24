@@ -1,60 +1,27 @@
 ---
-sudo: required
+services: docker
 
 env:
-  - repository: geerlingguy/docker-centos7-ansible
-    version: latest
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - repository: geerlingguy/docker-centos6-ansible
-    version: latest
-    init: /sbin/init
-    run_opts: ""
-  - repository: geerlingguy/docker-ubuntu1604-ansible
-    version: latest
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - repository: geerlingguy/docker-ubuntu1404-ansible
-    version: latest
-    init: /sbin/init
-    run_opts: ""
-  - repository: geerlingguy/docker-ubuntu1204-ansible
-    version: latest
-    init: /sbin/init
-    run_opts: ""
-
-services:
-  - docker
-
-before_install:
-  # Pull container.
-  - 'sudo docker pull ${repository}:${version}'
+  - distro: centos7
+  - distro: centos6
+  - distro: ubuntu1604
+  - distro: ubuntu1404
+  - distro: ubuntu1204
 
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state.
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${repository}:${version} "${init}" > "${container_id}"'
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
 
-  # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
-  - >
-    tail ${idempotence}
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
   # Ensure daemonize is available.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which daemonize'
-
-  # Clean up.
-  - 'sudo docker stop "$(cat ${container_id})"'
+  - 'docker exec --tty ${container_id} env TERM=xterm which daemonize'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

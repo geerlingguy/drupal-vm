@@ -7,7 +7,7 @@ It doesn't require any additional Drupal modules to use, but once you've made su
 Once you've configured your environment for your own Blackfire account, you can profile a request with Blackfire by running something like the following example (within Drupal VM, after logging in with `vagrant ssh`):
 
 ```
-$ blackfire curl http://drupalvm.dev/
+$ blackfire curl http://drupalvm.test/
 Profiling: [########################################] 10/10
 Blackfire cURL completed
 Graph URL https://blackfire.io/profiles/[UUID]/graph

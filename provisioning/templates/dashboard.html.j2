@@ -90,37 +90,41 @@
     {%- endmacro -%}
 
     {%- macro sectionSiteList() -%}
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Hostname</th>
-            <th>Document Root</th>
-            {% if configure_drush_aliases -%}
-              <th>Drush alias*</th>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Hostname</th>
+              <th>Document Root</th>
+              {% if configure_drush_aliases -%}
+                <th>Drush alias*</th>
+              {%- endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% if drupalvm_webserver == 'apache' -%}
+              {%- for host in apache_vhosts -%}
+                {%- if host.documentroot is defined -%}
+                  {{ printSite(host.servername, host.documentroot) }}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- elif drupalvm_webserver == 'nginx' -%}
+              {%- for host in nginx_vhosts -%}
+                {%- if host.root is defined -%}
+                  {%- for hostname in host.server_name.split() -%}
+                    {{ printSite(hostname, host.root) }}
+                  {%- endfor -%}
+                {%- endif -%}
+              {%- endfor -%}
             {%- endif %}
-        </thead>
-        <tbody>
-          {% if drupalvm_webserver == 'apache' -%}
-            {%- for host in apache_vhosts -%}
-              {%- if host.documentroot is defined -%}
-                {{ printSite(host.servername, host.documentroot) }}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- elif drupalvm_webserver == 'nginx' -%}
-            {%- for host in nginx_vhosts -%}
-              {%- if host.root is defined -%}
-                {%- for hostname in host.server_name.split() -%}
-                  {{ printSite(hostname, host.root) }}
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif %}
-          <tr><td colspan=3><small>*Note: If Ansible isn't installed on your host, Drush aliases are only created inside the VM.</small></td></tr>
-        </tbody>
-      </table>
+            <tr><td colspan=3><small>*Note: If Ansible isn't installed on your host, Drush aliases are only created inside the VM.</small></td></tr>
+          </tbody>
+        </table>
+      </div>
     {%- endmacro -%}
 
     {%- macro sectionDevelopmentTools() -%}
+          <div class="table-responsive">
       <table class="table">
         {% if not installed_extras -%}
           <tr>
@@ -132,9 +136,9 @@
           {%- if servername() != "/{{ adminer_install_filename }}" -%}
             <tr>
               <th>Adminer</th>
-              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
-              <td class="text-right">
-                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a>
+              </br>
+              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/mysql/#connect-using-adminer" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
@@ -145,9 +149,9 @@
           {%- if servername() != ":8025" -%}
             <tr>
               <th>MailHog</th>
-              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
-              <td class="text-right">
-                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a>
+              </br>
+              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/mailhog/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
@@ -158,9 +162,9 @@
           {%- if servername() -%}
             <tr>
               <th>PimpMyLog</th>
-              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
-              <td class="text-right">
-                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a>
+              </br>
+              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/pimpmylog/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
@@ -170,9 +174,9 @@
           {% macro servername() %}{{ vagrant_hostname }}:{{ solr_port }}/solr/{% endmacro %}
           <tr>
             <th>Solr</th>
-            <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
-            <td class="text-right">
-              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
+            <td><a href="http://{{ servername() }}">{{ servername() }}</a>
+            </br>
+            <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
               <a href="http://docs.drupalvm.com/en/latest/extras/solr/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
             </td>
           </tr>
@@ -182,175 +186,155 @@
           {%- if servername() -%}
             <tr>
               <th>XHProf</th>
-              <td><a href="http://{{ servername() }}">{{ servername() }}</a></td>
-              <td class="text-right">
-                <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
+              <td><a href="http://{{ servername() }}">{{ servername() }}</a>
+              </br>
+              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
                 <a href="http://docs.drupalvm.com/en/latest/extras/xhprof/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
               </td>
             </tr>
           {%- endif -%}
         {%- endif %}
       </table>
+      </div>
     {%- endmacro -%}
 
     {%- macro sectionPhpInformation() -%}
-      <table class="table">
-        <tr>
-          <th>PHP Version</th>
-          <td><code>{{ php_version }}</code></td>
-        </tr>
-        <tr>
-          <th>Webserver</th>
-          <td><code>{{ drupalvm_webserver|capitalize }}</code></td>
-        </tr>
-        <tr>
-          <th>Memory limit</th>
-          <td><code>{{ php_memory_limit }}</code></td>
-        </tr>
-        <tr>
-          <th>PHP-FPM enabled</th>
-          <td><code>{{ 'yes' if php_enable_php_fpm else 'no' }}</code></td>
-        </tr>
-        <tr><td colspan=2><small><a href="/server-info.php">View more details in the server's phpinfo() report</a>.</small></td></tr>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th>PHP Version</th>
+            <td><code>{{ php_version }}</code></td>
+          </tr>
+          <tr>
+            <th>Webserver</th>
+            <td><code>{{ drupalvm_webserver|capitalize }}</code></td>
+          </tr>
+          <tr>
+            <th>Memory limit</th>
+            <td><code>{{ php_memory_limit }}</code></td>
+          </tr>
+          <tr>
+            <th>PHP-FPM enabled</th>
+            <td><code>{{ 'yes' if php_enable_php_fpm else 'no' }}</code></td>
+          </tr>
+          <tr><td colspan=2><small><a href="/server-info.php">View more details in the server's phpinfo() report</a>.</small></td></tr>
+        </table>
+      </div>
     {%- endmacro -%}
 
     {%- macro sectionDatabaseConnection() -%}
-      <table class="table">
-        <tr>
-          <th>MySQL Hostname</th>
-          <td><code>127.0.0.1</code></td>
-        </tr>
-        <tr>
-          <th>MySQL Port</th>
-          <td><code>{{ mysql_port }}</code></td>
-        </tr>
-        <tr>
-          <th>MySQL Username</th>
-          <td><code>{{ mysql_root_username }}</code></td>
-        </tr>
-        <tr>
-          <th>MySQL Password</th>
-          <td><code>{{ mysql_root_password }}</code></td>
-        </tr>
-        <tr>
-          <th>SSH Hostname</th>
-          <td><code>{{ vagrant_ip }}</code></td>
-        </tr>
-        <tr>
-          <th>SSH Username</th>
-          <td><code>{{ vagrant_user }}</code></td>
-        </tr>
-        <tr>
-          <th>SSH Private Key</th>
-          <td><code>~/.vagrant.d/insecure_private_key</code></td>
-        </tr>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th>MySQL Hostname</th>
+            <td><code>127.0.0.1</code></td>
+          </tr>
+          <tr>
+            <th>MySQL Port</th>
+            <td><code>{{ mysql_port }}</code></td>
+          </tr>
+          <tr>
+            <th>MySQL Username</th>
+            <td><code>{{ mysql_root_username }}</code></td>
+          </tr>
+          <tr>
+            <th>MySQL Password</th>
+            <td><code>{{ mysql_root_password }}</code></td>
+          </tr>
+          <tr>
+            <th>SSH Hostname</th>
+            <td><code>{{ vagrant_ip }}</code></td>
+          </tr>
+          <tr>
+            <th>SSH Username</th>
+            <td><code>{{ vagrant_user }}</code></td>
+          </tr>
+          <tr>
+            <th>SSH Private Key</th>
+            <td><code>~/.vagrant.d/insecure_private_key</code></td>
+          </tr>
+        </table>
+      </div>
     {%- endmacro -%}
 
     {%- macro sectionDatabaseList() -%}
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Database name</th>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <tbody>
+            {% for database in mysql_databases -%}
             {% if 'adminer' in installed_extras -%}
-              <th></th>
+              <tr>
+                <td>
+                  <a href="http://{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}?username={{ mysql_root_username }}&db={{ database.name }}" class="btn btn-success btn-xs" role="button">{{ database.name }}</a>
+                </td>
+              </tr>
+            {% else -%}
+              <tr>
+                <td>{{ database.name }}</td>
+              </tr>
             {%- endif %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for database in mysql_databases -%}
-            <tr>
-              <td><code>{{ database.name }}</code></td>
-              {% if 'adminer' in installed_extras -%}
-              <td>
-                <a href="http://{{ getServernameFromDocroot(adminer_install_dir) }}/{{ adminer_install_filename }}?username={{ mysql_root_username }}&db={{ database.name }}" class="btn btn-success btn-xs" role="button">Adminer</a>
-              </td>
-              {%- endif %}
-            </tr>
-          {%- endfor %}
-        </tbody>
-      </table>
+            {%- endfor %}
+          </tbody>
+        </table>
+      </div>
     {%- endmacro -%}
 
+    {%- macro SectionDatabaseListLabel() -%}
+      {% if 'adminer' in installed_extras -%}
+        Databases using Adminer
+      {% else -%}
+        Databases
+      {%- endif %}
+    {%- endmacro -%}
+
+
     {%- macro sectionDatabaseUserList() -%}
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Password</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for user in mysql_users -%}
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
             <tr>
-              <td><code>{{ user.name }}</code></td>
-              <td><code>{{ user.password }}</code></td>
+              <th>Username</th>
+              <th>Password</th>
             </tr>
-          {%- endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for user in mysql_users -%}
+              <tr>
+                <td><code>{{ user.name }}</code></td>
+                <td><code>{{ user.password }}</code></td>
+              </tr>
+            {%- endfor %}
+          </tbody>
+        </table>
+      </div>
     {%- endmacro -%}
 
     <div class="container">
 
       <div class="row">
         <div class="col-md-12">
-          <section class="jumbotron">
-            <div class="row">
-              <div class="col-md-7 text-center">
-                <a href="https://www.drupalvm.com/"><img src="http://docs.drupalvm.com/en/latest/images/drupal-vm-logo.png" alt="Drupal VM" title="Welcome to Drupal VM"></a>
-                <p><a href="https://github.com/geerlingguy/drupal-vm">Drupal VM</a> is a VM for local Drupal development, built with Vagrant + Ansible.</p>
-                <p><a class="btn btn-primary btn-lg" href="http://docs.drupalvm.com/en/latest/" role="button">Read the documentation</a></p>
-              </div>
-
-              <div class="col-md-5">
-                <h5>/etc/hosts</h5>
-                <section class="well small">
-                  {{ sectionHost() }}
-                </section>
-                <small>Unless you're using the <a href="https://github.com/cogitatio/vagrant-hostsupdater" target="_blank">vagrant-hostsupdater</a> or <a href="https://github.com/smdahlen/vagrant-hostmanager" target="_blank">vagrant-hostmanager</a> plugin, add the lines above to your host machine's hosts file.</small>
-              </div>
-            </div>
+          <section class="jumbotron text-center">
+            <a href="https://www.drupalvm.com/"><img src="http://docs.drupalvm.com/en/latest/images/drupal-vm-logo.png" alt="Drupal VM" title="Welcome to Drupal VM" class="img-responsive center-block"></a>
+            <p><a href="https://github.com/geerlingguy/drupal-vm">Drupal VM</a> is a VM for local Drupal development, built with Vagrant + Ansible.</p>
+            <p><small>Machine name: <strong>{{ vagrant_machine_name }}</strong></small></p>
+            <p><a class="btn btn-primary btn-lg" href="http://docs.drupalvm.com/en/latest/" role="button">Read the documentation</a></p>
           </section>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-7">
-
+        <div class="col-md-9">
           <section class="panel panel-default">
             <div class="panel-heading">Your sites</div>
             <div class="panel-body">
               {{ sectionSiteList() }}
             </div>
           </section>
-
-          <section class="panel panel-default">
-            <div class="panel-heading">Development tools</div>
-            <div class="panel-body">
-              {{ sectionDevelopmentTools() }}
-            </div>
-          </section>
-
-          <section class="panel panel-default">
-            <div class="panel-heading">PHP information</div>
-            <div class="panel-body">
-              {{ sectionPhpInformation() }}
-            </div>
-          </section>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-3">
           <section class="panel panel-default">
-            <div class="panel-heading">MySQL connection information</div>
-            <div class="panel-body">
-              {{ sectionDatabaseConnection() }}
-            </div>
-          </section>
-
-          <section class="panel panel-default">
-            <div class="panel-heading">Databases</div>
+            <div class="panel-heading"> {{ SectionDatabaseListLabel() }}</div>
             <div class="panel-body">
               {{ sectionDatabaseList() }}
 
@@ -360,6 +344,48 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-md-3">
+          <section class="panel panel-default">
+            <div class="panel-heading">PHP information</div>
+            <div class="panel-body">
+              {{ sectionPhpInformation() }}
+            </div>
+          </section>
+        </div>
+
+        <div class="col-md-6">
+          <section class="panel panel-default">
+            <div class="panel-heading">MySQL connection information</div>
+            <div class="panel-body">
+              {{ sectionDatabaseConnection() }}
+            </div>
+          </section>
+        </div>
+
+        <div class="col-md-3">
+          <section class="panel panel-default">
+            <div class="panel-heading">Development tools</div>
+            <div class="panel-body">
+              {{ sectionDevelopmentTools() }}
+            </div>
+          </section>
+        </div>  
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <section class="panel panel-default">
+            <div class="panel-heading">/etc/hosts</div>
+              <div class="panel-body">
+                <section class="well small">
+                  {{ sectionHost() }}
+                </section>
+                <small>Unless you're using the <a href="https://github.com/cogitatio/vagrant-hostsupdater" target="_blank">vagrant-hostsupdater</a> or <a href="https://github.com/smdahlen/vagrant-hostmanager" target="_blank">vagrant-hostmanager</a> plugin, add the lines above to your host machine's hosts file.</small>
+              </div>
+          </section>
+        </div>
+      </div>
     </div>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">

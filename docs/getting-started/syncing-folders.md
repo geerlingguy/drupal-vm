@@ -14,7 +14,7 @@ You can add as many synced folders as you'd like, and you can configure [any typ
 
 ## Options
 
-The synced folder options exposed are `type`, `excluded_paths` (when using rsync), `id`, `create` and `mount_options`. Besides these there are some sane defaults set when using rsync. For example all files synced with rsync will be writable by everyone, thus allowing the web server to create files.
+The synced folder options exposed are `type`, `excluded_paths` (when using rsync), `id`, `create`, `mount_options` and `nfs_udp`. Besides these there are some sane defaults set when using rsync. For example all files synced with rsync will be writable by everyone, thus allowing the web server to create files.
 
 ### Overriding defaults
 

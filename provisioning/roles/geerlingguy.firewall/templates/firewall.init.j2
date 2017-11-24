@@ -24,6 +24,9 @@ case "$1" in
   stop)
     echo "Stopping firewall."
     iptables -F
+    if [ -x "$(which ip6tables 2>/dev/null)" ]; then
+        ip6tables -F
+    fi
     ;;
   restart)
     echo "Restarting firewall."

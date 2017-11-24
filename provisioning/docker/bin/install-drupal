@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Install a Drupal site with Drush.
+#
+# Usage:
+#   install-drupal [version]
+# [version] is optional, defaults to 8.4.x. Try 7.x, 7.55, 8.5.x, 8.3.2, etc.
+
+# Exit on any individual command failure.
+set -e
+
+# Setup.
+DRUPAL_VERSION="${1:-8.4.x}"
+PROJECT_PATH='/var/www/drupalvm/drupal'
+
+# Create Drupal project directory.
+mkdir -p $PROJECT_PATH
+
+# Download Drupal with Drush.
+echo "Downloading Drupal $DRUPAL_VERSION"
+drush dl drupal-$DRUPAL_VERSION \
+  --destination=$PROJECT_PATH \
+  --drupal-project-rename=web
+
+# Install Drupal with Drush.
+echo "Installing Drupal"
+drush si standard --root=$PROJECT_PATH/web -y \
+  --db-url='mysql://drupal:drupal@localhost/drupal' \
+  --site-name='Drupal VM' \
+  --account-name=admin --account-pass=admin
+
+# Set appropriate permissions.
+chown -R www-data:www-data $PROJECT_PATH

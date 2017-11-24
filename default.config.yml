@@ -1,14 +1,20 @@
 ---
-# `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
-# geerlingguy/debian8, geerlingguy/ubuntu1404, geerlingguy/ubuntu1204, etc.
+# Available `vagrant_box` values include:
+#   - geerlingguy/centos7
+#   - geerlingguy/centos6
+#   - geerlingguy/debian9
+#   - geerlingguy/debian8
+#   - geerlingguy/ubuntu1604
+#   - geerlingguy/ubuntu1404
 vagrant_box: geerlingguy/ubuntu1604
+
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
 vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
-vagrant_hostname: drupalvm.dev
+vagrant_hostname: drupalvm.test
 vagrant_machine_name: drupalvm
 vagrant_ip: 192.168.88.88
 
@@ -81,8 +87,9 @@ drupal_core_owner: "{{ drupalvm_user }}"
 drupal_db_user: drupal
 drupal_db_password: drupal
 drupal_db_name: drupal
+drupal_db_host: localhost
 
-# Settings for installing a Drupal site if 'install_site:' is 'true'.
+# Settings for installing a Drupal site if 'drupal_install_site:' is 'true'.
 drupal_major_version: 8
 drupal_domain: "{{ vagrant_hostname }}"
 drupal_site_name: "Drupal"
@@ -141,6 +148,7 @@ apache_packages_state: latest
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - expires.load
+  - headers.load
   - ssl.load
   - rewrite.load
   - proxy.load
@@ -225,7 +233,7 @@ extra_packages:
   - sqlite
 
 # You can configure almost anything else on the server in the rest of this file.
-drush_version: "8.1.10"
+drush_version: "8.1.14"
 
 extra_security_enabled: false
 
@@ -246,7 +254,7 @@ firewall_log_dropped_packets: false
 firewall_disable_firewalld: true
 firewall_disable_ufw: true
 
-# PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
+# PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1, 7.2.
 # See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
 php_version: "7.1"
 php_install_recommends: no
@@ -273,11 +281,12 @@ composer_home_group: "{{ drupalvm_user }}"
 composer_global_packages:
   - { name: hirak/prestissimo, release: '^0.3' }
 
-# Run specified scripts before or after VM is provisioned. Path is relative to
-# the `provisioning/playbook.yml` file.
+# Run specified scripts before or after VM is provisioned. Use {{ playbook_dir }}
+# to reference the provisioning/ folder in Drupal VM or {{ config_dir }} to
+# reference the directory where your `config.yml` is.
 pre_provision_scripts: []
 post_provision_scripts: []
-  # - "../examples/scripts/configure-solr.sh"
+  # - "{{ playbook_dir }}/../examples/scripts/configure-solr.sh"
 
 # MySQL Configuration.
 mysql_root_password: root

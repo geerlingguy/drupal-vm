@@ -46,8 +46,8 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupalv
               goutte: ~
               javascript_session: selenium2
               selenium2:
-                wd_host: http://drupalvm.dev:4444/wd/hub
-              base_url: http://drupalvm.dev
+                wd_host: http://drupalvm.test:4444/wd/hub
+              base_url: http://drupalvm.test
             Drupal\DrupalExtension:
               blackbox: ~
               api_driver: 'drupal'

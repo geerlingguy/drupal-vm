@@ -78,31 +78,31 @@
 
 - name: Clone the PHP repository.
   git:
-    repo: https://git.php.net/repository/php-src.git
+    repo: "{{ php_source_repo }}"
     dest: "{{ php_source_clone_dir }}"
     version: "{{ php_source_version }}"
     accept_hostkey: yes
     depth: "{{ php_source_clone_depth }}"
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Ensure PHP installation path exists.
   file:
     path: "{{ php_source_install_path }}"
     state: directory
     mode: 0755
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Build configure script.
   shell: >
     ./buildconf --force
     chdir={{ php_source_clone_dir }}
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Run configure script.
   shell: >
     {{ php_source_configure_command }}
     chdir={{ php_source_clone_dir }}
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Make and install PHP.
   shell: >
@@ -111,7 +111,7 @@
   with_items:
     - "{{ php_source_make_command }}"
     - make install
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Ensure php executable is symlinked into a standard path.
   file:

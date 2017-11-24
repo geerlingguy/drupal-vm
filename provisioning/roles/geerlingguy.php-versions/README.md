@@ -26,7 +26,7 @@ The PHP version to be installed. Any [currently-supported PHP major version](htt
     - hosts: webservers
     
       vars:
-        php_version: 7.1
+        php_version: '7.1'
     
       roles:
         - role: geerlingguy.repo-remi

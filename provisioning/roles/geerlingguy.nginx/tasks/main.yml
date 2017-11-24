@@ -24,6 +24,9 @@
 - include: setup-OpenBSD.yml
   when: ansible_os_family == 'OpenBSD'
 
+- include: setup-Archlinux.yml
+  when: ansible_os_family == 'Archlinux'
+
 # Vhost configuration.
 - include: vhosts.yml
 

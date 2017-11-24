@@ -1,0 +1,14 @@
+---
+- hosts: all
+
+  vars:
+    varnish_version: "4.1"
+
+  pre_tasks:
+    - include: setup.yml
+
+  roles:
+    - role_under_test
+
+  post_tasks:
+    - include: debug.yml

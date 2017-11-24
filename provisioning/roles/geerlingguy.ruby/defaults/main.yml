@@ -13,8 +13,8 @@ ruby_install_gems_user: "{{ ansible_user }}"
 # If set to TRUE, ruby will be installed from source, using the version set with
 # the 'ruby_version' variable instead of using a package.
 ruby_install_from_source: false
-ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
-ruby_version: 2.3.0
+ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz
+ruby_version: 2.4.1
 
 # Default should usually work, but this will be overridden on Ubuntu 14.04.
 ruby_rubygems_package_name: rubygems

@@ -1,0 +1,20 @@
+---
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=600
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure build dependencies are installed (RedHat 7+).
+  yum: 'name="{{ item }}" state=present'
+  with_items:
+    - logrotate
+    - systemd-sysv
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version >= '7'
+
+- name: Ensure build dependencies are installed (RedHat < 7).
+  yum: 'name="{{ item }}" state=present'
+  with_items:
+    - logrotate
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version < '7'
+
+- name: Ensure curl is installed.
+  package: 'name=curl state=present'
