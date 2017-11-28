@@ -28,6 +28,7 @@
       with_fileglob: "{{ pre_provision_tasks_dir|default(omit) }}"
 
     - include: tasks/php.yml
+    - include: tasks/sshd.yml
 
   roles:
     # Essential roles.
@@ -103,7 +104,6 @@
     - { role: geerlingguy.security, when: extra_security_enabled }
 
   tasks:
-    - include: tasks/sshd.yml
     - include: tasks/extras.yml
 
     - include: tasks/apparmor.yml
