@@ -3,6 +3,7 @@
 
   vars:
     solr_version: "4.10.4"
+    solr_remove_cruft: true
     java_packages:
       - openjdk-7-jdk
 

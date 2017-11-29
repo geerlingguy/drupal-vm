@@ -2,7 +2,7 @@
 - hosts: all
 
   vars:
-    solr_version: "5.5.3"
+    solr_version: "5.5.4"
     solr_remove_cruft: true
     java_packages:
       - openjdk-7-jdk
@@ -11,9 +11,6 @@
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == "Debian"
-
-    - name: Ensure sudo is present.
-      package: name=sudo state=present
 
   roles:
     - geerlingguy.java

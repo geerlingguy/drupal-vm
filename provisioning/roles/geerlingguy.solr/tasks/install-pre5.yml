@@ -79,5 +79,5 @@
   when: >
     (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04') or
     (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 8) or
-    (ansible_distribution == 'CentOS' and ansible_distribution_version|int >= 7) or
+    (ansible_distribution == 'CentOS' and ansible_distribution_major_version|int >= 7) or
     (ansible_distribution == 'Fedora')

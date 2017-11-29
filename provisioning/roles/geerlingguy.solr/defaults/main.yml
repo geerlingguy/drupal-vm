@@ -4,11 +4,14 @@ solr_workspace: /root
 solr_create_user: true
 solr_user: solr
 
-solr_version: "6.3.0"
+solr_version: "7.1.0"
 solr_mirror: "https://archive.apache.org/dist"
 solr_remove_cruft: false
 
+solr_service_manage: true
 solr_service_name: solr
+solr_service_state: started
+
 solr_install_dir: /opt
 solr_install_path: "/opt/{{ solr_service_name }}"
 solr_home: "/var/{{ solr_service_name }}"

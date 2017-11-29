@@ -20,3 +20,9 @@ galaxy_info:
       - all
   galaxy_tags:
     - development
+    - solr
+    - search
+    - lucene
+    - container
+    - apache
+    - text

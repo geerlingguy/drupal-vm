@@ -1,0 +1,47 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - name: Set Java 8 package for RedHat.
+      set_fact:
+        java_packages:
+          - java-1.8.0-openjdk
+      when: ansible_os_family == "RedHat"
+
+    - name: Set Java 8 package for Debian/Ubuntu.
+      set_fact:
+        java_packages:
+          - openjdk-8-jdk
+      when: >
+        ansible_distribution == "Debian" or
+        (ansible_distribution == "Ubuntu" and ansible_distribution_version == "14.04")
+
+    - name: Add repository for OpenJDK 8 (Ubuntu 14.04).
+      apt_repository: repo='ppa:openjdk-r/ppa'
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "14.04"
+
+    - name: Enable Backports repository (Debian).
+      apt_repository:
+        repo: 'deb http://ftp.debian.org/debian {{ ansible_distribution_release }}-backports main'
+        state: present
+        filename: "{{ ansible_distribution_release }}_backports"
+      register: debian_backports
+      when: ansible_distribution == "Debian"
+
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == "Debian"
+
+    # See: http://unix.stackexchange.com/a/342469
+    - name: Install dependencies (Debian).
+      apt:
+        default_release: "{{ ansible_distribution_release }}-backports"
+        name:
+          - openjdk-8-jre-headless
+          - ca-certificates-java
+        state: present
+      when: ansible_distribution == "Debian"
+
+  roles:
+    - geerlingguy.java
+    - role_under_test
