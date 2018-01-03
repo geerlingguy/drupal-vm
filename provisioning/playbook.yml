@@ -115,6 +115,10 @@
     - include: tasks/cron.yml
       tags: ['cron']
 
+    - include: tasks/goaccess.yml
+      when: '"goaccess" in installed_extras'
+      tags: ['goaccess']
+
     - include: tasks/dashboard.yml
       when: dashboard_install_dir is defined and dashboard_install_dir != ''
       tags: ['webserver', 'database', 'php']
