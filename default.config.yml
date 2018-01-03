@@ -139,6 +139,10 @@ apache_vhosts:
     documentroot: "{{ pimpmylog_install_dir }}"
     extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
+  - servername: "goaccess.{{ vagrant_hostname }}"
+    documentroot: "{{ goaccess_install_dir }}"
+    extra_parameters: ""
+
   - servername: "{{ vagrant_ip }}"
     serveralias: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
@@ -173,6 +177,10 @@ nginx_hosts:
   - server_name: "pimpmylog.{{ vagrant_hostname }}"
     root: "{{ pimpmylog_install_dir }}"
     is_php: true
+
+  - server_name: "goaccess.{{ vagrant_hostname }}"
+    root: "{{ goaccess_install_dir }}"
+    is_php: false
 
   - server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"
     root: "{{ dashboard_install_dir }}"
