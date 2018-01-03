@@ -350,6 +350,7 @@ docker_image_path: ~/Downloads
 
 # Other configuration.
 dashboard_install_dir: /var/www/dashboard
+goaccess_install_dir: /var/www/goaccess
 known_hosts_path: ~/.ssh/known_hosts
 hostname_configure: true
 hostname_fqdn: "{{ vagrant_hostname }}"
