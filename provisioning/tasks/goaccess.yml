@@ -1,0 +1,73 @@
+---
+
+- name: Looking for GoAccess
+  stat:
+    path: /usr/local/bin/goaccess
+  register: goaccess_stat
+
+- name: Create Directory for GoAccess
+  file:
+    path: /opt/goaccess-1.2
+    state: directory
+    mode: 0775
+  when: goaccess_stat.stat.exists|bool == false
+
+- name: Download GoAccess
+  unarchive:
+    src: http://tar.goaccess.io/goaccess-1.2.tar.gz
+    dest: /opt/
+    remote_src: yes
+  when: goaccess_stat.stat.exists|bool == false
+
+- name: Make GoAccess
+  command: "{{ item }}"
+  args:
+    chdir: '/opt/goaccess-1.2/'
+  with_items:
+    - ./configure --enable-utf8 --enable-geoip=legacy
+    - make
+    - make install
+  when: goaccess_stat.stat.exists|bool == false
+
+- name: Configure GoAcccess
+  lineinfile:
+    path: /usr/local/etc/goaccess.conf
+    regexp: '{{ item.regex|regex_escape() }}'
+    line: '{{ item.replace }}'
+    backrefs: yes
+    state: present
+  with_items:
+    - regex: '#time-format %H:%M:%S'
+      replace: 'time-format %H:%M:%S'
+    - regex: '#date-format %d/%b/%Y'
+      replace: 'date-format %d/%b/%Y'
+    - regex: '#log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+      replace: 'log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+
+- name: Create folder for GoAccess output
+  file:
+    path: "{{ goaccess_install_dir }}"
+    state: directory
+    mode: 0777
+
+# Note: Daemonizing the task internally produces a task which dies after completion.
+# This needs work still. Running on a cron for now...
+
+- name: Initialize a report (Debian/Apache)
+  shell: goaccess /var/log/apache2/access* -o {{ goaccess_install_dir }}/index.html
+  when:
+    - 'drupalvm_webserver == "apache"'
+    - 'ansible_os_family == "Debian"'
+  changed_when: false
+
+- name: Initialize a report (RedHat/httpd)
+  shell: goaccess /var/log/httpd/access* -o {{ goaccess_install_dir }}/index.html
+  when:
+    - 'drupalvm_webserver == "apache"'
+    - 'ansible_os_family == "RedHat"'
+  changed_when: false
+
+- name: Initialize a report (nginx)
+  shell: goaccess /var/log/nginx/access* -o {{ goaccess_install_dir }}/index.html
+  when: 'drupalvm_webserver == "nginx"'
+  changed_when: false
