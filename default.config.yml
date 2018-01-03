@@ -220,6 +220,7 @@ installed_extras:
   # - drupalconsole
   - drush
   # - elasticsearch
+  # - goaccess
   # - java
   - mailhog
   # - memcached
