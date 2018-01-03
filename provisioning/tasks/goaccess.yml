@@ -29,7 +29,25 @@
     - make install
   when: goaccess_stat.stat.exists|bool == false
 
-- name: Configure GoAcccess
+- name: Configure GoAcccess for Apache
+  lineinfile:
+    path: /usr/local/etc/goaccess.conf
+    regexp: '{{ item.regex|regex_escape() }}'
+    line: '{{ item.replace }}'
+    backrefs: yes
+    state: present
+  with_items:
+    - regex: '#time-format %H:%M:%S'
+      replace: 'time-format %H:%M:%S'
+    - regex: '#date-format %d/%b/%Y'
+      replace: 'date-format %d/%b/%Y'
+    - regex: 'log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+      replace: '#log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+    - regex: '#log-format %v:%^ %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+      replace: 'log-format %v:%^ %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+  when: 'drupalvm_webserver == "apache"'
+
+- name: Configure GoAcccess for NGINX
   lineinfile:
     path: /usr/local/etc/goaccess.conf
     regexp: '{{ item.regex|regex_escape() }}'
@@ -43,6 +61,9 @@
       replace: 'date-format %d/%b/%Y'
     - regex: '#log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
       replace: 'log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+    - regex: 'log-format %v:%^ %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+      replace: '#log-format %v:%^ %h %^[%d:%t %^] "%r" %s %b "%R" "%u"'
+  when: 'drupalvm_webserver == "nginx"'
 
 - name: Create folder for GoAccess output
   file:
