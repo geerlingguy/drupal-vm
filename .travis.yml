@@ -23,15 +23,16 @@ env:
     # Defaults - Ubuntu 14.04.
     - type: defaults
       distro: ubuntu1404
-    # Defaults - CentOS 7.
-    - type: centos
-      distro: centos7
     # Defaults - Debian 9.
     - type: debian
       distro: debian9
     # Defaults - Debian 8.
     - type: debian
       distro: debian8
+    # Defaults - CentOS 7.
+    - type: centos
+      distro: centos7
+      local_config: tests/centos-7.config.yml
 
     # PHP 5.6 - Ubuntu 16.04.
     - type: defaults
