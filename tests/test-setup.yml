@@ -11,6 +11,11 @@
       package: name=logrotate state=present
       when: ansible_os_family == 'RedHat'
 
+    - name: Override postfix_inet_protocols (RHEL).
+      set_fact:
+        postfix_inet_protocols: ipv4
+      when: ansible_os_family == 'RedHat'
+
     - name: Copy initctl_faker into place for Ubuntu 14.04.
       copy:
         src: initctl_faker
