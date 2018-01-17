@@ -7,8 +7,8 @@
 
 - name: Copy dashboard page into place.
   template:
-    src: ../templates/dashboard.html.j2
-    dest: "{{ dashboard_install_dir }}/index.html"
+    src: ../templates/dashboard.php.j2
+    dest: "{{ dashboard_install_dir }}/index.php"
     mode: 0644
 
 - name: Copy phpinfo file into place.
