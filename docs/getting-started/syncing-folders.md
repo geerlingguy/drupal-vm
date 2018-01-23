@@ -73,6 +73,12 @@ vagrant_synced_folders:
 
 See [this issue](https://github.com/geerlingguy/drupal-vm/issues/66) for more details.
 
+If you are using `smb` the correct mount options would be:
+
+```yaml
+    mount_options: ["dir_mode=0775", "file_mode=0664"]
+```
+
 ### Using [`vagrant-bindfs`](https://github.com/gael-ian/vagrant-bindfs) to work around permissions-related errors
 
 If you're using NFS synced folders the mounted directories will use the same numeric permissions on the guest VM as on the host OS. If you're on OSX for instance, your files within the VM would be owned by 501:20. To correct these permissions you can use the [`vagrant-bindfs` plugin](https://github.com/gael-ian/vagrant-bindfs) to mount your NFS folders to a temporary location and then re-mount them to the actual destination with the correct ownership.
