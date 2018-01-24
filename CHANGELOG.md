@@ -1,5 +1,31 @@
 # Drupal VM Changelog
 
+## 4.7.1 (2018-01-23)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * `nodejs_npm_global_packages` now adds `npm` by default (see #1651).
+  * `solr_version` is now `5.5.5` by default (was `5.5.3`).
+
+### Improvements
+
+  * #1602: Add machine name to dashboard header.
+  * #1651: Update NPM when provisioning (as per NPM's recommendation).
+  * Solr default version updated to `5.5.5`.
+  * Updated roles: php-xdebug, solr, mysql, postfix.
+
+### Bugfixes
+
+  * #1606: Fix vagrant-cachier for modern nfs installations with udp disabled.
+  * #1585: Fix typo in README.md
+  * #1653: Fix typo in mkdocs.yml
+  * #1617: Fix typos in PHP.md
+
+
 ## 4.7.0 "Water, Music, and Tronaction" (2017-10-06)
 
 ### Breaking Changes
