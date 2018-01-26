@@ -34,6 +34,8 @@ options_override:
   ]
 ```
 
+> Note If you're using CentOS, the group should be set to `httpd` or `apache` instead.
+
 ## Synced Folder Troubleshooting
 
 _Read the following [overview on the performance of the different synced folder mechanisms](../other/performance.md#synced-folder-performance)._
@@ -71,6 +73,8 @@ vagrant_synced_folders:
       group: "www-data"
 ```
 
+> Note If you're using CentOS, the group should be set to `httpd` or `apache` instead.
+
 See [this issue](https://github.com/geerlingguy/drupal-vm/issues/66) for more details.
 
 ### Using [`vagrant-bindfs`](https://github.com/gael-ian/vagrant-bindfs) to work around permissions-related errors
@@ -96,12 +100,8 @@ vconfig['vagrant_synced_folders'].each do |synced_folder|
   end
 end
 ```
-__Note:__ The content for the `Vagrantfile.local` above works for Ubuntu and Debian boxes. If using Centos you might see an error such as:
 
-```
-==> drupalvm: Cannot create bind mount from '/var/nfs/home/joeschmoe/projects/drupal-vm' to '/var/www/drupalvm': Group 'www-data' doesn't exist
-```
-The key is to change the line `g: 'www-data'` to the group which your web server is running as. For example `g: 'apache'`.
+> Note If you're using CentOS, the group should be set to `httpd` or `apache` instead.
 
 ### Other NFS-related errors
 
