@@ -132,6 +132,7 @@ Vagrant.configure('2') do |config|
     v.cpus = vconfig['vagrant_cpus']
     v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     v.customize ['modifyvm', :id, '--ioapic', 'on']
+    v.customize ["modifyvm", :id, "--cableconnected1", "on"]
     v.gui = vconfig['vagrant_gui']
   end
 
