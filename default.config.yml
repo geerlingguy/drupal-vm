@@ -63,7 +63,7 @@ drupal_build_makefile: false
 drush_makefile_path: "{{ config_dir }}/drupal.make.yml"
 drush_make_options: "--no-gitinfofile"
 
-# Set 'build_makefile' to 'false' and this to 'true' if you are using a
+# Set 'drupal_build_makefile' to 'false' and this to 'true' if you are using a
 # composer based site deployment strategy.
 drupal_build_composer: false
 drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
@@ -71,8 +71,8 @@ drupal_composer_install_dir: "/var/www/drupalvm/drupal"
 drupal_composer_dependencies:
   - "drupal/devel:1.x-dev"
 
-# Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
-# are using Composer's create-project as a site deployment strategy.
+# Set this to 'true' and 'drupal_build_makefile', 'drupal_build_composer' to 'false'
+# if you are using Composer's create-project as a site deployment strategy.
 drupal_build_composer_project: true
 drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
