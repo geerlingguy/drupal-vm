@@ -1,5 +1,6 @@
 ---
 # Available `vagrant_box` values include:
+#   - beet/box (pre-provisioned, based on Ubuntu 16.04)
 #   - geerlingguy/centos7
 #   - geerlingguy/centos6
 #   - geerlingguy/debian9
