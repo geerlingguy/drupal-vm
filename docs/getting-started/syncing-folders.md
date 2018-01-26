@@ -96,6 +96,12 @@ vconfig['vagrant_synced_folders'].each do |synced_folder|
   end
 end
 ```
+__Note:__ The content for the `Vagrantfile.local` above works for Ubuntu and Debian boxes. If using Centos you might see an error such as:
+
+```
+==> drupalvm: Cannot create bind mount from '/var/nfs/home/joeschmoe/projects/drupal-vm' to '/var/www/drupalvm': Group 'www-data' doesn't exist
+```
+The key is to change the line `g: 'www-data'` to the group which your web server is running as. For example `g: 'apache'`.
 
 ### Other NFS-related errors
 
