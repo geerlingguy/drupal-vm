@@ -10,6 +10,12 @@
     state: absent
   when: drush_path_state.stat.islnk is defined and drush_path_state.stat.islnk
 
+- name: Ensure Drush path directory exists.
+  file:
+    path: "{{ drush_path | dirname }}"
+    state: directory
+    mode: 0755
+
 - name: Install Drush.
   get_url:
     url: "{{ drush_phar_url }}"
