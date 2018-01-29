@@ -5,6 +5,11 @@
     php_enable_webserver: false
     php_opcache_enable: "0"
 
+    # Use Composer global install.
+    drush_launcher_install: no
+    drush_composer_global_install: yes
+    drush_composer_update: yes
+
   pre_tasks:
     - name: Enable remi repo for PHP 7.0 (RedHat).
       set_fact: php_enablerepo="remi,remi-php70"

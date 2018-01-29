@@ -4,6 +4,8 @@
   vars:
     php_enable_webserver: false
     php_opcache_enable: "0"
+    drush_launcher_install: no
+    drush_composer_global_install: no
     drush_install_from_source: yes
 
   pre_tasks:
