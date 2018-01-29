@@ -169,7 +169,9 @@ docker exec $CONTAINER_ID curl -sSi --header Host:$IP localhost \
   && (echo 'Dashboard install pass' && exit 0) \
   || (echo 'Dashboard install fail' && cat /tmp/dvm-test && exit 1)
 
-# Drush - see https://github.com/drush-ops/drush/issues/3336.
+# Drush - see https://github.com/drush-ops/drush/issues/3336. This test would
+# also test generated global Drush aliases, but it's currently not working due
+# to $reasons.
 # docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status \
 #   | tee /tmp/dvm-test \
 #   | grep -q 'Drupal bootstrap.*Successful' \
