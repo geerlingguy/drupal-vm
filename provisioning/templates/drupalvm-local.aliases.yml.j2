@@ -1,23 +1,11 @@
-<?php
-
-/**
- * Drupal VM drush aliases.
- *
- * {{ ansible_managed }}
- */
-
+# {{ ansible_managed }}
 {% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
-$aliases['{{ host }}'] = array(
-  'uri' => '{{ host }}',
-  'root' => '{{ root }}',
-  'remote-host' => '{{ host }}',
-  'remote-user' => '{{ vagrant_user }}',
-  'ssh-options' => '-o "SendEnv PHP_IDE_CONFIG PHP_OPTIONS XDEBUG_CONFIG" -o PasswordAuthentication=no -i "' . (getenv('VAGRANT_HOME') ?: drush_server_home() . '/.vagrant.d') . '/insecure_private_key"',
-  'path-aliases' => array(
-    '%drush-script' => '{{ drush_path }}',
-  ),
-);
+{{ host }}:
+  host: 'drupalvm.test'
+  options: {  }
+  root: '{{ root }}'
+  uri: drupalvm.test
 
 {% endif -%}
 {% endmacro -%}

@@ -110,7 +110,9 @@ drupalvm_cron_jobs: []
 # this variable is 'true'.
 configure_drush_aliases: true
 drush_aliases_host_template: "templates/drupalvm.aliases.drushrc.php.j2"
+drush_aliases_host_template_yml: "templates/drupalvm.aliases.yml.j2"
 drush_aliases_guest_template: "templates/drupalvm-local.aliases.drushrc.php.j2"
+drush_aliases_guest_template_yml: "templates/drupalvm-local.aliases.yml.j2"
 
 # Helper variable to configure the PHP-FPM connection for each Apache
 # VirtualHost in the `apache_vhosts` list.
