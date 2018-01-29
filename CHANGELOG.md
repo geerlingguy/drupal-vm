@@ -1,5 +1,27 @@
 # Drupal VM Changelog
 
+## 4.7.2 (2018-01-29)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * #1624: Added `beet/box` to list of recommended base boxes (for faster Ubuntu 16.04 provisioning).
+  * #1668: Fixed some comments which had incorrect variable references.
+  * Updated `drush_version` to `"8.1.15"` (was `"8.1.14"`).
+
+### Improvements
+
+  * Updated roles: drush.
+
+### Bugfixes
+
+  * #1659: Mention changes required for CentOS when using specialized synced folder methods.
+  * #1539: Update Drush role so Drush installs correctly on Debian 8 and 9.
+
+
 ## 4.7.1 (2018-01-23)
 
 ### Breaking Changes
