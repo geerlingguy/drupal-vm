@@ -181,7 +181,7 @@ docker exec $CONTAINER_ID curl -sSi --header Host:$IP localhost \
 # Drush.
 docker exec $CONTAINER_ID $DRUSH_BIN status \
   | tee /tmp/dvm-test \
-  | grep -q 'Drush launcher' \
+  | grep -q 'Drush' \
   && (echo 'Drush install pass' && exit 0) \
   || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
 
