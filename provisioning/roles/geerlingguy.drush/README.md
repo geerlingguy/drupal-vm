@@ -26,6 +26,14 @@ The path where drush will be installed and available to your system. Should be i
 
 Path to the directory where Drush will store its generated config.
 
+    drush_install_from_source: no
+
+Whether to use Git and Composer to install Drush from source.
+
+    drush_version: 8.1.10
+
+The version of Drush to download (examples: `8.1.10`, `8.1.9`). This should exactly match an available [Drush release](https://github.com/drush-ops/drush/releases). Note that setting `drush_install_from_source` to `yes` changes the possible values for `drush_version`--see below for more information.
+
 ### Variables used for source install (Git).
 
     drush_install_path: /usr/local/share/drush

@@ -19,4 +19,4 @@ Remi's RPM repository is included with Drupal VM, and you can make the following
 
 If you want parity with your production environment and wish to install the default distribution packages, set `php_version: ''` inside your `config.yml` to avoid adding Remi's or Ondřej's repositories. Doing this will use the default packages set in the [`geerlingguy.php`](https://github.com/geerlingguy/ansible-role-php) Ansible role.
 
-_Note: If you're using a base OS with a PHP version older than what's assumed in the `geerlingguy.php` role, you will also need to override some of the default variables set by that role in your `config.yml`. See the [`geerlingguy.php` Ansible role's README](https://github.com/geerlingguy/ansible-role-php-#readme) for more information._
+_Note: If you're using a base OS with a PHP version older than what's assumed in the `geerlingguy.php` role, you will also need to override some of the default variables set by that role in your `config.yml`. See the [`geerlingguy.php` Ansible role's README](https://github.com/geerlingguy/ansible-role-php#readme) for more information._
