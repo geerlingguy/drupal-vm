@@ -8,7 +8,7 @@
 
 {% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
-$aliases['{{ host }}'] = array(
+$aliases['{{ host.split('.')[0] }}'] = array(
   'uri' => '{{ host }}',
   'root' => '{{ root }}',
   'remote-host' => '{{ host }}',

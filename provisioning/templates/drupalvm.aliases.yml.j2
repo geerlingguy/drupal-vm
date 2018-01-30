@@ -1,14 +1,12 @@
 # {{ ansible_managed }}
 {% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
-{{ host }}:
+{{ host.split('.')[0] }}:
   host: '{{ host }}'
   options: {  }
-  paths:
-    drush-script: '{{ drush_path }}'
   root: '{{ root }}'
   uri: '{{ host }}'
-  user: vagrant
+  user: '{{ vagrant_user }}'
   ssh:
     options: '-o "SendEnv PHP_IDE_CONFIG PHP_OPTIONS XDEBUG_CONFIG" -o PasswordAuthentication=no -i "${env.home}/.vagrant.d/insecure_private_key"'
 

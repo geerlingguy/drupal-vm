@@ -64,7 +64,7 @@ If you're locked to an older version of Drush, it is likely that Drush will try 
 If you're still having issues, you can avoid `sql-sync` entirely and pipe the mysqldump output yourself with:
 
 ```
-drush @remote sql-dump | drush @drupalvm.drupalvm.test sql-cli
+drush @remote sql-dump | drush @drupalvm.drupalvm sql-cli
 ```
 
 ## Running `drush core-cron` as a cron job.

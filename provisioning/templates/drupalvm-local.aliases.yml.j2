@@ -1,11 +1,10 @@
 # {{ ansible_managed }}
 {% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
-{{ host }}:
-  host: 'drupalvm.test'
+{{ host.split('.')[0] }}:
   options: {  }
   root: '{{ root }}'
-  uri: drupalvm.test
+  uri: '{{ host }}'
 
 {% endif -%}
 {% endmacro -%}
