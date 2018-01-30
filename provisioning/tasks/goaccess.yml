@@ -80,24 +80,16 @@
     state: directory
     mode: 0777
 
-# Note: Daemonizing the task internally produces a task which dies after completion.
-# This needs work still. Running on a cron for now...
+- name: Ensure GoAccess cron task is present for Apache
+  cron:
+    name: "Update GoAccess data"
+    state: present
+    job: "goaccess /var/log/apache2/access.log -o {{ goaccess_install_dir }}/index.html"
+  when: 'drupalvm_webserver == "apache"'
 
-- name: Initialize a report (Debian/Apache)
-  shell: goaccess /var/log/apache2/access* -o {{ goaccess_install_dir }}/index.html
-  when:
-    - 'drupalvm_webserver == "apache"'
-    - 'ansible_os_family == "Debian"'
-  changed_when: false
-
-- name: Initialize a report (RedHat/httpd)
-  shell: goaccess /var/log/httpd/access* -o {{ goaccess_install_dir }}/index.html
-  when:
-    - 'drupalvm_webserver == "apache"'
-    - 'ansible_os_family == "RedHat"'
-  changed_when: false
-
-- name: Initialize a report (nginx)
-  shell: goaccess /var/log/nginx/access* -o {{ goaccess_install_dir }}/index.html
+- name: Ensure GoAccess cron task is present for NGINX
+  cron:
+    name: "Update GoAccess data"
+    state: present
+    job: "goaccess /var/log/nginx/access.log -o {{ goaccess_install_dir }}/index.html"
   when: 'drupalvm_webserver == "nginx"'
-  changed_when: false
