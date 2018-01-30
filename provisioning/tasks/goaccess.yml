@@ -84,12 +84,12 @@
   cron:
     name: "Update GoAccess data"
     state: present
-    job: "goaccess /var/log/apache2/access.log -o {{ goaccess_install_dir }}/index.html"
+    job: "/usr/local/bin/goaccess /var/log/apache2/access.log -o {{ goaccess_install_dir }}/index.html"
   when: 'drupalvm_webserver == "apache"'
 
 - name: Ensure GoAccess cron task is present for NGINX
   cron:
     name: "Update GoAccess data"
     state: present
-    job: "goaccess /var/log/nginx/access.log -o {{ goaccess_install_dir }}/index.html"
+    job: "/usr/local/bin/goaccess /var/log/nginx/access.log -o {{ goaccess_install_dir }}/index.html"
   when: 'drupalvm_webserver == "nginx"'
