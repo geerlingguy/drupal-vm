@@ -5,6 +5,15 @@
     path: /usr/local/bin/goaccess
   register: goaccess_stat
 
+- name: Ensure GoAccess dependencies are installed
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - libgeoip-dev
+    - libncursesw5-dev
+  when: goaccess_stat.stat.exists|bool == false
+
 - name: Create Directory for GoAccess
   file:
     path: /opt/goaccess-1.2
