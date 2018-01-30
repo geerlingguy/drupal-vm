@@ -1,17 +1,10 @@
-<?php
-
-/**
- * Drupal VM drush aliases.
- *
- * {{ ansible_managed }}
- */
-
+# {{ ansible_managed }}
 {% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
-$aliases['{{ host.split('.')[0] }}'] = array(
-  'uri' => '{{ host }}',
-  'root' => '{{ root }}',
-);
+{{ host.split('.')[0] }}:
+  options: {  }
+  root: '{{ root }}'
+  uri: '{{ host }}'
 
 {% endif -%}
 {% endmacro -%}

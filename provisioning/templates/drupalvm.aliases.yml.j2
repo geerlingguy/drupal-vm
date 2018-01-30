@@ -1,17 +1,14 @@
-<?php
-
-/**
- * Drupal VM drush aliases.
- *
- * {{ ansible_managed }}
- */
-
+# {{ ansible_managed }}
 {% macro alias(host, root) -%}
 {%- if root not in _devtool_docroots %}
-$aliases['{{ host.split('.')[0] }}'] = array(
-  'uri' => '{{ host }}',
-  'root' => '{{ root }}',
-);
+{{ host.split('.')[0] }}:
+  host: '{{ host }}'
+  options: {  }
+  root: '{{ root }}'
+  uri: '{{ host }}'
+  user: '{{ vagrant_user }}'
+  ssh:
+    options: '-o "SendEnv PHP_IDE_CONFIG PHP_OPTIONS XDEBUG_CONFIG" -o PasswordAuthentication=no -i "${env.home}/.vagrant.d/insecure_private_key"'
 
 {% endif -%}
 {% endmacro -%}

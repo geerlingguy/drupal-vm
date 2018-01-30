@@ -1,45 +1,111 @@
 ---
-- name: Check if local Drush configuration folder exists.
-  stat:
-    path: ~/.drush
-  register: local_drush_config_folder
-  delegate_to: 127.0.0.1
-  become: no
-  when: configure_drush_aliases
-
-- name: Create Drush configuration folder if it doesn't exist.
+# On the host machine.
+- name: Ensure Drush directories exist.
   file:
-    path: ~/.drush
+    path: "{{ item }}"
     state: directory
+    mode: 0755
   delegate_to: 127.0.0.1
   become: no
-  when: configure_drush_aliases and (local_drush_config_folder.stat.exists == false)
+  with_items:
+    - ~/.drush
+    - ~/.drush/sites
+
+- name: Check if Drush configuration file exists.
+  stat:
+    path: ~/.drush/drush.yml
+  delegate_to: 127.0.0.1
+  become: no
+  register: drush_config_file
+
+- name: Create a Drush configuration file with a custom alias-path.
+  copy:
+    src: ../templates/drush.yml
+    dest: ~/.drush/drush.yml
+    mode: 0644
+  delegate_to: 127.0.0.1
+  become: no
+  when: not drush_config_file.stat.exists
 
 # Note that this doesn't work for Windows, since Ansible's running in the VM.
+# Note also that we are copying both Drush < 9 and Drush >= 9 alias files since
+# there's no other way to support multiple versions of Drush :-(.
 - name: Configure host machine drush aliases.
   template:
-    src: "{{ drush_aliases_host_template }}"
-    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
   delegate_to: 127.0.0.1
   become: no
-  when: configure_drush_aliases
+  with_items:
+    - src: "{{ drush_aliases_host_template }}"
+      dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+    - src: "{{ drush_aliases_host_template_yml }}"
+      dest: "~/.drush/sites/{{ vagrant_machine_name }}.site.yml"
 
-- name: Ensure drush directory exists for vagrant user inside VM.
-  file: 'path="~/.drush" state=directory'
+# Inside the VM - Vagrant user.
+- name: Ensure drush directories exist for vagrant user inside VM.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
   become: no
+  with_items:
+    - ~/.drush
+    - ~/.drush/sites
+
+- name: Check if Drush configuration file exists.
+  stat:
+    path: ~/.drush/drush.yml
+  become: no
+  register: drush_config_file_inside
+
+- name: Create a Drush configuration file with a custom alias-path.
+  copy:
+    src: ../templates/drush.yml
+    dest: ~/.drush/drush.yml
+    mode: 0644
+  become: no
+  when: not drush_config_file_inside.stat.exists
 
 - name: Configure drush aliases for vagrant user inside VM.
   template:
-    src: "{{ drush_aliases_guest_template }}"
-    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
   become: no
-  when: configure_drush_aliases
+  with_items:
+    - src: "{{ drush_aliases_guest_template }}"
+      dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+    - src: "{{ drush_aliases_guest_template_yml }}"
+      dest: "~/.drush/sites/{{ vagrant_machine_name }}.site.yml"
 
-- name: Ensure drush directory exists for root user inside VM.
-  file: 'path="~/.drush" state=directory'
+# Inside the VM - root user.
+- name: Ensure drush directories exist for root user inside VM.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - ~/.drush
+    - ~/.drush/sites
+
+- name: Check if Drush configuration file exists.
+  stat:
+    path: ~/.drush/drush.yml
+  register: drush_config_file_inside_root
+
+- name: Create a Drush configuration file with a custom alias-path.
+  copy:
+    src: ../templates/drush.yml
+    dest: ~/.drush/drush.yml
+    mode: 0644
+  when: not drush_config_file_inside_root.stat.exists
 
 - name: Configure drush aliases for root user inside VM.
   template:
-    src: "{{ drush_aliases_guest_template }}"
-    dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
-  when: configure_drush_aliases
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - src: "{{ drush_aliases_guest_template }}"
+      dest: "~/.drush/{{ vagrant_machine_name }}.aliases.drushrc.php"
+    - src: "{{ drush_aliases_guest_template_yml }}"
+      dest: "~/.drush/sites/{{ vagrant_machine_name }}.site.yml"

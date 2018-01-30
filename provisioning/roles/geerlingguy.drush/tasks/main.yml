@@ -1,6 +1,9 @@
 ---
-- include: install.yml
-  when: not drush_install_from_source
+- include: install-drush-launcher.yml
+  when: drush_launcher_install
 
-- include: source-install.yml
+- include: install-drush-composer.yml
+  when: drush_composer_global_install
+
+- include: install-source.yml
   when: drush_install_from_source

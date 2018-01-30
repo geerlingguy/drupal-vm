@@ -2,7 +2,7 @@
 services: docker
 
 env:
-  # Normal installation.
+  # Default installation.
   - distro: centos7
     playbook: test.yml
   - distro: ubuntu1604
@@ -11,6 +11,9 @@ env:
     playbook: test.yml
   - distro: debian9
     playbook: test.yml
+  # Install from composer.
+  - distro: centos7
+    playbook: test-composer-install.yml
   # Install from source.
   - distro: centos7
     playbook: test-source-install.yml
