@@ -5,10 +5,13 @@ env:
   # Test source install on latest supported OSes.
   - distro: centos7
     playbook: test-source.yml
-    GIT_VERSION: 2.9.3
+    GIT_VERSION: 2.16.1
+  - distro: fedora24
+    playbook: test-source.yml
+    GIT_VERSION: 2.16.1
   - distro: ubuntu1604
     playbook: test-source.yml
-    GIT_VERSION: 2.9.3
+    GIT_VERSION: 2.16.1
 
   # Test package install on all supported OSes.
   - distro: centos7
@@ -19,7 +22,7 @@ env:
     GIT_VERSION: 1.7.1
   - distro: fedora24
     playbook: test.yml
-    GIT_VERSION: 2.7.4
+    GIT_VERSION: 2.7.5
   - distro: ubuntu1604
     playbook: test.yml
     GIT_VERSION: 2.7.4
