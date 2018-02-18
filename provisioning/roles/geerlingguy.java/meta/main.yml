@@ -17,7 +17,9 @@ galaxy_info:
       - all
     - name: Debian
       versions:
-      - all
+      - wheezy
+      - jessie
+      - stretch
     - name: Ubuntu
       versions:
       - all
@@ -28,3 +30,7 @@ galaxy_info:
     - development
     - system
     - web
+    - java
+    - jdk
+    - openjdk
+    - oracle
