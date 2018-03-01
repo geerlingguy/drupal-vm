@@ -31,13 +31,15 @@ provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisio
 if provisioner == :ansible
   playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = host_config_dir
+
+  # Verify Ansible version requirement.
+  require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
 else
   playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = guest_config_dir
 end
 
-# Verify version requirements.
-require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
+# Verify Vagrant version requirement.
 Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
 ensure_plugins(vconfig['vagrant_plugins'])
