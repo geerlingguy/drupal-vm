@@ -29,7 +29,7 @@
   with_items: "{{ git_install_from_source_dependencies }}"
   when: ansible_os_family == 'Debian'
 
-- name: Get installed version
+- name: Get installed version.
   command: >
     git --version
     warn=no
@@ -38,7 +38,7 @@
   check_mode: no
   register: git_installed_version
 
-- name: Force git install if the version numbers do not match
+- name: Force git install if the version numbers do not match.
   set_fact:
     git_reinstall_from_source: true
   when:
