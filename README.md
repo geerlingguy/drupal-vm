@@ -6,7 +6,14 @@
 
 Drupal VM makes building Drupal development environments quick and easy, and introduces developers to the wonderful world of Drupal development on virtual machines or Docker containers (instead of crufty old MAMP/WAMP-based development).
 
-It will install the following on an Ubuntu 16.04 (by default) linux VM:
+There are two ways you can use Drupal VM:
+
+  1. With Vagrant and VirtualBox.
+  2. With Docker.
+
+The rest of this README assumes you're using Vagrant and VirtualBox (this is currently the most flexible and widely-used method of using Drupal VM). If you'd like to use Drupal VM with Docker, please read the [Drupal VM Docker documentation](http://docs.drupalvm.com/en/latest/other/docker/).
+
+Drupal VM installs the following on an Ubuntu 16.04 (by default) linux VM:
 
   - Apache 2.4.x (or Nginx)
   - PHP 7.1.x (configurable)
