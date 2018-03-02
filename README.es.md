@@ -8,10 +8,10 @@ Drupal VM hace que la construcción de entornos de desarrollo Drupal sea rápido
 
 Instalará los siguientes en un Ubuntu 16.04 (predeterminado) linux VM:
 
-  - Apache 2.4.x (or Nginx)
+  - Apache 2.4.x (o Nginx)
   - PHP 7.1.x (configurable)
-  - MySQL 5.7.x (or MariaDB, or PostgreSQL)
-  - Drupal 7 or 8
+  - MySQL 5.7.x (o MariaDB, o PostgreSQL)
+  - Drupal 7 o 8
   - Optional:
     - Drupal Console
     - Drush
@@ -19,16 +19,16 @@ Instalará los siguientes en un Ubuntu 16.04 (predeterminado) linux VM:
     - Apache Solr 4.10.x (configurable)
     - Elasticsearch
     - Node.js 0.12 (configurable)
-    - Selenium, for testing your sites via Behat
+    - Selenium, para probar el sitio vía Behat
     - Ruby
     - Memcached
     - Redis
     - SQLite
-    - Blackfire, XHProf, or Tideways for profiling your code
-    - XDebug, for debugging your code
-    - Adminer, for accessing databases directly
-    - Pimp my Log, for easy viewing of log files
-    - MailHog, for catching and debugging email
+    - Blackfire, XHProf, o Tideways para perfilar tu código
+    - XDebug, para reparar tu código
+    - Adminer, para acceder directamente a la base de datos
+    - Pimp my Log, para facilitar la vista de archivos de inicio de sesión
+    - MailHog, para detectar y reparar el correo
 
 Debería tomar alrededor de 5-10 minutos para construir o reconstruir el VM desde cero en una decente conexión de banda ancha.
 
