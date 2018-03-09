@@ -23,3 +23,7 @@ galaxy_info:
   galaxy_tags:
     - development
     - system
+    - git
+    - vcs
+    - source
+    - code

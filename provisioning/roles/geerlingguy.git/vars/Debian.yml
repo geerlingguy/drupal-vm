@@ -4,6 +4,7 @@ git_install_from_source_dependencies:
   - libexpat1-dev
   - gettext
   - libssl-dev
+  - zlib1g-dev
   - build-essential
   - gcc
 
