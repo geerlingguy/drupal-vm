@@ -13,11 +13,11 @@ def which(cmd)
 end
 
 # Recursively walk an tree and run provided block on each value found.
-def walk(obj, &fn)
+def walk(obj, &function)
   if obj.is_a?(Array)
-    obj.map { |value| walk(value, &fn) }
+    obj.map { |value| walk(value, &function) }
   elsif obj.is_a?(Hash)
-    obj.each_pair { |key, value| obj[key] = walk(value, &fn) }
+    obj.each_pair { |key, value| obj[key] = walk(value, &function) }
   else
     obj = yield(obj)
   end
