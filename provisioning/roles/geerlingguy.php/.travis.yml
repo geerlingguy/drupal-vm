@@ -6,9 +6,12 @@ env:
   - distro: centos7
     playbook: test.yml
     php_version: 7.0
-  - distro: fedora24
+  - distro: fedora27
     playbook: test.yml
-    php_version: 5.6
+    php_version: 7.1
+  - distro: debian9
+    playbook: test.yml
+    php_version: 7.0
   - distro: debian8
     playbook: test.yml
     php_version: 7.0

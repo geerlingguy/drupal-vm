@@ -28,7 +28,7 @@ __php_extension_conf_paths:
   - /etc/php/7.0/cli/conf.d
 
 __php_apc_conf_filename: 20-apcu.ini
-__php_opcache_conf_filename: 05-opcache.ini
+__php_opcache_conf_filename: 10-opcache.ini
 __php_fpm_daemon: php7.0-fpm
 __php_fpm_conf_path: "/etc/php/7.0/fpm"
 __php_fpm_pool_conf_path: "{{ __php_fpm_conf_path }}/pool.d/www.conf"
