@@ -1,5 +1,28 @@
 # Drupal VM Changelog
 
+## 4.8.1 (2018-03-10)
+
+### Breaking Changes
+
+Drupal VM now requires Ansible 2.4+ if you are using the version installed on your host. (Used to require 2.2+).
+
+### New/changed variables in default.config.yml
+
+  * `drupalvm_ansible_version_min` is now `2.4`. Make sure to upgrade if you're on an older version!
+
+### Improvements
+
+  * #1701: Ansible required version is TOO DARN LOW!
+  * #1682: Add documentation for setting up Atom with XDebug.
+  * Updated roles: git, ruby, apache-php-fpm, solr, security, java, git, php.
+
+### Bugfixes
+
+  * #1692: Fix the install-drupal command on the Docker image.
+  * #1704: Ansible version check is done on host even when force_ansible_local is true.
+  * #1708: Selenium paths value in docs should be quoted.
+
+
 ## 4.8.0 "Tower Music / Let Us Pray" (2018-01-30)
 
 This release is all about Drush. Please read my blog post [Drupal VM 4.8 and Drush 9.0.0 - Some major changes](https://www.jeffgeerling.com/blog/2018/drupal-vm-48-and-drush-900-some-major-changes) for details and more background.
