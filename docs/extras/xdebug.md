@@ -47,6 +47,7 @@ To use XDebug with NetBeans, change the `php_xdebug_idekey` variable as shown be
 ```yaml
 php_xdebug_idekey: netbeans-xdebug
 ```
+
 ### Atom and XDebug with Drupal VM
 
 To use XDebug with Atom, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
@@ -57,7 +58,8 @@ php_xdebug_idekey: xdebug-atom
 
 ### Eclipse and XDebug with Drupal VM
 
-To use XDebug with Eclipse,change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
+To use XDebug with Eclipse, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
+
 ```yaml
 php_xdebug_idekey: ECLIPSE_DBGP
 ```
