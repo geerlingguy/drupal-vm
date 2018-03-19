@@ -52,7 +52,7 @@ end
 
 # Return the ansible version parsed from running the executable path provided.
 def ansible_version
-  /^[^\s]+ (.+)$/.match(`#{ansible_bin} --version`) { |match| return match[1] }
+  /^[^\s]+ ([^\(]+).*$/.match(`#{ansible_bin} --version`) { |match| return match[1] }
 end
 
 # Require that if installed, the ansible version meets the requirements.
