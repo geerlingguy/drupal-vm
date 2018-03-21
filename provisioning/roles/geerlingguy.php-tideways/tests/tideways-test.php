@@ -9,10 +9,10 @@ $tideways_root_dir = '/usr/share/php';
 $xhprof_root_dir = '/usr/share/php';
 $success = TRUE;
 
-tideways_enable();
-$data = tideways_disable();
+tideways_xhprof_enable();
+$data = tideways_xhprof_disable();
 
-if (isset($data['main()==>tideways_disable'])) {
+if (isset($data['main()==>tideways_xhprof_disable'])) {
   print "Tideways profiling working.\r\n";
 }
 else {
