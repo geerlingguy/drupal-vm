@@ -1,6 +1,6 @@
 ---
-- name: Ensure iptables is installed.
-  package: name=iptables state=installed
+- name: Ensure iptables is present.
+  package: name=iptables state=present
 
 - name: Flush iptables the first time playbook runs.
   command: >
