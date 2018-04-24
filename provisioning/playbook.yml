@@ -7,27 +7,25 @@
     - ../default.config.yml
 
   pre_tasks:
-    - include: tasks/config.yml
+    - include_tasks: tasks/config.yml
       tags: ['always']
 
-    - include: tasks/backwards-compatibility.yml
+    - include_tasks: tasks/backwards-compatibility.yml
       tags: ['always']
-      static: no
 
-    - include: "tasks/init-{{ ansible_os_family }}.yml"
-      static: no
+    - include_tasks: "tasks/init-{{ ansible_os_family }}.yml"
 
     - name: Run configured pre-provision shell scripts.
       script: "{{ item }}"
       with_items: "{{ pre_provision_scripts|default([]) }}"
 
     - name: Run configured pre-provision ansible task files.
-      include: "{{ outer_item }}"
+      include_tasks: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
       with_fileglob: "{{ pre_provision_tasks_dir|default(omit) }}"
 
-    - include: tasks/php.yml
+    - import_tasks: tasks/php.yml
 
   roles:
     # Essential roles.
@@ -103,20 +101,20 @@
     - { role: geerlingguy.security, when: extra_security_enabled }
 
   tasks:
-    - include: tasks/sshd.yml
-    - include: tasks/extras.yml
+    - import_tasks: tasks/sshd.yml
+    - import_tasks: tasks/extras.yml
 
-    - include: tasks/apparmor.yml
+    - include_tasks: tasks/apparmor.yml
       when: ansible_os_family == 'Debian' and drupal_db_backend == 'mysql'
       tags: ['database']
 
-    - include: tasks/drush-aliases.yml
+    - include_tasks: tasks/drush-aliases.yml
       when: configure_drush_aliases
 
-    - include: tasks/cron.yml
+    - import_tasks: tasks/cron.yml
       tags: ['cron']
 
-    - include: tasks/dashboard.yml
+    - include_tasks: tasks/dashboard.yml
       when: dashboard_install_dir is defined and dashboard_install_dir != ''
       tags: ['webserver', 'database', 'php']
 
@@ -125,7 +123,7 @@
       with_items: "{{ post_provision_scripts|default([]) }}"
 
     - name: Run configured post-provision ansible task files.
-      include: "{{ outer_item }}"
+      include_tasks: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
       with_fileglob: "{{ post_provision_tasks_dir|default(omit) }}"
