@@ -2,6 +2,10 @@
 # RHEL/CentOS only. Set a repository to use for PostgreSQL installation.
 postgresql_enablerepo: ""
 
+# Set postgresql state when configuration changes are made. Recommended values:
+# `restarted` or `reloaded`
+postgresql_restarted_state: "restarted"
+
 postgresql_python_library: python-psycopg2
 postgresql_user: postgres
 postgresql_group: postgres
