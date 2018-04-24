@@ -64,6 +64,14 @@ To use XDebug with Eclipse, change the `php_xdebug_idekey` variable as shown bel
 php_xdebug_idekey: ECLIPSE_DBGP
 ```
 
+### Visual Studio Code and XDebug with Drupal VM
+
+To use XDebug with Visual Studio Code, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
+
+```yaml
+php_xdebug_idekey: VSCODE
+```
+
 ### XDebug over SSH/Drush
 
 As long as `xdebug` is listed in `installed_extras` Drupal VM is configured to accept the `PHP_IDE_CONFIG`, `XDEBUG_CONFIG` and `PHP_OPTIONS` environment variables over SSH and this can be used to set up some IDE's as well as enable XDebug on a per request basis:
