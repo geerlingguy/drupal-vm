@@ -6,7 +6,7 @@ galaxy_info:
   description: Nginx installation for Linux, FreeBSD and OpenBSD.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.8
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
@@ -17,7 +17,8 @@ galaxy_info:
       - all
     - name: Ubuntu
       versions:
-      - all
+      - trusty
+      - xenial
     - name: Archlinux
       versions:
       - all
@@ -35,3 +36,8 @@ galaxy_info:
   galaxy_tags:
     - development
     - web
+    - nginx
+    - reverse
+    - proxy
+    - load
+    - balancer

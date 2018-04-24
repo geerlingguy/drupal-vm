@@ -11,4 +11,4 @@
 - name: Ensure nginx is installed.
   yum:
     name: "{{ nginx_package_name }}"
-    state: installed
+    state: present

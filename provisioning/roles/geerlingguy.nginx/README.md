@@ -117,6 +117,17 @@ Extra lines to be inserted in the top-level `http` block in `nginx.conf`. The va
       proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header   Host $http_host;
 
+See the template in `templates/nginx.conf.j2` for more details on the placement.
+
+    nginx_extra_conf_options: ""
+
+Extra lines to be inserted in the top of `nginx.conf`. The value should be defined literally (as you would insert it directly in the `nginx.conf`, adhering to the Nginx configuration syntax - such as `;` for line termination, etc.), for example:
+
+    nginx_extra_conf_options: |
+      worker_rlimit_nofile 8192;
+
+See the template in `templates/nginx.conf.j2` for more details on the placement.
+
     nginx_log_format: |
       '$remote_addr - $remote_user [$time_local] "$request" '
       '$status $body_bytes_sent "$http_referer" '
