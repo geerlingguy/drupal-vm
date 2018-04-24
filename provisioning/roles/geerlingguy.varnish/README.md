@@ -62,6 +62,10 @@ How Varnish stores cache entries (this is passed in as the argument for `-s`). I
 
 Varnish PID file path. Set to an empty string if you don't want to use a PID file.
 
+    varnishd_extra_options: ""
+
+Extra options or flags to pass to the Varnish daemon when it starts (e.g. `-p http_max_hdr=128`).
+
     varnish_enabled_services:
       - varnish
 

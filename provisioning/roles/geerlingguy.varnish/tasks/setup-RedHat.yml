@@ -27,4 +27,4 @@
 - name: Ensure Varnish is installed.
   yum:
     name: "{{ varnish_package_name }}"
-    state: installed
+    state: present
