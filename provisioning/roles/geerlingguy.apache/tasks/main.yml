@@ -13,8 +13,7 @@
   when: apache_packages is not defined
 
 # Setup/install tasks.
-- include: "setup-{{ ansible_os_family }}.yml"
-  static: no
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
@@ -34,8 +33,7 @@
   when: "apache_version.split('.')[1] == '4'"
 
 # Configure Apache.
-- include: "configure-{{ ansible_os_family }}.yml"
-  static: no
+- include_tasks: "configure-{{ ansible_os_family }}.yml"
 
 - name: Ensure Apache has selected state and enabled on boot.
   service:
