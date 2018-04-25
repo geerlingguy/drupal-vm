@@ -92,6 +92,7 @@ The formats of these are the same as in the `mysql_user` module.
 
 Default MySQL connection configuration.
 
+    mysql_log_file_group: mysql *adm on Debian*
     mysql_log: ""
     mysql_log_error: *default value depends on OS*
     mysql_syslog_tag: *default value depends on OS*

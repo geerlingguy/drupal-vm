@@ -3,9 +3,9 @@
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-# PHP package state; use 'installed' to make sure it's installed, or 'latest' if
+# PHP package state; use 'present' to make sure it's installed, or 'latest' if
 # you want to upgrade or switch versions using a new repo.
-php_packages_state: installed
+php_packages_state: present
 
 # Whether to install recommended packages. Used only for Debian/Ubuntu.
 php_install_recommends: yes

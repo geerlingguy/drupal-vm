@@ -50,7 +50,7 @@
     path: "{{ mysql_slow_query_log_file }}"
     state: file
     owner: mysql
-    group: mysql
+    group: "{{ mysql_log_file_group }}"
     mode: 0640
   when: mysql_slow_query_log_enabled
 
@@ -66,7 +66,7 @@
     path: "{{ mysql_log_error }}"
     state: file
     owner: mysql
-    group: mysql
+    group: "{{ mysql_log_file_group }}"
     mode: 0640
   when: mysql_log == "" and mysql_log_error != ""
 

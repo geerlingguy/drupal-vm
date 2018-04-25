@@ -4,7 +4,7 @@ services: docker
 env:
   - distro: centos7
   - distro: ubuntu1604
-  - distro: debian8
+  - distro: debian9
 
 script:
   # Configure test script so we can run extra tests after playbook is run.

@@ -12,7 +12,7 @@
 - name: Install PhpRedis extension (RedHat).
   yum:
     name: "{{ php_redis_package }}"
-    state: installed
+    state: present
     enablerepo: "{{ php_enablerepo }}"
   notify:
     - restart webserver
@@ -20,7 +20,7 @@
   when: (php_redis_install_from_source == false) and (ansible_os_family == 'RedHat')
 
 - name: Install PhpRedis extension (Debian).
-  apt: "name={{ php_redis_package }} state=installed"
+  apt: "name={{ php_redis_package }} state=present"
   notify:
     - restart webserver
     - restart php-fpm

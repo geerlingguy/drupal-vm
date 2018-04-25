@@ -2,7 +2,7 @@
 - name: Ensure git is installed (RedHat).
   package:
     name: "{{ item }}"
-    state: installed
+    state: present
     enablerepo: "{{ git_enablerepo }}"
   with_items: "{{ git_packages }}"
   when: (git_install_from_source == false) and (ansible_os_family == 'RedHat')
@@ -14,7 +14,7 @@
 - name: Ensure git is installed (Debian).
   apt:
     name: "{{ item }}"
-    state: installed
+    state: present
   with_items: "{{ git_packages }}"
   when: (git_install_from_source == false) and (ansible_os_family == 'Debian')
 

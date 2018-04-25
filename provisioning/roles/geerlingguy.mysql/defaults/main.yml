@@ -44,6 +44,9 @@ mysql_sql_mode: ''
 # mysql_pid_file: /var/run/mysqld/mysqld.pid
 # mysql_socket: /var/lib/mysql/mysql.sock
 
+# Log file settings.
+mysql_log_file_group: mysql
+
 # Slow query log settings.
 mysql_slow_query_log_enabled: no
 mysql_slow_query_time: "2"

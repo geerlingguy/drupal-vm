@@ -11,7 +11,7 @@
 - name: Install PHP Memcached extension (RedHat).
   yum:
     name: "{{ php_memcached_package }}"
-    state: installed
+    state: present
     enablerepo: "{{ php_enablerepo }}"
   notify:
     - restart webserver
@@ -21,7 +21,7 @@
 - name: Install PHP Memcached extension (Debian).
   apt:
     name: "{{ php_memcached_package }}"
-    state: installed
+    state: present
   notify:
     - restart webserver
     - restart php-fpm

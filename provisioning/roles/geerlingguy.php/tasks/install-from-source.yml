@@ -1,6 +1,6 @@
 ---
 - name: Ensure dependencies for building from source are installed (RedHat).
-  package: "name={{ item }} state=installed"
+  package: "name={{ item }} state=present"
   with_items:
     - autoconf
     - automake
@@ -30,7 +30,7 @@
   when: ansible_os_family == 'Debian'
 
 - name: Ensure dependencies for building from source are installed (Debian).
-  apt: "pkg={{ item }} state=installed"
+  apt: "pkg={{ item }} state=present"
   with_items:
     - build-essential
     - autoconf

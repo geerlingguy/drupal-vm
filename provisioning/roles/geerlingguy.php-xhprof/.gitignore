@@ -1,1 +1,2 @@
-.DS_Store
+*.retry
+tests/test.sh

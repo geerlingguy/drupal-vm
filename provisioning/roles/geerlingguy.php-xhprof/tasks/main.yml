@@ -14,7 +14,7 @@
 
 # Setup/install tasks.
 - name: Ensure dependencies for installing XHProf are present.
-  package: "name={{ item }} state=installed"
+  package: "name={{ item }} state=present"
   with_items:
     - make
     - gcc
