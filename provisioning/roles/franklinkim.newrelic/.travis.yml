@@ -1,10 +1,57 @@
 ---
-
-language: ruby
 sudo: required
+language: python
 services:
   - docker
-install:
-  - docker pull franklinkim/ansible:ubuntu-trusty
+env:
+  global:
+    - role: franklinkim.newrelic
+  matrix:
+    - distribution: Ubuntu
+      distribution_version: xenial
+      init: /lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distribution: Ubuntu
+      distribution_version: trusty
+      init: /sbin/init
+      run_opts: ""
+    - distribution: Debian
+      distribution_version: stretch
+      init: /lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distribution: Debian
+      distribution_version: jessie
+      init: /lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distribution: EL
+      distribution_version: "7"
+      init: /usr/lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker pull ansiblecheck/ansiblecheck:"${distribution,,}"-"${distribution_version}"
+
 script:
-  - docker run -v $(pwd):/opt/ansible franklinkim/ansible:ubuntu-trusty tests/run.sh
+  - container_id=$(mktemp)
+  # Start The Built Container In The Background
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/${role}:ro ${run_opts} ansiblecheck/ansiblecheck:"${distribution,,}"-"${distribution_version}" "${init}" > "${container_id}"'
+
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/${role}/tests/main.yml --syntax-check'
+
+  # Test role.
+  - 'docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook /etc/ansible/roles/${role}/tests/main.yml'
+
+  # Test Idempotence
+  - idempotence=$(mktemp)
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/${role}/tests/main.yml | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

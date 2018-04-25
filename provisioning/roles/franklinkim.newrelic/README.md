@@ -50,7 +50,7 @@ newrelic_user: newrelic
 newrelic_group: newrelic
 # User groups to append to user
 newrelic_groups: []
-# Name of the file where the server monitor will store it's log messages.
+# Name of the file where the server monitor will store its log messages.
 newrelic_logfile: /var/log/newrelic/nrsysmond.log
 # Level of detail you want in the log file
 newrelic_loglevel: info
@@ -63,7 +63,7 @@ newrelic_service_enabled: yes
 # current state: started, stopped
 newrelic_service_state: started
 # use default hostname, set a value to override the default hostname
-newrelic_override_hostname: ~
+newrelic_override_hostname:
 # A series of label_type/label_value pairings: label_type:label_value
 newrelic_labels:
 # proxy server to use (i.e. proxy-host:8080)
@@ -97,7 +97,6 @@ This is an example playbook:
 ---
 
 - hosts: all
-  become: yes
   roles:
     - franklinkim.newrelic
   vars:

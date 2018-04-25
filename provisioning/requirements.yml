@@ -4,7 +4,7 @@
 - src: thom8.php-upload-progress
   version: 1.0.1
 - src: franklinkim.newrelic
-  version: 1.6.0
+  version: 1.7.2
 - src: geerlingguy.adminer
   version: 1.2.0
 - src: geerlingguy.apache

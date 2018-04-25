@@ -3,6 +3,7 @@
 - name: Installing dependencies
   apt:
     pkg: apt-transport-https
+    update_cache: yes
     state: present
 
 - name: Adding APT key

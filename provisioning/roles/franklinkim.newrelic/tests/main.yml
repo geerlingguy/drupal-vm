@@ -1,7 +1,6 @@
 ---
 
 - hosts: all
-  become: yes
   roles:
     - franklinkim.newrelic
   vars:
