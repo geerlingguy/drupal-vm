@@ -36,7 +36,9 @@ The default values for the HTTP server deamon are `httpd` (used by Apache) for R
 
     php_packages_state: "present"
 
-If you have enabled any additional repositories such as [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel) or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to swap PHP versions on the fly. By default, this is set to 'installed'. You can now override this variable to 'latest'. Combined with php_enablerepo, a user now doesn't need to manually uninstall the existing PHP packages before installing them from a different repository.
+If you have enabled any additional repositories such as [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel) or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to swap PHP versions on the fly. By default, this is set to `"present"`. You can override this variable to `"latest"` to upgrade to the latest available version. Combined with php_enablerepo`, a user now doesn't need to manually uninstall the existing PHP packages before installing them from a different repository.
+
+You can also use the [`geerlingguy.php-versions`](https://galaxy.ansible.com/geerlingguy/php-versions/) role to more easily switch between major PHP versions (e.g. 5.6, 7.0, 7.1, 7.2).
 
     php_install_recommends: yes
 

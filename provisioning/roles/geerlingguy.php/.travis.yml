@@ -15,6 +15,9 @@ env:
   - distro: debian8
     playbook: test.yml
     php_version: 7.0
+  - distro: ubuntu1804
+    playbook: test.yml
+    php_version: 7.0
   - distro: ubuntu1604
     playbook: test.yml
     php_version: 7.0
@@ -25,10 +28,10 @@ env:
   # Only test source install on latest supported OSes.
   - distro: centos7
     playbook: test-source.yml
-    php_version: 7.1.9
-  - distro: ubuntu1604
+    php_version: 7.1.17
+  - distro: ubuntu1804
     playbook: test-source.yml
-    php_version: 7.1.9
+    php_version: 7.1.17
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
@@ -60,7 +63,7 @@ script:
           docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php-fpm status
           docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php-fpm status | grep -qF "fpm.service; enabled"
           ;;
-        "debian8"|"ubuntu1604")
+        "debian8"|"ubuntu1604"|"ubuntu1804")
           docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php${php_version}-fpm status
           docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager status php${php_version}-fpm status | grep -qF "fpm.service; enabled"
           ;;

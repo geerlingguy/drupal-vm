@@ -43,7 +43,7 @@
     - libcurl4-openssl-dev
     - libbz2-dev
     - libjpeg-dev
-    - libpng12-dev
+    - libpng-dev
     - libxpm-dev
     - libfreetype6-dev
     - libgmp3-dev
