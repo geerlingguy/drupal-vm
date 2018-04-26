@@ -22,11 +22,11 @@
 - src: geerlingguy.drupal-console
   version: 1.1.1
 - src: geerlingguy.drush
-  version: 3.0.0
+  version: 3.1.0
 - src: geerlingguy.elasticsearch
   version: 2.2.0
 - src: geerlingguy.firewall
-  version: 2.3.1
+  version: 2.4.0
 - src: geerlingguy.git
   version: 2.0.2
 - src: geerlingguy.java

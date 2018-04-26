@@ -7,9 +7,9 @@ env:
     playbook: test.yml
   - distro: ubuntu1604
     playbook: test.yml
-  - distro: debian8
-    playbook: test.yml
   - distro: debian9
+    playbook: test.yml
+  - distro: debian8
     playbook: test.yml
   # Install from composer.
   - distro: centos7

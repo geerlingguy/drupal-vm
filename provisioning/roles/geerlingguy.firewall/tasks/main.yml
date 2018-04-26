@@ -40,5 +40,5 @@
     state: "{{ firewall_state }}"
     enabled: "{{ firewall_enabled_at_boot }}"
 
-- include: disable-other-firewalls.yml
+- import_tasks: disable-other-firewalls.yml
   when: firewall_disable_firewalld or firewall_disable_ufw
