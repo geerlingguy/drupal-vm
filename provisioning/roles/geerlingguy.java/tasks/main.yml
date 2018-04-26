@@ -19,17 +19,14 @@
   when: java_packages is not defined
 
 # Setup/install tasks.
-- include: setup-RedHat.yml
+- include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
-  static: no
 
-- include: setup-Debian.yml
+- include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
-  static: no
 
-- include: setup-FreeBSD.yml
+- include_tasks: setup-FreeBSD.yml
   when: ansible_os_family == 'FreeBSD'
-  static: no
 
 # Environment setup.
 - name: Set JAVA_HOME if configured.
