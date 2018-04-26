@@ -51,8 +51,8 @@
     group: "{{ composer_home_group }}"
   when: composer_github_oauth_token != ''
 
-- include: global-require.yml
+- include_tasks: global-require.yml
   when: composer_global_packages|length > 0
 
-- include: project-bin.yml
+- include_tasks: project-bin.yml
   when: composer_add_project_to_path
