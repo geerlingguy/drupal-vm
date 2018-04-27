@@ -15,19 +15,19 @@ env:
     playbook: test.yml
     ruby_version: 1.9.3
     ruby_path_prefix: /usr
-  - distro: debian8
+  - distro: debian9
     playbook: test.yml
-    ruby_version: 2.1.5
+    ruby_version: 2.3.3
     ruby_path_prefix: /usr
 
   # Source install on latest OSes.
   - distro: centos7
     playbook: test-source.yml
-    ruby_version: 2.3.0
+    ruby_version: 2.4.4
     ruby_path_prefix: /usr/local
   - distro: ubuntu1604
     playbook: test-source.yml
-    ruby_version: 2.3.0
+    ruby_version: 2.4.4
     ruby_path_prefix: /usr/local
 
 script:
