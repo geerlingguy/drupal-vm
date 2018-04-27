@@ -27,8 +27,7 @@
     php_packages: __php_packages
 
 # Setup tasks.
-- include: "setup-{{ ansible_os_family }}.yml"
-  static: no
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
 
 - name: Set the correct XHProf package when PHP 5.6 is used.
   set_fact:

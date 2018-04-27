@@ -27,5 +27,5 @@
   when: (php_redis_install_from_source == false) and (ansible_os_family == 'Debian')
 
 # Install PhpRedis from source.
-- include: install-from-source.yml
+- include_tasks: install-from-source.yml
   when: php_redis_install_from_source == true

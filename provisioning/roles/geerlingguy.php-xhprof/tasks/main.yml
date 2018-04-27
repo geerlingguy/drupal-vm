@@ -63,7 +63,7 @@
     cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_html {{ php_xhprof_html_dir }}
     creates={{ php_xhprof_html_dir }}/index.php
 
-- include: configure.yml
+- include_tasks: configure.yml
 
 - name: Ensure XHProf output directory exists.
   file:

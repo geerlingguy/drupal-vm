@@ -57,6 +57,6 @@
 # $ php -r 'echo ini_get("extension_dir")."\n";'
 # $ cp Tideways.php /path/to/php/lib
 
-- include: configure.yml
-- include: xhprof.yml
+- include_tasks: configure.yml
+- include_tasks: xhprof.yml
   when: tideways_install_xhprof_ui
