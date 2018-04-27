@@ -6,7 +6,7 @@ galaxy_info:
   description: Node.js installation for Linux
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.9
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
@@ -19,6 +19,12 @@ galaxy_info:
       versions:
       - trusty
       - xenial
+      - bionic
   galaxy_tags:
     - development
     - web
+    - javascript
+    - js
+    - node
+    - npm
+    - nodejs
