@@ -1,6 +1,8 @@
 ---
 - name: Detect if AppArmor is working.
   command: service apparmor status
+  args:
+    warn: no
   register: apparmor_status
   failed_when: false
   changed_when: false
