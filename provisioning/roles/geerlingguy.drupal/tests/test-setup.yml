@@ -18,11 +18,12 @@
   apt_repository: repo='ppa:ondrej/php'
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version != "16.04"
 
-- name: Set php_packages for PHP 7.0 Debian 8 install.
+- name: Set php_packages for PHP 7.0 Debian install.
   set_fact:
     php_packages:
       - php7.0-common
       - php7.0-cli
+      - php7.0-curl
       - php7.0-dev
       - php7.0-fpm
       - libpcre3-dev

@@ -6,7 +6,7 @@ galaxy_info:
   description: Deploy or install Drupal on your servers.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:

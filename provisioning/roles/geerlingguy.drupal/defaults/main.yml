@@ -44,7 +44,7 @@ drupal_db_host: "127.0.0.1"
 drupal_install_site: true
 
 # Settings for installing a Drupal site if 'drupal_install_site:' is 'true'.
-drupal_domain: "drupaltest.dev"
+drupal_domain: "drupaltest.test"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_site_install_extra_args: []

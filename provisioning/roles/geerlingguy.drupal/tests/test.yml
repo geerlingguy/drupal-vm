@@ -5,7 +5,7 @@
     - test-vars.yml
 
   pre_tasks:
-    - include: test-setup.yml
+    - import_tasks: test-setup.yml
 
   roles:
     - name: geerlingguy.repo-remi

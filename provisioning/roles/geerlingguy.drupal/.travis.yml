@@ -5,7 +5,7 @@ env:
   # Composer-project-based Drupal 8 site setup.
   - distro: centos7
     playbook: test.yml
-  - distro: debian8
+  - distro: debian9
     playbook: test.yml
   - distro: ubuntu1604
     playbook: test.yml
@@ -28,7 +28,7 @@ script:
   - ${PWD}/tests/test.sh
 
   # Make sure Drupal is running.
-  - 'docker exec --tty ${container_id} env TERM=xterm curl http://drupaltest.dev/ | grep "Welcome to Drupal"'
+  - 'docker exec --tty ${container_id} env TERM=xterm curl http://localhost/ | grep "Welcome to Drupal"'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

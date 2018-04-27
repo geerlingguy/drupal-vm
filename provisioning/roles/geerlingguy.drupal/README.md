@@ -85,7 +85,7 @@ Required Drupal settings. When used in a production or shared environment, you s
 
 Set this to `false` if you don't need to install Drupal (using the `drupal_*` settings below), but instead copy down a database (e.g. using `drush sql-sync`).
 
-    drupal_domain: "drupaltest.dev"
+    drupal_domain: "drupaltest.test"
     drupal_site_name: "Drupal"
     drupal_install_profile: standard
     drupal_site_install_extra_args: []
