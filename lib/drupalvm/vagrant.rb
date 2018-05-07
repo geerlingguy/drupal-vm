@@ -72,6 +72,18 @@ def vagrant_provisioner
   ansible_bin ? :ansible : :ansible_local
 end
 
+def vagrant_ip_resolver
+  cached_addresses = {}
+  proc do |vm, _resolving_vm|
+    if cached_addresses[vm.name].nil? && vm.communicate.ready?
+      vm.communicate.execute("hostname -I | cut -d ' ' -f 2") do |_type, contents|
+        cached_addresses[vm.name] = contents.split("\n").first[/(\d+\.\d+\.\d+\.\d+)/, 1]
+      end
+    end
+    cached_addresses[vm.name]
+  end
+end
+
 def ensure_plugins(plugins)
   logger = Vagrant::UI::Colored.new
   installed = false

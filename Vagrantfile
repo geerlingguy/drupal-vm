@@ -55,15 +55,7 @@ Vagrant.configure('2') do |config|
 
     # Use assigned IP with vagrant-hostmanager
     if Vagrant.has_plugin?('vagrant-hostmanager')
-      cached_addresses = {}
-      config.hostmanager.ip_resolver = proc do |vm, _resolving_vm|
-        if cached_addresses[vm.name].nil? && vm.communicate.ready?
-          vm.communicate.execute("hostname -I | cut -d ' ' -f 2") do |_type, contents|
-            cached_addresses[vm.name] = contents.split("\n").first[/(\d+\.\d+\.\d+\.\d+)/, 1]
-          end
-        end
-        cached_addresses[vm.name]
-      end
+      config.hostmanager.ip_resolver = vagrant_ip_resolver
     end
   elsif vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
     # Use vagrant-auto_network to assign IP automatically
