@@ -1,7 +1,7 @@
 ---
 # Install Drush Launcher.
 drush_launcher_install: yes
-drush_launcher_version: "0.5.1"
+drush_launcher_version: "0.6.0"
 drush_launcher_phar_url: https://github.com/drush-ops/drush-launcher/releases/download/{{ drush_launcher_version }}/drush.phar
 drush_launcher_path: /usr/local/bin/drush
 
