@@ -22,7 +22,10 @@ galaxy_info:
       - stretch
     - name: Ubuntu
       versions:
-      - all
+      - precise
+      - trusty
+      - xenial
+      - bionic
     - name: FreeBSD
       versions:
       - 10.2

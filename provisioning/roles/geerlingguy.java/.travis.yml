@@ -5,6 +5,7 @@ env:
   - distro: centos7
   - distro: centos6
   - distro: fedora27
+  - distro: ubuntu1804
   - distro: ubuntu1604
   - distro: ubuntu1404
   - distro: ubuntu1204
