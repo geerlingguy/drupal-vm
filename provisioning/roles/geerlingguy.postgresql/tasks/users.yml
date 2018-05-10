@@ -3,6 +3,7 @@
   postgresql_user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
+    encrypted: "{{ item.encrypted | default(omit) }}"
     priv: "{{ item.priv | default(omit) }}"
     role_attr_flags: "{{ item.role_attr_flags | default(omit) }}"
     db: "{{ item.db | default(omit) }}"
