@@ -26,6 +26,10 @@
     php_xhprof_module_path: __php_xhprof_module_path
     php_packages: __php_packages
 
+- name: Define php_install_recommends variable.
+  set_fact:
+    php_install_recommends: "{{ php_versions_install_recommends }}"
+
 # Setup tasks.
 - include_tasks: "setup-{{ ansible_os_family }}.yml"
 

@@ -16,6 +16,10 @@ Available variables are listed below, along with default values (see `defaults/m
 
 The PHP version to be installed. Any [currently-supported PHP major version](http://php.net/supported-versions.php) is a valid option (e.g. `5.6`, `7.0`, `7.1`, etc.
 
+    php_versions_install_recommends: no
+
+(For Debian OSes only) Whether to install recommended packages. This is set to `no` by default because setting it to `yes` often leads to multiple PHP versions being installed (thus making a bit of a mess) when using repos like Ondrej's PHP PPA for Ubuntu.
+
 ## Dependencies
 
   - geerlingguy.php is a soft dependency as the `php_version` variable is required to be set.
