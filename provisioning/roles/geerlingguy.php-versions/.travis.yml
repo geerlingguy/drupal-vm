@@ -8,27 +8,31 @@ env:
   matrix:
     # Default - PHP 7.1
     - distro: centos7
-    - distro: centos6
-    - distro: debian8
+    - distro: debian9
+    - distro: ubuntu1804
     - distro: ubuntu1604
-    - distro: ubuntu1404
 
     # PHP 7.2
     - distro: centos7
       playbook: test-7.2.yml
       php_version: "7.2"
-    - distro: centos6
-      playbook: test-7.2.yml
-      php_version: "7.2"
-    - distro: debian8
+    - distro: ubuntu1804
       playbook: test-7.2.yml
       php_version: "7.2"
     - distro: ubuntu1604
       playbook: test-7.2.yml
       php_version: "7.2"
-    - distro: ubuntu1404
+    - distro: debian9
       playbook: test-7.2.yml
       php_version: "7.2"
+
+    # PHP 5.6
+    - distro: centos7
+      playbook: test-5.6.yml
+      php_version: "5.6"
+    - distro: ubuntu1804
+      playbook: test-5.6.yml
+      php_version: "5.6"
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
