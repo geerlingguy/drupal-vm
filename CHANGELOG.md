@@ -1,6 +1,6 @@
 # Drupal VM Changelog
 
-## 4.9.0 "Tower Music / Let Us Pray" (2018-06-01)
+## 4.9.0 "Creation of Tron" (2018-06-01)
 
 This release improves compatibility with Ansible 2.4, 2.5 and beyond, and updates almost every Ansible role in Drupal VM.
 
