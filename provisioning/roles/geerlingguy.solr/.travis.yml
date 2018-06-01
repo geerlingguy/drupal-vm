@@ -17,9 +17,11 @@ env:
     playbook: test-solr-6.yml
   - distro: debian9
     playbook: test-solr-6.yml
+  - distro: ubuntu1604
+    playbook: test-solr-4.yml
+  - distro: ubuntu1604
+    playbook: test-solr-3.yml
   - distro: ubuntu1404
-    playbook: test-solr-5.yml
-  - distro: ubuntu1204
     playbook: test-solr-5.yml
   - distro: ubuntu1404
     playbook: test-solr-4.yml

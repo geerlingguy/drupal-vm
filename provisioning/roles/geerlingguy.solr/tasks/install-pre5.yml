@@ -58,26 +58,26 @@
     group: root
     mode: 0664
   changed_when: false
+  when: ansible_service_mgr != 'systemd'
 
 - name: Copy solr init script into place.
   template:
     src: "solr-init-{{ ansible_os_family }}-pre5.j2"
     dest: "/etc/init.d/{{ solr_service_name }}"
     mode: 0755
+  when: ansible_service_mgr != 'systemd'
 
 - name: Ensure daemon is installed (Debian).
   apt: name=daemon state=present
-  when: ansible_os_family == "Debian"
+  when:
+    - ansible_os_family == "Debian"
+    - ansible_service_mgr != 'systemd'
 
 - name: Copy solr systemd unit file into place (for systemd systems).
   template:
-    src: solr.unit.j2
+    src: solr-pre5.unit.j2
     dest: /etc/systemd/system/solr.service
     owner: root
     group: root
     mode: 0755
-  when: >
-    (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04') or
-    (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 8) or
-    (ansible_distribution == 'CentOS' and ansible_distribution_major_version|int >= 7) or
-    (ansible_distribution == 'Fedora')
+  when: ansible_service_mgr == 'systemd'
