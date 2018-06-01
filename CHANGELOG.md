@@ -1,5 +1,34 @@
 # Drupal VM Changelog
 
+## 4.9.0 "Tower Music / Let Us Pray" (2018-06-01)
+
+This release improves compatibility with Ansible 2.4, 2.5 and beyond, and updates almost every Ansible role in Drupal VM.
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  - Removed unused `php_xdebug_cli_enable` variable.
+  - Added `php_xdebug_cli_disable: yes`.
+
+### Improvements
+
+  * #619, #1720: Add documentation for using Eclipse and Visual Studio Code with xdebug.
+  * #1552: Better PHP 7.2 compatibility with XDebug.
+  * #1553: Fix use of deprecated 'include' syntax in Ansible playbooks.
+  * #1566: Remove unused `php_xdebug_cli_enable` variable.
+  * #1778: Remove Ansible 2.2 compatibility-related tasks.
+  * Updated roles: selenium, php-tideways, firewall, solr, nginx, drupal console, apache, varnish, postgres, new relic, java, composer, php, mysql, blackfire, elasticsearch, drush, drupal, node.js, php-redis, php-tideways, php-versions, xhprof, redis, security, ruby.
+
+### Bugfixes
+
+  * #1736: Better Ansible version parsing in Vagrantfile.
+  * #1654: Make sure Tideways can be installed.
+  * #1518: Improve use of old versions of Solr on newer OS releases.
+
+
 ## 4.8.1 (2018-03-10)
 
 ### Breaking Changes
