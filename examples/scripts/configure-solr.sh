@@ -17,6 +17,11 @@ SOLR_MODULE_NAME="search_api_solr"
 SOLR_VERSION="5.x"
 SOLR_CORE_PATH="/var/solr/data/$SOLR_CORE_NAME"
 
+# Check to see if version argument specified.
+if [ ! -z "$1" ]; then
+  SOLR_VERSION=$1
+fi
+
 # Check to see if we've already performed this setup.
 if [ ! -e "$SOLR_SETUP_COMPLETE_FILE" ]; then
   # Download and expand the Solr module.
