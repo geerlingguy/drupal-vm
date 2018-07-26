@@ -31,6 +31,7 @@ galaxy_info:
       - lucid
       - trusty
       - precise
+      - bionic
     - name: SLES
       versions:
       - all

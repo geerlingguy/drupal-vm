@@ -7,6 +7,10 @@ env:
     playbook: test.yml
     ruby_version: 2.0.0
     ruby_path_prefix: /usr
+  - distro: ubuntu1804
+    playbook: test.yml
+    ruby_version: 2.5.1
+    ruby_path_prefix: /usr
   - distro: ubuntu1604
     playbook: test.yml
     ruby_version: 2.3.1
@@ -23,11 +27,11 @@ env:
   # Source install on latest OSes.
   - distro: centos7
     playbook: test-source.yml
-    ruby_version: 2.4.4
+    ruby_version: 2.5.1
     ruby_path_prefix: /usr/local
-  - distro: ubuntu1604
+  - distro: ubuntu1804
     playbook: test-source.yml
-    ruby_version: 2.4.4
+    ruby_version: 2.5.1
     ruby_path_prefix: /usr/local
 
 script:
