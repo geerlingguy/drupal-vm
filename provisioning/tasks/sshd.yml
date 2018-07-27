@@ -37,6 +37,6 @@
     state: present
     create: yes
     regexp: "^SSH_HOME="
-    line: "SSH_HOME={{ ssh_home }} && [ -e $SSH_HOME ] && cd $SSH_HOME"
+    line: "SSH_HOME=\"{{ ssh_home }}\" && [ -e \"$SSH_HOME\" ] && cd \"$SSH_HOME\""
   become: no
   when: ssh_home is defined
