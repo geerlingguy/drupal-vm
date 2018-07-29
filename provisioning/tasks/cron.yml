@@ -9,5 +9,6 @@
     month: "{{ item.month | default('*') }}"
     job: "{{ item.job }}"
     state: "{{ item.state | default('present') }}"
+    user: "{{ item.user | default(ansible_user) }} "
   with_items: "{{ drupalvm_cron_jobs|default([]) }}"
   become: no
