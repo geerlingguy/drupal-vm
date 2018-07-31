@@ -7,7 +7,7 @@ Type=simple
 WorkingDirectory={{ solr_install_path }}/example
 ExecStart=/usr/bin/java -jar -Dsolr.solr.home={{ solr_home }} -Djetty.host={{ solr_host }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }} start.jar
 Restart=on-failure
-User=solr
+User={{ solr_user }}
 
 [Install]
 WantedBy=multi-user.target
