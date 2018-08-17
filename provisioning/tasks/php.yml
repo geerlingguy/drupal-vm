@@ -5,7 +5,7 @@
   when: drupalvm_webserver == 'nginx'
   tags: ['webserver', 'database', 'php']
 
-- name: Ensure PHP version -specific workspace directory exists.
+- name: Ensure PHP version-specific workspace directory exists.
   file:
     path: "/root/php{{ php_version }}"
     state: directory
