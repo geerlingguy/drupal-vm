@@ -14,7 +14,7 @@ backend default {
 
 {% if varnish_backends is defined %}
 # Other backend servers.
-{% for backend, value in varnish_backends.iteritems() %}
+{% for backend, value in varnish_backends.items() | list %}
 backend {{ backend }} {
   .host = "{{ value.host }}";
   .port = "{{ value.port }}";
@@ -25,7 +25,7 @@ backend {{ backend }} {
 sub vcl_recv {
 {% if varnish_vhosts is defined %}
   # Varnish vhosts.
-{% for vhost, value in varnish_vhosts.iteritems() if varnish_vhosts is defined %}
+{% for vhost, value in varnish_vhosts.items() | list if varnish_vhosts is defined %}
   {% if loop.first %}
   if (req.http.host == "{{ vhost }}" || req.http.host == "www.{{ vhost }}") {
   {% else %}
