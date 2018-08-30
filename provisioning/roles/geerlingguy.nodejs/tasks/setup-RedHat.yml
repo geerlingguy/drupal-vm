@@ -34,4 +34,4 @@
   when: ansible_distribution_major_version|int >= 7
 
 - name: Ensure Node.js and npm are installed.
-  yum: "name=nodejs-{{ nodejs_version[0] }}.* state=present enablerepo='epel,nodesource'"
+  yum: "name=nodejs-{{ nodejs_version|regex_replace('x', '') }}* state=present enablerepo='epel,nodesource'"
