@@ -13,6 +13,7 @@
     url: https://getcomposer.org/installer
     dest: /tmp/composer-installer.php
     mode: 0755
+    checksum: "sha384:{{ lookup('url', 'https://composer.github.io/installer.sig') }}"
   when: not composer_bin.stat.exists
 
 - name: Run Composer installer.
