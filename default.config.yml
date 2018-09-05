@@ -19,6 +19,9 @@ vagrant_hostname: drupalvm.test
 vagrant_machine_name: drupalvm
 vagrant_ip: 192.168.88.88
 
+# Set this to 'true' if you don't want to automatically add or remove hostnames into your local hosts config.
+disable_hostsupdater: false
+
 # Allow Drupal VM to be accessed via a public network interface on your host.
 # Vagrant boxes are insecure by default, so be careful. You've been warned!
 # See: https://docs.vagrantup.com/v2/networking/public_network.html

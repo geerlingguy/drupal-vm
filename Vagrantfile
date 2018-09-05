@@ -44,19 +44,39 @@ Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
 ensure_plugins(vconfig['vagrant_plugins'])
 
+# Local host updater settings
+begin
+  disable_hostsupdater = vconfig.fetch('disable_hostsupdater')
+rescue KeyError
+  disable_hostsupdater = false
+end
+
 Vagrant.configure('2') do |config|
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
   config.vm.define vconfig['vagrant_machine_name']
 
   # Networking configuration.
   config.vm.hostname = vconfig['vagrant_hostname']
-  config.vm.network :private_network,
-    ip: vconfig['vagrant_ip'],
-    auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
+  if !disable_hostsupdater
+    config.vm.network :private_network,
+      ip: vconfig['vagrant_ip'],
+      auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
+  else
+    config.vm.network :private_network,
+      ip: vconfig['vagrant_ip'],
+      auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network'),
+      hostsupdater: 'skip'
+  end
 
   unless vconfig['vagrant_public_ip'].empty?
-    config.vm.network :public_network,
-      ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
+    if !disable_hostsupdater
+      config.vm.network :public_network,
+        ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
+    else
+      config.vm.network :public_network,
+        ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil,
+        hostsupdater: 'skip'
+    end
   end
 
   # SSH options.
@@ -75,7 +95,7 @@ Vagrant.configure('2') do |config|
     config.hostsupdater.aliases = aliases
   elsif Vagrant.has_plugin?('vagrant-hostmanager')
     config.hostmanager.enabled = true
-    config.hostmanager.manage_host = true
+    config.hostmanager.manage_host = !disable_hostsupdater
     config.hostmanager.aliases = aliases
   end
 
