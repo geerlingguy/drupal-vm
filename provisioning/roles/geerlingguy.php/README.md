@@ -73,6 +73,8 @@ Specific settings inside the default `www.conf` PHP-FPM pool. If you'd like to m
 
 By default, all the extra defaults below are applied through the php.ini included with this role. You can self-manage your php.ini file (if you need more flexility in its configuration) by setting this to `false` (in which case all the below variables will be ignored).
 
+    php_fpm_pool_user: "[apache|nginx|other]" # default varies by OS
+    php_fpm_pool_group: "[apache|nginx|other]" # default varies by OS
     php_memory_limit: "256M"
     php_max_execution_time: "60"
     php_max_input_time: "60"
