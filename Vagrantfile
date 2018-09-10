@@ -45,11 +45,7 @@ Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 ensure_plugins(vconfig['vagrant_plugins'])
 
 # Local host updater settings
-begin
-  disable_hostsupdater = vconfig.fetch('disable_hostsupdater')
-rescue KeyError
-  disable_hostsupdater = false
-end
+disable_hostsupdater = vconfig.fetch('disable_hostsupdater')
 
 Vagrant.configure('2') do |config|
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
