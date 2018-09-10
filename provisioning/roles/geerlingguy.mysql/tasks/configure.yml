@@ -3,6 +3,7 @@
   command: 'mysql --version'
   register: mysql_cli_version
   changed_when: false
+  check_mode: no
 
 - name: Copy my.cnf global MySQL configuration.
   template:
