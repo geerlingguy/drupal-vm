@@ -2,7 +2,7 @@
 - hosts: all
 
   vars:
-    solr_version: "5.5.4"
+    solr_version: "5.5.5"
     solr_remove_cruft: true
     java_packages:
       - openjdk-7-jdk
