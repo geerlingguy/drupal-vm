@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   vars:
     firewall_allowed_tcp_ports:
@@ -7,9 +9,9 @@
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=yes cache_valid_time=1200
+      apt: update_cache=true cache_valid_time=1200
       when: ansible_os_family == 'Debian'
       changed_when: false
 
   roles:
-    - role_under_test
+    - role: geerlingguy.firewall
