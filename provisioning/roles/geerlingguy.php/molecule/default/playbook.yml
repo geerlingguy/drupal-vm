@@ -1,16 +1,23 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   vars:
     php_enable_webserver: false
     php_enable_php_fpm: true
     php_memory_limit: "192M"
     php_enablerepo: "remi,remi-php70"
-    php_install_recommends: no
+    php_install_recommends: false
+
+  handlers:
+    - name: update apt cache
+      apt: update_cache=true
+      when: ansible_os_family == 'Debian'
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=yes cache_valid_time=600
+      apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == 'Debian'
       changed_when: false
 
@@ -22,10 +29,10 @@
     # Debian-specific tasks.
     - name: Add dependencies for PHP versions (Debian).
       apt:
-        name: "{{ item }}"
-      with_items:
-        - apt-transport-https
-        - ca-certificates
+        name:
+          - apt-transport-https
+          - ca-certificates
+        state: present
       when: ansible_distribution == "Debian"
 
     - name: Add Ondrej Sury's apt key (Debian).
@@ -38,14 +45,19 @@
       apt_repository:
         repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
         state: present
-      register: php_ondrej_debian_repo
       when: ansible_distribution == "Debian"
+      notify: update apt cache
 
-    - name: Update apt caches after repo is added (Debian).
-      apt: update_cache=yes
-      when: php_ondrej_debian_repo.changed and (ansible_distribution == "Debian")
+    - meta: flush_handlers
 
   roles:
     - role: geerlingguy.repo-remi
-      when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
-    - role_under_test
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution != 'Fedora'
+    - role: geerlingguy.php
+
+  post_tasks:
+    - name: Confirm PHP configuration is correct.
+      shell: php -i | grep 'memory_limit.*192'
+      changed_when: false

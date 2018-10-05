@@ -34,4 +34,4 @@ galaxy_info:
     - webserver
     - html
 
-allow_duplicates: yes
+allow_duplicates: true

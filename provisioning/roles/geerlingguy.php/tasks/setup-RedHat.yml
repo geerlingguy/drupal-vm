@@ -3,5 +3,5 @@
   package:
     name: "{{ php_packages }}"
     state: "{{ php_packages_state }}"
-    enablerepo: "{{ php_enablerepo }}"
+    enablerepo: "{{ php_enablerepo | default(omit) }}"
   notify: restart webserver

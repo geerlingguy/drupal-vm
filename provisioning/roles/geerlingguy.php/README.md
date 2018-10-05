@@ -40,7 +40,7 @@ If you have enabled any additional repositories such as [geerlingguy.repo-epel](
 
 You can also use the [`geerlingguy.php-versions`](https://galaxy.ansible.com/geerlingguy/php-versions/) role to more easily switch between major PHP versions (e.g. 5.6, 7.0, 7.1, 7.2).
 
-    php_install_recommends: yes
+    php_install_recommends: true
 
 (Debian/Ubuntu only) Whether to install recommended packages when installing `php_packages`; you might want to set this to `no` explicitly if you're installing a PPA that recommends certain packages you don't want (e.g. Ondrej's `php` PPA will install `php7.0-cli` if you install `php-pear` alongside `php5.6-cli`... which is often not desired!).
 
