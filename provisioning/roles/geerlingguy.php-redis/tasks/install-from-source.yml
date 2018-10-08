@@ -4,7 +4,7 @@
     repo: "{{ php_redis_source_repo }}"
     dest: "{{ php_redis_source_clone_dir }}"
     version: "{{ php_redis_source_version }}"
-    accept_hostkey: yes
+    accept_hostkey: true
     depth: 1
 
 - name: Run phpize.

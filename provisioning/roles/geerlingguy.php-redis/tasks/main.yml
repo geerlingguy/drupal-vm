@@ -13,18 +13,22 @@
   yum:
     name: "{{ php_redis_package }}"
     state: present
-    enablerepo: "{{ php_enablerepo }}"
+    enablerepo: "{{ php_enablerepo | default(omit, true) }}"
   notify:
     - restart webserver
     - restart php-fpm
-  when: (php_redis_install_from_source == false) and (ansible_os_family == 'RedHat')
+  when:
+    - php_redis_install_from_source == false
+    - ansible_os_family == 'RedHat'
 
 - name: Install PhpRedis extension (Debian).
   apt: "name={{ php_redis_package }} state=present"
   notify:
     - restart webserver
     - restart php-fpm
-  when: (php_redis_install_from_source == false) and (ansible_os_family == 'Debian')
+  when:
+    - php_redis_install_from_source == false
+    - ansible_os_family == 'Debian'
 
 # Install PhpRedis from source.
 - include_tasks: install-from-source.yml

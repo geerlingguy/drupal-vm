@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_enable_webserver: false
+
+  roles:
+    - role: geerlingguy.memcached
+    - role: geerlingguy.php
+    - role: geerlingguy.php-memcached
+
+  post_tasks:
+    - name: Run test script to confirm Memcached is reachable via PHP.
+      script: memcached-test.php
+      args:
+        executable: php
+      changed_when: false

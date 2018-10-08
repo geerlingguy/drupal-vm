@@ -15,7 +15,7 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ postgresql_users }}"
   no_log: true
-  become: yes
+  become: true
   become_user: "{{ postgresql_user }}"
   # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
   vars:

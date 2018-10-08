@@ -15,7 +15,8 @@ nginx_package_name: "nginx"
 nginx_conf_template: "nginx.conf.j2"
 nginx_vhost_template: "vhost.j2"
 
-nginx_worker_processes: "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
+nginx_worker_processes: >-
+  "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
 nginx_worker_connections: "1024"
 nginx_multi_accept: "off"
 
@@ -59,7 +60,7 @@ nginx_vhosts: []
 #   server_name: "example.com" # default: N/A
 #   root: "/var/www/example.com" # default: N/A
 #   index: "index.html index.htm" # default: "index.html index.htm"
-#   filename: "example.com.conf" # Can be used to set the filename of the vhost file.
+#   filename: "example.com.conf" # Can be used to set the vhost filename.
 #
 #   # Properties that are only added if defined:
 #   server_name_redirect: "www.example.com" # default: N/A
@@ -80,7 +81,7 @@ nginx_upstreams: []
 #     "srv3.example.com"
 #   }
 
-nginx_log_format: |
+nginx_log_format: |-
   '$remote_addr - $remote_user [$time_local] "$request" '
   '$status $body_bytes_sent "$http_referer" '
   '"$http_user_agent" "$http_x_forwarded_for"'

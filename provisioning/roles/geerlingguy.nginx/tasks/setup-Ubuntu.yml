@@ -3,7 +3,7 @@
   apt_repository:
     repo: 'ppa:nginx/{{ nginx_ppa_version }}'
     state: present
-    update_cache: yes
+    update_cache: true
   register: nginx_ppa_added
   when: nginx_ppa_use
 

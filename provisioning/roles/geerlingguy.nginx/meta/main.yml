@@ -10,29 +10,29 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Debian
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - trusty
-      - xenial
+        - trusty
+        - xenial
     - name: Archlinux
       versions:
-      - all
+        - all
     - name: FreeBSD
       versions:
-      - 10.3
-      - 10.2
-      - 10.1
-      - 10.0
-      - 9.3
+        - 10.3
+        - 10.2
+        - 10.1
+        - 10.0
+        - 9.3
     - name: OpenBSD
       versions:
-      - 5.9
-      - 6.0
+        - 5.9
+        - 6.0
   galaxy_tags:
     - development
     - web

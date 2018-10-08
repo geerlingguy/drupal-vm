@@ -39,6 +39,11 @@ The user and group under which PostgreSQL will run.
 
 The directories (usually one, but can be multiple) where PostgreSQL's socket will be created.
 
+    postgresql_service_state: started
+    postgresql_service_enabled: true
+
+Control the state of the postgresql service and whether it should start at boot time.
+
     postgresql_global_config_options:
       - option: unix_socket_directories
         value: '{{ postgresql_unix_socket_directories | join(",") }}'

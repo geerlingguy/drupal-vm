@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-nginx)
 
+**Note:** Please consider using the official [NGINX Ansible role](https://github.com/nginxinc/ansible-role-nginx) from NGINX, Inc.
+
 Installs Nginx on RedHat/CentOS, Debian/Ubuntu, Archlinux, FreeBSD or OpenBSD servers.
 
 This role installs and configures the latest version of Nginx from the Nginx yum repository (on RedHat-based systems), apt (on Debian-based systems), pacman (Archlinux), pkgng (on FreeBSD systems) or pkg_add (on OpenBSD systems). You will likely need to do extra setup work after this role has installed Nginx, like adding your own [virtualhost].conf file inside `/etc/nginx/conf.d/`, describing the location and options to use for your particular website.
@@ -128,7 +130,7 @@ Extra lines to be inserted in the top of `nginx.conf`. The value should be defin
 
 See the template in `templates/nginx.conf.j2` for more details on the placement.
 
-    nginx_log_format: |
+    nginx_log_format: |-
       '$remote_addr - $remote_user [$time_local] "$request" '
       '$status $body_bytes_sent "$http_referer" '
       '"$http_user_agent" "$http_x_forwarded_for"'

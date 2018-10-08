@@ -13,7 +13,7 @@
   yum:
     name: "{{ php_mysql_package }}"
     state: present
-    enablerepo: "{{ php_enablerepo }}"
+    enablerepo: "{{ php_enablerepo | default(omit, true) }}"
   notify:
     - restart webserver
     - restart php-fpm

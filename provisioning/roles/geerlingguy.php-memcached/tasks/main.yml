@@ -12,7 +12,7 @@
   yum:
     name: "{{ php_memcached_package }}"
     state: present
-    enablerepo: "{{ php_enablerepo }}"
+    enablerepo: "{{ php_enablerepo | default(omit, true) }}"
   notify:
     - restart webserver
     - restart php-fpm

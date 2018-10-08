@@ -29,7 +29,7 @@ The home directory inside which Python MySQL settings will be stored, which Ansi
 
 The MySQL root user account details.
 
-    mysql_root_password_update: no
+    mysql_root_password_update: false
 
 Whether to force update the MySQL root user's password. By default, this role will only change the root user's password when MySQL is first configured. You can force an update by setting this to `yes`.
 
@@ -37,7 +37,7 @@ Whether to force update the MySQL root user's password. By default, this role wi
 
 > Note: If you get an error like `ERROR 1698 (28000): Access denied for user 'root'@'localhost' (using password: YES)` when trying to log in from the CLI you might need to run as root or sudoer.
 
-    mysql_enabled_on_startup: yes
+    mysql_enabled_on_startup: true
 
 Whether MySQL should be enabled on startup.
 
@@ -46,7 +46,7 @@ Whether MySQL should be enabled on startup.
     
 The main my.cnf configuration file and include directory.
 
-    overwrite_global_mycnf: yes
+    overwrite_global_mycnf: true
 
 Whether the global my.cnf should be overwritten each time this role is run. Setting this to `no` tells Ansible to only create the `my.cnf` file if it doesn't exist. This should be left at its default value (`yes`) if you'd like to use this role's variables to configure MySQL.
 
@@ -99,7 +99,7 @@ Default MySQL connection configuration.
 
 MySQL logging configuration. Setting `mysql_log` (the general query log) or `mysql_log_error` to `syslog` will make MySQL log to syslog using the `mysql_syslog_tag`.
 
-    mysql_slow_query_log_enabled: no
+    mysql_slow_query_log_enabled: false
     mysql_slow_query_log_file: *default value depends on OS*
     mysql_slow_query_time: 2
 

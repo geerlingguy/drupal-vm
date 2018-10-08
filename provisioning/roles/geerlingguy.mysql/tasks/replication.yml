@@ -39,7 +39,7 @@
     master_password: "{{ mysql_replication_user.password }}"
     master_log_file: "{{ master.File }}"
     master_log_pos: "{{ master.Position }}"
-  ignore_errors: True
+  ignore_errors: true
   when: >
     ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
     and (mysql_replication_role == 'slave')

@@ -3,7 +3,7 @@
   command: 'mysql --version'
   register: mysql_cli_version
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: Copy my.cnf global MySQL configuration.
   template:
@@ -39,7 +39,7 @@
   command: "touch {{ mysql_slow_query_log_file }}"
   args:
     creates: "{{ mysql_slow_query_log_file }}"
-    warn: no
+    warn: false
   when: mysql_slow_query_log_enabled
 
 - name: Create datadir if it does not exist
@@ -48,7 +48,7 @@
     state: directory
     owner: mysql
     group: mysql
-    mode:  0755
+    mode: 0755
     setype: mysqld_db_t
 
 - name: Set ownership on slow query log file (if configured).
@@ -64,7 +64,7 @@
   command: "touch {{ mysql_log_error }}"
   args:
     creates: "{{ mysql_log_error }}"
-    warn: no
+    warn: false
   when: mysql_log == "" and mysql_log_error != ""
 
 - name: Set ownership on error log file (if configured).
