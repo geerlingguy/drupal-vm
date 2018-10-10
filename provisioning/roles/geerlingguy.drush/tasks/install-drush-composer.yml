@@ -2,14 +2,14 @@
 - name: Ensure Drush is installed globally via Composer.
   composer:
     command: require
-    global_command: yes
+    global_command: true
     arguments: "drush/drush:{{ drush_composer_version }}"
   register: drush_composer_require
 
 - name: Update global Drush install if configured.
   composer:
     command: update
-    global_command: yes
+    global_command: true
     arguments: "drush/drush --with-dependencies"
   when:
     - drush_composer_update

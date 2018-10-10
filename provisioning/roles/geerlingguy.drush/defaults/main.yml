@@ -1,23 +1,24 @@
 ---
 # Install Drush Launcher.
-drush_launcher_install: yes
+drush_launcher_install: true
 drush_launcher_version: "0.6.0"
-drush_launcher_phar_url: https://github.com/drush-ops/drush-launcher/releases/download/{{ drush_launcher_version }}/drush.phar
+drush_launcher_phar_url: >-
+  https://github.com/drush-ops/drush-launcher/releases/download/{{ drush_launcher_version }}/drush.phar
 drush_launcher_path: /usr/local/bin/drush
 
 # Install Drush via Composer globally.
-drush_composer_global_install: no
+drush_composer_global_install: false
 drush_composer_version: "~9.0"
-drush_composer_update: no
+drush_composer_update: false
 drush_composer_path: /usr/local/bin/drush
 
 # Install from source (git clone + composer-based install).
-drush_install_from_source: no
+drush_install_from_source: false
 drush_source_install_bin_path: /usr/local/bin/drush
 drush_source_install_path: /usr/local/share/drush
 drush_source_install_version: "8.x"
-drush_keep_updated: no
-drush_force_update: no
-drush_force_composer_install: no
+drush_keep_updated: false
+drush_force_update: false
+drush_force_composer_install: false
 drush_composer_cli_options: "--prefer-dist --no-interaction"
 drush_clone_depth: 1

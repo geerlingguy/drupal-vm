@@ -1,37 +1,33 @@
 ---
+language: python
 services: docker
 
 env:
-  # Default installation.
-  - distro: centos7
-    playbook: test.yml
-  - distro: ubuntu1604
-    playbook: test.yml
-  - distro: debian9
-    playbook: test.yml
-  - distro: debian8
-    playbook: test.yml
-  # Install from composer.
-  - distro: centos7
-    playbook: test-composer-install.yml
-  # Install from source.
-  - distro: centos7
-    playbook: test-source-install.yml
+  global:
+    - ROLE_NAME: drush
+  matrix:
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
+    - MOLECULE_DISTRO: ubuntu1604
+    - MOLECULE_DISTRO: debian9
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_PLAYBOOK: playbook-composer.yml
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_PLAYBOOK: playbook-source.yml
+
+install:
+  # Install test dependencies.
+  - pip install molecule docker
+
+before_script:
+  # Use actual Ansible Galaxy role name for the project directory.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
+  - cd geerlingguy.$ROLE_NAME
 
 script:
-  # Configure test script so we can run extra tests after playbook is run.
-  - export container_id=$(date +%s)
-  - export cleanup=false
-
-  # Download test shim.
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
-
   # Run tests.
-  - ${PWD}/tests/test.sh
-
-  # Test Drush.
-  - 'docker exec --tty ${container_id} env TERM=xterm drush --version || true'
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

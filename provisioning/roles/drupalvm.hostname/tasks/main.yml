@@ -21,5 +21,6 @@
   register: set_hostname
 
 - name: Set the hostname for current session.
-  shell: hostname --file /etc/hostname
+  command: hostname --file /etc/hostname
   when: set_hostname.changed
+  tags: ['skip_ansible_lint']

@@ -101,6 +101,10 @@ docker exec $CONTAINER_ID cp $DRUPALVM_DIR/$COMPOSERFILE ${config_dir:-$DRUPALVM
 printf "\n"${green}"Checking playbook syntax..."${neutral}"\n"
 docker exec --tty $CONTAINER_ID env TERM=xterm ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml --syntax-check
 
+# Run Ansible Lint.
+docker exec $CONTAINER_ID bash -c "easy_install ansible-lint"
+docker exec $CONTAINER_ID bash -c "cd $DRUPALVM_DIR/provisioning && ansible-lint playbook.yml" || true
+
 # Run the setup playbook.
 printf "\n"${green}"Running the setup playbook..."${neutral}"\n"
 docker exec --tty $CONTAINER_ID env TERM=xterm ansible-playbook /var/www/drupalvm/tests/test-setup.yml

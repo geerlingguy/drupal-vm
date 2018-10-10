@@ -18,7 +18,10 @@
   shell: >
     {{ composer_path }} update {{ drush_composer_cli_options }}
     chdir={{ drush_source_install_path }}
-  when: drush_clone.changed and ansible_distribution == "Debian" and ansible_distribution_release == "wheezy" and drush_composer.stat.exists
+  when:
+    - drush_clone.changed and ansible_distribution == "Debian"
+    - ansible_distribution_release == "wheezy"
+    - drush_composer.stat.exists
 
 - name: Install Drush dependencies with Composer.
   shell: >
@@ -31,10 +34,10 @@
     src: "{{ drush_source_install_path }}/drush"
     dest: "{{ drush_source_install_bin_path }}"
     state: link
-    force: yes
+    force: true
 
 - name: Run drush to finish setting it up.
   command: "{{ drush_source_install_bin_path }}"
   register: drush_result
   changed_when: "'Execute a drush command' not in drush_result.stdout"
-  become: no
+  become: false

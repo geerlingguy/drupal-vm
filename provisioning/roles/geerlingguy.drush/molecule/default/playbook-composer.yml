@@ -1,14 +1,20 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   vars:
     php_enable_webserver: false
     php_opcache_enable: "0"
 
     # Use Composer global install.
-    drush_launcher_install: no
-    drush_composer_global_install: yes
-    drush_composer_update: yes
+    drush_launcher_install: false
+    drush_composer_global_install: true
+    drush_composer_update: true
+
+  handlers:
+    - name: update apt cache
+      apt: update_cache=true
 
   pre_tasks:
     - name: Enable remi repo for PHP 7.0 (RedHat).
@@ -16,7 +22,7 @@
       when: ansible_os_family == 'RedHat'
 
     - name: Update apt cache.
-      apt: update_cache=yes cache_valid_time=600
+      apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == 'Debian'
 
     - name: Ensure unzip is installed.
@@ -25,10 +31,9 @@
     # Debian-specific tasks.
     - name: Add dependencies for PHP versions (Debian).
       apt:
-        name: "{{ item }}"
-      with_items:
-        - apt-transport-https
-        - ca-certificates
+        name:
+          - apt-transport-https
+          - ca-certificates
       when: ansible_distribution == "Debian"
 
     - name: Add Ondrej Sury's apt key (Debian).
@@ -41,16 +46,14 @@
       apt_repository:
         repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
         state: present
-      register: php_ondrej_debian_repo
       when: ansible_distribution == "Debian"
+      notify: update apt cache
 
-    - name: Update apt caches after repo is added (Debian).
-      apt: update_cache=yes
-      when: php_ondrej_debian_repo.changed and (ansible_distribution == "Debian")
+    - meta: flush_handlers
 
   roles:
     - role: geerlingguy.repo-remi
       when: ansible_os_family == 'RedHat'
-    - geerlingguy.php
-    - geerlingguy.composer
-    - role_under_test
+    - role: geerlingguy.php
+    - role: geerlingguy.composer
+    - role: geerlingguy.drush

@@ -17,7 +17,7 @@
     drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
 
 # Deploy Drupal if configured.
-- include_tasks: tasks/deploy.yml
+- include_tasks: deploy.yml
   when: drupal_deploy
 
 - name: Define drupal_deploy_updated
@@ -25,19 +25,19 @@
     drupal_deploy_updated: "{{ (drupal_deploy_repo_updated is defined and drupal_deploy_repo_updated.changed) | default(false) }}"
 
 # Run update tasks if Drupal was updated.
-- include_tasks: tasks/update.yml
+- include_tasks: update.yml
   when: drupal_deploy_updated and drupal_site_exists
 
 # Build makefile if configured.
-- include_tasks: tasks/build-makefile.yml
+- include_tasks: build-makefile.yml
   when: drupal_build_makefile
 
 # Build with composer if configured.
-- include_tasks: tasks/build-composer.yml
+- include_tasks: build-composer.yml
   when: drupal_build_composer
 
 # Build a composer project if configured.
-- include_tasks: tasks/build-composer-project.yml
+- include_tasks: build-composer-project.yml
   when: drupal_build_composer_project
 
 # Set Drush variables.
@@ -52,5 +52,5 @@
   when: drush_vendor_bin.stat.exists
 
 # Install site if configured.
-- include_tasks: tasks/install-site.yml
+- include_tasks: install-site.yml
   when: drupal_install_site

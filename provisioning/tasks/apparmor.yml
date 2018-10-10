@@ -13,8 +13,11 @@
     src: /etc/apparmor.d/usr.sbin.mysqld
     state: link
   register: mysql_apparmor
-  when: "mysql_slow_query_log_enabled and apparmor_status.rc == 0"
+  when:
+    - mysql_slow_query_log_enabled
+    - apparmor_status.rc == 0
 
 - name: Restart the AppArmor if necessary.
   service: name=apparmor state=restarted
   when: mysql_apparmor.changed
+  tags: ['skip_ansible_lint']
