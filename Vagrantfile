@@ -105,7 +105,7 @@ Vagrant.configure('2') do |config|
   end
 
   config.vm.provision provisioner do |ansible|
-    ansible.compatibility_mode = "2.0"
+    ansible.compatibility_mode = '2.0'
     ansible.playbook = playbook
     ansible.extra_vars = {
       config_dir: config_dir,
