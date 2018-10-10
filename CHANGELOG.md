@@ -13,6 +13,7 @@ N/A
 ### Improvements
 
   * #1827: Improve Tideways documentation.
+  * #1589: Add name to Ansible provisioner.
   * #1823: Remove Debian 8 CI test, Debian 9 suffices.
   * Updated roles: solr, ruby, varnish, nodejs, java, mysql, composer, php, firewall, apache, and many others with fixes for Ansible 2.7+ and linting issues.
 
