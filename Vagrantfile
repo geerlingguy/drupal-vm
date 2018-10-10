@@ -104,7 +104,7 @@ Vagrant.configure('2') do |config|
     config.vm.synced_folder synced_folder.fetch('local_path'), synced_folder.fetch('destination'), options
   end
 
-  config.vm.provision provisioner do |ansible|
+  config.vm.provision 'drupalvm', type: provisioner do |ansible|
     ansible.compatibility_mode = '2.0'
     ansible.playbook = playbook
     ansible.extra_vars = {
