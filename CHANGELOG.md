@@ -1,5 +1,28 @@
 # Drupal VM Changelog
 
+## 4.9.1 (2018-10-10)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * The Devel module dependency in `drupal_composer_dependencies` was changed from `1.x-dev` (which no longer seems to work) to `^1.2`.
+
+### Improvements
+
+  * #1827: Improve Tideways documentation.
+  * #1823: Remove Debian 8 CI test, Debian 9 suffices.
+  * Updated roles: solr, ruby, varnish, nodejs, java, mysql, composer, php, firewall, apache, and many others with fixes for Ansible 2.7+ and linting issues.
+
+### Bugfixes
+
+  * #1761: Fix deprecation warnings in Ansible 2.7.0.
+  * #1822: Update composer role to fix CentOS 7 Composer download bug.
+  * #1743, #1831: Use stable version of Devel via Composer.
+
+
 ## 4.9.0 "Creation of Tron" (2018-06-01)
 
 This release improves compatibility with Ansible 2.4, 2.5 and beyond, and updates almost every Ansible role in Drupal VM.
