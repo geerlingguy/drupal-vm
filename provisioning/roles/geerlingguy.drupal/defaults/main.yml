@@ -6,8 +6,8 @@ drupal_deploy_repo: ""
 drupal_deploy_version: master
 drupal_deploy_update: true
 drupal_deploy_dir: "/var/www/drupal"
-drupal_deploy_accept_hostkey: no
-drupal_deploy_composer_install: yes
+drupal_deploy_accept_hostkey: false
+drupal_deploy_composer_install: true
 
 # Set this to 'true' and 'drupal_build_composer*' to 'false' if you would like
 # to build a Drupal make file with Drush.
@@ -21,7 +21,7 @@ drupal_build_composer: false
 drupal_composer_path: "/path/to/drupal.composer.json"
 drupal_composer_install_dir: "{{ drupal_deploy_dir }}"
 drupal_composer_dependencies:
-  - "drupal/devel:1.x-dev"
+  - "drupal/devel:^1.2"
 
 # Set this to 'true' and 'drupal_build_makefile', 'drupal_build_composer' to
 # 'false' if you are using Composer's create-project as a site deployment

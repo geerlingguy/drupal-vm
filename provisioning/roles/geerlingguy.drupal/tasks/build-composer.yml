@@ -4,7 +4,7 @@
     path: "{{ drupal_composer_install_dir }}"
     state: directory
     mode: 0775
-  become: no
+  become: false
   when: drupal_composer_path and not drupal_site_exists
 
 # Use copy-and-move to prevent issues in Windows with VirtualBox. See:
@@ -14,19 +14,19 @@
     src: "{{ drupal_composer_path }}"
     dest: "/tmp/drupalvm-composer.json"
   when: drupal_composer_path and not drupal_site_exists
-  become: no
+  become: false
 
 - name: Move composer.json into place.
   command: "mv /tmp/drupalvm-composer.json {{ drupal_composer_install_dir }}/composer.json"
   when: drupal_composer_path and not drupal_site_exists
-  become: no
+  become: false
 
 - name: Run composer install (this may take a while).
   composer:
     command: install
     working_dir: "{{ drupal_composer_install_dir }}"
-  when: not drupal_site_exists
-  become: no
+  when: falset drupal_site_exists
+  become: false
 
 - name: Install dependencies with composer require (this may take a while).
   composer:
@@ -34,4 +34,4 @@
     arguments: "{{ item }}"
     working_dir: "{{ drupal_composer_install_dir }}"
   with_items: "{{ drupal_composer_dependencies|default([]) }}"
-  become: no
+  become: false

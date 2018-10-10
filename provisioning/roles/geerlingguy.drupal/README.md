@@ -27,7 +27,7 @@ Available variables are listed below, along with default values (see `defaults/m
     drupal_deploy_version: master
     drupal_deploy_update: true
     drupal_deploy_dir: "/var/www/drupal"
-    drupal_deploy_accept_hostkey: no
+    drupal_deploy_accept_hostkey: false
 
 Set `drupal_deploy` to `true` and `drupal_build_composer*` to `false` if you would like to deploy Drupal to your server from an existing Git repository. The other options all apply to the Git checkout operation:
 
@@ -39,7 +39,7 @@ Set `drupal_deploy` to `true` and `drupal_build_composer*` to `false` if you wou
 
 You can also control whether a `composer install` is run after the git clone is finished using the following variable:
 
-    drupal_deploy_composer_install: yes
+    drupal_deploy_composer_install: true
 
 ### Build a project from a Drush Make file
 
@@ -55,7 +55,7 @@ Set this to `true` and `drupal_build_composer*` to `false` if you would like to 
     drupal_composer_path: "/path/to/drupal.composer.json"
     drupal_composer_install_dir: "/var/www/drupal"
     drupal_composer_dependencies:
-      - "drupal/devel:1.x-dev"
+      - "drupal/devel:^1.2"
 
 Set `drupal_build_makefile` to `false` and this to `true` if you are using a Composer-based site deployment strategy.
 

@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   vars_files:
     - test-vars.yml
@@ -24,11 +26,11 @@
       when: ansible_os_family == "RedHat"
     - role: geerlingguy.repo-dotdeb
       when: ansible_distribution == 'Debian'
-    - geerlingguy.apache
-    - geerlingguy.mysql
-    - geerlingguy.php
-    - geerlingguy.php-mysql
-    - geerlingguy.git
-    - geerlingguy.composer
-    - geerlingguy.drush
-    - role_under_test
+    - role: geerlingguy.apache
+    - role: geerlingguy.mysql
+    - role: geerlingguy.php
+    - role: geerlingguy.php-mysql
+    - role: geerlingguy.git
+    - role: geerlingguy.composer
+    - role: geerlingguy.drush
+    - role: geerlingguy.drupal
