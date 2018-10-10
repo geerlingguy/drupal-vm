@@ -52,8 +52,13 @@
 {% if apache_vhosts_version == "2.4" %}
   SSLCompression off
 {% endif %}
+{% if vhost.certificate_file is defined %}
   SSLCertificateFile {{ vhost.certificate_file }}
+{% endif %}
+{% if vhost.certificate_key_file is defined %}
   SSLCertificateKeyFile {{ vhost.certificate_key_file }}
+{% endif %}
+
 {% if vhost.certificate_chain_file is defined %}
   SSLCertificateChainFile {{ vhost.certificate_chain_file }}
 {% endif %}
