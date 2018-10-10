@@ -1,25 +1,29 @@
 ---
+language: python
 services: docker
 
 env:
-  - distro: centos7
-  - distro: ubuntu1604
-  - distro: debian9
+  global:
+    - ROLE_NAME: php-xdebug
+  matrix:
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
+    - MOLECULE_DISTRO: ubuntu1604
+    - MOLECULE_DISTRO: debian9
+
+install:
+  # Install test dependencies.
+  - pip install molecule docker
+
+before_script:
+  # Use actual Ansible Galaxy role name for the project directory.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
+  - cd geerlingguy.$ROLE_NAME
 
 script:
-  # Configure test script so we can run extra tests after playbook is run.
-  - export container_id=$(date +%s)
-  - export cleanup=false
-
-  # Download test shim.
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
-
   # Run tests.
-  - ${PWD}/tests/test.sh
-
-  # Run script to test if Xdebug is available and working.
-  - 'docker exec ${container_id} env TERM=xterm php /etc/ansible/roles/role_under_test/tests/xdebug-test.php'
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

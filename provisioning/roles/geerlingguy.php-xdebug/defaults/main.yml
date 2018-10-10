@@ -18,4 +18,4 @@ php_xdebug_idekey: sublime.xdebug
 php_xdebug_max_nesting_level: 256
 
 # Only used on Debian/Ubuntu.
-php_xdebug_cli_disable: no
+php_xdebug_cli_disable: false

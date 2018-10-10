@@ -3,4 +3,4 @@
 php_version: '7.1'
 
 # For Debian OSes only.
-php_versions_install_recommends: no
+php_versions_install_recommends: false

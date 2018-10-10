@@ -7,4 +7,3 @@ git_install_from_source_dependencies:
   - zlib1g-dev
   - build-essential
   - gcc
-

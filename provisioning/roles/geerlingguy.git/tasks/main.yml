@@ -1,22 +1,24 @@
 ---
 - name: Ensure git is installed (RedHat).
   package:
-    name: "{{ item }}"
+    name: "{{ git_packages }}"
     state: present
-    enablerepo: "{{ git_enablerepo }}"
-  with_items: "{{ git_packages }}"
-  when: (git_install_from_source == false) and (ansible_os_family == 'RedHat')
+    enablerepo: "{{ git_enablerepo | default(omit, true) }}"
+  when:
+    - git_install_from_source == false
+    - ansible_os_family == 'RedHat'
 
 - name: Update apt cache (Debian).
-  apt: update_cache=yes cache_valid_time=86400
+  apt: update_cache=true cache_valid_time=86400
   when: ansible_os_family == 'Debian'
 
 - name: Ensure git is installed (Debian).
   apt:
-    name: "{{ item }}"
+    name: "{{ git_packages }}"
     state: present
-  with_items: "{{ git_packages }}"
-  when: (git_install_from_source == false) and (ansible_os_family == 'Debian')
+  when:
+    - git_install_from_source == false
+    - ansible_os_family == 'Debian'
 
 # Install git from source when git_install_from_source is true.
 - import_tasks: install-from-source.yml

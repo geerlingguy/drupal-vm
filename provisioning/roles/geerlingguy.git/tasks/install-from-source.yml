@@ -35,7 +35,7 @@
     warn=no
   changed_when: false
   failed_when: false
-  check_mode: no
+  check_mode: false
   register: git_installed_version
 
 - name: Force git install if the version numbers do not match.
@@ -56,7 +56,7 @@
     src: "{{ workspace }}/git-{{ git_version }}.tar.gz"
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
-    copy: no
+    copy: false
   when: (git_installed_version.rc != 0) or git_reinstall_from_source
 
 - name: Build git.
@@ -67,4 +67,4 @@
     - all
     - install
   when: (git_installed_version.rc != 0) or git_reinstall_from_source
-  become: yes
+  become: true

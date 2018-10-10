@@ -17,10 +17,10 @@
 # Debian-specific tasks.
 - name: Add dependencies for PHP versions (Debian).
   apt:
-    name: "{{ item }}"
-  with_items:
-    - apt-transport-https
-    - ca-certificates
+    name:
+      - apt-transport-https
+      - ca-certificates
+    state: present
   when: ansible_distribution == "Debian"
 
 - name: Add Ondrej Sury's apt key (Debian).
@@ -37,7 +37,7 @@
   when: ansible_distribution == "Debian"
 
 - name: Update apt caches after repo is added (Debian).
-  apt: update_cache=yes
+  apt: update_cache=true
   when: php_ondrej_debian_repo.changed and (ansible_distribution == "Debian")
 
 # PHP package purges.
@@ -45,11 +45,11 @@
   apt:
     name: "{{ item }}"
     state: absent
-    purge: yes
-    force: yes
-  when: "'php' + php_version not in item"
+    purge: true
+    force: true
   with_items:
     - php5.6-common
     - php7.0-common
     - php7.1-common
     - php7.2-common
+  when: "'php' + php_version not in item"

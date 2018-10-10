@@ -1,23 +1,24 @@
 ---
 - name: Update apt cache if needed.
-  apt: update_cache=yes cache_valid_time=86400
+  apt: update_cache=true cache_valid_time=86400
 
 - name: Install required dependencies.
-  apt: "name={{ item }} state=present"
-  with_items:
-    - curl
-    - python-apt
-    - python-pycurl
-    - sudo
-    - unzip
-    - make
+  apt:
+    name:
+      - curl
+      - python-apt
+      - python-pycurl
+      - sudo
+      - unzip
+      - make
+    state: present
 
 # Ubuntu-specific tasks.
 - name: Add repository for Apache 2.4.9+ (Ubuntu 12/14).
   apt_repository: repo='ppa:ondrej/apache2'
-  when: >
-    (ansible_distribution_release == "precise" or ansible_distribution_release == "trusty") and
-    ansible_distribution == "Ubuntu"
+  when:
+    - ansible_distribution_release == "precise" or ansible_distribution_release == "trusty"
+    - ansible_distribution == "Ubuntu"
 
 - name: Define php_xhprof_html_dir.
   set_fact:

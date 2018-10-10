@@ -54,7 +54,7 @@ The IDE key to use in the URL when making Xdebug requests (e.g. `http://example.
 
 The maximimum function nesting level before Xdebug bails and throws a fatal exception.
 
-    php_xdebug_cli_disable: no
+    php_xdebug_cli_disable: false
 
 (Debian/Ubuntu ONLY) Disable xdebug for the CLI SAPI.
 

@@ -13,15 +13,15 @@
   when: php_xdebug_config_filename is not defined
 
 - name: Ensure dependencies for building from source are installed (RedHat).
-  yum: "name={{ item }} state=present"
-  with_items:
-    - '@development'
+  yum:
+    name: '@development'
+    state: present
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure dependencies for building from source are installed (Debian).
-  apt: "name={{ item }} state=present"
-  with_items:
-    - build-essential
+  apt:
+    name: build-essential
+    state: present
   when: ansible_os_family == 'Debian'
 
 - name: Untar Xdebug.
@@ -29,10 +29,10 @@
     src: "https://xdebug.org/files/xdebug-{{ php_xdebug_version }}.tgz"
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/xdebug-{{ php_xdebug_version }}"
-    copy: no
+    copy: false
 
 - name: Build Xdebug.
-  shell: >
+  command: >
     {{ item }}
     chdir={{ workspace }}/xdebug-{{ php_xdebug_version }}
     creates={{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so
@@ -53,7 +53,7 @@
   copy:
     src: "{{ workspace }}/xdebug-{{ php_xdebug_version }}/modules/xdebug.so"
     dest: "{{ php_xdebug_module_path }}/xdebug-{{ php_xdebug_version }}.so"
-    remote_src: True
+    remote_src: true
   notify: restart webserver
 
 - include_tasks: configure.yml
