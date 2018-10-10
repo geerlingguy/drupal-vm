@@ -1,0 +1,9 @@
+---
+git_install_from_source_dependencies:
+  - libcurl4-gnutls-dev
+  - libexpat1-dev
+  - gettext
+  - libssl-dev
+  - zlib1g-dev
+  - build-essential
+  - gcc

@@ -7,6 +7,6 @@
   with_items: "{{ mysql_packages }}"
   register: arch_mysql_install_packages
 
-# Init the database if mysql is newly installed
-- command: mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+- name: Run mysql_install_db if MySQL packages were changed.
+  command: mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
   when: arch_mysql_install_packages.changed

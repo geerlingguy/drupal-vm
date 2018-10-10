@@ -18,59 +18,25 @@
 # machine, but the groupname will differ or not exist. For the latter case
 # we create a group called `vagrant_group`.
 #
-# In Ansible 2.3+ the gr_name will be set if the GID is mapped to an existing
-# group. If the GID doesn't exist, gr_name will be undefined.
-- name: Ensure a group with the same GID as used to sync directories exist (Ansible 2.3+).
+# The gr_name will be set if the GID is mapped to an existing group. If the GID
+# doesn't exist, gr_name will be undefined.
+- name: Ensure a group with the same GID as used to sync directories exist.
   group:
     gid: "{{ vagrant_directory.stat.gid }}"
     name: vagrant_group
     state: present
-  when: >
-    ansible_version.full | version_compare('2.3', '>=') and
-    vagrant_directory.stat.exists and
-    vagrant_directory.stat.gr_name is undefined
+  when:
+    - vagrant_directory.stat.exists
+    - vagrant_directory.stat.gr_name is undefined
 
-- name: Ensure the webserver user is in the same group as the owner of synced directories (Ansible 2.3+).
+- name: Ensure the webserver user is in the same group as the owner of synced directories.
   user:
     name: "{{ drupalvm_webserver_user }}"
     append: yes
     groups: "{{ vagrant_directory.stat.gr_name|default('vagrant_group') }}"
-  when: >
-    ansible_version.full | version_compare('2.3', '>=') and
-    vagrant_directory.stat.exists and
-    not (vagrant_directory.stat.gr_name is defined and vagrant_directory.stat.gr_name == 'root')
-
-# With Ansible 2.2 or lower, the existance of gr_name is dependant on the
-# existance of UID as well, therefore we cannot rely on it.
-# TODO: Remove the version compares and the 2.2 tasks once we require Ansible
-# 2.3+
-- name: Detect if group used to sync directories already exist (Ansible 2.2).
-  shell: "getent group {{ vagrant_directory.stat.gid }} | cut -d':' -f1"
-  register: vagrant_directory_groupname
-  changed_when: false
-  when: >
-    ansible_version.full | version_compare('2.3', '<') and
-    vagrant_directory.stat.exists
-
-- name: Ensure a group with the same GID as used to sync directories exist (Ansible 2.2).
-  group:
-    gid: "{{ vagrant_directory.stat.gid }}"
-    name: vagrant_group
-    state: present
-  when: >
-    ansible_version.full | version_compare('2.3', '<') and
-    vagrant_directory.stat.exists and
-    vagrant_directory_groupname.stdout == ''
-
-- name: Ensure the webserver user is in the same group as the owner of synced directories (Ansible 2.2).
-  user:
-    name: "{{ drupalvm_webserver_user }}"
-    append: yes
-    groups: "{{ vagrant_directory_groupname.stdout|default('vagrant_group') }}"
-  when: >
-    ansible_version.full | version_compare('2.3', '<') and
-    vagrant_directory.stat.exists and
-    vagrant_directory_groupname.stdout != 'root'
+  when:
+    - vagrant_directory.stat.exists
+    - not (vagrant_directory.stat.gr_name is defined and vagrant_directory.stat.gr_name == 'root')
 
 - name: Ensure admin group exist.
   group: "name=admin state=present"

@@ -27,7 +27,7 @@
   delegate_to: "{{ mysql_replication_master }}"
   register: master
   when: >
-    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave|failed))
+    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')
 
@@ -39,9 +39,9 @@
     master_password: "{{ mysql_replication_user.password }}"
     master_log_file: "{{ master.File }}"
     master_log_pos: "{{ master.Position }}"
-  ignore_errors: True
+  ignore_errors: true
   when: >
-    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave|failed))
+    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')
     and mysql_replication_user
@@ -49,6 +49,6 @@
 - name: Start replication.
   mysql_replication: mode=startslave
   when: >
-    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave|failed))
+    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')

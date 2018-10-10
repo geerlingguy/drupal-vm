@@ -107,6 +107,9 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
 {% if varnish_version | version_compare('4.1', '<') %}
              -u varnish -g varnish \
 {% endif %}
+{% if varnishd_extra_options %}
+             {{ varnishd_extra_options }}
+{% endif %}
              -S ${VARNISH_SECRET_FILE} \
              -s ${VARNISH_STORAGE}"
 #

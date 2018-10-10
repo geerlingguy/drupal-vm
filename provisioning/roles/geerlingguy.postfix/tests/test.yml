@@ -1,5 +1,15 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Override postfix_inet_protocols (RHEL).
+      set_fact:
+        postfix_inet_protocols: ipv4
+      when: ansible_os_family == 'RedHat'
+
   roles:
-    - ansible-role-postfix
+    - role_under_test

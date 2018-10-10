@@ -26,7 +26,7 @@ installed_extras:
   - varnish
 
 # Disable Apache package upgrades.
-apache_packages_state: installed
+apache_packages_state: present
 
 # Disable the dashboard page. Also remove any unneeded virtualhosts.
 dashboard_install_dir: ''

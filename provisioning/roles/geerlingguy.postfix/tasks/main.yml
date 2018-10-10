@@ -1,11 +1,23 @@
 ---
-- name: Ensure postfix is installed (RedHat).
-  yum: name=postfix state=installed
-  when: ansible_os_family == 'RedHat'
+- name: Ensure postfix is installed.
+  package:
+    name: postfix
+    state: present
 
-- name: Ensure postfix is installed (Debian).
-  apt: name=postfix state=installed
-  when: ansible_os_family == 'Debian'
+- name: Update Postfix configuration.
+  lineinfile:
+    dest: "{{ postfix_config_file }}"
+    line: "{{ item.name }} = {{ item.value }}"
+    regexp: "^{{ item.name }} ="
+  with_items:
+    - name: inet_interfaces
+      value: "{{ postfix_inet_interfaces }}"
+    - name: inet_protocols
+      value: "{{ postfix_inet_protocols }}"
+  notify: restart postfix
 
 - name: Ensure postfix is started and enabled at boot.
-  service: name=postfix state=started enabled=yes
+  service:
+    name: postfix
+    state: "{{ postfix_service_state }}"
+    enabled: "{{ postfix_service_enabled }}"

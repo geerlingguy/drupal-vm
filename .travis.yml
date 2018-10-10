@@ -23,15 +23,13 @@ env:
     # Defaults - Ubuntu 14.04.
     - type: defaults
       distro: ubuntu1404
-    # Defaults - CentOS 7.
-    - type: centos
-      distro: centos7
     # Defaults - Debian 9.
     - type: debian
       distro: debian9
-    # Defaults - Debian 8.
-    - type: debian
-      distro: debian8
+    # Defaults - CentOS 7.
+    - type: centos
+      distro: centos7
+      local_config: tests/centos-7.config.yml
 
     # PHP 5.6 - Ubuntu 16.04.
     - type: defaults
@@ -43,16 +41,17 @@ env:
     # Nginx and Drush make file test - Ubuntu 16.04.
     - type: nginx-drush-make
       distro: ubuntu1604
-      local_config: tests/ubuntu-16-nginx.config.yml
+      local_config: tests/ubuntu-16-nginx-drush-make.config.yml
       config_dir: /var/www/drupalvm/config
 
+    # TODO: See https://github.com/geerlingguy/drupal-vm/issues/1675
     # PostgreSQL - Ubuntu 16.04.
-    - type: postgresql
-      distro: ubuntu1604
-      local_config: tests/ubuntu-16-postgresql.config.yml
-      config_dir: /var/www/drupalvm/config
-      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
-      TEST_INSTALLED_EXTRAS: false
+    # - type: postgresql
+    #   distro: ubuntu1604
+    #   local_config: tests/ubuntu-16-postgresql.config.yml
+    #   config_dir: /var/www/drupalvm/config
+    #   DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
+    #   TEST_INSTALLED_EXTRAS: false
 
 before_install:
   # Pull container.

@@ -1,1 +1,8 @@
 ---
+postfix_config_file: /etc/postfix/main.cf
+
+postfix_service_state: started
+postfix_service_enabled: yes
+
+postfix_inet_interfaces: localhost
+postfix_inet_protocols: all

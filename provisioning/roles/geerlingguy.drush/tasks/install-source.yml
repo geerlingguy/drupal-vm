@@ -1,0 +1,43 @@
+---
+- name: Clone Drush from GitHub.
+  git:
+    repo: https://github.com/drush-ops/drush.git
+    dest: "{{ drush_source_install_path }}"
+    version: "{{ drush_source_install_version }}"
+    update: "{{ drush_keep_updated }}"
+    force: "{{ drush_force_update }}"
+    depth: "{{ drush_clone_depth }}"
+  register: drush_clone
+
+- name: Check for composer.json
+  stat: path={{ drush_source_install_path }}/composer.json
+  register: drush_composer
+
+# See: https://github.com/geerlingguy/ansible-role-drush/issues/6
+- name: Ensure Drush can be installed on Debian Wheezy.
+  shell: >
+    {{ composer_path }} update {{ drush_composer_cli_options }}
+    chdir={{ drush_source_install_path }}
+  when:
+    - drush_clone.changed and ansible_distribution == "Debian"
+    - ansible_distribution_release == "wheezy"
+    - drush_composer.stat.exists
+
+- name: Install Drush dependencies with Composer.
+  shell: >
+    {{ composer_path }} install {{ drush_composer_cli_options }}
+    chdir={{ drush_source_install_path }}
+  when: (drush_clone.changed and drush_composer.stat.exists) or drush_force_composer_install
+
+- name: Create drush symlink.
+  file:
+    src: "{{ drush_source_install_path }}/drush"
+    dest: "{{ drush_source_install_bin_path }}"
+    state: link
+    force: true
+
+- name: Run drush to finish setting it up.
+  command: "{{ drush_source_install_bin_path }}"
+  register: drush_result
+  changed_when: "'Execute a drush command' not in drush_result.stdout"
+  become: false

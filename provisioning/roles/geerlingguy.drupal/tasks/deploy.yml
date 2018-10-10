@@ -13,12 +13,12 @@
     repo: "{{ drupal_deploy_repo }}"
     version: "{{ drupal_deploy_version }}"
     update: "{{ drupal_deploy_update }}"
-    force: yes
+    force: true
     dest: "{{ drupal_deploy_dir }}"
     accept_hostkey: "{{ drupal_deploy_accept_hostkey }}"
   register: drupal_deploy_repo_updated
   notify: clear opcache
-  become: no
+  become: false
 
 - name: Check if a composer.json file is present.
   stat: "path={{ drupal_deploy_dir }}/composer.json"
@@ -31,4 +31,4 @@
   when:
     - drupal_deploy_composer_file.stat.exists == true
     - drupal_deploy_composer_install == true
-  become: no
+  become: false

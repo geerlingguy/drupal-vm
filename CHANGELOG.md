@@ -1,5 +1,135 @@
 # Drupal VM Changelog
 
+## 4.9.0 "Creation of Tron" (2018-06-01)
+
+This release improves compatibility with Ansible 2.4, 2.5 and beyond, and updates almost every Ansible role in Drupal VM.
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  - Removed unused `php_xdebug_cli_enable` variable.
+  - Added `php_xdebug_cli_disable: yes`.
+
+### Improvements
+
+  * #619, #1720: Add documentation for using Eclipse and Visual Studio Code with xdebug.
+  * #1552: Better PHP 7.2 compatibility with XDebug.
+  * #1553: Fix use of deprecated 'include' syntax in Ansible playbooks.
+  * #1566: Remove unused `php_xdebug_cli_enable` variable.
+  * #1778: Remove Ansible 2.2 compatibility-related tasks.
+  * Updated roles: selenium, php-tideways, firewall, solr, nginx, drupal console, apache, varnish, postgres, new relic, java, composer, php, mysql, blackfire, elasticsearch, drush, drupal, node.js, php-redis, php-tideways, php-versions, xhprof, redis, security, ruby.
+
+### Bugfixes
+
+  * #1736: Better Ansible version parsing in Vagrantfile.
+  * #1654: Make sure Tideways can be installed.
+  * #1518: Improve use of old versions of Solr on newer OS releases.
+
+
+## 4.8.1 (2018-03-10)
+
+### Breaking Changes
+
+Drupal VM now requires Ansible 2.4+ if you are using the version installed on your host. (Used to require 2.2+).
+
+### New/changed variables in default.config.yml
+
+  * `drupalvm_ansible_version_min` is now `2.4`. Make sure to upgrade if you're on an older version!
+
+### Improvements
+
+  * #1701: Ansible required version is TOO DARN LOW!
+  * #1682: Add documentation for setting up Atom with XDebug.
+  * Updated roles: git, ruby, apache-php-fpm, solr, security, java, git, php.
+
+### Bugfixes
+
+  * #1692: Fix the install-drupal command on the Docker image.
+  * #1704: Ansible version check is done on host even when force_ansible_local is true.
+  * #1708: Selenium paths value in docs should be quoted.
+
+
+## 4.8.0 "Tower Music / Let Us Pray" (2018-01-30)
+
+This release is all about Drush. Please read my blog post [Drupal VM 4.8 and Drush 9.0.0 - Some major changes](https://www.jeffgeerling.com/blog/2018/drupal-vm-48-and-drush-900-some-major-changes) for details and more background.
+
+If you have Drush 8 installed on your host machine, primarily use Drush _outside_ of Drupal VM, and don't use a Drush make file, none of the breaking changes should affect you.
+
+### Breaking Changes
+
+  * Drush is no longer installed inside Drupal VM if you have `drush` in `installed_extras`. Drush Launcher is installed by default.
+  * The `drush_version` configuration option is no longer used by default.
+  * Drush make files cannot be built with Drush 9+. If you have `drupal_build_makefile: true` in your `config.yml`, you _must_ add configuration to install an older version of Drush inside Drupal VM. See the [Drupal VM Drush make docs](http://docs.drupalvm.com/en/latest/deployment/drush-make/).
+
+### New/changed variables in default.config.yml
+
+  * Added the following variables to support Drush 9:
+    * `drush_aliases_host_template_yml: "templates/drupalvm.aliases.yml.j2"`
+    * `drush_aliases_guest_template_yml: "templates/drupalvm-local.aliases.yml.j2"`
+  * Removed now-unused variable: `drush_version: "8.1.15"` (Drush Launcher is installed by default inside Drupal VM).
+
+### Improvements
+
+  * #1672: Upgrade Drupal VM to use Drush Launcher and natively support Drush 9.0.0.
+  * #1595: Create Drush global aliases that work for Drush 9+ and work outside Drupal VM.
+  * Updated roles: drush.
+
+### Bugfixes
+
+N/A
+
+
+## 4.7.2 (2018-01-29)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * #1624: Added `beet/box` to list of recommended base boxes (for faster Ubuntu 16.04 provisioning).
+  * #1668: Fixed some comments which had incorrect variable references.
+  * Updated `drush_version` to `"8.1.15"` (was `"8.1.14"`).
+
+### Improvements
+
+  * Updated roles: drush.
+
+### Bugfixes
+
+  * #1659: Mention changes required for CentOS when using specialized synced folder methods.
+  * #1539: Update Drush role so Drush installs correctly on Debian 8 and 9.
+
+
+## 4.7.1 (2018-01-23)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * `nodejs_npm_global_packages` now adds `npm` by default (see #1651).
+  * `solr_version` is now `5.5.5` by default (was `5.5.3`).
+
+### Improvements
+
+  * #1602: Add machine name to dashboard header.
+  * #1651: Update NPM when provisioning (as per NPM's recommendation).
+  * Solr default version updated to `5.5.5`.
+  * Updated roles: php-xdebug, solr, mysql, postfix.
+
+### Bugfixes
+
+  * #1606: Fix vagrant-cachier for modern nfs installations with udp disabled.
+  * #1585: Fix typo in README.md
+  * #1653: Fix typo in mkdocs.yml
+  * #1617: Fix typos in PHP.md
+
+
 ## 4.7.0 "Water, Music, and Tronaction" (2017-10-06)
 
 ### Breaking Changes

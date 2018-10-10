@@ -63,13 +63,14 @@ The `|` denotes a multiline scalar block in YAML, so newlines are preserved in t
 No SSL vhosts are configured by default, but you can add them using the same pattern as `apache_vhosts`, with a few additional directives, like the following example:
 
     apache_vhosts_ssl:
-      - {
-        servername: "local.dev",
-        documentroot: "/var/www/html",
-        certificate_file: "/home/vagrant/example.crt",
-        certificate_key_file: "/home/vagrant/example.key",
+      - servername: "local.dev"
+        documentroot: "/var/www/html"
+        certificate_file: "/home/vagrant/example.crt"
+        certificate_key_file: "/home/vagrant/example.key"
         certificate_chain_file: "/path/to/certificate_chain.crt"
-      }
+        extra_parameters: |
+          RewriteCond %{HTTP_HOST} !^www\. [NC]
+          RewriteRule ^(.*)$ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 Other SSL directives can be managed with other SSL-related role variables.
 
@@ -99,7 +100,7 @@ The list of packages to be installed. This defaults to a set of platform-specifi
 
 Set initial Apache daemon state to be enforced when this role is run. This should generally remain `started`, but you can set it to `stopped` if you need to fix the Apache config during a playbook run or otherwise would not like Apache started at the time this role is run.
 
-    apache_packages_state: installed
+    apache_packages_state: present
 
 If you have enabled any additional repositories such as _ondrej/apache2_, [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel), or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to upgrade versions. You can set this to `latest` (combined with `apache_enablerepo` on RHEL) and can directly upgrade to a different Apache version from a different repo (instead of uninstalling and reinstalling Apache).
 

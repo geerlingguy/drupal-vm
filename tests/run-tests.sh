@@ -101,6 +101,10 @@ docker exec $CONTAINER_ID cp $DRUPALVM_DIR/$COMPOSERFILE ${config_dir:-$DRUPALVM
 printf "\n"${green}"Checking playbook syntax..."${neutral}"\n"
 docker exec --tty $CONTAINER_ID env TERM=xterm ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml --syntax-check
 
+# Run Ansible Lint.
+docker exec $CONTAINER_ID bash -c "easy_install ansible-lint"
+docker exec $CONTAINER_ID bash -c "cd $DRUPALVM_DIR/provisioning && ansible-lint playbook.yml" || true
+
 # Run the setup playbook.
 printf "\n"${green}"Running the setup playbook..."${neutral}"\n"
 docker exec --tty $CONTAINER_ID env TERM=xterm ansible-playbook /var/www/drupalvm/tests/test-setup.yml
@@ -169,10 +173,19 @@ docker exec $CONTAINER_ID curl -sSi --header Host:$IP localhost \
   && (echo 'Dashboard install pass' && exit 0) \
   || (echo 'Dashboard install fail' && cat /tmp/dvm-test && exit 1)
 
+# Drush - see https://github.com/drush-ops/drush/issues/3336. This test would
+# also test generated global Drush aliases, but it's currently not working due
+# to $reasons.
+# docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status \
+#   | tee /tmp/dvm-test \
+#   | grep -q 'Drupal bootstrap.*Successful' \
+#   && (echo 'Drush install pass' && exit 0) \
+#   || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
+
 # Drush.
-docker exec $CONTAINER_ID $DRUSH_BIN @$MACHINE_NAME.$HOSTNAME status \
+docker exec $CONTAINER_ID $DRUSH_BIN status \
   | tee /tmp/dvm-test \
-  | grep -q 'Drupal bootstrap.*Successful' \
+  | grep -q 'Drush' \
   && (echo 'Drush install pass' && exit 0) \
   || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
 

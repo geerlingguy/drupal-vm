@@ -1,0 +1,27 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_enable_webserver: false
+    php_enablerepo: "remi,remi-php70"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.redis
+    - role: geerlingguy.php
+    - role: geerlingguy.php-redis
+
+  post_tasks:
+    - name: Run test script to confirm Redis is reachable via PHP.
+      script: redis-test.php
+      args:
+        executable: php
+      changed_when: false

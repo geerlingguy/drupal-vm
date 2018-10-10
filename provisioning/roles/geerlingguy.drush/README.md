@@ -2,11 +2,13 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-drush.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-drush)
 
-Installs [Drush](http://www.drush.org/en/master/), a command line shell and scripting interface for Drupal, on any Linux or UNIX system.
+Installs [Drush](http://www.drush.org), a command line shell and scripting interface for Drupal, on any Linux or UNIX system.
 
 ## Requirements
 
 PHP must be installed on the system prior to running this role (suggested role: `geerlingguy.php`).
+
+Global composer installation requires Composer to also be installed on the system (suggested role: `geerlingguy.composer`).
 
 Source installation additionally requires Git and Composer to also be installed on the system (suggested roles: `geerlingguy.git` and `geerlingguy.composer`).
 
@@ -14,34 +16,73 @@ Source installation additionally requires Git and Composer to also be installed 
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    drush_phar_url: https://github.com/drush-ops/drush/releases/download/8.1.10/drush.phar
+### Drush Launcher
 
-The URL from which the Drush phar file will be downloaded.
+[Drush Launcher](https://github.com/drush-ops/drush-launcher) is a small wrapper around Drush for your global `$PATH`.
 
-    drush_path: /usr/local/bin/drush
+It is the recommended way to use `drush`, but there are some situations where you might wish to install and run Drush globally without using Drush Launcher. The following variables control Drush Launcher's installation:
+
+    drush_launcher_install: true
+
+Set to `no` if you don't want the launcher installed.
+
+    drush_launcher_version: "0.6.0"
+
+The version of the Drush Launcher to install. This should exactly match an available [Drush Launcher release](https://github.com/drush-ops/drush-launcher/releases).
+
+    drush_launcher_phar_url: https://github.com/drush-ops/drush-launcher/releases/download/{{ drush_launcher_version }}/drush.phar
+
+The URL from which the Drush Launcher phar file will be downloaded.
+
+    drush_launcher_path: /usr/local/bin/drush
 
 The path where drush will be installed and available to your system. Should be in your user's `$PATH` so you can run commands simply with `drush` instead of the full path.
 
-    drush_config: ~/.drush
+### Drush global install via Composer
 
-Path to the directory where Drush will store its generated config.
+Some people need to have the full power of `drush` available globally, and this role allows the global install of Drush via Composer. If using this option, make sure you have Composer installed!
+
+    drush_composer_global_install: false
+
+Set to `yes` (and set `drush_launcher_install` to `false`) if you want to install `drush` globally using Composer.
+
+    drush_composer_version: "~9.0"
+
+The version constraint for the global Drush installation.
+
+    drush_composer_update: false
+
+Whether to run `composer update drush/drush` to ensure the version of Drush installed globally is the latest version.
+
+    drush_composer_path: /usr/local/bin/drush
+
+The path in which a symlink to the Drush binary installed via Composer should be placed.
+
+> NOTE: Composer 'global' installation is global _to the user under which Drush is installed_—e.g. if you install globally using the root user, `drush` will only work properly as `root` or when using `sudo`.
 
 ### Variables used for source install (Git).
 
-    drush_install_path: /usr/local/share/drush
+You can also install Drush from source if you need a bleeding-edge release, or if you need a specific version which can't be installed via Composer.
+
+    drush_install_from_source: false
+
+Set to `yes` (and set `drush_launcher_install` to `false`) if you want to install `drush` globally using the Drush source code.
+
+    drush_source_install_bin_path: /usr/local/bin/drush
+    drush_source_install_path: /usr/local/share/drush
 
 The location of the entire drush installation (includes all the supporting files, as well as the `drush` executable file.
 
-    drush_version: "master"
+    drush_source_install_version: "8.x"
 
-The version of Drush to install (examples: `"master"` for the bleeding edge, `"7.x"`, `"6.x"`, `"6.2.0"`). This should be a string as it refers to a git branch, tag, or commit hash.
+The version of Drush to install (examples: `"master"` for the bleeding edge, `"8.x"`, `"7.x"`, `"6.2.0"`). This should be a string as it refers to a git branch, tag, or commit hash.
 
-    drush_keep_updated: no
-    drush_force_update: no
+    drush_keep_updated: false
+    drush_force_update: false
 
 Whether to keep Drush up-to-date with the latest revision of the branch specified by `drush_version`, and whether to force the update (e.g. overwrite local modifications to the drush repository).
 
-    drush_force_composer_install: no
+    drush_force_composer_install: false
 
 Use this if you get an error message when provisioning like `Unable to load autoload.php. Run composer install to fetch dependencies and write this file`. It will force a `composer install` inside the Drush directory.
 

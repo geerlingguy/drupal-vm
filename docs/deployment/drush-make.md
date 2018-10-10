@@ -1,8 +1,15 @@
-If you want to build a Drupal site using a [Drush make file](http://www.drush.org/en/master/make/) instead of composer, set `drupal_build_composer_project: false`, `drupal_build_makefile: true` and either use the `example.drupal.make.yml` file as a base, or use your own Drush make file: just place it or symlink it into the root of the Drupal VM folder with the filename `drupal.make.yml`. You can also set a separate path to the makefile using the `drush_makefile_path` variable.
+If you want to build a Drupal site using a [Drush make file](http://www.drush.org/en/master/make/) instead of Composer, you will need to do the following:
+
+  - Set `drupal_build_composer_project: false`
+  - Set `drupal_build_makefile: true`
+  - Use the `example.drupal.make.yml` file as a base (copy it to a new file named `drupal.make.yml`), or use your own Drush make file
+    - (You can also set a separate path to the makefile using the `drush_makefile_path` variable.)
+  - Set the following options to force an install an older version of Drush (Drush 9+ no longer supports Drush make files):
 
 ```yaml
-drupal_build_composer_project: false
-drupal_build_makefile: true
+drush_launcher_install: no
+drush_install_from_source: yes
+drush_source_install_version: "8.1.15"
 ```
 
 Have a look at the defaults in `default.config.yml` and tweak the settings as you'd like in your `config.yml`, then run `vagrant up` as in the Quick Start Guide. Within a few minutes, you should have your site running and available at the `drupal_domain` configured in `config.yml`, falling back to the default `http://drupalvm.test` set in `default.config.yml`.

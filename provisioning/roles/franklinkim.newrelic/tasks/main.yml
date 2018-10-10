@@ -5,21 +5,21 @@
     msg: "newrelic_license_key has not been defined"
   when: newrelic_license_key|default(False) == False
 
-- include: install.yml
+- import_tasks: install.yml
   tags:
     - monitoring
     - newrelic
     - install
     - newrelic-install
 
-- include: config.yml
+- import_tasks: config.yml
   tags:
     - monitoring
     - newrelic
     - config
     - newrelic-config
 
-- include: service.yml
+- import_tasks: service.yml
   tags:
     - monitoring
     - newrelic

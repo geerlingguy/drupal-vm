@@ -1,7 +1,0 @@
----
-drupalvm_webserver: nginx
-
-# Test makefile based installation.
-drupal_build_makefile: true
-drupal_build_composer_project: false
-drupal_core_path: "/var/www/drupalvm/drupal"

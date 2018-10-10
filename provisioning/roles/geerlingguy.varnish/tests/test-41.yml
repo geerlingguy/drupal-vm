@@ -5,10 +5,10 @@
     varnish_version: "4.1"
 
   pre_tasks:
-    - include: setup.yml
+    - import_tasks: setup.yml
 
   roles:
     - role_under_test
 
   post_tasks:
-    - include: debug.yml
+    - include_tasks: debug.yml

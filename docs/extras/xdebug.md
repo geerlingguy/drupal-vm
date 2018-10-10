@@ -48,12 +48,36 @@ To use XDebug with NetBeans, change the `php_xdebug_idekey` variable as shown be
 php_xdebug_idekey: netbeans-xdebug
 ```
 
+### Atom and XDebug with Drupal VM
+
+To use XDebug with Atom, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
+
+```yaml
+php_xdebug_idekey: xdebug-atom
+```
+
+### Eclipse and XDebug with Drupal VM
+
+To use XDebug with Eclipse, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
+
+```yaml
+php_xdebug_idekey: ECLIPSE_DBGP
+```
+
+### Visual Studio Code and XDebug with Drupal VM
+
+To use XDebug with Visual Studio Code, change the `php_xdebug_idekey` variable as shown below in `config.yml`, and then run `vagrant provision` to reconfigure the VM.
+
+```yaml
+php_xdebug_idekey: VSCODE
+```
+
 ### XDebug over SSH/Drush
 
 As long as `xdebug` is listed in `installed_extras` Drupal VM is configured to accept the `PHP_IDE_CONFIG`, `XDEBUG_CONFIG` and `PHP_OPTIONS` environment variables over SSH and this can be used to set up some IDE's as well as enable XDebug on a per request basis:
 
 ```
-PHP_OPTIONS="-d xdebug.default_enable=1" drush @drupalvm.drupalvm.test migrate-import
+PHP_OPTIONS="-d xdebug.default_enable=1" drush @drupalvm.drupalvm migrate-import
 ```
 
 To send the environment variables when using `vagrant ssh`, [create a `Vagrantfile.local`](../extending/vagrantfile.md) with:
@@ -76,3 +100,6 @@ While most people use XDebug only for debugging purposes, you can also use it fo
 **Note**: You should only enable one code profiler at a time—e.g. when using [Blackfire](blackfire.md), disable [XHProf](xhprof.md), [Tideways](tideways.md) and [XDebug](xdebug.md).
 
 For a list of available role variables, see the [`geerlingguy.php-xdebug` Ansible role's README](https://github.com/geerlingguy/ansible-role-php-xdebug#readme).
+
+
+

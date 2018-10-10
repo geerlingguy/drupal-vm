@@ -7,7 +7,7 @@ galaxy_info:
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
   issue_tracker_url: https://github.com/geerlingguy/drupal-vm/issues
-  min_ansible_version: 2.2
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
@@ -22,6 +22,7 @@ galaxy_info:
         - saucy
         - trusty
         - xenial
+        - bionic
   galaxy_tags:
     - php
     - web

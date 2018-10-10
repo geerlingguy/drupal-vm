@@ -6,7 +6,7 @@ Installs Node.js on RHEL/CentOS or Debian/Ubuntu.
 
 ## Requirements
 
-Requires the EPEL repository on RedHat/CentOS (you can install it by simply adding the `geerlingguy.repo-epel` role to your playbook).
+None.
 
 ## Role Variables
 

@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+{% macro alias(host, root) -%}
+{%- if root not in _devtool_docroots %}
+{{ host.split('.')[0] }}:
+  options: {  }
+  root: '{{ root }}'
+  uri: '{{ host }}'
+
+{% endif -%}
+{% endmacro -%}
+
+{% block aliases -%}
+{%- if drupalvm_webserver == 'apache' -%}
+  {%- for vhost in apache_vhosts -%}
+    {{ alias(vhost.servername, vhost.documentroot) }}
+    {%- if vhost.serveralias is defined -%}
+      {%- for serveralias in vhost.serveralias.split() -%}
+        {{ alias(serveralias, vhost.documentroot) }}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- elif drupalvm_webserver == 'nginx' -%}
+  {%- for host in nginx_vhosts -%}
+    {%- for server_name in host.server_name.split() -%}
+      {{ alias(server_name, host.root) }}
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- endblock %}

@@ -1,8 +1,7 @@
 ---
 - name: Ensure PHP packages are installed.
   package:
-    name: "{{ item }}"
+    name: "{{ php_packages }}"
     state: "{{ php_packages_state }}"
-    enablerepo: "{{ php_enablerepo }}"
-  with_items: "{{ php_packages }}"
+    enablerepo: "{{ php_enablerepo | default(omit, true) }}"
   notify: restart webserver

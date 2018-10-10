@@ -1,0 +1,27 @@
+---
+- name: Check current state.
+  stat:
+    path: "{{ drush_launcher_path }}"
+  register: drush_path_state
+
+- name: Perform cleanup of old symlink.
+  file:
+    path: "{{ drush_launcher_path }}"
+    state: absent
+  when: drush_path_state.stat.islnk is defined and drush_path_state.stat.islnk
+
+- name: Ensure Drush path directory exists.
+  file:
+    path: "{{ drush_launcher_path | dirname }}"
+    state: directory
+    mode: 0755
+
+- name: Install Drush.
+  get_url:
+    url: "{{ drush_launcher_phar_url }}"
+    dest: "{{ drush_launcher_path }}"
+
+- name: Ensure Drush is executable.
+  file:
+    path: "{{ drush_launcher_path }}"
+    mode: 0755

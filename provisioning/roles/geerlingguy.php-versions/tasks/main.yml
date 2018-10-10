@@ -2,8 +2,8 @@
 - name: Include OS-specific variables.
   include_vars: "{{ item }}"
   with_fileglob:
-    - "../vars/{{ ansible_os_family }}.yml"
-    - "../vars/{{ ansible_os_family }}-php{{ php_version }}.yml"
+    - "{{ role_path }}/vars/{{ ansible_os_family }}.yml"
+    - "{{ role_path }}/vars/{{ ansible_os_family }}-php{{ php_version }}.yml"
 
 - name: Define PHP variables.
   set_fact: "{{ item.key }}={{ hostvars[inventory_hostname][item.value] }}"
@@ -26,9 +26,12 @@
     php_xhprof_module_path: __php_xhprof_module_path
     php_packages: __php_packages
 
+- name: Define php_install_recommends variable.
+  set_fact:
+    php_install_recommends: "{{ php_versions_install_recommends }}"
+
 # Setup tasks.
-- include: "setup-{{ ansible_os_family }}.yml"
-  static: no
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
 
 - name: Set the correct XHProf package when PHP 5.6 is used.
   set_fact:

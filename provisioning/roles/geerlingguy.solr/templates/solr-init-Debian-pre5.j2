@@ -25,7 +25,7 @@ LOG_FILE="{{ solr_log_file_path }}"
 start () {
     echo -n "Starting {{ solr_service_name }}... "
 
-    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name={{ solr_service_name }}
+    daemon -U --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name={{ solr_service_name }}
 
     RETVAL=$?
     if [ $RETVAL = 0 ]

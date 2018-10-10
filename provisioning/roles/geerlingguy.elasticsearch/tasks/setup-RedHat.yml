@@ -11,4 +11,4 @@
     mode: 0644
 
 - name: Install Elasticsearch.
-  yum: pkg=elasticsearch state=installed
+  yum: pkg=elasticsearch state=present

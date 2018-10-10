@@ -5,7 +5,17 @@
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
-      changed_when: false
+      changed_when: False
+
+    # See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
+    - name: Ensure 'man' directory exists.
+      file:
+        path: /usr/share/man/man1
+        state: directory
+        recurse: True
+      when:
+        - ansible_distribution == 'Ubuntu'
+        - ansible_distribution_version == '18.04'
 
   roles:
     - role_under_test

@@ -32,4 +32,6 @@ VARNISH_USER=varnish
 VARNISH_GROUP=varnish
 
 # Other options, see the man page varnishd(1)
-#DAEMON_OPTS="-p thread_pool_min=5 -p thread_pool_max=500 -p thread_pool_timeout=300"
+{% if varnishd_extra_options %}
+DAEMON_OPTS="{{ varnishd_extra_options }}"
+{% endif %}

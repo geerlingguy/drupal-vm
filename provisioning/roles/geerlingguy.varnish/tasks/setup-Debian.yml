@@ -2,7 +2,7 @@
 - name: Ensure APT HTTPS Transport is installed.
   apt:
     name: apt-transport-https
-    state: installed
+    state: present
 
 - name: Add packagecloud.io Varnish apt key.
   apt_key:

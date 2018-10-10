@@ -1,0 +1,22 @@
+---
+- name: Ensure Drush is installed globally via Composer.
+  composer:
+    command: require
+    global_command: true
+    arguments: "drush/drush:{{ drush_composer_version }}"
+  register: drush_composer_require
+
+- name: Update global Drush install if configured.
+  composer:
+    command: update
+    global_command: true
+    arguments: "drush/drush --with-dependencies"
+  when:
+    - drush_composer_update
+    - not drush_composer_require.changed
+
+- name: Ensure globally-installed Drush is symlinked into bin dir.
+  file:
+    src: "~/.composer/vendor/bin/drush"
+    dest: "{{ drush_composer_path }}"
+    state: link

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-redis.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-redis)
 
-Installs [Redis](http://redis.io/) on RHEL/CentOS or Debian/Ubuntu.
+Installs [Redis](http://redis.io/) on Linux.
 
 ## Requirements
 
@@ -108,7 +108,7 @@ None.
 
     - hosts: all
       roles:
-        - { role: geerlingguy.redis }
+        - role: geerlingguy.redis
 
 ## License
 

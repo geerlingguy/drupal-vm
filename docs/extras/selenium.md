@@ -34,7 +34,7 @@ Using the default Drupal site as an example (it's installed in `/var/www/drupalv
         default:
           suites:
             web_features:
-              paths: [ %paths.base%/features/web ]
+              paths: [ "%paths.base%/features/web" ]
               contexts:
                 - WebContext
                 - Drupal\DrupalExtension\Context\DrupalContext

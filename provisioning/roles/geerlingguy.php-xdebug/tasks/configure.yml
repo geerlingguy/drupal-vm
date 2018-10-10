@@ -6,7 +6,17 @@
     owner: root
     group: root
     mode: 0644
+  when: "'cli' not in item or ('cli' in item and not php_xdebug_cli_disable)"
   with_items: "{{ php_extension_conf_paths }}"
+  notify:
+    - restart webserver
+    - restart php-fpm
+
+- name: Disable xdebug for PHP CLI.
+  file:
+    path: "/etc/php/{{ php_version }}/cli/conf.d/{{ php_xdebug_config_filename }}"
+    state: absent
+  when: ansible_os_family == 'Debian' and php_xdebug_cli_disable
   notify:
     - restart webserver
     - restart php-fpm
