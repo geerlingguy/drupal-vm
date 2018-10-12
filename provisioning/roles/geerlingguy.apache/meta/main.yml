@@ -11,6 +11,9 @@ galaxy_info:
     - name: EL
       versions:
         - all
+    - name: Fedora
+      versions:
+        - all
     - name: Amazon
       versions:
         - all
@@ -33,5 +36,6 @@ galaxy_info:
     - apache
     - webserver
     - html
+    - httpd
 
 allow_duplicates: true
