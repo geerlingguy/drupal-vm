@@ -52,4 +52,5 @@
     - php7.0-common
     - php7.1-common
     - php7.2-common
+    - php7.3-common
   when: "'php' + php_version not in item"
