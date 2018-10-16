@@ -11,14 +11,14 @@ composer_home_group: root
 # A list of packages to install globally. See commented examples below for
 # usage; the 'release' is optional, and defaults to '@stable'.
 composer_global_packages: []
-  # - { name: phpunit/phpunit, release: "4.7.x" }
-  # - { name: phpunit/phpunit, release: "@stable" }
+# - { name: phpunit/phpunit, release: "4.7.x" }
+# - { name: phpunit/phpunit, release: "@stable" }
 
 composer_add_to_path: true
 
 # Add a project vendor/bin directory to the PATH
 composer_add_project_to_path: false
-#composer_project_path: /path/to/project/vendor/bin
+# composer_project_path: /path/to/project/vendor/bin
 
 # GitHub OAuth token (used to help overcome API rate limits).
 composer_github_oauth_token: ''

@@ -1,6 +1,7 @@
 ---
-- hosts: localhost
-  remote_user: root
+- name: Converge
+  hosts: all
+  become: true
 
   vars:
     php_enablerepo: "remi,remi-php70"
@@ -34,6 +35,6 @@
       when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
     - role: geerlingguy.repo-dotdeb
       when: ansible_distribution == 'Debian'
-    - geerlingguy.git
-    - geerlingguy.php
-    - role_under_test
+    - role: geerlingguy.git
+    - role: geerlingguy.php
+    - role: geerlingguy.composer

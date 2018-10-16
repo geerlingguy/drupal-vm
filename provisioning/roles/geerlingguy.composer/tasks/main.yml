@@ -11,7 +11,7 @@
 - name: Get Composer installer signature.
   uri:
     url: https://composer.github.io/installer.sig
-    return_content: yes
+    return_content: true
   register: composer_installer_signature
   when: not composer_bin.stat.exists
 
@@ -30,13 +30,13 @@
   when: not composer_bin.stat.exists
 
 - name: Move Composer into globally-accessible location.
-  shell: >
+  command: >
     mv /tmp/composer.phar {{ composer_path }}
     creates={{ composer_path }}
   when: not composer_bin.stat.exists
 
 - name: Update Composer to latest version (if configured).
-  shell: >
+  command: >
     {{ php_executable }} {{ composer_path }} self-update
   register: composer_update
   changed_when: "'Updating to version' in composer_update.stdout"
@@ -50,7 +50,7 @@
     state: directory
 
 - name: Add GitHub OAuth token for Composer (if configured).
-  become: yes
+  become: true
   become_user: "{{ composer_home_owner }}"
   template:
     src: "auth.json.j2"
