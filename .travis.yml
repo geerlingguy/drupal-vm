@@ -35,7 +35,7 @@ env:
     - type: defaults
       distro: ubuntu1604
       local_config: tests/ubuntu-16-php56.config.yml
-      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
+      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
       TEST_INSTALLED_EXTRAS: false
 
     # Nginx and Drush make file test - Ubuntu 16.04.
@@ -50,7 +50,7 @@ env:
     #   distro: ubuntu1604
     #   local_config: tests/ubuntu-16-postgresql.config.yml
     #   config_dir: /var/www/drupalvm/config
-    #   DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/drush/drush/drush"
+    #   DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
     #   TEST_INSTALLED_EXTRAS: false
 
 before_install:
