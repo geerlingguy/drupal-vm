@@ -25,7 +25,7 @@
   composer:
     command: install
     working_dir: "{{ drupal_composer_install_dir }}"
-  when: falset drupal_site_exists
+  when: not drupal_site_exists
   become: false
 
 - name: Install dependencies with composer require (this may take a while).
