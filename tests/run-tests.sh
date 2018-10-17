@@ -183,7 +183,7 @@ docker exec $CONTAINER_ID curl -sSi --header Host:$IP localhost \
 #   || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
 
 # Drush.
-docker exec $CONTAINER_ID $DRUSH_BIN status \
+docker exec $CONTAINER_ID bash -c "cd $DRUPALVM_DIR/drupal && $DRUSH_BIN status" \
   | tee /tmp/dvm-test \
   | grep -q 'Drush' \
   && (echo 'Drush install pass' && exit 0) \
