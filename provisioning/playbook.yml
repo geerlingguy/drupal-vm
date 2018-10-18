@@ -7,10 +7,10 @@
     - ../default.config.yml
 
   pre_tasks:
-    - include_tasks: tasks/config.yml
+    - import_tasks: tasks/config.yml
       tags: ['always']
 
-    - include_tasks: tasks/backwards-compatibility.yml
+    - import_tasks: tasks/backwards-compatibility.yml
       tags: ['always']
 
     - include_tasks: "tasks/init-{{ ansible_os_family }}.yml"
