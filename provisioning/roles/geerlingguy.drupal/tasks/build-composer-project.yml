@@ -27,7 +27,7 @@
 
 - name: Move Drupal project files to drupal_composer_install_dir (this may take a while).
   command: >
-    cp -r /tmp/composer-project/. {{ drupal_composer_install_dir }}/
+    cp -rp /tmp/composer-project/. {{ drupal_composer_install_dir }}/
     creates={{ drupal_core_path }}/index.php
   become: false
   when: not drupal_site_exists
