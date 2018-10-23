@@ -1,36 +1,36 @@
 ---
 __php_packages:
-  - php7.0-common
-  - php7.0-cli
-  - php7.0-dev
-  - php7.0-fpm
+  - php{{ php_default_version_debian }}-common
+  - php{{ php_default_version_debian }}-cli
+  - php{{ php_default_version_debian }}-dev
+  - php{{ php_default_version_debian }}-fpm
   - libpcre3-dev
-  - php7.0-gd
-  - php7.0-curl
-  - php7.0-imap
-  - php7.0-json
-  - php7.0-opcache
-  - php7.0-xml
-  - php7.0-mbstring
+  - php{{ php_default_version_debian }}-gd
+  - php{{ php_default_version_debian }}-curl
+  - php{{ php_default_version_debian }}-imap
+  - php{{ php_default_version_debian }}-json
+  - php{{ php_default_version_debian }}-opcache
+  - php{{ php_default_version_debian }}-xml
+  - php{{ php_default_version_debian }}-mbstring
   - php-sqlite3
   - php-apcu
 __php_webserver_daemon: "apache2"
 
 # Vendor-specific configuration paths on Debian/Ubuntu make my brain asplode.
 __php_conf_paths:
-  - /etc/php/7.0/fpm
-  - /etc/php/7.0/apache2
-  - /etc/php/7.0/cli
+  - /etc/php/{{ php_default_version_debian }}/fpm
+  - /etc/php/{{ php_default_version_debian }}/apache2
+  - /etc/php/{{ php_default_version_debian }}/cli
 
 __php_extension_conf_paths:
-  - /etc/php/7.0/fpm/conf.d
-  - /etc/php/7.0/apache2/conf.d
-  - /etc/php/7.0/cli/conf.d
+  - /etc/php/{{ php_default_version_debian }}/fpm/conf.d
+  - /etc/php/{{ php_default_version_debian }}/apache2/conf.d
+  - /etc/php/{{ php_default_version_debian }}/cli/conf.d
 
 __php_apc_conf_filename: 20-apcu.ini
 __php_opcache_conf_filename: 10-opcache.ini
-__php_fpm_daemon: php7.0-fpm
-__php_fpm_conf_path: "/etc/php/7.0/fpm"
+__php_fpm_daemon: php{{ php_default_version_debian }}-fpm
+__php_fpm_conf_path: "/etc/php/{{ php_default_version_debian }}/fpm"
 __php_fpm_pool_conf_path: "{{ __php_fpm_conf_path }}/pool.d/www.conf"
 
 __php_fpm_pool_user: www-data
