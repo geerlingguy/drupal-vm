@@ -10,25 +10,25 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Fedora
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - wheezy
-      - jessie
-      - stretch
+        - wheezy
+        - jessie
+        - stretch
     - name: Ubuntu
       versions:
-      - precise
-      - trusty
-      - xenial
-      - bionic
+        - precise
+        - trusty
+        - xenial
+        - bionic
     - name: FreeBSD
       versions:
-      - 10.2
+        - 10.2
   galaxy_tags:
     - development
     - system

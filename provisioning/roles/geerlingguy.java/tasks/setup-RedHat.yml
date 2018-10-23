@@ -1,4 +1,5 @@
 ---
 - name: Ensure Java is installed.
-  package: "name={{ item }} state=present"
-  with_items: "{{ java_packages }}"
+  package:
+    name: "{{ java_packages }}"
+    state: present

@@ -40,9 +40,12 @@
     mode: 0644
   when: java_home is defined and java_home != ''
 
-- name: check java version
+- name: Check the Java version
   command: java -version
   changed_when: false
-  register: javaversion
+  register: java_version
 
-- debug: var=javaversion
+- name: Display the Java version.
+  debug:
+    var: java_version
+    verbosity: 2
