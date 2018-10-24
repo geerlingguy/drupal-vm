@@ -20,9 +20,6 @@ env:
     # Defaults - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
-    # Defaults - Ubuntu 14.04.
-    - type: defaults
-      distro: ubuntu1404
     # Defaults - Debian 9.
     - type: debian
       distro: debian9

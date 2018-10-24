@@ -22,10 +22,10 @@ Drupal VM installs the following on an Ubuntu 16.04 (by default) linux VM:
   - Optional:
     - Drupal Console
     - Drush
-    - Varnish 4.x (configurable)
-    - Apache Solr 4.10.x (configurable)
+    - Varnish
+    - Apache Solr
     - Elasticsearch
-    - Node.js 0.12 (configurable)
+    - Node.js
     - Selenium, for testing your sites via Behat
     - Ruby
     - Memcached

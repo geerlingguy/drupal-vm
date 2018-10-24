@@ -5,8 +5,8 @@
 #   - geerlingguy/centos6
 #   - geerlingguy/debian9
 #   - geerlingguy/debian8
+#   - geerlingguy/ubuntu1804
 #   - geerlingguy/ubuntu1604
-#   - geerlingguy/ubuntu1404
 vagrant_box: geerlingguy/ubuntu1604
 
 vagrant_user: vagrant
