@@ -24,7 +24,7 @@
 - src: geerlingguy.drush
   version: 3.1.2
 - src: geerlingguy.elasticsearch
-  version: 2.2.0
+  version: 3.0.0
 - src: geerlingguy.firewall
   version: 2.4.1
 - src: geerlingguy.git
@@ -78,4 +78,4 @@
 - src: geerlingguy.solr
   version: 4.3.0
 - src: geerlingguy.varnish
-  version: 2.3.2
+  version: 3.0.0

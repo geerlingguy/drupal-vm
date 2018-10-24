@@ -36,6 +36,7 @@
     group: root
     mode: 0644
   when: >
+    (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7) or
     (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 8) or
     (ansible_distribution == 'Ubuntu' and ansible_distribution_version.split(".")[0]|int >= 16)
   notify:
@@ -76,7 +77,7 @@
   service:
     name: "{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
   with_items: "{{ varnish_enabled_services | default([]) }}"
   when: >
     varnish_enabled_services and
@@ -87,7 +88,7 @@
   service:
     name: "{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
     use: "service"
   with_items: "{{ varnish_enabled_services | default([]) }}"
   when:

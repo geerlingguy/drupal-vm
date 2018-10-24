@@ -5,17 +5,29 @@
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Install Elasticsearch.
+  package:
+    name: elasticsearch
+    state: "{{ elasticsearch_package_state }}"
+
 - name: Configure Elasticsearch.
   template:
     src: elasticsearch.yml.j2
     dest: /etc/elasticsearch/elasticsearch.yml
     owner: root
     group: elasticsearch
-    mode: 0750
+    mode: 0660
   notify: restart elasticsearch
 
 - name: Start Elasticsearch.
-  service: name=elasticsearch state=started enabled=yes
+  service:
+    name: elasticsearch
+    state: "{{ elasticsearch_service_state }}"
+    enabled: "{{ elasticsearch_service_enabled }}"
 
 - name: Make sure Elasticsearch is running before proceeding.
-  wait_for: host={{ elasticsearch_network_host }} port={{ elasticsearch_http_port }} delay=3 timeout=300
+  wait_for:
+    host: "{{ elasticsearch_network_host }}"
+    port: "{{ elasticsearch_http_port }}"
+    delay: 3
+    timeout: 300

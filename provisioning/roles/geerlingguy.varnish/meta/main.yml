@@ -10,15 +10,23 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Ubuntu
       versions:
-      - precise
-      - trusty
-      - xenial
+        - precise
+        - trusty
+        - xenial
+        - bionic
     - name: Debian
       versions:
-      - all
+        - all
   galaxy_tags:
     - web
+    - varnish
+    - cache
+    - proxy
+    - reverse-proxy
+    - performance
+    - loadbalancer
+    - balancer

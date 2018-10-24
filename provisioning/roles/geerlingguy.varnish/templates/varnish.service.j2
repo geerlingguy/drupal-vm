@@ -1,15 +1,33 @@
 [Unit]
 Description=Varnish Cache, a high-performance HTTP accelerator
+After=network-online.target
 
 [Service]
 Type=forking
+KillMode=process
+
 {% if varnish_pidfile %}
 PIDFile={{ varnish_pidfile }}
 {% endif %}
+
+# Maximum number of open files (for ulimit -n)
 LimitNOFILE={{ varnish_limit_nofile }}
-LimitMEMLOCK=82000
+
+# Locked shared memory - should suffice to lock the shared memory log
+# (varnishd -l argument)
+# Default log size is 80MB vsl + 1M vsm + header -> 82MB
+# unit is bytes
+LimitMEMLOCK=85983232
+
+# Enable this to avoid "fork failed" on reload.
+TasksMax=infinity
+
+# Maximum size of the corefile.
+LimitCORE=infinity
+
 ExecStart=/usr/sbin/varnishd -a :{{ varnish_listen_port }} -T {{ varnish_admin_listen_host }}:{{ varnish_admin_listen_port }}{% if varnish_pidfile %} -P {{ varnish_pidfile }}{% endif %} -f {{ varnish_config_path }}/default.vcl -S {{ varnish_config_path }}/secret -s {{ varnish_storage }} {{ varnishd_extra_options }}
-ExecReload=/usr/share/varnish/reload-vcl
+ExecReload=/usr/sbin/varnishreload
+
 Restart=on-failure
 
 [Install]

@@ -1,0 +1,28 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    varnish_version: "4.1"
+
+  pre_tasks:
+    - import_tasks: playbook-setup.yml
+
+  roles:
+    - role: geerlingguy.varnish
+
+  post_tasks:
+    - name: Check the installed Ansible version.
+      command: varnishd -V
+      register: varnish_version
+      failed_when: "'4.1' not in varnish_version.stderr"
+      changed_when: false
+      tags: ['skip_ansible_lint']
+
+    - name: Verify Varnish is running on port 80.
+      shell: 'curl -sI localhost:80 | grep -q "Via: .* varnish"'
+      args:
+        warn: false
+      changed_when: false
+      tags: ['skip_ansible_lint']

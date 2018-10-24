@@ -1,6 +1,6 @@
 ---
 varnish_package_name: "varnish"
-varnish_version: "5.1"
+varnish_version: "6.1"
 
 varnish_use_default_vcl: true
 varnish_default_vcl_template_path: default.vcl.j2
@@ -23,6 +23,9 @@ varnishd_extra_options: ""
 
 varnish_enabled_services:
   - varnish
+
+# Make sure Packagecloud repo is used on RHEL/CentOS.
+varnish_packagecloud_repo_yum_repository_priority: "1"
 
 # Optionally define additional backends.
 # varnish_backends:

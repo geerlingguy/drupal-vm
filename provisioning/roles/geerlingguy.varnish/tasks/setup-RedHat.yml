@@ -1,27 +1,29 @@
 ---
 - name: Ensure Varnish dependencies are installed.
-  yum: name={{ item }} state=present
-  with_items:
-    - yum-utils
-    - pygpgme
+  yum:
+    name:
+      - yum-utils
+      - pygpgme
+    state: present
 
 - name: Add Varnish packagecloud.io yum repo.
   yum_repository:
     name: varnishcache_{{ varnish_packagecloud_repo }}
     description: Varnish Cache packagecloud.io repository.
     baseurl: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/el/{{ ansible_distribution_major_version|int }}/$basearch
-    repo_gpgcheck: no
-    gpgcheck: no
-    enabled: yes
+    repo_gpgcheck: false
+    gpgcheck: false
+    enabled: true
     gpgkey: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/gpgkey
     sslverify: 1
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+    priority: "{{ varnish_packagecloud_repo_yum_repository_priority }}"
   register: varnish_packagecloud_repo_addition
 
 - name: Refresh yum metadata cache if repo changed.
-  command: >
-    yum clean metadata
-    warn=no
+  command: yum clean metadata
+  args:
+    warn: false
   when: varnish_packagecloud_repo_addition.changed
 
 - name: Ensure Varnish is installed.
