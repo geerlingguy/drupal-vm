@@ -49,6 +49,7 @@ If you only need a container to run your site, and you want to package up the co
         volumes:
           - ./:/var/www/drupalvm/drupal/web/:rw,delegated
           - /var/lib/mysql
+          - /sys/fs/cgroup:/sys/fs/cgroup:ro
         command: /lib/systemd/systemd
     ```
 

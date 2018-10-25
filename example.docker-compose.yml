@@ -27,6 +27,7 @@ services:
     volumes:
       - ./:/var/www/drupalvm/:rw,delegated
       - /var/lib/mysql
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
     privileged: true
     command: /lib/systemd/systemd
