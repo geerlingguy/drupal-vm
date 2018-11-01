@@ -2,7 +2,7 @@
 
 To do this, BigPipe requires an environment configured to allow the authenticated request response to be streamed from PHP all the way through to the client. All parts of the web stack that intermediate the connection have to have output buffering disabled so the response stream can flow through.
 
-Drupal VM's default configuration uses Apache with the `mod_proxy_fastcgi` module to connect to PHP-FPM, which isn't the most optimal configuration for BigPipe, and requires gzip compression to be disabled, so you should either switch to Nginx or consider further customizing the Apache configuration.
+Drupal VM's default configuration uses Apache with the `mod_proxy_fastcgi` module to connect to PHP-FPM, which isn't the most optimal configuration for BigPipe, so you should either switch to Nginx or consider further customizing the Apache configuration.
 
 Drupal VM's Varnish configuration works with BigPipe out of the box, as it allows the backend response to be streamed whenever BigPipe is enabled (it outputs a `Surrogate-Control: BigPipe/1.0` header to tell Varnish when to stream the response).
 
