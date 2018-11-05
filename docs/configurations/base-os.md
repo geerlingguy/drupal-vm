@@ -41,6 +41,12 @@ php_opcache_enabled_in_ini: false
 firewall_disable_firewalld: false
 ```
 
+- **Varnish**: Newer versions of Varnish are no longer available for CentOS 6, so you need to lock Varnish in at an older version, by adding something like the following in `config.yml`:
+
+```yaml
+varnish_version: 5.2
+```
+
 ## Debian 9 Stretch
 
 Everything should work out of the box with Debian 9.
