@@ -1,6 +1,6 @@
 ---
 - name: Install extra apt packages (if any are configured).
-  apt: "name={{ extra_packages | list }} state=present"
+  apt: "name={{ extra_packages }} state=present"
   when:
     - ansible_os_family == 'Debian'
     - extra_packages | length
