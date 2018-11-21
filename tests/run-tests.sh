@@ -16,6 +16,7 @@ CONTAINER_ID="${CONTAINER_ID:-dvm-test}"
 type="${type:-tests/defaults}"
 distro="${distro:-ubuntu1604}"
 cleanup="${cleanup:-true}"
+easy_install_cmd=${easy_install_cmd:-easy_install}
 
 ## Set up vars for Docker setup.
 # CentOS 7
