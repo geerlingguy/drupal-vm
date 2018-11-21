@@ -10,6 +10,9 @@
     - import_tasks: tasks/config.yml
       tags: ['always']
 
+    - import_tasks: tasks/app-toggles.yml
+      tags: ['always']
+
     - import_tasks: tasks/backwards-compatibility.yml
       tags: ['always']
 
