@@ -67,6 +67,7 @@ pages:
     - 'Vagrant LXC provider': 'other/vagrant-lxc.md'
     - 'Improving Performance': 'other/performance.md'
     - 'Docker': 'other/docker.md'
+    - 'Custom Vagrant Base Box': 'other/custom-base-box.md'
     - 'BigPipe with Drupal VM': 'other/bigpipe.md'
     - 'Drupal multisite': 'deployment/multisite.md'
     - 'Drupal 6 Notes': 'other/drupal-6.md'
