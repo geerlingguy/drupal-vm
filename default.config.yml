@@ -1,13 +1,14 @@
 ---
 # Available `vagrant_box` values include:
 #   - beet/box (pre-provisioned, based on Ubuntu 16.04)
+#   - geerlingguy/drupal-vm (pre-provisioned, based on Ubuntu 16.04)
 #   - geerlingguy/centos7
 #   - geerlingguy/centos6
 #   - geerlingguy/debian9
 #   - geerlingguy/debian8
 #   - geerlingguy/ubuntu1804
 #   - geerlingguy/ubuntu1604
-vagrant_box: geerlingguy/ubuntu1604
+vagrant_box: geerlingguy/drupal-vm
 
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
