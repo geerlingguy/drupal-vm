@@ -20,8 +20,6 @@ env:
     # Defaults - Ubuntu 18.04.
     - type: defaults
       distro: ubuntu1804
-      # https://bugs.launchpad.net/ubuntu/+source/python-setuptools/+bug/1774419
-      easy_install_cmd: python /usr/lib/python2.7/dist-packages/easy_install.py
     # Defaults - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
