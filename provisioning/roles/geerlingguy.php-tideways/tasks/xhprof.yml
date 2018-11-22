@@ -1,3 +1,4 @@
+---
 - name: Define xhprof_download_url.
   set_fact:
     xhprof_download_url: "{{ __tideways_xhprof_download_url }}"
@@ -27,7 +28,7 @@
   unarchive:
     src: "{{ xhprof_download_url }}"
     dest: "{{ workspace }}"
-    copy: no
+    copy: false
     creates: "{{ workspace }}/{{ xhprof_download_folder_name }}"
 
 - name: Move XHProf PHP library into place.

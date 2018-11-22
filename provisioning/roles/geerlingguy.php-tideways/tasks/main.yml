@@ -24,14 +24,14 @@
   unarchive:
     src: "{{ tideways_download_url }}"
     dest: "{{ workspace }}"
-    copy: no
+    copy: false
     creates: "{{ workspace }}/{{ tideways_download_folder_name }}"
 
 - name: Build Tideways.
-  shell: >
+  command: >
     {{ item }}
     chdir={{ workspace }}/{{ tideways_download_folder_name }}
-    creates={{ workspace }}/{{ tideways_download_folder_name }}/modules/tideways_xhprof.so
+    creates={{ workspace }}/{{ tideways_download_folder_name }}/modules/{{ tideways_extension_name }}
   with_items:
     - phpize
     - ./configure
@@ -48,9 +48,10 @@
     mode: 0755
 
 - name: Move Tideways module into place.
-  shell: >
-    cp {{ workspace }}/{{ tideways_download_folder_name }}/modules/tideways_xhprof.so {{ php_tideways_module_path }}/tideways_xhprof.so
-    creates={{ php_tideways_module_path }}/tideways_xhprof.so
+  command: >
+    cp {{ workspace }}/{{ tideways_download_folder_name }}/modules/{{ tideways_extension_name }}
+    {{ php_tideways_module_path }}/{{ tideways_extension_name }}
+    creates={{ php_tideways_module_path }}/{{ tideways_extension_name }}
   notify: restart webserver
 
 # TODO - Install the Tideways.php file for UI?

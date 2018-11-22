@@ -54,7 +54,7 @@
 - src: geerlingguy.php-redis
   version: 3.2.1
 - src: geerlingguy.php-tideways
-  version: 2.1.0
+  version: 2.2.0
 - src: geerlingguy.php-versions
   version: 2.1.5
 - src: geerlingguy.php-xdebug
