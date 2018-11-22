@@ -18,7 +18,7 @@
     dest: "{{ nginx_vhost_path }}/{{ item.filename|default(item.server_name.split(' ')[0] ~ '.conf') }}"
     force: true
     owner: root
-    group: root
+    group: "{{ root_group }}"
     mode: 0644
   when: item.state|default('present') != 'absent'
   with_items: "{{ nginx_vhosts }}"
