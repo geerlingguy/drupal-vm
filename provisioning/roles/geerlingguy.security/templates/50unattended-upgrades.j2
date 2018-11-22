@@ -1,4 +1,5 @@
-Unattended-Upgrade::Automatic-Reboot "false";
+Unattended-Upgrade::Automatic-Reboot "{{ security_autoupdate_reboot }}";
+Unattended-Upgrade::Automatic-Reboot-Time "{{ security_autoupdate_reboot_time }}";
 
 {% if security_autoupdate_mail_to %}
 Unattended-Upgrade::Mail "{{ security_autoupdate_mail_to }}";

@@ -10,7 +10,7 @@
 
 - name: Configure host based authentication (if entries are configured).
   template:
-    src: "templates/pg_hba.conf.j2"
+    src: "pg_hba.conf.j2"
     dest: "{{ postgresql_config_path }}/pg_hba.conf"
     owner: "{{ postgresql_user }}"
     group: "{{ postgresql_group }}"

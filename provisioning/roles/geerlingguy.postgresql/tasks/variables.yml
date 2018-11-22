@@ -13,15 +13,15 @@
     postgresql_packages: "{{ __postgresql_packages | list }}"
   when: postgresql_packages is not defined
 
-- name: Define postgresql_daemon.
-  set_fact:
-    postgresql_daemon: "{{ __postgresql_daemon }}"
-  when: postgresql_daemon is not defined
-
 - name: Define postgresql_version.
   set_fact:
     postgresql_version: "{{ __postgresql_version }}"
   when: postgresql_version is not defined
+
+- name: Define postgresql_daemon.
+  set_fact:
+    postgresql_daemon: "{{ __postgresql_daemon }}"
+  when: postgresql_daemon is not defined
 
 - name: Define postgresql_data_dir.
   set_fact:

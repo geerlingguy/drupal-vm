@@ -38,7 +38,7 @@ The port through which you'd like SSH to be accessible. The default is port 22, 
     security_ssh_permit_root_login: "no"
     security_ssh_usedns: "no"
 
-Security settings for SSH authentication. It's best to leave these set to `"no"`, but there are times (especially during initial server configuration or when you don't have key-based authentication in place) when one or all may be safely set to `'yes'`.
+Security settings for SSH authentication. It's best to leave these set to `"no"`, but there are times (especially during initial server configuration or when you don't have key-based authentication in place) when one or all may be safely set to `'yes'`. **NOTE: It is _very_ important that you quote the 'yes' or 'no' values. Failure to do so may lock you out of your server.**
 
     security_sudoers_passwordless: []
     security_sudoers_passworded: []
@@ -52,6 +52,14 @@ Whether to install/enable `yum-cron` (RedHat-based systems) or `unattended-upgra
     security_autoupdate_blacklist: []
 
 (Debian/Ubuntu only) A listing of packages that should not be automatically updated.
+
+    security_autoupdate_reboot: false
+
+(Debian/Ubuntu only) Whether to reboot when needed during unattended upgrades.
+
+    security_autoupdate_reboot_time: "03:00"
+
+(Debian/Ubuntu only) The time to trigger a reboot, when needed, if `security_autoupdate_reboot` is set to `true`. In 24h "hh:mm" clock format.
 
     security_autoupdate_mail_to: ""
     security_autoupdate_mail_on_error: true

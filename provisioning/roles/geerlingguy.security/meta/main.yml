@@ -10,21 +10,22 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - all
+        - all
     - name: Fedora
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - all
+        - all
   galaxy_tags:
     - system
     - security
     - fail2ban
-    - automatic-updates
+    - automatic
+    - updates
     - yum
     - apt
     - dnf

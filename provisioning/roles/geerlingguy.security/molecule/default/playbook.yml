@@ -1,38 +1,41 @@
-- hosts: all
+---
+- name: Converge
+  hosts: all
+  become: true
 
   pre_tasks:
     - name: Update apt cache.
-      package: update_cache=yes cache_valid_time=600
+      package: update_cache=true cache_valid_time=600
       when: ansible_os_family == 'Debian'
 
     - name: Ensure build dependencies are installed (RedHat).
-      package: 'name="{{ item }}" state=present'
-      with_items:
-        - openssh-server
-        - openssh-clients
+      package:
+        name:
+          - openssh-server
+          - openssh-clients
+        state: present
       when: ansible_os_family == 'RedHat'
 
     - name: Ensure build dependencies are installed (Fedora).
-      package: 'name="{{ item }}" state=present'
-      with_items:
-        - procps
+      package: name=procps state=present
       when: ansible_distribution == 'Fedora'
 
     - name: Ensure build dependencies are installed (Debian).
-      package: 'name="{{ item }}" state=present'
-      with_items:
-        - openssh-server
-        - openssh-client
+      package:
+        name:
+          - openssh-server
+          - openssh-client
+        state: present
       when: ansible_os_family == 'Debian'
 
     - name: Ensure auth.log file is present.
       copy:
         dest: /var/log/auth.log
         content: ""
-        force: no
+        force: false
       when: >
         (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04') or
-        (ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie')
+        (ansible_distribution == 'Debian')
 
   roles:
-    - role_under_test
+    - role: geerlingguy.security
