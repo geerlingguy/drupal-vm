@@ -38,14 +38,4 @@
     src: java_home.sh.j2
     dest: /etc/profile.d/java_home.sh
     mode: 0644
-  when: java_home is defined and java_home != ''
-
-- name: Check the Java version
-  command: java -version
-  changed_when: false
-  register: java_version
-
-- name: Display the Java version.
-  debug:
-    var: java_version
-    verbosity: 2
+  when: java_home is defined and java_home
