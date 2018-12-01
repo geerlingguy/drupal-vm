@@ -62,6 +62,7 @@ Vagrant.configure('2') do |config|
   # SSH options.
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
+  config.ssh.extra_args = "-tt"
 
   # Vagrant box.
   config.vm.box = vconfig['vagrant_box']
