@@ -6,30 +6,28 @@ env:
   global:
     - ROLE_NAME: php-versions
   matrix:
-    # Default PHP version.
+    # Default PHP version (7.2).
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
     - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: ubuntu1604
     - MOLECULE_DISTRO: debian9
 
-    # PHP 7.2.
+    # PHP 7.3.
     - MOLECULE_DISTRO: centos7
       MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-      MOLECULE_PLAYBOOK: playbook-7.2.yml
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
     - MOLECULE_DISTRO: ubuntu1804
-      MOLECULE_PLAYBOOK: playbook-7.2.yml
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
     - MOLECULE_DISTRO: ubuntu1604
-      MOLECULE_PLAYBOOK: playbook-7.2.yml
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
     - MOLECULE_DISTRO: debian9
-      MOLECULE_PLAYBOOK: playbook-7.2.yml
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
 
-    # PHP 5.6.
+    # PHP 7.1.
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-      MOLECULE_PLAYBOOK: playbook-5.6.yml
+      MOLECULE_PLAYBOOK: playbook-7.1.yml
     - MOLECULE_DISTRO: ubuntu1804
-      MOLECULE_PLAYBOOK: playbook-5.6.yml
+      MOLECULE_PLAYBOOK: playbook-7.1.yml
 
 install:
   # Install test dependencies.

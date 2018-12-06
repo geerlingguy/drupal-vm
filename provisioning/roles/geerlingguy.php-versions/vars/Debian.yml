@@ -33,7 +33,6 @@ __php_packages:
   - "php{{ php_version }}-imap"
   - "php{{ php_version }}-json"
   - "php{{ php_version }}-mbstring"
-  - "php{{ php_version }}-mcrypt"
   - "php{{ php_version }}-opcache"
   - "php{{ php_version }}-sqlite3"
   - "php{{ php_version }}-xml"

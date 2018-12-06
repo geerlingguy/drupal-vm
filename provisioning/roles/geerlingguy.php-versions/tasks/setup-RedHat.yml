@@ -14,3 +14,7 @@
 - name: Enable remi repo for PHP 7.2.
   set_fact: php_enablerepo="remi,remi-php72"
   when: php_version == "7.2"
+
+- name: Enable remi repo for PHP 7.3.
+  set_fact: php_enablerepo="remi,remi-php73"
+  when: php_version == "7.3"

@@ -5,7 +5,7 @@ galaxy_info:
   author: geerlingguy
   description: Allows different PHP versions to be installed.
   company: "Midwestern Mac, LLC"
-  license: "license (BSD, MIT)"
+  license: "MIT"
   issue_tracker_url: https://github.com/geerlingguy/drupal-vm/issues
   min_ansible_version: 2.4
   platforms:
@@ -17,9 +17,6 @@ galaxy_info:
         - all
     - name: Ubuntu
       versions:
-        - precise
-        - raring
-        - saucy
         - trusty
         - xenial
         - bionic
