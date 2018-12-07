@@ -35,7 +35,7 @@
 - name: Install dependencies with composer require (this may take a while).
   composer:
     command: require
-    arguments: "{{ item }} -vv --profile"
+    arguments: "{{ item }}"
     working_dir: "{{ drupal_composer_install_dir }}"
   with_items: "{{ drupal_composer_dependencies|default([]) }}"
   become: false
