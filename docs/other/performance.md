@@ -113,6 +113,6 @@ Though it's not supported natively by Vagrant, you can mount a Samba share _from
   1. Install Samba inside the VM.
   2. Configure Samba (through `smb.conf`) to share a directory inside the VM.
   3. Open firewall ports `137`, `138`, `139`, and `445`.
-  4. Mount the Samba shared folder within Windows Explorer (e.g. visit `\\drupalvm.dev\share_name`)
+  4. Mount the Samba shared folder within Windows Explorer (e.g. visit `\\drupalvm.test\share_name`)
 
 Read this blog post for further detail in creating a Samba share: [Configure a reverse-mounted Samba shared folder](https://www.jeffgeerling.com/blog/2017/drupal-vm-on-windows-fast-container-blt-project-development#reverse-share).

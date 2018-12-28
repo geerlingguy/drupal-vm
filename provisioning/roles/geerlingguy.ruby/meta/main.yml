@@ -6,7 +6,7 @@ galaxy_info:
   description: Ruby installation for Linux.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
@@ -31,6 +31,7 @@ galaxy_info:
       - lucid
       - trusty
       - precise
+      - bionic
     - name: SLES
       versions:
       - all
@@ -43,3 +44,7 @@ galaxy_info:
   galaxy_tags:
     - development
     - web
+    - ruby
+    - rails
+    - gem
+    - bundler

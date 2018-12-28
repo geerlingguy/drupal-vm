@@ -23,21 +23,23 @@ end
 vconfig = load_config([
   default_config_file,
   "#{host_config_dir}/config.yml",
-  "#{host_config_dir}/local.config.yml",
-  "#{host_config_dir}/#{drupalvm_env}.config.yml"
+  "#{host_config_dir}/#{drupalvm_env}.config.yml",
+  "#{host_config_dir}/local.config.yml"
 ])
 
 provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
 if provisioner == :ansible
   playbook = "#{host_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = host_config_dir
+
+  # Verify Ansible version requirement.
+  require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
 else
   playbook = "#{guest_drupalvm_dir}/provisioning/playbook.yml"
   config_dir = guest_config_dir
 end
 
-# Verify version requirements.
-require_ansible_version ">= #{vconfig['drupalvm_ansible_version_min']}"
+# Verify Vagrant version requirement.
 Vagrant.require_version ">= #{vconfig['drupalvm_vagrant_version_min']}"
 
 ensure_plugins(vconfig['vagrant_plugins'])
@@ -102,14 +104,17 @@ Vagrant.configure('2') do |config|
     config.vm.synced_folder synced_folder.fetch('local_path'), synced_folder.fetch('destination'), options
   end
 
-  config.vm.provision provisioner do |ansible|
+  config.vm.provision 'drupalvm', type: provisioner do |ansible|
+    ansible.compatibility_mode = '2.0'
     ansible.playbook = playbook
     ansible.extra_vars = {
       config_dir: config_dir,
       drupalvm_env: drupalvm_env
     }
-    ansible.raw_arguments = ENV['DRUPALVM_ANSIBLE_ARGS']
+    ansible.raw_arguments = Shellwords.shellsplit(ENV['DRUPALVM_ANSIBLE_ARGS']) if ENV['DRUPALVM_ANSIBLE_ARGS']
     ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
+    # Use pip to get the latest Ansible version when using ansible_local.
+    provisioner == :ansible_local && ansible.install_mode = 'pip'
   end
 
   # VMware Fusion.
@@ -124,12 +129,13 @@ Vagrant.configure('2') do |config|
 
   # VirtualBox.
   config.vm.provider :virtualbox do |v|
-    v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
+    v.linked_clone = true
     v.name = vconfig['vagrant_hostname']
     v.memory = vconfig['vagrant_memory']
     v.cpus = vconfig['vagrant_cpus']
     v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     v.customize ['modifyvm', :id, '--ioapic', 'on']
+    v.customize ['modifyvm', :id, '--audio', 'none']
     v.gui = vconfig['vagrant_gui']
   end
 
@@ -150,7 +156,8 @@ Vagrant.configure('2') do |config|
     # Cache the composer directory.
     config.cache.enable :generic, cache_dir: '/home/vagrant/.composer/cache'
     config.cache.synced_folder_opts = {
-      type: vconfig['vagrant_synced_folder_default_type']
+      type: vconfig['vagrant_synced_folder_default_type'],
+      nfs_udp: false
     }
   end
 

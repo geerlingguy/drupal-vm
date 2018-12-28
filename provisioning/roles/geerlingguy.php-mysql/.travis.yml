@@ -1,43 +1,28 @@
 ---
+language: python
 services: docker
 
 env:
-  - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  global:
+    - ROLE_NAME: php-mysql
+  matrix:
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
+    - MOLECULE_DISTRO: ubuntu1604
 
-before_install:
-  # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+install:
+  # Install test dependencies.
+  - pip install molecule docker
+
+before_script:
+  # Use actual Ansible Galaxy role name for the project directory.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
+  - cd geerlingguy.$ROLE_NAME
 
 script:
-  - container_id=$(mktemp)
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
-
-  # Install dependencies.
-  - 'docker exec "$(cat ${container_id})" ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml'
-
-  # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
-
-  # Test role.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
-  - >
-    tail ${idempotence}
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
-
-  # Ensure PHP MySQL support is enabled.
-  - docker exec --tty "$(cat ${container_id})" env TERM=xterm php -i | grep 'mysqlnd => enabled'
+  # Run tests.
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

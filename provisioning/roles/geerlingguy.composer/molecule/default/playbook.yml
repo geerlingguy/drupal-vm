@@ -1,0 +1,40 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_enablerepo: "remi,remi-php70"
+    php_enable_webserver: false
+
+    # Test a global requirement.
+    composer_global_packages:
+      - name: phpunit/phpunit
+        release: "@stable"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Set php_packages for PHP 7.0 Debian 8 install.
+      set_fact:
+        php_packages:
+          - php7.0-common
+          - php7.0-cli
+          - php7.0-dev
+          - php7.0-fpm
+          - libpcre3-dev
+          - php7.0-opcache
+          - php7.0-apcu
+          - php7.0-xml
+      when: ansible_distribution == 'Debian'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
+    - role: geerlingguy.repo-dotdeb
+      when: ansible_distribution == 'Debian'
+    - role: geerlingguy.git
+    - role: geerlingguy.php
+    - role: geerlingguy.composer

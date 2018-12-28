@@ -6,5 +6,5 @@
 - name: Ensure nginx is installed.
   apt:
     name: "{{ nginx_package_name }}"
-    state: installed
+    state: present
     default_release: "{{ nginx_default_release }}"

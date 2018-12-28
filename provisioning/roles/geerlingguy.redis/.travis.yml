@@ -4,8 +4,8 @@ services: docker
 env:
   - distro: centos7
     redis_daemon: redis
-  # - distro: fedora24
-  #   redis_daemon: redis
+  - distro: fedora27
+    redis_daemon: redis
   - distro: ubuntu1604
     redis_daemon: redis-server
 

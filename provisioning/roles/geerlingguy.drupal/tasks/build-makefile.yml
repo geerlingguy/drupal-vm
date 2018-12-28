@@ -9,9 +9,9 @@
   file:
     path: "{{ drupal_core_path }}"
     state: directory
-    recurse: yes
+    recurse: true
     mode: 0775
-  become: no
+  become: false
   when: not drupal_site_exists
 
 - name: Generate Drupal site with drush makefile.
@@ -19,7 +19,7 @@
     {{ drush_path }} make -y /tmp/drupal.make.yml {{ drush_make_options }}
     chdir={{ drupal_core_path }}
   when: not drupal_site_exists
-  become: no
+  become: false
 
 - name: Check if a composer.json file is present.
   stat: "path={{ drupal_core_path }}/composer.json"
@@ -31,4 +31,4 @@
     composer install
     chdir={{ drupal_core_path }}
   when: not drupal_site_exists and drupal_core_composer_file.stat.exists
-  become: no
+  become: false

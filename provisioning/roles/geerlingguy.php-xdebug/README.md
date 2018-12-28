@@ -16,18 +16,14 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Where Xdebug setup files will be downloaded and built.
 
-    php_xdebug_version: 2.4.1
+    php_xdebug_version: 2.6.0
 
-The version of Xdebug to be installed (see [Updates](https://xdebug.org/updates.php) for a current listing).
+The version of Xdebug to be installed (see [Updates](https://xdebug.org/updates.php) for a current listing). **If using PHP 5.6**: Set this to `2.5.0` or earlier, as starting with XDebug 2.6.0, PHP 5.x support has been dropped.
 
     php_xdebug_default_enable: 1
     php_xdebug_coverage_enable: 1
 
 Whether to enable XDebug coverage and default exception handling or not. Disable these for slightly improved PHP performance, enable these to use XDebug to the fullest extent.
-
-    php_xdebug_cli_enable: 1
-
-Whether xdebug is enabled for the CLI.
 
     php_xdebug_module_path: /usr/lib64/php/modules
 
@@ -54,9 +50,13 @@ The location of the xdebug log (useful if you're having trouble connecting).
 
 The IDE key to use in the URL when making Xdebug requests (e.g. `http://example.local/?XDEBUG_SESSION_START=sublime.xdebug`).
 
-    php_xdebug_max_nesting_level: 100
+    php_xdebug_max_nesting_level: 256
 
 The maximimum function nesting level before Xdebug bails and throws a fatal exception.
+
+    php_xdebug_cli_disable: false
+
+(Debian/Ubuntu ONLY) Disable xdebug for the CLI SAPI.
 
 ## Dependencies
 

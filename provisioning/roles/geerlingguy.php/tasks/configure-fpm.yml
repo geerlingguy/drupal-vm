@@ -40,7 +40,7 @@
     owner: root
     group: root
     mode: 0644
-    force: no
+    force: false
   when: php_enable_php_fpm
 
 - name: Configure php-fpm pool (if enabled).
@@ -73,7 +73,7 @@
   service:
     name: "{{ php_fpm_daemon }}"
     state: started
-    enabled: yes
+    enabled: true
   when: php_enable_php_fpm and ansible_distribution != "Debian"
 
 # See: https://github.com/ansible/ansible/issues/22303
@@ -81,6 +81,6 @@
   service:
     name: "{{ php_fpm_daemon }}"
     state: started
-    enabled: yes
+    enabled: true
     use: service
   when: php_enable_php_fpm and ansible_distribution == "Debian"

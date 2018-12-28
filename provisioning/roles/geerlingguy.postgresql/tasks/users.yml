@@ -3,6 +3,7 @@
   postgresql_user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
+    encrypted: "{{ item.encrypted | default(omit) }}"
     priv: "{{ item.priv | default(omit) }}"
     role_attr_flags: "{{ item.role_attr_flags | default(omit) }}"
     db: "{{ item.db | default(omit) }}"
@@ -14,7 +15,7 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ postgresql_users }}"
   no_log: true
-  become: yes
+  become: true
   become_user: "{{ postgresql_user }}"
   # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
   vars:

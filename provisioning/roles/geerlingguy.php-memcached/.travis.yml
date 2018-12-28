@@ -1,40 +1,28 @@
 ---
-sudo: required
 language: python
-python: "2.7"
+services: docker
 
 env:
-  - SITE=test.yml
-
-before_install:
-  - sudo apt-get update -qq
+  global:
+    - ROLE_NAME: php-memcached
+  matrix:
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
+    - MOLECULE_DISTRO: ubuntu1604
 
 install:
-  # Install Ansible.
-  - pip install ansible
+  # Install test dependencies.
+  - pip install molecule docker
 
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
-
-  # Install dependencies.
-  - ansible-galaxy install geerlingguy.memcached geerlingguy.php
+before_script:
+  # Use actual Ansible Galaxy role name for the project directory.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
+  - cd geerlingguy.$ROLE_NAME
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
-
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
-
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
-
-  # Run script to test if Memcached is available and working.
-  - php tests/memcached-test.php
+  # Run tests.
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

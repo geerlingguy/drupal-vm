@@ -7,17 +7,17 @@ galaxy_info:
   description: PHP MySQL support for Linux.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.8
+  min_ansible_version: 2.0
   platforms:
     - name: EL
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - all
+        - all
   galaxy_tags:
     - database
     - web

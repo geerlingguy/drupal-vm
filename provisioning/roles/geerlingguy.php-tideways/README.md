@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-php-tideways.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-php-tideways)
 
-Installs the [Tideways PHP Profile Extension](https://github.com/tideways/php-profiler-extension) on Linux servers.
+Installs the [Tideways PHP Profile Extension](https://github.com/tideways/php-xhprof-extension) on Linux servers.
 
 ## Requirements
 
@@ -16,16 +16,20 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Where Tideways setup files will be downloaded and built.
 
-    tideways_download_url: https://github.com/tideways/php-profiler-extension/archive/master.zip
-    tideways_download_folder_name: php-profiler-extension-master
+    tideways_download_url: https://github.com/tideways/php-xhprof-extension/archive/master.zip
+    tideways_download_folder_name: php-xhprof-extension-master
 
-The URL from which Tideways will be downloaded.
+The URL from which Tideways will be downloaded, and the resulting folder into which it is downloaded.
+
+    tideways_extension_name: tideways_xhprof.so
+
+The extension name for the Tideways PHP extension.
 
     tideways_api_key: ''
 
 If you use the Tideways UI, set this variable to your API key. Otherwise the extension can be used along with the XHProf UI to view profiles.
 
-    tideways_install_xhprof_ui: yes
+    tideways_install_xhprof_ui: true
 
 Tideways data-format is 100% compatible with XHProf so you can use the XHProf UI to browse profiles reports and the `XHProfRuns_Default` class to write the profile data to disk. If you use the Tideways UI, set this variable to `no`.
 
@@ -58,4 +62,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2017 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2017 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

@@ -11,9 +11,9 @@
     {{ drupal_composer_project_package }} /tmp/composer-project
     {{ drupal_composer_project_options|default('--prefer-dist --no-interaction') }}
   when: not drupal_site_exists
-  become: no
+  become: false
   environment:
-      COMPOSER_PROCESS_TIMEOUT: 1200
+    COMPOSER_PROCESS_TIMEOUT: 1200
 
 - name: Ensure drupal_composer_install_dir directory has proper permissions.
   file:
@@ -29,7 +29,7 @@
   command: >
     cp -r /tmp/composer-project/. {{ drupal_composer_install_dir }}/
     creates={{ drupal_core_path }}/index.php
-  become: no
+  become: false
   when: not drupal_site_exists
 
 - name: Install dependencies with composer require (this may take a while).
@@ -38,4 +38,4 @@
     arguments: "{{ item }}"
     working_dir: "{{ drupal_composer_install_dir }}"
   with_items: "{{ drupal_composer_dependencies|default([]) }}"
-  become: no
+  become: false

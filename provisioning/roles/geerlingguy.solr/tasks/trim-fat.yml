@@ -7,11 +7,16 @@
     - "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     - "{{ solr_workspace }}/{{ solr_filename }}"
 
-- name: Remove extra cruft, if configured.
+- name: Remove docs, if not needed.
   file:
-    path: "{{ item }}"
+    path: "{{ solr_install_path }}/docs"
     state: absent
-  with_items:
-    - "{{ solr_install_path }}/docs"
-    - "{{ solr_install_path }}/example"
   when: solr_remove_cruft
+
+- name: Remove example dir, if not needed.
+  file:
+    path: "{{ solr_install_path }}/example"
+    state: absent
+  when:
+    - solr_remove_cruft
+    - solr_version.split('.')[0] >= '5'

@@ -1,28 +1,29 @@
 ---
 - name: Ensure dependencies for building from source are installed (RedHat).
-  package: "name={{ item }} state=installed"
-  with_items:
-    - autoconf
-    - automake
-    - libtool
-    - bison
-    - make
-    - curl-devel
-    - recode-devel
-    - aspell-devel
-    - libxml2-devel
-    - pkgconfig
-    - libmcrypt-devel
-    - t1lib-devel
-    - libXpm-devel
-    - libpng-devel
-    - libjpeg-turbo-devel
-    - bzip2-devel
-    - openssl-devel
-    - freetype-devel
-    - libicu-devel
-    - mariadb-devel
-    - gmp-devel
+  package:
+    name:
+      - autoconf
+      - automake
+      - libtool
+      - bison
+      - make
+      - curl-devel
+      - recode-devel
+      - aspell-devel
+      - libxml2-devel
+      - pkgconfig
+      - libmcrypt-devel
+      - t1lib-devel
+      - libXpm-devel
+      - libpng-devel
+      - libjpeg-turbo-devel
+      - bzip2-devel
+      - openssl-devel
+      - freetype-devel
+      - libicu-devel
+      - mariadb-devel
+      - gmp-devel
+    state: present
   when: ansible_os_family == 'RedHat'
 
 - name: Update apt cache (Debian).
@@ -30,28 +31,29 @@
   when: ansible_os_family == 'Debian'
 
 - name: Ensure dependencies for building from source are installed (Debian).
-  apt: "pkg={{ item }} state=installed"
-  with_items:
-    - build-essential
-    - autoconf
-    - automake
-    - libtool
-    - bison
-    - pkg-config
-    - re2c
-    - libxml2-dev
-    - libcurl4-openssl-dev
-    - libbz2-dev
-    - libjpeg-dev
-    - libpng12-dev
-    - libxpm-dev
-    - libfreetype6-dev
-    - libgmp3-dev
-    - libmcrypt-dev
-    - libmysqlclient-dev
-    - libpspell-dev
-    - librecode-dev
-    - libssl-dev
+  apt:
+    name:
+      - build-essential
+      - autoconf
+      - automake
+      - libtool
+      - bison
+      - pkg-config
+      - re2c
+      - libxml2-dev
+      - libcurl4-openssl-dev
+      - libbz2-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libxpm-dev
+      - libfreetype6-dev
+      - libgmp3-dev
+      - libmcrypt-dev
+      - libmysqlclient-dev
+      - libpspell-dev
+      - librecode-dev
+      - libssl-dev
+    state: present
   when: ansible_os_family == 'Debian'
 
 - name: Define php_fpm_daemon (if not defined already).
@@ -78,40 +80,40 @@
 
 - name: Clone the PHP repository.
   git:
-    repo: https://git.php.net/repository/php-src.git
+    repo: "{{ php_source_repo }}"
     dest: "{{ php_source_clone_dir }}"
     version: "{{ php_source_version }}"
-    accept_hostkey: yes
+    accept_hostkey: true
     depth: "{{ php_source_clone_depth }}"
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Ensure PHP installation path exists.
   file:
     path: "{{ php_source_install_path }}"
     state: directory
     mode: 0755
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Build configure script.
-  shell: >
+  command: >
     ./buildconf --force
     chdir={{ php_source_clone_dir }}
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Run configure script.
-  shell: >
+  command: >
     {{ php_source_configure_command }}
     chdir={{ php_source_clone_dir }}
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Make and install PHP.
-  shell: >
+  command: >
     {{ item }}
     chdir={{ php_source_clone_dir }}
   with_items:
     - "{{ php_source_make_command }}"
     - make install
-  when: php_installed|failed
+  when: php_installed.rc != 0
 
 - name: Ensure php executable is symlinked into a standard path.
   file:

@@ -1,0 +1,37 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_enable_webserver: false
+    php_enablerepo: "remi,remi-php72"
+    php_default_version_debian: "7.2"
+    php_pecl_extensions:
+      - redis
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Install development tools (Debian).
+      apt: name=build-essential state=present
+      when: ansible_os_family == 'Debian'
+
+    - name: Install development tools (RedHat).
+      yum: name="@Development tools" state=present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Set version to 7.0 on Debian 9 and enable pecl installation
+      set_fact:
+        php_default_version_debian: '7.0'
+      when:
+        - ansible_os_family == 'Debian'
+        - ansible_distribution_major_version == '9'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.php
+    - role: geerlingguy.php-pecl

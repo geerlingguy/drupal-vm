@@ -1,27 +1,47 @@
 ---
+language: python
 services: docker
 
 env:
-  - distro: centos7
-  - distro: centos6
-  - distro: debian8
-  - distro: ubuntu1604
-  - distro: ubuntu1404
+  global:
+    - ROLE_NAME: php-versions
+  matrix:
+    # Default PHP version (7.2).
+    - MOLECULE_DISTRO: centos7
+    - MOLECULE_DISTRO: ubuntu1804
+    - MOLECULE_DISTRO: ubuntu1604
+    - MOLECULE_DISTRO: debian9
+
+    # PHP 7.3.
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
+    - MOLECULE_DISTRO: ubuntu1804
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
+    - MOLECULE_DISTRO: ubuntu1604
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
+    - MOLECULE_DISTRO: debian9
+      MOLECULE_PLAYBOOK: playbook-7.3.yml
+
+    # PHP 7.1.
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_PLAYBOOK: playbook-7.1.yml
+    - MOLECULE_DISTRO: ubuntu1804
+      MOLECULE_PLAYBOOK: playbook-7.1.yml
+
+install:
+  # Install test dependencies.
+  - pip install molecule docker
+
+before_script:
+  # Use actual Ansible Galaxy role name for the project directory.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
+  - cd geerlingguy.$ROLE_NAME
 
 script:
-  # Configure test script so we can run extra tests after playbook is run.
-  - export container_id=$(date +%s)
-  - export cleanup=false
-
-  # Download test shim.
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
-
   # Run tests.
-  - ${PWD}/tests/test.sh
-
-  # Run script to test PHP version.
-  - 'docker exec ${container_id} env TERM=xterm php -v | grep "7.1."'
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

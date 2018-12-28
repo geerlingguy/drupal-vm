@@ -6,7 +6,7 @@ The URL to connect to the local solr server (assuming you're using the default `
 
     http://localhost:8983/solr/collection1
 
-This will connect to the default search core (`collection1`) set up by Solr. If you are using a multisite installation and want to have a search core per Drupal site, you can add more cores through Apache Solr's admin interface (visit `http://drupalvm.dev:8983/solr/`), then connect to each core by adding the core name to the end of the above URL (e.g. `core2` would be `http://localhost:8983/solr/core2`).
+This will connect to the default search core (`collection1`) set up by Solr. If you are using a multisite installation and want to have a search core per Drupal site, you can add more cores through Apache Solr's admin interface (visit `http://drupalvm.test:8983/solr/`), then connect to each core by adding the core name to the end of the above URL (e.g. `core2` would be `http://localhost:8983/solr/core2`).
 
 ## Using Different Solr versions
 

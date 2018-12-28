@@ -1,0 +1,28 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_enable_webserver: false
+    php_opcache_enable: "0"
+    drush_launcher_install: false
+    drush_composer_global_install: false
+    drush_install_from_source: true
+
+  pre_tasks:
+    - name: Enable remi repo for PHP 7.0 (RedHat).
+      set_fact: php_enablerepo="remi,remi-php70"
+      when: ansible_os_family == 'RedHat'
+
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.php
+    - role: geerlingguy.composer
+    - role: geerlingguy.git
+    - role: geerlingguy.drush

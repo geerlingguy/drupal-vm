@@ -2,7 +2,7 @@ Please read through the [Quick Start Guide in the README](https://github.com/gee
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mNio_aXMLos" frameborder="0" allowfullscreen></iframe>
 
-_In this video, Jeff Geerling walk you through getting a Drupal 8 website built on your Windows 10 laptop using Drupal VM 3._
+_In this video, Jeff Geerling walks through setting up a Drupal 8 website on Windows 10 using Drupal VM 3._
 
 There are a few caveats when using Drupal VM on Windows, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Windows host.
 
@@ -40,7 +40,7 @@ Creating symbolic links in a shared folder will fail with a permission or protoc
 
 There are two parts to this:
 
-  1. VirtualBox does not allow gets VMs to create symlinks in synced folders by default.
+  1. VirtualBox does not allow guest VMs to create symlinks in synced folders by default.
   2. Windows does not allow the creation of symlinks unless your local policy allows it; see [TechNet article](https://technet.microsoft.com/en-us/library/dn221947%28v=ws.10%29.aspx). Even if local policy allows it, many users experience problems in the creation of symlinks.
 
 Using Ubuntu bash under Windows 10 _can_ make this easier, but there are still issues when creating and managing symlinks between the bash environment and the guest Vagrant operating system.

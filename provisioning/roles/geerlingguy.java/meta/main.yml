@@ -6,25 +6,34 @@ galaxy_info:
   description: Java for Linux
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Fedora
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - all
+        - wheezy
+        - jessie
+        - stretch
     - name: Ubuntu
       versions:
-      - all
+        - precise
+        - trusty
+        - xenial
+        - bionic
     - name: FreeBSD
       versions:
-      - 10.2
+        - 10.2
   galaxy_tags:
     - development
     - system
     - web
+    - java
+    - jdk
+    - openjdk
+    - oracle

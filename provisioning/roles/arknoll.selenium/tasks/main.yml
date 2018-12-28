@@ -54,7 +54,7 @@
 
 - name: Get the latest release for chromedriver
   uri:
-    url: http://chromedriver.storage.googleapis.com/LATEST_RELEASE
+    url: https://chromedriver.storage.googleapis.com/LATEST_RELEASE
     return_content: yes
   register: chromedriver_latest
   when: selenium_install_chrome
@@ -62,7 +62,7 @@
 
 - name: Install chromedriver
   unarchive:
-    src: "http://chromedriver.storage.googleapis.com/{{ chromedriver_latest.content | trim }}/chromedriver_linux64.zip"
+    src: "https://chromedriver.storage.googleapis.com/{{ chromedriver_latest.content | trim }}/chromedriver_linux64.zip"
     dest: /usr/bin
     mode: 0755
     copy: no

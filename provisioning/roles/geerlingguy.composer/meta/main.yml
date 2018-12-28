@@ -6,38 +6,38 @@ galaxy_info:
   description: Composer PHP Dependency Manager
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.9
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
-      - all
+        - all
     - name: GenericUNIX
       versions:
-      - all
+        - all
     - name: Fedora
       versions:
-      - all
+        - all
     - name: opensuse
       versions:
-      - all
+        - all
     - name: GenericBSD
       versions:
-      - all
+        - all
     - name: FreeBSD
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - all
+        - all
     - name: SLES
       versions:
-      - all
+        - all
     - name: GenericLinux
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - all
+        - all
   galaxy_tags:
     - packaging
     - web

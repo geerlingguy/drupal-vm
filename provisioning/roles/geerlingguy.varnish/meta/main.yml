@@ -6,19 +6,27 @@ galaxy_info:
   description: Varnish for Linux.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.2
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Ubuntu
       versions:
-      - precise
-      - trusty
-      - xenial
+        - precise
+        - trusty
+        - xenial
+        - bionic
     - name: Debian
       versions:
-      - all
+        - all
   galaxy_tags:
     - web
+    - varnish
+    - cache
+    - proxy
+    - reverse-proxy
+    - performance
+    - loadbalancer
+    - balancer

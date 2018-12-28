@@ -12,18 +12,17 @@
   when: ansible_os_family == 'Debian'
 
 - name: Install packages required to build ruby (Debian).
-  apt: "name={{ item }} state=present"
-  with_items:
-    - build-essential
-    - zlib1g-dev
-    - libssl-dev
-    - libyaml-dev
-    - libreadline6-dev
-    - zlib1g-dev
-    - libncurses5-dev
-    - libffi-dev
-    - libgdbm3
-    - libgdbm-dev
+  apt:
+    name:
+      - build-essential
+      - zlib1g-dev
+      - libssl-dev
+      - libyaml-dev
+      - libreadline6-dev
+      - libncurses5-dev
+      - libffi-dev
+      - libgdbm-dev
+    state: present
   when: ansible_os_family == 'Debian'
 
 - name: Download ruby.

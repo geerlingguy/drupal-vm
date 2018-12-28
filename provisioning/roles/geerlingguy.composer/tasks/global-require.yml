@@ -5,7 +5,7 @@
     creates={{ composer_home_path }}/vendor/{{ item.name }}
   environment:
     COMPOSER_HOME: "{{ composer_home_path }}"
-  become: yes
+  become: true
   become_user: "{{ composer_home_owner }}"
   register: composer_global_require_result
   with_items: "{{ composer_global_packages }}"

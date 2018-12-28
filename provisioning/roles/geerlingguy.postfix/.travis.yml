@@ -1,36 +1,18 @@
 ---
-sudo: required
-language: python
-python: "2.7"
+services: docker
 
 env:
-  - SITE=test.yml
-
-before_install:
-  - sudo apt-get update -qq
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  - distro: centos7
+  - distro: ubuntu1604
+  - distro: debian9
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
-
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
-
-  # TODO - Add test to check if postfix is working correctly.
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars_files:
+    - test-vars.yml
+
+  pre_tasks:
+    - import_tasks: test-setup.yml
+
+  roles:
+    - name: geerlingguy.repo-remi
+      when: ansible_os_family == "RedHat"
+    - role: geerlingguy.repo-dotdeb
+      when: ansible_distribution == 'Debian'
+    - role: geerlingguy.apache
+    - role: geerlingguy.mysql
+    - role: geerlingguy.php
+    - role: geerlingguy.php-mysql
+    - role: geerlingguy.git
+    - role: geerlingguy.composer
+    - role: geerlingguy.drupal

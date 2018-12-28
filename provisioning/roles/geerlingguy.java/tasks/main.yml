@@ -1,15 +1,21 @@
 ---
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
-  when: ansible_distribution != 'Ubuntu' or ansible_distribution != 'Fedora'
-
-- name: Include OS-specific variables for Fedora.
+- name: Include OS-specific variables for Fedora or FreeBSD.
   include_vars: "{{ ansible_distribution }}.yml"
-  when: ansible_distribution == 'Fedora'
+  when: ansible_distribution == 'FreeBSD' or ansible_distribution == 'Fedora'
+
+- name: Include version-specific variables for CentOS/RHEL.
+  include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_distribution == 'CentOS' or
+        ansible_distribution == 'Red Hat Enterprise Linux' or
+        ansible_distribution == 'RedHat'
 
 - name: Include version-specific variables for Ubuntu.
-  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
   when: ansible_distribution == 'Ubuntu'
+
+- name: Include version-specific variables for Debian.
+  include_vars: "{{ ansible_distribution|title }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_os_family == 'Debian'
 
 - name: Define java_packages.
   set_fact:
@@ -17,17 +23,14 @@
   when: java_packages is not defined
 
 # Setup/install tasks.
-- include: setup-RedHat.yml
+- include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
-  static: no
 
-- include: setup-Debian.yml
+- include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
-  static: no
 
-- include: setup-FreeBSD.yml
+- include_tasks: setup-FreeBSD.yml
   when: ansible_os_family == 'FreeBSD'
-  static: no
 
 # Environment setup.
 - name: Set JAVA_HOME if configured.
@@ -35,4 +38,4 @@
     src: java_home.sh.j2
     dest: /etc/profile.d/java_home.sh
     mode: 0644
-  when: java_home is defined and java_home != ''
+  when: java_home is defined and java_home

@@ -7,7 +7,7 @@ galaxy_info:
   description: Apache 2.4+ PHP-FPM support for Linux.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.4
+  min_ansible_version: 2.0
   platforms:
   - name: EL
     versions:
@@ -17,6 +17,7 @@ galaxy_info:
     versions:
     - wheezy
     - jessie
+    - stretch
   - name: Ubuntu
     versions:
     - precise
@@ -24,3 +25,7 @@ galaxy_info:
     - xenial
   galaxy_tags:
     - web
+    - apache
+    - php
+    - cgi
+    - php-fpm

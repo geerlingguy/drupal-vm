@@ -1,0 +1,46 @@
+---
+- name: Configure toggle vars for Debian/Ubuntu.
+  set_fact:
+    apache_service: apache2
+    mysql_daemon: mysql
+  when: ansible_os_family == 'Debian'
+
+- name: Configure toggle vars for CentOS.
+  set_fact:
+    apache_service: httpd
+    mysql_daemon: "{{ 'mysqld' if ansible_distribution_major_version == '6' else 'mariadb' }}"
+  when: ansible_os_family == 'RedHat'
+
+# Toggle for drupalvm_webserver.
+- name: Ensure Apache is stopped and disabled if Nginx is used.
+  service:
+    name: "{{ apache_service }}"
+    state: stopped
+    enabled: false
+  failed_when: false
+  when: drupalvm_webserver == 'nginx'
+
+- name: Ensure Nginx is stopped and disabled if Apache is used.
+  service:
+    name: nginx
+    state: stopped
+    enabled: false
+  failed_when: false
+  when: drupalvm_webserver == 'apache'
+
+# Toggle for drupal_db_backend.
+- name: Ensure MySQL is stopped and disabled if Postgres is used.
+  service:
+    name: "{{ mysql_daemon }}"
+    state: stopped
+    enabled: false
+  failed_when: false
+  when: drupal_db_backend == 'pgsql'
+
+- name: Ensure Postgres is stopped and disabled if MySQL is used.
+  service:
+    name: postgresql
+    state: stopped
+    enabled: false
+  failed_when: false
+  when: drupal_db_backend == 'mysql'

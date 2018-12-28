@@ -1,0 +1,33 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - import_tasks: playbook-setup.yml
+
+    - name: Set older Varnish version for older OSes.
+      set_fact:
+        varnish_version: "5.1"
+      when: >
+        (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7) or
+        (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 16) or
+        (ansible_distribution == 'Debian' and ansible_distribution_major_version|int < 9)
+
+  roles:
+    - role: geerlingguy.varnish
+
+  post_tasks:
+    - name: Check the installed Varnish version.
+      command: varnishd -V
+      register: varnish_version_output
+      failed_when: "varnish_version not in varnish_version_output.stderr"
+      changed_when: false
+      tags: ['skip_ansible_lint']
+
+    - name: Verify Varnish is running on port 80.
+      shell: 'curl -sI localhost:80 | grep -q "Via: .* varnish"'
+      args:
+        warn: false
+      changed_when: false
+      tags: ['skip_ansible_lint']

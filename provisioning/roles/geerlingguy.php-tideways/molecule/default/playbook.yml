@@ -1,0 +1,26 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    php_enable_webserver: false
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.php-versions
+    - role: geerlingguy.php
+    - role: geerlingguy.php-tideways
+
+  post_tasks:
+    - name: Run test script to confirm Tideways is working.
+      script: tideways-test.php
+      args:
+        executable: php
+      changed_when: false

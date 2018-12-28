@@ -10,11 +10,11 @@ Drupal VM can be used with [Docker](https://www.docker.com) instead of or in add
 
 Before using Docker to run Drupal VM, you should [edit your hosts file](https://support.rackspace.com/how-to/modify-your-hosts-file/) and add the following line:
 
-    192.168.89.89  drupalvm.dev
+    192.168.89.89  drupalvm.test
 
 (Substitute the IP address and domain name you'd like to use to access your Drupal VM container.)
 
-You can also add other subdomains if you're using other built-in services, e.g. `adminer.drupalvm.dev`, `xhprof.drupalvm.com`, etc.
+You can also add other subdomains if you're using other built-in services, e.g. `adminer.drupalvm.test`, `xhprof.drupalvm.com`, etc.
 
 > If you're using Docker for Mac, you need to perform one additional step to ensure you can access Drupal VM using a unique IP address:
 >
@@ -28,11 +28,11 @@ You can also add other subdomains if you're using other built-in services, e.g. 
 If you just want a quick, easy Drupal site for testing, you can run an instance of Drupal VM and install Drupal inside using the provided script.
 
   1. Run an instance of Drupal VM: `docker run -d -p 80:80 -p 443:443 --name=drupalvm --privileged geerlingguy/drupal-vm`
-  2. Install Drupal on this instance: `docker exec drupalvm install-drupal` (you can choose a version using `install-drupal [version]`, using versions like `8.4.x`, `7.55`, `7.x`, etc.).
+  2. Install Drupal on this instance: `docker exec drupalvm install-drupal` (you can choose a version using `install-drupal [version]`, using versions like `8.x-dev` or `7.x-dev`).
 
 You should be able to access the Drupal site at `http://localhost`. If you need to share a host directory into the VM, you can do so by adding another `-v` parameter, like `-v /path/on/host:/path/in/container.
 
-If you only need a simple container to run your site, and you want to package up the container configuration with your project, you can add a simple Docker Compose file to your project's docroot like the following:
+If you only need a container to run your site, and you want to package up the container configuration with your project, you can add a Docker Compose file to your project's docroot like the following:
 
     ```yaml
     version: "3"
@@ -49,6 +49,7 @@ If you only need a simple container to run your site, and you want to package up
         volumes:
           - ./:/var/www/drupalvm/drupal/web/:rw,delegated
           - /var/lib/mysql
+          - /sys/fs/cgroup:/sys/fs/cgroup:ro
         command: /lib/systemd/systemd
     ```
 
@@ -97,7 +98,7 @@ This command takes the instructions in the Docker Compose file and does two thin
   1. Creates a custom Docker network that exposes Drupal VM on the IP address you have configured in `docker-compose.yml` (by default, `192.168.89.89`).
   2. Runs Drupal VM using the configuration in `docker-compose.yml`.
 
-After the Drupal VM container is running, you should be able to see the Dashboard page at the VM's IP address (e.g. `http://192.168.89.89`), and you should be able to access your site at the hostname you have configured in your hosts file (e.g. `http://drupalvm.dev/`).
+After the Drupal VM container is running, you should be able to see the Dashboard page at the VM's IP address (e.g. `http://192.168.89.89`), and you should be able to access your site at the hostname you have configured in your hosts file (e.g. `http://drupalvm.test/`).
 
 > Note: If you see Drupal's installer appear when accessing the site, that means the codebase was found, but either the database connection details are not in your local site configuration, or they are, but you don't have the default database populated yet. You may need to load in the database either via `drush sql-sync` or by importing a dump into the container. The default credentials are `drupal` and `drupal` for username and password, and `drupal` for the database name.
 
@@ -107,7 +108,7 @@ You can stop the container with `docker-compose stop` (and start it again with `
 
 Currently, the easiest way to use Drupal VM's `drush` inside a Docker container is to use `docker exec` to run `drush` internally. There are a few other ways you can try to get Drush working with a codebase running on a container, but the easiest way is to run a command like:
 
-    docker exec drupal-vm bash -c "drush --uri=drupalvm.dev --root=/var/www/drupalvm/drupal/web status"
+    docker exec drupal-vm bash -c "drush --uri=drupalvm.test --root=/var/www/drupalvm/drupal/web status"
 
 ## Method 3: 'Bake and Share' a custom Drupal VM Docker image
 
@@ -121,7 +122,7 @@ After you've configured your Drupal VM settings in `config.yml` and other config
 
 This will bake a Docker images using Drupal VM's default settings for distro, IP address, hostname, etc. You can override these options (all are listed in the `provisioning/docker/bake.sh` file) by prepending them to the `composer` command:
 
-    DRUPALVM_IP_ADDRESS='192.168.89.90' DISTRO='debian9' composer docker-bake
+    DRUPALVM_IP_ADDRESS='192.168.89.89' DISTRO='debian9' composer docker-bake
 
 This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
 

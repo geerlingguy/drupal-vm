@@ -1,6 +1,6 @@
 ---
 - name: Install required dependencies.
-  yum: "name={{ item }} state=installed"
+  yum: "name={{ item }} state=present"
   with_items:
     - curl
     - python-pycurl

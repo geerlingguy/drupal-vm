@@ -1,7 +1,6 @@
 ---
 - name: Ensure Apache is installed on RHEL.
-  yum:
-    name: "{{ item }}"
+  package:
+    name: "{{ apache_packages }}"
     state: "{{ apache_packages_state }}"
-    enablerepo: "{{ apache_enablerepo }}"
-  with_items: "{{ apache_packages }}"
+    enablerepo: "{{ apache_enablerepo | default(omit, true) }}"

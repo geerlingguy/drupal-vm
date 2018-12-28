@@ -1,0 +1,12 @@
+---
+git_install_from_source_dependencies:
+  - gettext-devel
+  - expat-devel
+  - curl-devel
+  - zlib-devel
+  - perl-devel
+  - openssl-devel
+  - subversion-perl
+  - make
+  - gcc
+  - tar

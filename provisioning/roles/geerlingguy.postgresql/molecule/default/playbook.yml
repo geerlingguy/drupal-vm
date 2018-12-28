@@ -1,0 +1,35 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    postgresql_databases:
+      - name: example
+    postgresql_users:
+      - name: jdoe
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Set custom variables for old CentOS 6 PostgreSQL install.
+      set_fact:
+        postgresql_hba_entries: []
+        postgresql_global_config_options:
+          - option: unix_socket_directory
+            value: '{{ postgresql_unix_socket_directories[0] }}'
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution_version.split('.')[0] == '6'
+
+  roles:
+    - role: geerlingguy.postgresql
+
+  post_tasks:
+    - name: Verify postgres is running.
+      command: "{{ postgresql_bin_path }}/pg_ctl -D {{ postgresql_data_dir }} status"
+      changed_when: false
+      become: true
+      become_user: postgres

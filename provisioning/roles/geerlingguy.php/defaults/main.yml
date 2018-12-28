@@ -3,12 +3,15 @@
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-# PHP package state; use 'installed' to make sure it's installed, or 'latest' if
+# Default PHP version to install on Debian-based OSes.
+php_default_version_debian: "7.0"
+
+# PHP package state; use 'present' to make sure it's installed, or 'latest' if
 # you want to upgrade or switch versions using a new repo.
-php_packages_state: installed
+php_packages_state: present
 
 # Whether to install recommended packages. Used only for Debian/Ubuntu.
-php_install_recommends: yes
+php_install_recommends: true
 
 # Set this to false if you're not using PHP with Apache/Nginx/etc.
 php_enable_webserver: true
@@ -25,7 +28,7 @@ php_fpm_pm_max_spare_servers: 5
 # The executable to run when calling PHP from the command line.
 php_executable: "php"
 
-# OpCache settings (useful for PHP >=5.5).
+# OpCache settings.
 php_opcache_zend_extension: "opcache.so"
 php_opcache_enable: "1"
 php_opcache_enable_cli: "0"
@@ -81,6 +84,7 @@ php_display_startup_errors: "Off"
 
 # Install PHP from source (instead of using a package manager) with these vars.
 php_install_from_source: false
+php_source_repo: "https://git.php.net/repository/php-src.git"
 php_source_version: "master"
 php_source_clone_dir: "~/php-src"
 php_source_clone_depth: 1

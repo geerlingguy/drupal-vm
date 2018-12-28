@@ -15,6 +15,8 @@ security_autoupdate_enabled: true
 security_autoupdate_blacklist: []
 
 # Autoupdate mail settings used on Debian/Ubuntu only.
+security_autoupdate_reboot: "false"
+security_autoupdate_reboot_time: "03:00"
 security_autoupdate_mail_to: ""
 security_autoupdate_mail_on_error: true
 
