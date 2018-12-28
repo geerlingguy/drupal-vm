@@ -3,7 +3,9 @@
   copy:
     content: "{{ hostname_fqdn }}\n"
     dest: /etc/mailname
-  when: ansible_os_family == 'Debian'
+  when:
+    - ansible_os_family == 'Debian'
+    - hostname_fqdn != ''
 
 - name: Add hostname to /etc/hosts.
   lineinfile:
@@ -12,6 +14,7 @@
     line: "127.0.0.1\t{{ hostname_fqdn }}\t{{ hostname_short }}"
     state: present
     unsafe_writes: "{{ hostname_unsafe_writes }}"
+  when: hostname_fqdn != ''
 
 - name: Configure hostname.
   copy:
@@ -19,8 +22,11 @@
     dest: /etc/hostname
     unsafe_writes: "{{ hostname_unsafe_writes }}"
   register: set_hostname
+  when: hostname_fqdn != ''
 
 - name: Set the hostname for current session.
   command: hostname --file /etc/hostname
-  when: set_hostname.changed
+  when:
+    - set_hostname is changed
+    - hostname_fqdn != ''
   tags: ['skip_ansible_lint']

@@ -17,6 +17,9 @@ env:
       CONTAINER_ID: dvm-test
 
   matrix:
+    # Defaults - Ubuntu 18.04.
+    - type: defaults
+      distro: ubuntu1804
     # Defaults - Ubuntu 16.04.
     - type: defaults
       distro: ubuntu1604
