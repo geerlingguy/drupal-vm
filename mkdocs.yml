@@ -63,6 +63,7 @@ pages:
     - 'Passing on CLI arguments to ansible': 'extending/ansible-args.md'
     - 'Pre- and Post-Provision Scripts': 'extending/scripts.md'
   - Other Information:
+    - 'Debug mode': 'other/debug.md'
     - 'Networking Notes': 'other/networking.md'
     - 'Vagrant LXC provider': 'other/vagrant-lxc.md'
     - 'Improving Performance': 'other/performance.md'
