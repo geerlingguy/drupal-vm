@@ -1,9 +1,4 @@
 ---
-- name: Add packagecloud GPG key.
-  rpm_key:
-    key: "{{ blackfire_gpg_key_url }}"
-    state: present
-
 - name: Check if Blackfire repository file exists.
   stat: path=/etc/yum.repos.d/blackfire.repo
   register: repo_file_stat
