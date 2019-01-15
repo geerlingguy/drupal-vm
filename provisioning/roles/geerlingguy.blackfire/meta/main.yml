@@ -11,19 +11,19 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
     - name: Debian
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - precise
-      - raring
-      - saucy
-      - trusty
-      - xenial
-      - bionic
+        - precise
+        - raring
+        - saucy
+        - trusty
+        - xenial
+        - bionic
   galaxy_tags:
     - development
     - web

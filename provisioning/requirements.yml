@@ -12,7 +12,7 @@
 - src: geerlingguy.apache-php-fpm
   version: 1.1.0
 - src: geerlingguy.blackfire
-  version: 1.1.0
+  version: 1.1.1
 - src: geerlingguy.composer
   version: 1.7.3
 - src: geerlingguy.daemonize

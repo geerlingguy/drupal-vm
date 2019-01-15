@@ -4,15 +4,20 @@
     key: "{{ blackfire_gpg_key_url }}"
     state: present
 
+- name: Check if Blackfire repository file exists.
+  stat: path=/etc/yum.repos.d/blackfire.repo
+  register: repo_file_stat
+
 - name: Add Blackfire repository.
   get_url:
-    url: http://packages.blackfire.io/fedora/blackfire.repo
+    url: "{{ blackfire_repo_url }}"
     dest: /etc/yum.repos.d/blackfire.repo
     mode: 0644
+  when: not repo_file_stat.stat.exists
 
 - name: Disable gpg_repocheck for non-bleeding-edge CentOS.
-  lineinfile: >
-    dest=/etc/yum.repos.d/blackfire.repo
-    regexp="^repo_gpgcheck="
-    line="repo_gpgcheck=0"
-    state=present
+  lineinfile:
+    dest: /etc/yum.repos.d/blackfire.repo
+    regexp: "^repo_gpgcheck="
+    line: "repo_gpgcheck=0"
+    state: present
