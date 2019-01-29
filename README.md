@@ -15,9 +15,9 @@ The rest of this README assumes you're using Vagrant and VirtualBox (this is cur
 
 Drupal VM installs the following on an Ubuntu 16.04 (by default) linux VM:
 
-  - Apache 2.4.x (or Nginx)
-  - PHP 7.1.x (configurable)
-  - MySQL 5.7.x (or MariaDB, or PostgreSQL)
+  - Apache (or Nginx)
+  - PHP (configurable version)
+  - MySQL (or MariaDB, or PostgreSQL)
   - Drupal 7 or 8
   - Optional:
     - Drupal Console
@@ -81,7 +81,7 @@ Notes:
   - **For faster provisioning** (macOS/Linux only): *[Install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
   - **For stability**: Because every version of VirtualBox introduces changes to networking, for the best stability, you should install Vagrant's `vbguest` plugin: `vagrant plugin install vagrant-vbguest`.
   - **NFS on Linux**: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
-  - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of early 2018, Drupal VM recommends: Vagrant 2.0.x, VirtualBox 5.2.x, and Ansible 2.4.x*
+  - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of early 2019, Drupal VM recommends: Vagrant 2.2.x, VirtualBox 6.0.x, and Ansible 2.7.x*
 
 ### 2 - Build the Virtual Machine
 
@@ -141,7 +141,7 @@ Drupal VM follows semantic versioning, which means your configuration should con
   2. Do a diff of your `config.yml` with the updated `default.config.yml` (e.g. `curl https://raw.githubusercontent.com/geerlingguy/drupal-vm/master/default.config.yml | git diff --no-index config.yml -`).
   3. Run `vagrant provision` to provision the VM, incorporating all the latest changes.
 
-For major version upgrades (e.g. 2.x.x to 3.x.x), it may be simpler to destroy the VM (`vagrant destroy`) then build a fresh new VM (`vagrant up`) using the new version of Drupal VM.
+For major version upgrades (e.g. 3.x.x to 4.x.x), it may be simpler to destroy the VM (`vagrant destroy`) then build a fresh new VM (`vagrant up`) using the new version of Drupal VM.
 
 ## System Requirements
 
