@@ -56,6 +56,7 @@ Vagrant.configure('2') do |config|
 
   unless vconfig['vagrant_public_ip'].empty?
     config.vm.network :public_network,
+      auto_correct: true,
       ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
   end
 
