@@ -1,6 +1,6 @@
 ---
 language: php
-php: '7.2'
+php: 7.2
 services: docker
 
 env:
@@ -38,11 +38,12 @@ env:
       DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
       TEST_INSTALLED_EXTRAS: false
 
+    # TODO: See https://github.com/geerlingguy/drupal-vm/issues/1874
     # Nginx and Drush make file test - Ubuntu 16.04.
-    - type: nginx-drush-make
-      distro: ubuntu1604
-      local_config: tests/ubuntu-16-nginx-drush-make.config.yml
-      config_dir: /var/www/drupalvm/config
+    # - type: nginx-drush-make
+    #   distro: ubuntu1604
+    #   local_config: tests/ubuntu-16-nginx-drush-make.config.yml
+    #   config_dir: /var/www/drupalvm/config
 
     # TODO: See https://github.com/geerlingguy/drupal-vm/issues/1675
     # PostgreSQL - Ubuntu 16.04.
