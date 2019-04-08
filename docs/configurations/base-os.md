@@ -2,24 +2,23 @@ Drupal VM's configuration is designed to work with RedHat and Debian-compatible 
 
 Currently-supported OSes are:
 
-  - Ubuntu 16.04 'Xenial' (default)
-  - Ubuntu 14.04 'Precise'
+  - Ubuntu 18.04 'Bionic' (default)
+  - Ubuntu 16.04 'Xenial'
   - RedHat Enterprise Linux / CentOS 7
   - RedHat Enterprise Linux / CentOS 6 (limited support)
   - Debian 9 'Stretch'
-  - Debian 8 'Jessie'
 
 For certain OSes, there are a couple other caveats and tweaks you may need to perform to get things running smoothly—the main features and latest development is only guaranteed to work with the default OS as configured in `default.config.yml`.
 
-Some other OSes should work, but are not regularly tested with Drupal VM, including Debian 8/Jessie (`debian/jessie64`) and Debian 7/Wheezy (`debian/wheezy64`).
+Some other OSes should work, but are not regularly tested with Drupal VM, including Debian 8/Jessie (`debian/jessie64`).
+
+## Ubuntu 18.04 Xenial LTS
+
+Everything should work out of the box with Ubuntu 16.04.
 
 ## Ubuntu 16.04 Xenial LTS
 
 Everything should work out of the box with Ubuntu 16.04.
-
-## Ubuntu 14.04 Trusty LTS
-
-Everything should work out of the box with Ubuntu 14.04.
 
 ## RedHat Enterprise Linux / CentOS 7
 
@@ -50,7 +49,3 @@ varnish_version: 5.2
 ## Debian 9 Stretch
 
 Everything should work out of the box with Debian 9.
-
-## Debian 8 Jessie
-
-Everything should work out of the box with Debian 8.

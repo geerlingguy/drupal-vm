@@ -13,7 +13,7 @@ There are two ways you can use Drupal VM:
 
 The rest of this README assumes you're using Vagrant and VirtualBox (this is currently the most flexible and widely-used method of using Drupal VM). If you'd like to use Drupal VM with Docker, please read the [Drupal VM Docker documentation](http://docs.drupalvm.com/en/latest/other/docker/).
 
-Drupal VM installs the following on an Ubuntu 16.04 (by default) linux VM:
+Drupal VM installs the following on an Ubuntu 18.04 (by default) linux VM:
 
   - Apache (or Nginx)
   - PHP (configurable version)
