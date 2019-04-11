@@ -7,11 +7,11 @@
 #     ```
 #     post_provision_scripts:
 #       - "../examples/scripts/pareview.sh"
-#    
+#
 #     composer_global_packages:
 #       - { name: hirak/prestissimo, release: '^0.3' }
 #       - { name: drupal/coder, release: '^' }
-#    
+#
 #     nodejs_version: "6.x"
 #     nodejs_npm_global_packages:
 #       - eslint
@@ -34,7 +34,7 @@ if [ ! -e "$PAREVIEW_SETUP_COMPLETE_FILE" ]; then
   $HOME_PATH/.composer/vendor/bin/phpcs --config-set installed_paths $HOME_PATH/.composer/vendor/drupal/coder/coder_sniffer
 
   # Download DrupalSecure.
-  git clone --branch master https://git.drupal.org/sandbox/coltrane/1921926.git /opt/drupalsecure_code_sniffs
+  git clone --branch master https://git.drupalcode.org/sandbox/coltrane-1921926.git /opt/drupalsecure_code_sniffs
 
   # Move the DrupalSecure directory into the PHPCS Standards.
   sudo ln -sv /opt/drupalsecure_code_sniffs/DrupalSecure $HOME_PATH/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards
