@@ -29,6 +29,6 @@
     command: install
     working_dir: "{{ drupal_deploy_dir }}"
   when:
-    - drupal_deploy_composer_file.stat.exists == true
-    - drupal_deploy_composer_install == true
+    - drupal_deploy_composer_file.stat.exists
+    - drupal_deploy_composer_install
   become: false
