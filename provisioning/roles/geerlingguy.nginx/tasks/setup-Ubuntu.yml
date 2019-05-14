@@ -12,3 +12,4 @@
     name: nginx
     state: absent
   when: nginx_ppa_added.changed
+  tags: ['skip_ansible_lint']

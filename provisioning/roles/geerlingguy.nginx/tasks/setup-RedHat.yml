@@ -9,6 +9,6 @@
   when: nginx_yum_repo_enabled
 
 - name: Ensure nginx is installed.
-  yum:
+  package:
     name: "{{ nginx_package_name }}"
     state: present
