@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -20,12 +22,14 @@ unless File.exist?(default_config_file)
   raise_message "Configuration file not found! Expected in #{default_config_file}"
 end
 
-vconfig = load_config([
-  default_config_file,
-  "#{host_config_dir}/config.yml",
-  "#{host_config_dir}/#{drupalvm_env}.config.yml",
-  "#{host_config_dir}/local.config.yml"
-])
+vconfig = load_config(
+  [
+    default_config_file,
+    "#{host_config_dir}/config.yml",
+    "#{host_config_dir}/#{drupalvm_env}.config.yml",
+    "#{host_config_dir}/local.config.yml"
+  ]
+)
 
 provisioner = vconfig['force_ansible_local'] ? :ansible_local : vagrant_provisioner
 if provisioner == :ansible
@@ -51,12 +55,12 @@ Vagrant.configure('2') do |config|
   # Networking configuration.
   config.vm.hostname = vconfig['vagrant_hostname']
   config.vm.network :private_network,
-    ip: vconfig['vagrant_ip'],
-    auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
+                    ip: vconfig['vagrant_ip'],
+                    auto_network: vconfig['vagrant_ip'] == '0.0.0.0' && Vagrant.has_plugin?('vagrant-auto_network')
 
   unless vconfig['vagrant_public_ip'].empty?
     config.vm.network :public_network,
-      ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
+                      ip: vconfig['vagrant_public_ip'] != '0.0.0.0' ? vconfig['vagrant_public_ip'] : nil
   end
 
   # SSH options.
