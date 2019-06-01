@@ -14,7 +14,7 @@
 - src: geerlingguy.blackfire
   version: 1.1.2
 - src: geerlingguy.composer
-  version: 1.7.3
+  version: 1.7.4
 - src: geerlingguy.daemonize
   version: 1.2.0
 - src: geerlingguy.drupal

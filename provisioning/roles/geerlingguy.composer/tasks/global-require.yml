@@ -15,4 +15,4 @@
     src: composer.sh.j2
     dest: /etc/profile.d/composer.sh
     mode: 0644
-  when: composer_add_to_path
+  when: composer_add_to_path | bool
