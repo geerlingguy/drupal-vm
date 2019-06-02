@@ -25,7 +25,7 @@
 
 - name: Run Composer installer.
   command: >
-    {{ php_executable }} composer-installer.php {% if composer_version != '' %} --version={{ composer_version }}{% endif %}
+    {{ php_executable }} composer-installer.php {% if composer_version %} --version={{ composer_version }}{% endif %}
     chdir=/tmp
   when: not composer_bin.stat.exists
 
@@ -40,7 +40,7 @@
     {{ php_executable }} {{ composer_path }} self-update
   register: composer_update
   changed_when: "'Updating to version' in composer_update.stdout"
-  when: composer_keep_updated
+  when: composer_keep_updated | bool
 
 - name: Ensure composer directory exists.
   file:
@@ -57,10 +57,10 @@
     dest: "{{ composer_home_path }}/auth.json"
     owner: "{{ composer_home_owner }}"
     group: "{{ composer_home_group }}"
-  when: composer_github_oauth_token != ''
+  when: composer_github_oauth_token | bool
 
 - include_tasks: global-require.yml
   when: composer_global_packages|length > 0
 
 - include_tasks: project-bin.yml
-  when: composer_add_project_to_path
+  when: composer_add_project_to_path | bool

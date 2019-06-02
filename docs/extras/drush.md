@@ -35,7 +35,7 @@ $ drush @drupalvm.test status
  Staging config path    :  [...]
 ```
 
-Drupal VM automatically generates a drush alias file in `~/.drush/drupalvm.aliases.drushrc.php` (for Drush < 9.0.0) and `~/.drush/sites/drupalvm.site.yml` (for Drupal 9.0.0+) with an alias for every site you have defined in the `apache_vhosts` or `nginx_vhosts` variable.
+Drupal VM automatically generates a drush alias file in `~/.drush/drupalvm.aliases.drushrc.php` (for Drush < 9.0.0) and `~/.drush/sites/drupalvm.site.yml` (for Drush 9.0.0+) with an alias for every site you have defined in the `apache_vhosts` or `nginx_vhosts` variable.
 
 If you want to customize the generated alias file you can override the `drush_aliases_host_template` and `drush_aliases_guest_template` variables (or `_yml` variables for Drush 9.0.0+) in your `config.yml`.
 

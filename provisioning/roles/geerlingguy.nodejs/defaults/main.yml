@@ -1,7 +1,7 @@
 ---
-# Set the version of Node.js to install ("0.12", "4.x", "5.x", "6.x", "8.x", "9.x").
+# Set the version of Node.js to install ("6.x", "8.x", "10.x", "11.x", etc.).
 # Version numbers from Nodesource: https://github.com/nodesource/distributions
-nodejs_version: "6.x"
+nodejs_version: "10.x"
 
 # The user for whom the npm packages will be installed.
 # nodejs_install_npm_user: username
@@ -9,7 +9,8 @@ nodejs_version: "6.x"
 # The directory for global installations.
 npm_config_prefix: "/usr/local/lib/npm"
 
-# Set to true to suppress the UID/GID switching when running package scripts. If set explicitly to false, then installing as a non-root user will fail.
+# Set to true to suppress the UID/GID switching when running package scripts. If
+# set explicitly to false, then installing as a non-root user will fail.
 npm_config_unsafe_perm: "false"
 
 # Define a list of global packages to be installed with NPM.

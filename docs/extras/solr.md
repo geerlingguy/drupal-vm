@@ -12,7 +12,7 @@ This will connect to the default search core (`collection1`) set up by Solr. If 
 
 Drupal VM installs Apache Solr 5.x by default, but you can use 6.x, 4.x, or other versions instead. To do this, [see the version-specific test examples](https://github.com/geerlingguy/ansible-role-solr/tree/master/tests) in the `geerlingguy.solr` role.
 
-One important note: If you use Solr 5.x or 6.x (or later), you need to make sure your VM has Java 8+. By default, many of the supported OSes only install Java 7. To install Java 8, see the `geerlingguy.java` role examples for [installing Java 8 on RHEL/CentOS or Ubuntu < 16.04](https://github.com/geerlingguy/ansible-role-java#example-playbook-install-openjdk-8).
+One important note: If you use Solr 6.x or later, you need to make sure your VM has Java 8+. Some older base OSes only install Java 7. To install Java 8, see the `geerlingguy.java` role examples for [installing Java 8 on RHEL/CentOS or Ubuntu < 16.04](https://github.com/geerlingguy/ansible-role-java#example-playbook-install-openjdk-8).
 
 ## Configuring the Solr search core for Drupal
 

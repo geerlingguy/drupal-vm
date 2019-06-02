@@ -3,6 +3,8 @@
   command: "{{ drush_path }} updatedb -y"
   args:
     chdir: "{{ drupal_core_path }}"
+  register: drush_database_updates
+  changed_when: "'No database updates required.' not in drush_database_updates.stdout"
 
 # TODO: Import configuration if configured?
 # TODO: Other commands if configured?
@@ -11,3 +13,4 @@
   command: "{{ drush_path }} cache-rebuild --quiet"
   args:
     chdir: "{{ drupal_core_path }}"
+  tags: ['skip_ansible_lint']

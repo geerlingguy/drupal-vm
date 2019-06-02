@@ -38,10 +38,6 @@ elif [ $distro = 'ubuntu1604' ]; then
 elif [ $distro = 'debian9' ]; then
   init="/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# Debian 8
-elif [ $distro = 'debian8' ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 fi
 
 # Set OS-specific options.

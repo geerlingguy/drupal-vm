@@ -38,19 +38,14 @@
 
 - name: Update apt caches after repo is added (Debian).
   apt: update_cache=true
-  when: php_ondrej_debian_repo.changed and (ansible_distribution == "Debian")
+  when:
+    - php_ondrej_debian_repo.changed
+    - ansible_distribution == "Debian"
+  tags: ['skip_ansible_lint']
 
-# PHP package purges.
-- name: Purge PHP version packages.
+- name: Purge PHP version packages (besides the currently chosen php_version).
   apt:
-    name: "{{ item }}"
+    name: "{{ php_versions_debian | reject('search', 'php' ~ php_version) | list }}"
     state: absent
     purge: true
     force: true
-  with_items:
-    - php5.6-common
-    - php7.0-common
-    - php7.1-common
-    - php7.2-common
-    - php7.3-common
-  when: "'php' + php_version not in item"
