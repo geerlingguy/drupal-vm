@@ -41,5 +41,8 @@
   notify:
     - reload nginx
 
-- name: Ensure nginx is started and enabled to start at boot.
-  service: name=nginx state=started enabled=yes
+- name: Ensure nginx service is running as configured.
+  service:
+    name: nginx
+    state: "{{ nginx_service_state }}"
+    enabled: "{{ nginx_service_enabled }}"
