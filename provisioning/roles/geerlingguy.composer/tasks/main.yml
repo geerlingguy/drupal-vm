@@ -57,10 +57,10 @@
     dest: "{{ composer_home_path }}/auth.json"
     owner: "{{ composer_home_owner }}"
     group: "{{ composer_home_group }}"
-  when: composer_github_oauth_token | bool
+  when: composer_github_oauth_token | length > 0
 
 - include_tasks: global-require.yml
-  when: composer_global_packages|length > 0
+  when: composer_global_packages | length > 0
 
 - include_tasks: project-bin.yml
   when: composer_add_project_to_path | bool
