@@ -27,13 +27,18 @@ To run commands on your host computer but execute them on the VM, add a new site
 dev:
   root: /var/www/drupalvm/drupal
   host: 192.168.88.88
-  user: vagrant
   password: vagrant
+  type: ssh
+  extra-options: '-o PasswordAuthentication=no -i ~/.vagrant.d/insecure_private_key'
 ```
 
 Execute from host machine using the `--target` option.
 
     drupal --target=drupalvm.test site:status
+
+or
+
+    drupal @drupalvm.test site:status
 
 For more details, see [Drupal Console's documentation](https://docs.drupalconsole.com/en/alias/how-to-use-drupal-console-in-a-remote-installation.html)
 
