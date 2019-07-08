@@ -791,8 +791,8 @@ composer_global_packages:
 
 # Run specified scripts before or after VM is provisioned. Path is relative to
 # the `provisioning/playbook.yml` file.
-#pre_provision_scripts:
-#  - "../scripts/pre-provision.sh"
+pre_provision_scripts:
+ - "../scripts/pre-provision.sh"
 # post_provision_scripts:
   # - "../examples/scripts/configure-solr.sh"
   
