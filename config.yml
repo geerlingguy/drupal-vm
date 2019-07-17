@@ -220,19 +220,6 @@ nginx_hosts:
       fastcgi_buffers 16 16k;
       fastcgi_buffer_size 32k;
 
-  - server_name: "resilience.test www.resilience.test"
-    root: "{{ sites_path }}/resilience/web"
-    is_php: true
-    extra_parameters: |
-      listen 443 ssl;
-      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
-      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
-      ssl_protocols       TLSv1.1 TLSv1.2;
-      ssl_ciphers         HIGH:!aNULL:!MD5;
-      fastcgi_param WWW_NREL "DRUPALVM";
-      fastcgi_buffers 16 16k;
-      fastcgi_buffer_size 32k;
-
   - server_name: "nsrdb.test www.nsrdb.test"
     root: "{{ sites_path }}/nsrdb/web"
     is_php: true
