@@ -1,5 +1,4 @@
 ---
-
 - name: Include OS-specific variables (RedHat).
   include_vars: "{{ ansible_os_family }}.yml"
   when:
@@ -19,15 +18,10 @@
     git_install_from_source_dependencies: "{{ __git_install_from_source_dependencies | list }}"
   when: git_install_from_source_dependencies is not defined
 
-- name: Ensure git's dependencies are installed (RedHat).
-  package: "name={{ item }} state=present"
-  with_items: "{{ git_install_from_source_dependencies }}"
-  when: ansible_os_family == 'RedHat'
-
-- name: Ensure git's dependencies are installed (Debian).
-  apt: "name={{ item }} state=present"
-  with_items: "{{ git_install_from_source_dependencies }}"
-  when: ansible_os_family == 'Debian'
+- name: Ensure git's dependencies are installed.
+  package:
+    name: "{{ git_install_from_source_dependencies }}"
+    state: present
 
 - name: Get installed version.
   command: >
@@ -42,14 +36,14 @@
   set_fact:
     git_reinstall_from_source: true
   when:
-    - git_install_from_source_force_update
+    - git_install_from_source_force_update | bool
     - (git_installed_version.rc == 0) and (git_installed_version.stdout | regex_replace("^.*?([0-9\.]+)$", "\\1") | version_compare(git_version, operator="!="))
 
 - name: Download git.
   get_url:
     url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
     dest: "{{ workspace }}/git-{{ git_version }}.tar.gz"
-  when: (git_installed_version.rc != 0) or git_reinstall_from_source
+  when: (git_installed_version.rc != 0) or (git_reinstall_from_source | bool)
 
 - name: Expand git archive.
   unarchive:
@@ -57,7 +51,7 @@
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
     copy: false
-  when: (git_installed_version.rc != 0) or git_reinstall_from_source
+  when: (git_installed_version.rc != 0) or (git_reinstall_from_source | bool)
 
 - name: Build git.
   command: >
@@ -66,5 +60,5 @@
   with_items:
     - all
     - install
-  when: (git_installed_version.rc != 0) or git_reinstall_from_source
+  when: (git_installed_version.rc != 0) or (git_reinstall_from_source | bool)
   become: true

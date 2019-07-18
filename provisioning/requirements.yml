@@ -28,7 +28,7 @@
 - src: geerlingguy.firewall
   version: 2.4.1
 - src: geerlingguy.git
-  version: 2.0.3
+  version: 2.0.5
 - src: geerlingguy.java
   version: 1.9.5
 - src: geerlingguy.mailhog
@@ -74,7 +74,7 @@
 - src: geerlingguy.ruby
   version: 2.5.2
 - src: geerlingguy.security
-  version: 1.8.0
+  version: 1.8.1
 - src: geerlingguy.solr
   version: 4.3.0
 - src: geerlingguy.varnish

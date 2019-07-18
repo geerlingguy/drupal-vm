@@ -4,21 +4,29 @@
 
 # Fail2Ban
 - include_tasks: fail2ban-RedHat.yml
-  when: ansible_os_family == 'RedHat' and security_fail2ban_enabled
+  when:
+    - ansible_os_family == 'RedHat'
+    - security_fail2ban_enabled | bool
 
 - include_tasks: fail2ban-Debian.yml
-  when: ansible_os_family == 'Debian' and security_fail2ban_enabled
+  when:
+    - ansible_os_family == 'Debian'
+    - security_fail2ban_enabled | bool
 
 - name: Ensure fail2ban is running and enabled on boot.
   service: name=fail2ban state=started enabled=yes
-  when: security_fail2ban_enabled
+  when: security_fail2ban_enabled | bool
 
 # SSH
 - include_tasks: ssh.yml
 
 # Autoupdate
 - include_tasks: autoupdate-RedHat.yml
-  when: ansible_os_family == 'RedHat' and security_autoupdate_enabled
+  when:
+    - ansible_os_family == 'RedHat'
+    - security_autoupdate_enabled | bool
 
 - include_tasks: autoupdate-Debian.yml
-  when: ansible_os_family == 'Debian' and security_autoupdate_enabled
+  when:
+    - ansible_os_family == 'Debian'
+    - security_autoupdate_enabled | bool
