@@ -7,14 +7,10 @@ env:
     - ROLE_NAME: git
   matrix:
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-      MOLECULE_PLAYBOOK: playbook-source.yml
-    - MOLECULE_DISTRO: fedora27
       MOLECULE_PLAYBOOK: playbook-source.yml
     - MOLECULE_DISTRO: ubuntu1804
       MOLECULE_PLAYBOOK: playbook-source.yml
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
     - MOLECULE_DISTRO: centos6
     - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: ubuntu1604
