@@ -25,9 +25,6 @@ galaxy_info:
         - trusty
         - xenial
         - bionic
-    - name: Suse
-      versions:
-        - all
     - name: Solaris
       versions:
         - 11.3

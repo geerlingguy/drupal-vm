@@ -21,4 +21,16 @@
     group: root
     mode: 0644
   notify: restart apache
-  when: apache_create_vhosts
+  when: apache_create_vhosts | bool
+
+- name: Check if localhost cert exists (RHEL 8 and later).
+  stat:
+    path: /etc/pki/tls/certs/localhost.crt
+  register: localhost_cert
+  when: ansible_distribution_major_version | int >= 8
+
+- name: Ensure httpd certs are installed (RHEL 8 and later).
+  command: /usr/libexec/httpd-ssl-gencerts
+  when:
+    - ansible_distribution_major_version | int >= 8
+    - not localhost_cert.stat.exists
