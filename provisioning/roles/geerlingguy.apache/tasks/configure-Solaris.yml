@@ -16,4 +16,4 @@
     group: root
     mode: 0644
   notify: restart apache
-  when: apache_create_vhosts
+  when: apache_create_vhosts | bool
