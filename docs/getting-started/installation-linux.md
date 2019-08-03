@@ -1,4 +1,4 @@
-Please read through the [Quick Start Guiden the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
+Please read through the [Quick Start Guide the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
 
 For a quick introduction to setting up Drupal VM, the [macOS video tutorial](installation-macos.md) applies somwhat to Linux as well.
 
