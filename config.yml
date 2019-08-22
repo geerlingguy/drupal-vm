@@ -678,6 +678,7 @@ installed_extras:
   # - nodejs
   - pimpmylog
   - php7.2-zip
+  - php7.2-gmp
   # - redis
   # - ruby
   - selenium
