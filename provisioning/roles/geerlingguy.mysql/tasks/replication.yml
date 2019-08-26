@@ -6,10 +6,11 @@
     password: "{{ mysql_replication_user.password }}"
     priv: "{{ mysql_replication_user.priv | default('*.*:REPLICATION SLAVE,REPLICATION CLIENT') }}"
     state: present
-  when: >
-    (mysql_replication_role == 'master')
-    and mysql_replication_user
-    and (mysql_replication_master != '')
+  when:
+    - mysql_replication_role == 'master'
+    - mysql_replication_user.name is defined
+    - mysql_replication_master != ''
+  tags: ['skip_ansible_galaxy']
 
 - name: Check slave replication status.
   mysql_replication:
@@ -18,18 +19,20 @@
     login_password: "{{ mysql_replication_user.password }}"
   ignore_errors: true
   register: slave
-  when: >
-    mysql_replication_role == 'slave'
-    and (mysql_replication_master != '')
+  when:
+    - mysql_replication_role == 'slave'
+    - mysql_replication_master != ''
+  tags: ['skip_ansible_galaxy']
 
 - name: Check master replication status.
   mysql_replication: mode=getmaster
   delegate_to: "{{ mysql_replication_master }}"
   register: master
-  when: >
-    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
-    and (mysql_replication_role == 'slave')
-    and (mysql_replication_master != '')
+  when:
+    - (slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed)
+    - mysql_replication_role == 'slave'
+    - mysql_replication_master != ''
+  tags: ['skip_ansible_galaxy']
 
 - name: Configure replication on the slave.
   mysql_replication:
@@ -40,15 +43,16 @@
     master_log_file: "{{ master.File }}"
     master_log_pos: "{{ master.Position }}"
   ignore_errors: true
-  when: >
-    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
-    and (mysql_replication_role == 'slave')
-    and (mysql_replication_master != '')
-    and mysql_replication_user
+  when:
+    - (slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed)
+    - mysql_replication_role == 'slave'
+    - mysql_replication_user.name is defined
+    - mysql_replication_master != ''
 
 - name: Start replication.
   mysql_replication: mode=startslave
-  when: >
-    ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed))
-    and (mysql_replication_role == 'slave')
-    and (mysql_replication_master != '')
+  when:
+    - (slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed)
+    - mysql_replication_role == 'slave'
+    - mysql_replication_master != ''
+  tags: ['skip_ansible_galaxy']

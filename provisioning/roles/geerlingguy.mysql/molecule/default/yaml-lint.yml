@@ -2,5 +2,5 @@
 extends: default
 rules:
   line-length:
-    max: 150
+    max: 160
     level: warning

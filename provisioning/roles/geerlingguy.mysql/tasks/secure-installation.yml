@@ -26,7 +26,11 @@
   changed_when: false
 
 - name: Get list of hosts for the root user.
-  command: mysql -NBe "SELECT Host FROM mysql.user WHERE User = '{{ mysql_root_username }}' ORDER BY (Host='localhost') ASC"
+  command: mysql -NBe
+    "SELECT Host
+    FROM mysql.user
+    WHERE User = '{{ mysql_root_username }}'
+    ORDER BY (Host='localhost') ASC"
   register: mysql_root_hosts
   changed_when: false
   check_mode: false
@@ -38,7 +42,8 @@
 - name: Update MySQL root password for localhost root account (5.7.x).
   shell: >
     mysql -u root -NBe
-    'ALTER USER "{{ mysql_root_username }}"@"{{ item }}" IDENTIFIED WITH mysql_native_password BY "{{ mysql_root_password }}";'
+    'ALTER USER "{{ mysql_root_username }}"@"{{ item }}"
+    IDENTIFIED WITH mysql_native_password BY "{{ mysql_root_password }}";'
   with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
   when: >
     ((mysql_install_packages | bool) or mysql_root_password_update)
