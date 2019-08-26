@@ -1,0 +1,40 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - name: Set Java 8 package for RedHat.
+      set_fact:
+        java_packages:
+          - java-1.8.0-openjdk
+      when: ansible_os_family == "RedHat"
+
+    - name: Set Java 8 package for Ubuntu.
+      set_fact:
+        java_packages:
+          - openjdk-8-jdk
+      when: ansible_os_family == "Ubuntu"
+
+    - name: Set Java 11 package for Debian.
+      set_fact:
+        java_packages:
+          - openjdk-11-jdk
+      when: ansible_os_family == "Debian"
+
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == "Debian"
+
+    # See: http://unix.stackexchange.com/a/342469
+    - name: Install dependencies (Debian).
+      apt:
+        name:
+          - openjdk-11-jre-headless
+          - ca-certificates-java
+        state: present
+      when: ansible_distribution == "Debian"
+
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.solr
