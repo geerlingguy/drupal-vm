@@ -54,10 +54,15 @@ Set this to `true` and `drupal_build_composer*` to `false` if you would like to 
     drupal_build_composer: false
     drupal_composer_path: "/path/to/drupal.composer.json"
     drupal_composer_install_dir: "/var/www/drupal"
+    drupal_composer_no_dev: true
     drupal_composer_dependencies:
       - "drupal/devel:^1.2"
 
-Set `drupal_build_makefile` to `false` and this to `true` if you are using a Composer-based site deployment strategy.
+Set `drupal_build_makefile` to `false` and this to `true` if you are using a Composer-based site deployment strategy. The other options should be relatively straightforward.
+
+    drupal_composer_bin_dir: "vendor/bin"
+
+If you set the `bin-dir` in your project's `composer.json` file to a value other than `vendor/bin`, override this variable with the same directory path.
 
 ### Create a new project using `drupal-project` (Composer)
 
@@ -71,6 +76,10 @@ Set this to `true` and `drupal_build_makefile`, `drupal_build_composer` to `fals
 
     drupal_core_path: "{{ drupal_deploy_dir }}/web"
     drupal_core_owner: "{{ ansible_ssh_user | default(ansible_env.SUDO_USER, true) | default(ansible_env.USER, true) | default(ansible_user_id) }}"
+    drupal_core_owner_become: false
+
+The path to Drupal's root, along with the ownership properties. If you are not running Ansible as the user that should have ownership over the core path, specify the desired system user in `drupal_core_owner` and set `drupal_core_owner_become: true`.
+
     drupal_db_user: drupal
     drupal_db_password: drupal
     drupal_db_name: drupal

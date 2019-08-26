@@ -18,7 +18,8 @@
     accept_hostkey: "{{ drupal_deploy_accept_hostkey }}"
   register: drupal_deploy_repo_updated
   notify: clear opcache
-  become: false
+  become: "{{ drupal_core_owner_become }}"
+  become_user: "{{ drupal_core_owner }}"
 
 - name: Check if a composer.json file is present.
   stat: "path={{ drupal_deploy_dir }}/composer.json"
@@ -28,7 +29,9 @@
   composer:
     command: install
     working_dir: "{{ drupal_deploy_dir }}"
+    no_dev: "{{ drupal_composer_no_dev }}"
   when:
     - drupal_deploy_composer_file.stat.exists
     - drupal_deploy_composer_install
-  become: false
+  become: "{{ drupal_core_owner_become }}"
+  become_user: "{{ drupal_core_owner }}"
