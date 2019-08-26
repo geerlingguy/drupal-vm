@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: java
   author: geerlingguy
   description: Java for Linux
   company: "Midwestern Mac, LLC"
@@ -20,6 +21,7 @@ galaxy_info:
         - wheezy
         - jessie
         - stretch
+        - buster
     - name: Ubuntu
       versions:
         - precise

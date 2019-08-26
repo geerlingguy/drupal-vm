@@ -13,7 +13,7 @@
     path: "{{ solr_install_path }}"
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
-    recurse: yes
+    recurse: true
   when: not solr_war_file.stat.exists
 
 # Set up solr_home.
@@ -46,7 +46,7 @@
     path: "{{ solr_home }}"
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
-    recurse: yes
+    recurse: true
   when: not solr_example.stat.exists
 
 # Set up Solr init script.

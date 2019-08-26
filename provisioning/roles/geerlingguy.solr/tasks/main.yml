@@ -21,7 +21,7 @@
   get_url:
     url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-    force: no
+    force: false
   when: solr_install_path_status.stat.isdir is not defined
   register: solr_download_status
 
@@ -29,8 +29,9 @@
   unarchive:
     src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
-    copy: no
+    copy: false
   when: solr_download_status.changed
+  tags: ['skip_ansible_lint']
 
 # Install Solr < 5.
 - include_tasks: install-pre5.yml
@@ -44,7 +45,7 @@
   service:
     name: "{{ solr_service_name }}"
     state: "{{ solr_service_state }}"
-    enabled: yes
+    enabled: true
   when: solr_service_manage
 
 # Configure solr.

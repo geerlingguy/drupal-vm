@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    solr_version: "3.6.2"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == "Debian"
+
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.solr

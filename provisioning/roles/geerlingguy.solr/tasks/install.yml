@@ -1,13 +1,14 @@
 ---
 - name: Ensure dependencies are installed.
-  package: name={{ item }} state=present
-  with_items:
-    - lsof
-    - acl
-    - sudo
+  package:
+    name:
+      - lsof
+      - acl
+      - sudo
+    state: present
 
 - name: Run Solr installation script.
-  shell: >
+  command: >
     {{ solr_workspace }}/{{ solr_filename }}/bin/install_solr_service.sh
     {{ solr_workspace }}/{{ solr_filename }}.tgz
     -i {{ solr_install_dir }}
@@ -21,17 +22,19 @@
 # Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
 - name: Ensure solr is stopped (RHEL 7 workaround).
   command: service {{ solr_service_name }} stop
-  when: >
-    (ansible_os_family == 'RedHat')
-    and (ansible_distribution_version.split(".")[0] == '7')
-    and (solr_install_script_result.changed)
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_version.split(".")[0] == '7'
+    - solr_install_script_result.changed
   failed_when: false
+  tags: ['skip_ansible_lint']
 
 - name: Run systemd daemon_reload (RHEL 7 workaround).
   systemd:
     name: solr
-    daemon_reload: yes
-  when: >
-    (ansible_os_family == 'RedHat')
-    and (ansible_distribution_version.split(".")[0] == '7')
-    and (solr_install_script_result.changed)
+    daemon_reload: true
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_version.split(".")[0] == '7'
+    - solr_install_script_result.changed
+  tags: ['skip_ansible_lint']

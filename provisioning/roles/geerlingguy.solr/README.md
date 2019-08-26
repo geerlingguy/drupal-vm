@@ -8,7 +8,7 @@ Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
 Java must be available on the server. You can easily install Java using the `geerlingguy.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
 
-This role is currently tested and working with Solr 3.x, 4.x, 5.x, 6.x and 7.x.
+This role is currently tested and working with Solr 3.x, 4.x, 5.x, 6.x, 7.x, and 8.x.
 
 ## Role Variables
 
@@ -23,7 +23,7 @@ Files will be downloaded to this path on the remote server before being moved in
 
 Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user.
 
-    solr_version: "6.2.0"
+    solr_version: "8.2.0"
 
 The Apache Solr version to install. For a full list, see [available Apache Solr versions](http://archive.apache.org/dist/lucene/solr/).
 

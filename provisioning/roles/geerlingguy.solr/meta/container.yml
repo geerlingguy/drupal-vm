@@ -1,9 +1,0 @@
-# See: https://github.com/geerlingguy/solr-container
-solr:
-  from: "debian:9"
-  ports:
-    - "8983:8983"
-  command: ["/opt/solr/bin/solr", "start", "-f", "-force"]
-  roles:
-    - geerlingguy.java
-    - geerlingguy.solr

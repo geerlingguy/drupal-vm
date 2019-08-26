@@ -1,17 +1,19 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   vars:
     solr_version: "5.5.5"
     solr_remove_cruft: true
     java_packages:
-      - openjdk-7-jdk
+      - openjdk-8-jdk
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=yes cache_valid_time=600
+      apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == "Debian"
 
   roles:
-    - geerlingguy.java
-    - role_under_test
+    - role: geerlingguy.java
+    - role: geerlingguy.solr
