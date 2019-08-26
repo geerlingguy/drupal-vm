@@ -15,11 +15,15 @@ drupal_build_makefile: false
 drush_makefile_path: "/path/to/drupal.make.yml"
 drush_make_options: "--no-gitinfofile"
 
+# You can configure the `bin-dir` in your project's composer.json `config` key.
+drupal_composer_bin_dir: "vendor/bin"
+
 # Set 'drupal_build_makefile' to 'false' and this to 'true' if you are using a
 # Composer-based site deployment strategy.
 drupal_build_composer: false
 drupal_composer_path: "/path/to/drupal.composer.json"
 drupal_composer_install_dir: "{{ drupal_deploy_dir }}"
+drupal_composer_no_dev: true
 drupal_composer_dependencies:
   - "drupal/devel:^1.2"
 
@@ -33,6 +37,7 @@ drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction
 # Required Drupal settings.
 drupal_core_path: "{{ drupal_deploy_dir }}/web"
 drupal_core_owner: "{{ ansible_ssh_user | default(ansible_env.SUDO_USER, true) | default(ansible_env.USER, true) | default(ansible_user_id) }}"
+drupal_core_owner_become: false
 drupal_db_user: drupal
 drupal_db_password: drupal
 drupal_db_name: drupal

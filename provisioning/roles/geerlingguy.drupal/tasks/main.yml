@@ -42,13 +42,13 @@
 
 # Set Drush variables.
 - name: Check if a project specific Drush binary exists.
-  stat: "path={{ drupal_composer_install_dir }}/vendor/bin/drush"
+  stat: "path={{ drupal_composer_install_dir }}/{{ drupal_composer_bin_dir }}/drush"
   register: drush_vendor_bin
   ignore_errors: true
 
 - name: Use project specific Drush if available.
   set_fact:
-    drush_path: "{{ drupal_composer_install_dir }}/vendor/bin/drush"
+    drush_path: "{{ drupal_composer_install_dir }}/{{ drupal_composer_bin_dir }}/drush"
   when: drush_vendor_bin.stat.exists
 
 # Install site if configured.
