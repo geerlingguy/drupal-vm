@@ -693,18 +693,18 @@ installed_extras:
 # Add any extra apt or yum packages you would like installed.
 extra_packages:
   - sqlite
-  - mongodb-org
   - imagemagick
   - php-gmagick
   - webalizer
   - python-pip
   - cabextract
   - traceroute
-  - php-mongodb
   - awscli
   - xvfb 
   - libfontconfig 
   - wkhtmltopdf
+  # - php-mongodb
+  # - mongodb-org-server
   # - ImageMagick-devel
   # - GraphicsMagick-devel
   # - GraphicsMagick
@@ -780,8 +780,8 @@ composer_global_packages:
 
 # Run specified scripts before or after VM is provisioned. Path is relative to
 # the `provisioning/playbook.yml` file.
-pre_provision_scripts:
- - "../scripts/pre-provision.sh"
+# pre_provision_scripts:
+#  - "../scripts/pre-provision.sh"
 # post_provision_scripts:
 #   - "../examples/scripts/configure-solr.sh"
   
