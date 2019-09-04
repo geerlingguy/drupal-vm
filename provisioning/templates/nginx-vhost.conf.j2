@@ -82,6 +82,18 @@ server {
     }
     location ~ ^(/[a-z\-]+)?/system/files/ {
         try_files $uri /index.php?$query_string;
+      }
+    ###
+    ### advagg_css and advagg_js support
+    ###
+    location ~* files/advagg_(?:css|js)/ {
+      gzip_static on;
+      {# brotli_static on;  #}
+      access_log  off;
+      expires     max;
+      add_header  ETag "";
+      add_header  Cache-Control "max-age=31449600, no-transform, public";
+      try_files   $uri @rewrite;
     }
     {% endblock %}
 
