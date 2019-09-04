@@ -683,9 +683,9 @@ installed_extras:
   # - redis
   # - ruby
   - selenium
-  - solr
+  # - solr
   # - tideways
-  # - upload-progress
+  - upload-progress
   - varnish
   - xdebug
   # - xhprof
@@ -783,7 +783,7 @@ composer_global_packages:
 pre_provision_scripts:
  - "../scripts/pre-provision.sh"
 # post_provision_scripts:
-  # - "../examples/scripts/configure-solr.sh"
+#   - "../examples/scripts/configure-solr.sh"
   
 # MySQL Configuration.
 mysql_root_password: root
@@ -839,13 +839,13 @@ php_post_max_size: "2048M"
 client_max_body_size: "2048M"
 
 # Solr Configuration (if enabled above).
-solr_version: "5.5.5"
-solr_xms: "64M"
-solr_xmx: "256M"
-solr_cores:
-  - cleanenergysolutions.sandbox
-  - cleanenergysolutions.stage
-  - cleanenergysolutions.prod
+# solr_version: "5.5.5"
+# solr_xms: "64M"
+# solr_xmx: "256M"
+# solr_cores:
+#   - cleanenergysolutions.sandbox
+#   - cleanenergysolutions.stage
+#   - cleanenergysolutions.prod
 # java_packages:
 #   - java-1.8.0-openjdk
 
