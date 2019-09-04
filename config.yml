@@ -753,8 +753,8 @@ php_max_input_vars: "4000"
 php_output_buffering: "Off"
 
 # php_packages_extra:
-    # - php71-php-pecl-mongodb.x86_64
-  # - php71-php-pecl-imagick
+    # - php72-php-pecl-mongodb.x86_64
+  # - php72-php-pecl-imagick
   # - ImageMagick
   # - "php{{ php_version }}-bz2"
   # - "php{{ php_version }}-imagick"
