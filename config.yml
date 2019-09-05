@@ -1022,8 +1022,8 @@ extra_packages:
   - cabextract
   - traceroute
   - awscli
-  - xvfb 
-  - libfontconfig 
+  - xvfb
+  - libfontconfig
   - wkhtmltopdf
   # - php-mongodb
   # - mongodb-org-server
@@ -1035,7 +1035,7 @@ extra_packages:
   # - libpng12
   # - bind-utils
   # - openssl-devel
-  # - ffmpeg 
+  # - ffmpeg
   # - perl-Image-ExifTool
   # - net-tools
 # You can configure almost anything else on the server in the rest of this file.
@@ -1106,7 +1106,7 @@ composer_global_packages:
 #  - "../scripts/pre-provision.sh"
 # post_provision_scripts:
 #   - "../examples/scripts/configure-solr.sh"
-  
+
 # MySQL Configuration.
 mysql_root_password: root
 mysql_supports_innodb_large_prefix: true
@@ -1175,7 +1175,7 @@ client_max_body_size: "2048M"
 elasticsearch_network_host: localhost
 elasticsearch_http_port: 9200
 
-# Whether to allow inline scripting against ElasticSearch. 
+# Whether to allow inline scripting against ElasticSearch.
 # elasticsearch_script_inline: true
 # elasticsearch_script_indexed: true
 
