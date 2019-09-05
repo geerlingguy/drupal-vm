@@ -471,6 +471,374 @@ nginx_hosts:
     root: "{{ sites_path }}/eere-project"
     is_php: true
     extra_parameters: |
+      location /femp/assistance {
+        alias /var/www/sites/eere-project/femp/assistance_project/web;
+
+        # Don't touch PHP for static content.
+        try_files $uri $uri/ @assistance;
+
+        # Don't allow direct access to PHP files in the vendor directory.
+        location ~ /.+\/vendor/.*\.php$ {
+            deny all;
+            return 404;
+        }
+        # Allow "Well-Known URIs" as per RFC 5785
+        location ~* ^/.well-known/ {
+            allow all;
+        }
+        location ~ (^|/)\. {
+            return 403;
+        }
+
+        # Redirect common PHP files to their new locations.
+        location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
+            return 301 $scheme://$host$1/core/$2$is_args$args;
+        }
+
+        # Use fastcgi for all php files.
+        location ~ \.php$|^/update.php {
+            fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_intercept_errors on;
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+            fastcgi_pass 127.0.0.1:9000;
+        }
+
+        location ~ ^/femp/assistance/sites/.*/files/styles/ {
+            try_files $uri @rewrite;
+        }
+        location ~ ^/femp/assistance/(/[a-z\-]+)?/system/files/ {
+            try_files $uri /index.php?$query_string;
+        }
+
+        location ~ ^/femp/[a-z\-]+/favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~ ^/femp/[a-z\-]+/robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+            expires max;
+            log_not_found off;
+        }
+      }
+
+      location @assistance {
+          rewrite /femp/assistance/(.*)$ /femp/assistance/index.php?/$1 last;
+      }
+      location /femp/training {
+        alias /var/www/sites/eere-project/femp/training_project/web;
+
+        # Don't touch PHP for static content.
+        try_files $uri $uri/ @training;
+
+        # Don't allow direct access to PHP files in the vendor directory.
+        location ~ /.+\/vendor/.*\.php$ {
+            deny all;
+            return 404;
+        }
+        # Allow "Well-Known URIs" as per RFC 5785
+        location ~* ^/.well-known/ {
+            allow all;
+        }
+        location ~ (^|/)\. {
+            return 403;
+        }
+
+        # Redirect common PHP files to their new locations.
+        location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
+            return 301 $scheme://$host$1/core/$2$is_args$args;
+        }
+
+        # Use fastcgi for all php files.
+        location ~ \.php$|^/update.php {
+            fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_intercept_errors on;
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+            fastcgi_pass 127.0.0.1:9000;
+        }
+
+        location ~ ^/femp/training/sites/.*/files/styles/ {
+            try_files $uri @rewrite;
+        }
+        location ~ ^/femp/training/(/[a-z\-]+)?/system/files/ {
+            try_files $uri /index.php?$query_string;
+        }
+
+        location ~ ^/femp/[a-z\-]+/favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~ ^/femp/[a-z\-]+/robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+            expires max;
+            log_not_found off;
+        }
+      }
+
+      location @training {
+          rewrite /femp/training/(.*)$ /femp/training/index.php?/$1 last;
+      }
+      location /femp/resource_center {
+        alias /var/www/sites/eere-project/wind/resource_center_project/web;
+
+        # Don't touch PHP for static content.
+        try_files $uri $uri/ @resource_center;
+
+        # Don't allow direct access to PHP files in the vendor directory.
+        location ~ /.+\/vendor/.*\.php$ {
+            deny all;
+            return 404;
+        }
+        # Allow "Well-Known URIs" as per RFC 5785
+        location ~* ^/.well-known/ {
+            allow all;
+        }
+        location ~ (^|/)\. {
+            return 403;
+        }
+
+        # Redirect common PHP files to their new locations.
+        location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
+            return 301 $scheme://$host$1/core/$2$is_args$args;
+        }
+
+        # Use fastcgi for all php files.
+        location ~ \.php$|^/update.php {
+            fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_intercept_errors on;
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+            fastcgi_pass 127.0.0.1:9000;
+        }
+
+        location ~ ^/femp/resource_center/sites/.*/files/styles/ {
+            try_files $uri @rewrite;
+        }
+        location ~ ^/femp/resource_center/(/[a-z\-]+)?/system/files/ {
+            try_files $uri /index.php?$query_string;
+        }
+
+        location ~ ^/femp/[a-z\-]+/favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~ ^/femp/[a-z\-]+/robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+            expires max;
+            log_not_found off;
+        }
+      }
+      location @resource_center {
+        rewrite /wind/resource_center/(.*)$ /wind/resource_center/index.php?/$1 last;
+      }
+      location /femp/requirements {
+        alias /var/www/sites/eere-project/femp/requirements_project/web;
+
+        # Don't touch PHP for static content.
+        try_files $uri $uri/ @requirements;
+
+        # Don't allow direct access to PHP files in the vendor directory.
+        location ~ /.+\/vendor/.*\.php$ {
+            deny all;
+            return 404;
+        }
+        # Allow "Well-Known URIs" as per RFC 5785
+        location ~* ^/.well-known/ {
+            allow all;
+        }
+        location ~ (^|/)\. {
+            return 403;
+        }
+
+        # Redirect common PHP files to their new locations.
+        location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
+            return 301 $scheme://$host$1/core/$2$is_args$args;
+        }
+
+        # Use fastcgi for all php files.
+        location ~ \.php$|^/update.php {
+            fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_intercept_errors on;
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+            fastcgi_pass 127.0.0.1:9000;
+        }
+
+        location ~ ^/femp/requirements/sites/.*/files/styles/ {
+            try_files $uri @rewrite;
+        }
+        location ~ ^/femp/requirements/(/[a-z\-]+)?/system/files/ {
+            try_files $uri /index.php?$query_string;
+        }
+
+        location ~ ^/femp/[a-z\-]+/favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~ ^/femp/[a-z\-]+/robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+            expires max;
+            log_not_found off;
+        }
+      }
+      location @requirements {
+          rewrite /femp/requirements/(.*)$ /femp/requirements/index.php?/$1 last;
+      }
+      location /seeaction {
+          alias /var/www/sites/eere-project/seeaction_project/web;
+  
+          # Don't touch PHP for static content.
+          try_files $uri $uri/ @requirements;
+  
+          # Don't allow direct access to PHP files in the vendor directory.
+          location ~ /.+\/vendor/.*\.php$ {
+              deny all;
+              return 404;
+          }
+          # Allow "Well-Known URIs" as per RFC 5785
+          location ~* ^/.well-known/ {
+              allow all;
+          }
+          location ~ (^|/)\. {
+              return 403;
+          }
+  
+          # Redirect common PHP files to their new locations.
+          location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
+              return 301 $scheme://$host$1/core/$2$is_args$args;
+          }
+  
+          # Use fastcgi for all php files.
+          location ~ \.php$|^/update.php {
+              fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+              fastcgi_index index.php;
+              fastcgi_param SCRIPT_FILENAME $request_filename;
+              fastcgi_intercept_errors on;
+              fastcgi_read_timeout 600;
+              include fastcgi_params;
+              fastcgi_pass 127.0.0.1:9000;
+          }
+  
+          location ~ ^/seeaction/sites/.*/files/styles/ {
+              try_files $uri @rewrite;
+          }
+          location ~ ^/seeaction/(/[a-z\-]+)?/system/files/ {
+              try_files $uri /index.php?$query_string;
+          }
+  
+          location ~ ^/[a-z\-]+/favicon.ico {
+              log_not_found off;
+              access_log off;
+          }
+  
+          location ~ ^/[a-z\-]+/robots.txt {
+              allow all;
+              log_not_found off;
+              access_log off;
+          }
+  
+          location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+              expires max;
+              log_not_found off;
+          }
+      }
+      location @seeaction {
+        rewrite /seeaction/(.*)$ /seeaction/index.php?/$1 last;
+      }
+      location /resilience {
+          alias /var/www/sites/eere-project/resilience_project/web;
+  
+          # Don't touch PHP for static content.
+          try_files $uri $uri/ @resilience;
+  
+          # Don't allow direct access to PHP files in the vendor directory.
+          location ~ /.+\/vendor/.*\.php$ {
+              deny all;
+              return 404;
+          }
+          # Allow "Well-Known URIs" as per RFC 5785
+          location ~* ^/.well-known/ {
+              allow all;
+          }
+          location ~ (^|/)\. {
+              return 403;
+          }
+  
+          # Redirect common PHP files to their new locations.
+          location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
+              return 301 $scheme://$host$1/core/$2$is_args$args;
+          }
+  
+          # Use fastcgi for all php files.
+          location ~ \.php$|^/update.php {
+              fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+              fastcgi_index index.php;
+              fastcgi_param SCRIPT_FILENAME $request_filename;
+              fastcgi_intercept_errors on;
+              fastcgi_read_timeout 600;
+              include fastcgi_params;
+              fastcgi_pass 127.0.0.1:9000;
+          }
+  
+          location ~ ^/resilience/sites/.*/files/styles/ {
+              try_files $uri @rewrite;
+          }
+          location ~ ^/resilience/(/[a-z\-]+)?/system/files/ {
+              try_files $uri /index.php?$query_string;
+          }
+  
+          location ~ ^/[a-z\-]+/favicon.ico {
+              log_not_found off;
+              access_log off;
+          }
+  
+          location ~ ^/[a-z\-]+/robots.txt {
+              allow all;
+              log_not_found off;
+              access_log off;
+          }
+  
+          location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+              expires max;
+              log_not_found off;
+          }
+      }
+      location @resilience {
+          rewrite /resilience/(.*)$ /resilience/index.php?/$1 last;
+      }
       listen 443 ssl;
       ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
       ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
