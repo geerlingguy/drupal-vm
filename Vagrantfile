@@ -109,7 +109,7 @@ Vagrant.configure('2') do |config|
   end
 
   config.vm.provision 'drupalvm', type: provisioner do |ansible|
-    ansible.pip_install_cmd = "curl https://bootstrap.pypa.io/get-pip.py | sudo python"
+    ansible.pip_install_cmd = 'curl https://bootstrap.pypa.io/get-pip.py | sudo python'
     ansible.compatibility_mode = '2.0'
     ansible.playbook = playbook
     ansible.extra_vars = {
