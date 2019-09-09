@@ -1000,15 +1000,13 @@ installed_extras:
   # - newrelic
   # - nodejs
   - pimpmylog
-  - php7.2-zip
-  - php7.2-gmp
   # - redis
   # - ruby
-  - selenium
+  # - selenium
   # - solr
   # - tideways
-  - upload-progress
-  - varnish
+  # - upload-progress
+  # - varnish
   - xdebug
   # - xhprof
 
@@ -1025,6 +1023,8 @@ extra_packages:
   - xvfb
   - libfontconfig
   - wkhtmltopdf
+  - php7.2-zip
+  - php7.2-gmp
   # - php-mongodb
   # - mongodb-org-server
   # - ImageMagick-devel
