@@ -1076,7 +1076,8 @@ php_opcache_max_accelerated_files: 4096
 php_max_input_vars: "4000"
 php_output_buffering: "Off"
 
-# php_packages_extra:
+php_packages_extra:
+  - php-pear
     # - php72-php-pecl-mongodb.x86_64
   # - php72-php-pecl-imagick
   # - ImageMagick
@@ -1194,3 +1195,6 @@ known_hosts_path: ~/.ssh/known_hosts
 hostname_configure: true
 hostname_fqdn: "{{ vagrant_hostname }}"
 ssh_home: "{{ drupal_core_path }}"
+# Add extensions to this list to have them installed with this role.
+php_pecl_extensions: [jsmin]
+# - xdebug
