@@ -30,8 +30,8 @@ vagrant_synced_folders:
     create: true
 
 # Memory and CPU to use for this VM.
-vagrant_memory: 2048
-vagrant_cpus: 1
+vagrant_memory: 8192
+vagrant_cpus: 8
 
 # Ensure vagrant plugins are installed.
 vagrant_plugins:
@@ -1064,7 +1064,8 @@ firewall_disable_ufw: true
 # See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
 php_version: "7.2"
 php_install_recommends: no
-php_memory_limit: "2048M"
+# php_memory_limit: "2048M"
+php_memory_limit: "4096M"
 php_display_errors: "On"
 php_display_startup_errors: "On"
 php_realpath_cache_size: "1024K"
