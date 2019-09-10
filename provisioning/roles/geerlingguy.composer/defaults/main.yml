@@ -22,3 +22,8 @@ composer_add_project_to_path: false
 
 # GitHub OAuth token (used to help overcome API rate limits).
 composer_github_oauth_token: ''
+
+# Access NREL private packages in Composer
+composer_github_auth_asset_packagist_user: ""
+composer_github_auth_asset_packagist_pass: ""
+

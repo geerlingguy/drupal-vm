@@ -1,4 +1,10 @@
 {
+    "http-basic": {
+        "asset-packagist.nrel.gov": {
+            "username": "{{ composer_github_auth_asset_packagist_user }}",
+            "password": "{{ composer_github_auth_asset_packagist_pass }}"
+        }
+    },
     "github-oauth": {
         "github.com": "{{ composer_github_oauth_token }}"
     }
