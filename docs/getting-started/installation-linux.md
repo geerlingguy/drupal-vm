@@ -1,6 +1,6 @@
 Please read through the [Quick Start Guide in the README](https://github.com/geerlingguy/drupal-vm#quick-start-guide) to get started.
 
-For a quick introduction to setting up Drupal VM, the [macOS video tutorial](installation-macos.md) applies somwhat to Linux as well.
+For a quick introduction to setting up Drupal VM, the [macOS video tutorial](installation-macos.md) applies somewhat to Linux as well.
 
 There are a few caveats when using Drupal VM on Linux, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Linux host.
 
