@@ -19,5 +19,5 @@
     enabled: "{{ postgresql_service_enabled }}"
 
 # Configure PostgreSQL.
-- import_tasks: databases.yml
 - import_tasks: users.yml
+- import_tasks: databases.yml
