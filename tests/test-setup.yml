@@ -2,10 +2,6 @@
 - hosts: all
   become: yes
 
-  vars:
-    # Added to prevent test failures in CI.
-    firewall_enable_ipv6: false
-
   tasks:
     - name: Update apt cache.
       apt: update_cache=yes
