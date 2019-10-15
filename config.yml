@@ -1025,8 +1025,8 @@ extra_packages:
   - wkhtmltopdf
   - php7.2-zip
   - php7.2-gmp
-  # - php-mongodb
-  # - mongodb-org-server
+  - php-mongodb
+  - mongodb-org-server
   # - ImageMagick-devel
   # - GraphicsMagick-devel
   # - GraphicsMagick
@@ -1078,7 +1078,7 @@ php_output_buffering: "Off"
 
 php_packages_extra:
   - php-pear
-    # - php72-php-pecl-mongodb.x86_64
+  # - php72-php-pecl-mongodb.x86_64
   # - php72-php-pecl-imagick
   # - ImageMagick
   # - "php{{ php_version }}-bz2"
@@ -1104,8 +1104,8 @@ composer_global_packages:
 
 # Run specified scripts before or after VM is provisioned. Path is relative to
 # the `provisioning/playbook.yml` file.
-# pre_provision_scripts:
-#  - "../scripts/pre-provision.sh"
+pre_provision_scripts:
+ - "../scripts/pre-provision.sh"
 # post_provision_scripts:
 #   - "../examples/scripts/configure-solr.sh"
 
