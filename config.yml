@@ -1027,6 +1027,8 @@ extra_packages:
   - php7.2-gmp
   - php-mongodb
   - mongodb-org-server
+  # - libcurl4
+  # - mongodb-org-tools
   # - ImageMagick-devel
   # - GraphicsMagick-devel
   # - GraphicsMagick
