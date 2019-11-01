@@ -37,7 +37,7 @@
     git_reinstall_from_source: true
   when:
     - git_install_from_source_force_update | bool
-    - (git_installed_version.rc == 0) and (git_installed_version.stdout | regex_replace("^.*?([0-9\.]+)$", "\\1") | version_compare(git_version, operator="!="))
+    - (git_installed_version.rc == 0) and (git_installed_version.stdout | regex_replace("^.*?([0-9\.]+)$", "\\1") is version(git_version, operator="!="))
 
 - name: Download git.
   get_url:
