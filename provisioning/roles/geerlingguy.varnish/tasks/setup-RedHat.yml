@@ -10,7 +10,7 @@
   yum_repository:
     name: varnishcache_{{ varnish_packagecloud_repo }}
     description: Varnish Cache packagecloud.io repository.
-    baseurl: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/el/{{ ansible_distribution_major_version|int }}/$basearch
+    baseurl: "{{ varnish_yum_repo_baseurl }}"
     repo_gpgcheck: false
     gpgcheck: false
     enabled: true
@@ -25,6 +25,7 @@
   args:
     warn: false
   when: varnish_packagecloud_repo_addition.changed
+  tags: ['skip_ansible_lint']
 
 - name: Ensure Varnish is installed.
   yum:

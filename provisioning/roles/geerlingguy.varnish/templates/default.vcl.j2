@@ -1,4 +1,4 @@
-{% if varnish_version | version_compare('4.0', '>=') %}
+{% if varnish_version is version('4.0', '>=') %}
 vcl 4.0;
 {% endif %}
 

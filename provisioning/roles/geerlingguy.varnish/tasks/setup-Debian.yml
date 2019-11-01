@@ -11,7 +11,7 @@
 
 - name: Add packagecloud.io Varnish apt repository.
   apt_repository:
-    repo: "deb https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main"
+    repo: "{{ varnish_apt_repo }}"
     state: present
 
 - name: Ensure Varnish is installed.

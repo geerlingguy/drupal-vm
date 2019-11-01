@@ -27,6 +27,12 @@ varnish_enabled_services:
 # Make sure Packagecloud repo is used on RHEL/CentOS.
 varnish_packagecloud_repo_yum_repository_priority: "1"
 
+# Only used on RedHat / CentOS.
+varnish_yum_repo_baseurl: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/el/{{ ansible_distribution_major_version|int }}/$basearch
+
+# Only used on Debian / Ubuntu.
+varnish_apt_repo: deb https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main
+
 # Optionally define additional backends.
 # varnish_backends:
 #   apache:
