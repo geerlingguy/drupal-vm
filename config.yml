@@ -595,7 +595,7 @@ nginx_hosts:
       location @training {
           rewrite /femp/training/(.*)$ /femp/training/index.php?/$1 last;
       }
-      location /femp/resource_center {
+      location /wind/resource_center {
         alias /var/www/sites/eere-project/wind/resource_center_project/web;
 
         # Don't touch PHP for static content.
