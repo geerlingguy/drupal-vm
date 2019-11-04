@@ -11,7 +11,7 @@
         margin: 0;
       }
       /* minor fallback styling for when loaded without an internet connection */
-      .panel, .jumbotron, .well {
+      .card, .jumbotron {
         margin-bottom: 20px;
       }
       td, th {
@@ -315,7 +315,7 @@
         <div class="col-md-12">
           <section class="jumbotron text-center">
             <a href="https://www.drupalvm.com/"><img src="http://docs.drupalvm.com/en/latest/images/drupal-vm-logo.png" alt="Drupal VM" title="Welcome to Drupal VM" class="img-responsive center-block"></a>
-            <p><a href="https://github.com/geerlingguy/drupal-vm">Drupal VM</a> is a VM for local Drupal development, built with Vagrant + Ansible.</p>
+            <p class="lead"><a href="https://github.com/geerlingguy/drupal-vm">Drupal VM</a> is a VM for local Drupal development, built with Vagrant + Ansible.</p>
             <p><small>Machine name: <strong>{{ vagrant_machine_name }}</strong></small></p>
             <p><a class="btn btn-primary btn-lg" href="http://docs.drupalvm.com/en/latest/" role="button">Read the documentation</a></p>
           </section>
@@ -324,18 +324,18 @@
 
       <div class="row">
         <div class="col-md-9">
-          <section class="panel panel-default">
-            <div class="panel-heading">Your sites</div>
-            <div class="panel-body">
+          <section class="card">
+            <div class="card-header">Your sites</div>
+            <div class="card-body">
               {{ sectionSiteList() }}
             </div>
           </section>
         </div>
 
         <div class="col-md-3">
-          <section class="panel panel-default">
-            <div class="panel-heading"> {{ SectionDatabaseListLabel() }}</div>
-            <div class="panel-body">
+          <section class="card">
+            <div class="card-header"> {{ SectionDatabaseListLabel() }}</div>
+            <div class="card-body">
               {{ sectionDatabaseList() }}
 
               {{ sectionDatabaseUserList() }}
@@ -346,39 +346,39 @@
 
       <div class="row">
         <div class="col-md-3">
-          <section class="panel panel-default">
-            <div class="panel-heading">PHP information</div>
-            <div class="panel-body">
+          <section class="card">
+            <div class="card-header">PHP information</div>
+            <div class="card-body">
               {{ sectionPhpInformation() }}
             </div>
           </section>
         </div>
 
         <div class="col-md-6">
-          <section class="panel panel-default">
-            <div class="panel-heading">MySQL connection information</div>
-            <div class="panel-body">
+          <section class="card">
+            <div class="card-header">MySQL connection information</div>
+            <div class="card-body">
               {{ sectionDatabaseConnection() }}
             </div>
           </section>
         </div>
 
         <div class="col-md-3">
-          <section class="panel panel-default">
-            <div class="panel-heading">Development tools</div>
-            <div class="panel-body">
+          <section class="card">
+            <div class="card-header">Development tools</div>
+            <div class="card-body">
               {{ sectionDevelopmentTools() }}
             </div>
           </section>
-        </div>  
+        </div>
       </div>
 
       <div class="row">
         <div class="col-md-12">
-          <section class="panel panel-default">
-            <div class="panel-heading">/etc/hosts</div>
-              <div class="panel-body">
-                <section class="well small">
+          <section class="card">
+            <div class="card-header">/etc/hosts</div>
+              <div class="card-body">
+                <section class="card small">
                   {{ sectionHost() }}
                 </section>
                 <small>Unless you're using the <a href="https://github.com/cogitatio/vagrant-hostsupdater" target="_blank">vagrant-hostsupdater</a> or <a href="https://github.com/smdahlen/vagrant-hostmanager" target="_blank">vagrant-hostmanager</a> plugin, add the lines above to your host machine's hosts file.</small>
@@ -388,6 +388,6 @@
       </div>
     </div>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </body>
 </html>
