@@ -456,6 +456,26 @@ nginx_hosts:
       ssl_protocols       TLSv1.1 TLSv1.2;
       ssl_ciphers         HIGH:!aNULL:!MD5;
 
+  - server_name: "zeroenergy.test www.zeroenergy.test"
+    root: "{{ sites_path }}/zeroenergy/web"
+    is_php: true
+    extra_parameters: |
+      listen 443 ssl;
+      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+      ssl_protocols       TLSv1.1 TLSv1.2;
+      ssl_ciphers         HIGH:!aNULL:!MD5;
+
+  - server_name: "zeroenergy.test www.zeroenergy-pantheon.test"
+    root: "{{ sites_path }}/zeroenergy-pantheon/web"
+    is_php: true
+    extra_parameters: |
+      listen 443 ssl;
+      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+      ssl_protocols       TLSv1.1 TLSv1.2;
+      ssl_ciphers         HIGH:!aNULL:!MD5;
+
   # Action.network
   - server_name: "eere.test www.eere.test"
     root: "{{ sites_path }}/eere"
@@ -1025,8 +1045,10 @@ extra_packages:
   - wkhtmltopdf
   - php7.2-zip
   - php7.2-gmp
-  - php-mongodb
-  - mongodb-org-server
+  - libcurl3
+  - openssl
+  # - php-mongodb
+  # - mongodb-org-server
   # - libcurl4
   # - mongodb-org-tools
   # - ImageMagick-devel
