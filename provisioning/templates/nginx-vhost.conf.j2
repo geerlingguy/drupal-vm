@@ -64,6 +64,10 @@ server {
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $request_filename;
         fastcgi_param WWW_NREL "DRUPALVM";
+        fastcgi_param DB_USER 'root';
+        fastcgi_param DB_PASSWORD 'root';
+        fastcgi_param DB_HOST 'localhost';
+        fastcgi_param DB_PORT '3306';
         fastcgi_intercept_errors on;
         fastcgi_read_timeout {{ php_max_execution_time }};
         include fastcgi_params;
