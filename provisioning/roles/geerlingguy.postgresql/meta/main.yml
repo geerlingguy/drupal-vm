@@ -12,12 +12,20 @@ galaxy_info:
       versions:
         - 6
         - 7
+    - name: Fedora
+      versions:
+        - 29
+        - 30
     - name: Ubuntu
       versions:
-        - all
+        - xenial
+        - bionic
     - name: Debian
       versions:
-        - all
+        - wheezy
+        - jessie
+        - stretch
+        - buster
   galaxy_tags:
     - database
     - postgresql

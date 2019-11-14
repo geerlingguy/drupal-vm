@@ -104,7 +104,7 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
              -p thread_pool_min=${VARNISH_MIN_THREADS} \
              -p thread_pool_max=${VARNISH_MAX_THREADS} \
              -p thread_pool_timeout=${VARNISH_THREAD_TIMEOUT} \
-{% if varnish_version | version_compare('4.1', '<') %}
+{% if varnish_version is version('4.1', '<') %}
              -u varnish -g varnish \
 {% endif %}
 {% if varnishd_extra_options %}

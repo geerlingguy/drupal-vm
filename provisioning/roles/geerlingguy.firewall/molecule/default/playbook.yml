@@ -4,6 +4,7 @@
   become: true
 
   vars:
+    firewall_enable_ipv6: false
     firewall_allowed_tcp_ports:
       - "9123"
 

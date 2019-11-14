@@ -1,5 +1,29 @@
 # Drupal VM Changelog
 
+=======
+## 5.0.2 (2019-11-04)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+N/A
+
+### Improvements
+
+  * #1982: Updated Dashboard to Boostrap 4 for improved accessibility.
+  * Updated various roles to ensure Ansible 2.9 compatibility.
+  * Tested Drupal VM on macOS Catalina with latest versions of Vagrant and VirtualBox.
+  * Updated roles: postgresql, firewall, git, php-versions, varnish
+
+### Bugfixes
+
+  * #1969: Documentation typo fix for Linux installation.
+  * #1973: Fix site-install error in certain circumstances.
+
+
 ## 5.0.1 (2019-08-29)
 
 ### Breaking Changes

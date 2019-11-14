@@ -6,7 +6,7 @@
     - "{{ role_path }}/vars/{{ ansible_os_family }}-php{{ php_version }}.yml"
 
 - name: Define PHP variables.
-  set_fact: "{{ item.key }}={{ hostvars[inventory_hostname][item.value] }}"
+  set_fact: "{{ item.key }}={{ lookup('vars', item.value) }}"
   when:
     - hostvars[inventory_hostname][item.key] is undefined
     - hostvars[inventory_hostname][item.value] is defined

@@ -5,3 +5,6 @@ composer_home_path: "/{{ drupalvm_user }}/.composer"
 # Don't run the 'disable firewall' tasks in tests.
 firewall_disable_firewalld: false
 firewall_disable_ufw: false
+
+# Added to prevent test failures in CI.
+firewall_enable_ipv6: false

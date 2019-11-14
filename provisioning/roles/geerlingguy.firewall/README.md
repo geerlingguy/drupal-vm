@@ -60,6 +60,10 @@ Whether to log dropped packets to syslog (messages will be prefixed with "Droppe
 
 Set to `true` to disable firewalld (installed by default on RHEL/CentOS) or ufw (installed by default on Ubuntu), respectively.
 
+    firewall_enable_ipv6: true
+
+Set to `false` to disable configuration of ip6tables (for example, if your `GRUB_CMDLINE_LINUX` contains `ipv6.disable=1`).
+
 ## Dependencies
 
 None.

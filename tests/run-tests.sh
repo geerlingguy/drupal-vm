@@ -22,6 +22,10 @@ cleanup="${cleanup:-true}"
 if [ $distro = 'centos7' ]; then
   init="/usr/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+# CentOS 8
+elif [ $distro = 'centos8' ]; then
+  init="/usr/lib/systemd/systemd"
+  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # CentOS 6
 elif [ $distro = 'centos6' ]; then
   init="/sbin/init"
@@ -32,6 +36,10 @@ elif [ $distro = 'ubuntu1804' ]; then
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Ubuntu 16.04
 elif [ $distro = 'ubuntu1604' ]; then
+  init="/lib/systemd/systemd"
+  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+# Debian 10
+elif [ $distro = 'debian10' ]; then
   init="/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Debian 9

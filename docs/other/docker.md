@@ -27,7 +27,7 @@ You can also add other subdomains if you're using other built-in services, e.g. 
 
 If you just want a quick, easy Drupal site for testing, you can run an instance of Drupal VM and install Drupal inside using the provided script.
 
-  1. Run an instance of Drupal VM: `docker run -d -p 80:80 -p 443:443 --name=drupalvm --privileged geerlingguy/drupal-vm`
+  1. Run an instance of Drupal VM: `docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 80:80 -p 443:443 --name=drupalvm --privileged geerlingguy/drupal-vm`
   2. Install Drupal on this instance: `docker exec drupalvm install-drupal` (you can choose a version using `install-drupal [version]`, using versions like `8.x-dev` or `7.x-dev`).
 
 You should be able to access the Drupal site at `http://localhost`. If you need to share a host directory into the VM, you can do so by adding another `-v` parameter, like `-v /path/on/host:/path/in/container.
