@@ -466,7 +466,7 @@ nginx_hosts:
       ssl_protocols       TLSv1.1 TLSv1.2;
       ssl_ciphers         HIGH:!aNULL:!MD5;
 
-  - server_name: "zeroenergy.test www.zeroenergy-pantheon.test"
+  - server_name: "zeroenergy-pantheon.test www.zeroenergy-pantheon.test"
     root: "{{ sites_path }}/zeroenergy-pantheon/web"
     is_php: true
     extra_parameters: |
