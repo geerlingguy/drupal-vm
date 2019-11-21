@@ -456,6 +456,17 @@ nginx_hosts:
       ssl_protocols       TLSv1.1 TLSv1.2;
       ssl_ciphers         HIGH:!aNULL:!MD5;
 
+  - server_name: "bedrock.test www.bedrock.test"
+    root: "{{ sites_path }}/bedrock/web"
+    is_php: true
+    extra_parameters: |
+      listen 443 ssl;
+      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+      ssl_protocols       TLSv1.1 TLSv1.2;
+      ssl_ciphers         HIGH:!aNULL:!MD5;
+
+
   - server_name: "zeroenergy.test www.zeroenergy.test"
     root: "{{ sites_path }}/zeroenergy/web"
     is_php: true
@@ -1043,10 +1054,10 @@ extra_packages:
   - xvfb
   - libfontconfig
   - wkhtmltopdf
-  - php7.2-zip
-  - php7.2-gmp
-  - libcurl3
-  - openssl
+  - php{{ php_version }}-zip
+  - php{{ php_version }}-gmp
+  # - libcurl3
+  # - openssl
   # - php-mongodb
   # - mongodb-org-server
   # - libcurl4
@@ -1102,7 +1113,8 @@ php_output_buffering: "Off"
 
 php_packages_extra:
   - php-pear
-  # - php72-php-pecl-mongodb.x86_64
+  - "php{{ php_version }}-curl"
+# - php72-php-pecl-mongodb.x86_64
   # - php72-php-pecl-imagick
   # - ImageMagick
   # - "php{{ php_version }}-bz2"
