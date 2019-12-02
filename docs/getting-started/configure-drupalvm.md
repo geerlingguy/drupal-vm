@@ -17,7 +17,7 @@ vagrant_box: geerlingguy/centos7
 vagrant_hostname: my-custom-site.dev
 vagrant_machine_name: my_custom_site
 
-php_version: "5.6"
+php_version: "7.2"
 ```
 
 #### 3. vagrant.config.yml
