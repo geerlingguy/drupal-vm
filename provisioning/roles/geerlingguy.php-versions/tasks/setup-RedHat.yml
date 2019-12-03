@@ -13,6 +13,7 @@
 
 # See: https://github.com/ansible/ansible/issues/64852
 - block:
+
   - name: Ensure dnf-plugins are installed on CentOS 8+.
     yum:
       name: dnf-plugins-core
@@ -26,3 +27,7 @@
       warn: false
     register: dnf_module_enable
     changed_when: "'Nothing to do' not in dnf_module_enable.stdout"
+
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version | int >= 8
