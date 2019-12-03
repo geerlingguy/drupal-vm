@@ -26,8 +26,3 @@
       warn: false
     register: dnf_module_enable
     changed_when: "'Nothing to do' not in dnf_module_enable.stdout"
-
-  - debug: var=dnf_module_enable
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution_major_version | int >= 8

@@ -56,7 +56,7 @@
 - src: geerlingguy.php-tideways
   version: 2.2.0
 - src: geerlingguy.php-versions
-  version: 4.0.0
+  version: 4.0.1
 - src: geerlingguy.php-xdebug
   version: 2.5.1
 - src: geerlingguy.php-xhprof
