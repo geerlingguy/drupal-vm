@@ -352,6 +352,17 @@ nginx_hosts:
       ssl_protocols       TLSv1.1 TLSv1.2;
       ssl_ciphers         HIGH:!aNULL:!MD5;
 
+  - server_name: "data-catalog.test www.data-catalog.test"
+    root: "{{ sites_path }}/data-catalog/docroot"
+    is_php: true
+    extra_parameters: |
+      listen 443 ssl;
+      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+      ssl_protocols       TLSv1.1 TLSv1.2;
+      ssl_ciphers         HIGH:!aNULL:!MD5;
+
+
   - server_name: "inside-co.test www.inside-co.test"
     root: "{{ sites_path }}/inside-co/web"
     is_php: true
@@ -1097,7 +1108,7 @@ firewall_disable_ufw: true
 
 # PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
 # See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
-php_version: "7.2"
+php_version: "7.3"
 php_install_recommends: no
 # php_memory_limit: "2048M"
 php_memory_limit: "4096M"
