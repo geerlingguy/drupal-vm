@@ -1,6 +1,31 @@
 # Drupal VM Changelog
 
 =======
+## 5.1.0 "Recognizer" (2019-12-03)
+
+This release adds support for PHP 7.4, and completely drops PHP 5.6 support (in the past, brave and daring souls could attempt to run 5.6—it is almost impossible to do so in Drupal VM as of this release).
+
+### Breaking Changes
+
+  * #1987: Minimum required Ansible version is now 2.5.
+  * #1993: Dropped support for old unsupported PHP versions: 5.6, 7.0, 7.1.
+
+### New/changed variables in default.config.yml
+
+  * `drupalvm_ansible_version_min: '2.5'` (was `'2.4'`)
+  * `php_version` supports `"7.2"`, `"7.3"`, or `"7.4"` (5.6, 7.0, and 7.1 dropped)
+
+### Improvements
+
+  * #1993: Add PHP 7.4 support. Drop 5.6, 7.0, and 7.1 support.
+  * Updated roles: mailhog, postgresql, php-versions.
+  * Update `config.yml` documentation to use modern PHP version.
+
+### Bugfixes
+
+  * TODO
+
+
 ## 5.0.2 (2019-11-04)
 
 ### Breaking Changes
@@ -52,7 +77,7 @@ There are no major architectural changes in this release, which speaks to the cu
 
 ### Breaking Changes
 
-  * #1881: Ubuntu 18.04 is now the defaul.t OS version (and is used in the `geerlingguy/drupal-vm` base image `2.0.0` and later)
+  * #1881: Ubuntu 18.04 is now the default OS version (and is used in the `geerlingguy/drupal-vm` base image `2.0.0` and later)
     * Ubuntu 14.04 is no longer supported.
   * #1874: PHP 7.2 is now the default PHP version
     * PHP 5.6 is no longer supported (though you may be able to install it for some time).

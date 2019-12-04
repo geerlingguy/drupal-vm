@@ -1,23 +1,23 @@
-Drupal VM defaults to PHP 7.2, but you can also install and use 7.1 or 7.3.
+Drupal VM defaults to PHP 7.2, but you can also install and use 7.3 or 7.4.
 
 ## Ubuntu
 
-Ondřej Surý's PPA for PHP is used to install PHP 7.2, but you can switch versions by changing `php_version` inside `config.yml` to `"7.1"` or `"7.3"`.
+Ondřej Surý's PPA for PHP is used to install PHP 7.2, but you can switch versions by changing `php_version` inside `config.yml` to `"7.3"` or `"7.4"`.
 
 If you're using Apache with `mod_php` you should also add `libapache2-mod-php{{ php_version }}` to the `extra_packages` list.
 
 _Note: XHProf does currently not work with PHP 7.1+, make sure you don't have it listed in `installed_extras`._
 
-## RedHat/CentOS 7
+## RedHat/CentOS 7 or 8
 
 Remi's RPM repository is included with Drupal VM, and you can make the following changes to use it to install a different version of PHP than 7.2:
 
   1. Make sure you've followed the directions for switching to CentOS 7 in the [use a different base OS](base-os.md) guide.
-  2. Change `php_version` inside `config.yml` to `"7.1"` or `"7.3"`.
+  2. Change `php_version` inside `config.yml` to `"7.3"` or `"7.4"`.
 
 ## PHP 5.6 EOL
 
-PHP 5.6 was end-of-lifed (meaning no more community support or security fixes) at the end of 2018. Drupal VM does not officially support PHP 5.6 anymore, though some package maintainers are still publishing packages for it. So you can try using `php_version: "5.6"` or using PHP's source installation at your own risk.
+PHP 5.6 was end-of-lifed (meaning no more community support or security fixes) at the end of 2018, and is not supported by Drupal VM.
 
 ## Using default distribution packages
 

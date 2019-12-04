@@ -1,0 +1,53 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Ensure build dependencies are installed (RedHat).
+      package:
+        name:
+          - "@Development tools"
+          - tar
+          - unzip
+          - net-tools
+          - curl
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Ensure build dependencies are installed (Debian).
+      apt:
+        name:
+          - build-essential
+          - tar
+          - unzip
+          - net-tools
+          - curl
+        state: present
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - geerlingguy.daemonize
+    - geerlingguy.mailhog
+
+  post_tasks:
+    - name: Copy test message into place.
+      copy:
+        src: test-message
+        dest: /tmp/test-message
+
+    - name: Send an email via mhsendmail.
+      shell: cat /tmp/test-message | /opt/mailhog/mhsendmail johndoe@example.com
+      changed_when: false
+
+    - name: Test retrieiving messages from the MailHog API.
+      uri:
+        url: http://localhost:8025/api/v2/messages
+      register: result
+      until: result.status == 200
+      retries: 60
+      delay: 1

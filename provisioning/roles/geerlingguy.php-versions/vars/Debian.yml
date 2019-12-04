@@ -39,8 +39,5 @@ __php_packages:
   - "php{{ php_version }}-yaml"
 
 php_versions_debian:
-  - php5.6-common
-  - php7.0-common
-  - php7.1-common
   - php7.2-common
   - php7.3-common
