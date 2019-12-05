@@ -393,6 +393,26 @@ nginx_hosts:
       ssl_protocols       TLSv1.1 TLSv1.2;
       ssl_ciphers         HIGH:!aNULL:!MD5;
 
+  - server_name: "decision-tree-d7.test www.decision-tree-d7.test"
+    root: "{{ sites_path }}/decision-tree-d7/web"
+    is_php: true
+    extra_parameters: |
+      listen 443 ssl;
+      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+      ssl_protocols       TLSv1.1 TLSv1.2;
+      ssl_ciphers         HIGH:!aNULL:!MD5;
+
+  - server_name: "decision-tree-d8.test www.decision-tree-d8.test"
+    root: "{{ sites_path }}/decision-tree-d8/web"
+    is_php: true
+    extra_parameters: |
+      listen 443 ssl;
+      ssl_certificate     /etc/ssl/certs/ssl-cert-snakeoil.pem;
+      ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+      ssl_protocols       TLSv1.1 TLSv1.2;
+      ssl_ciphers         HIGH:!aNULL:!MD5;
+
   - server_name: "ppf.test www.ppf.test"
     root: "{{ sites_path }}/ppf/web"
     is_php: true
