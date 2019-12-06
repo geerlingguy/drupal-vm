@@ -56,7 +56,7 @@ Set this to `true` and `drupal_build_composer*` to `false` if you would like to 
     drupal_composer_install_dir: "/var/www/drupal"
     drupal_composer_no_dev: true
     drupal_composer_dependencies:
-      - "drupal/devel:^1.2"
+      - "drush/drush:^10.1"
 
 Set `drupal_build_makefile` to `false` and this to `true` if you are using a Composer-based site deployment strategy. The other options should be relatively straightforward.
 
@@ -64,10 +64,10 @@ Set `drupal_build_makefile` to `false` and this to `true` if you are using a Com
 
 If you set the `bin-dir` in your project's `composer.json` file to a value other than `vendor/bin`, override this variable with the same directory path.
 
-### Create a new project using `drupal-project` (Composer)
+### Create a new project using `composer create-project` (Composer)
 
     drupal_build_composer_project: true
-    drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
+    drupal_composer_project_package: "drupal/recommended-project:^8@dev"
     drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 Set this to `true` and `drupal_build_makefile`, `drupal_build_composer` to `false` if you are using Composer's `create-project` as a site deployment strategy.
@@ -118,6 +118,7 @@ See the example playbooks used for Travis CI tests (`tests/test.yml` and `tests/
       roles:
         - geerlingguy.apache
         - geerlingguy.mysql
+        - geerlingguy.php-versions
         - geerlingguy.php
         - geerlingguy.php-mysql
         - geerlingguy.composer
