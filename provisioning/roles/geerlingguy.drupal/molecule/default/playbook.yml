@@ -16,6 +16,7 @@
       when: ansible_distribution == 'Debian'
     - role: geerlingguy.apache
     - role: geerlingguy.mysql
+    - role: geerlingguy.php-versions
     - role: geerlingguy.php
     - role: geerlingguy.php-mysql
     - role: geerlingguy.git

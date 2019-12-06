@@ -1,4 +1,5 @@
 ---
+php_version: "7.3"
 php_enable_webserver: false
 php_enablerepo: "remi,remi-php71"
 php_enable_php_fpm: true

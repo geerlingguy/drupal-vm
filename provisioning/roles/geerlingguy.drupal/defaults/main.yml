@@ -25,13 +25,13 @@ drupal_composer_path: "/path/to/drupal.composer.json"
 drupal_composer_install_dir: "{{ drupal_deploy_dir }}"
 drupal_composer_no_dev: true
 drupal_composer_dependencies:
-  - "drupal/devel:^1.2"
+  - "drush/drush:^10.1"
 
 # Set this to 'true' and 'drupal_build_makefile', 'drupal_build_composer' to
 # 'false' if you are using Composer's create-project as a site deployment
 # strategy.
 drupal_build_composer_project: true
-drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
+drupal_composer_project_package: "drupal/recommended-project:^8@dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 # Required Drupal settings.

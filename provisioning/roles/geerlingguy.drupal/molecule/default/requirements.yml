@@ -6,6 +6,7 @@
 - src: geerlingguy.nginx
 - src: geerlingguy.mysql
 - src: geerlingguy.postgresql
+- src: geerlingguy.php-versions
 - src: geerlingguy.php
 - src: geerlingguy.php-mysql
 - src: geerlingguy.php-pgsql
