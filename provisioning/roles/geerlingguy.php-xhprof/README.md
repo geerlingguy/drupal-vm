@@ -4,7 +4,7 @@
 
 Installs PHP [XHProf](http://php.net/manual/en/book.xhprof.php) on Linux servers.
 
-> **Note**: The XHProf extension has been on life support since Facebook abandoned active development around 2015. There is a better-maintained fork that works on the latest PHP versions called Tideways, and there's an Ansible role for it—please check out [`geerlingguy.php-tideways`](https://github.com/geerlingguy/ansible-role-php-tideways) if you need to support PHP versions later than 7.0.
+> **Note**: The XHProf extension has been on life support since Facebook abandoned active development around 2015. There is a better-maintained fork that works on the latest PHP versions called Tideways, and there's an Ansible role for it—please check out [`geerlingguy.php-tideways`](https://github.com/geerlingguy/ansible-role-php-tideways) if you need to support modern PHP versions.
 
 ## Requirements
 
@@ -18,10 +18,14 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Where XHProf setup files will be downloaded and built.
 
-    xhprof_download_url: https://github.com/RustJason/xhprof/archive/php7.zip
-    xhprof_download_folder_name: xhprof-php7
+    xhprof_version: "2.1.2"
 
-The URL from which XHProf will be downloaded. Note that this default is for the PHP 7-compatible version of XHProf. If you're using PHP 5.x, you should probably switch to the 'official' upstream source: `https://github.com/phacility/xhprof/archive/master.tar.gz`.
+The version of XHProf to download.
+
+    xhprof_download_url: https://github.com/longxinH/xhprof/archive/v{{ xhprof_version }}.zip
+    xhprof_download_folder_name: xhprof-{{ xhprof_version }}
+
+The URL from which XHProf will be downloaded.
 
     xhprof_output_dir: /tmp
 
@@ -43,7 +47,7 @@ Directory where the XHProf UI is stored.
 
     - hosts: webservers
       roles:
-        - { role: geerlingguy.php-xhprof }
+        - geerlingguy.php-xhprof
 
 ## License
 

@@ -25,11 +25,11 @@
   unarchive:
     src: "{{ xhprof_download_url }}"
     dest: "{{ workspace }}"
-    copy: no
+    copy: false
     creates: "{{ workspace }}/{{ xhprof_download_folder_name }}"
 
 - name: Build XHProf.
-  shell: >
+  command: >
     {{ item }}
     chdir={{ workspace }}/{{ xhprof_download_folder_name }}/extension
     creates={{ workspace }}/{{ xhprof_download_folder_name }}/extension/modules/xhprof.so
@@ -48,18 +48,19 @@
     mode: 0755
 
 - name: Move XHProf module into place.
-  shell: >
-    cp {{ workspace }}/{{ xhprof_download_folder_name }}/extension/modules/xhprof.so {{ php_xhprof_module_path }}/xhprof.so
+  command: >
+    cp {{ workspace }}/{{ xhprof_download_folder_name }}/extension/modules/xhprof.so
+    {{ php_xhprof_module_path }}/xhprof.so
     creates={{ php_xhprof_module_path }}/xhprof.so
   notify: restart webserver
 
 - name: Move XHProf PHP library into place.
-  shell: >
+  command: >
     cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_lib {{ php_xhprof_lib_dir }}
     creates={{ php_xhprof_lib_dir }}/utils/xhprof_lib.php
 
 - name: Move XHProf UI into place.
-  shell: >
+  command: >
     cp -r {{ workspace }}/{{ xhprof_download_folder_name }}/xhprof_html {{ php_xhprof_html_dir }}
     creates={{ php_xhprof_html_dir }}/index.php
 
