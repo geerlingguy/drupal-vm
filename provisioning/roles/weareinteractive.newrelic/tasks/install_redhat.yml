@@ -7,7 +7,5 @@
 
 - name: Installing packages
   yum:
-    name: "{{ item }}"
+    name: newrelic-sysmond
     state: present
-  with_items:
-    - newrelic-sysmond

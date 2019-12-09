@@ -1,39 +1,43 @@
-# Ansible franklinkim.newrelic role
+# Ansible weareinteractive.newrelic role
 
 [![Build Status](https://img.shields.io/travis/weareinteractive/ansible-newrelic.svg)](https://travis-ci.org/weareinteractive/ansible-newrelic)
-[![Galaxy](http://img.shields.io/badge/galaxy-franklinkim.newrelic-blue.svg)](https://galaxy.ansible.com/franklinkim/newrelic/)
+[![Galaxy](http://img.shields.io/badge/galaxy-weareinteractive.newrelic-blue.svg)](https://galaxy.ansible.com/weareinteractive/newrelic/)
 [![GitHub Tags](https://img.shields.io/github/tag/weareinteractive/ansible-newrelic.svg)](https://github.com/weareinteractive/ansible-newrelic)
 [![GitHub Stars](https://img.shields.io/github/stars/weareinteractive/ansible-newrelic.svg)](https://github.com/weareinteractive/ansible-newrelic)
 
-> `franklinkim.newrelic` is an [Ansible](http://www.ansible.com) role which:
+> `weareinteractive.newrelic` is an [Ansible](http://www.ansible.com) role which:
 >
 > * installs newrelic
 > * configures newrelic
 > * configures service
+
+**Note:**
+
+> Since Ansible Galaxy supports [organization](https://www.ansible.com/blog/ansible-galaxy-2-release) now, this role has moved from `franklinkim.newrelic` to `weareinteractive.newrelic`!
 
 ## Installation
 
 Using `ansible-galaxy`:
 
 ```shell
-$ ansible-galaxy install franklinkim.newrelic
+$ ansible-galaxy install weareinteractive.newrelic
 ```
 
 Using `requirements.yml`:
 
 ```yaml
-- src: franklinkim.newrelic
+- src: weareinteractive.newrelic
 ```
 
 Using `git`:
 
 ```shell
-$ git clone https://github.com/weareinteractive/ansible-newrelic.git franklinkim.newrelic
+$ git clone https://github.com/weareinteractive/ansible-newrelic.git weareinteractive.newrelic
 ```
 
 ## Dependencies
 
-* Ansible >= 2.0
+* Ansible >= 2.4
 
 ## Variables
 
@@ -97,11 +101,14 @@ This is an example playbook:
 ---
 
 - hosts: all
+  become: yes
   roles:
-    - franklinkim.newrelic
+    - weareinteractive.newrelic
   vars:
-    newrelic_service_state: started
     newrelic_license_key: ab2fa361cd4d0d373833cad619d7bcc424d27c16
+    # not starting service in docker env
+    newrelic_service_state: stopped
+    newrelic_service_enabled: false
 
 ```
 
