@@ -1,6 +1,6 @@
 ---
 # Set java_packages if you would like to use a different version than the
-# default (OpenJDK 1.7).
+# default for the OS (see defaults per OS in `vars` directory).
 # java_packages: []
 
 java_home: ""
