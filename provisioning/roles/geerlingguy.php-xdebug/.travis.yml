@@ -6,10 +6,9 @@ env:
   global:
     - ROLE_NAME: php-xdebug
   matrix:
-    - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-    - MOLECULE_DISTRO: ubuntu1604
-    - MOLECULE_DISTRO: debian9
+    - MOLECULE_DISTRO: centos8
+    - MOLECULE_DISTRO: ubuntu1804
+    - MOLECULE_DISTRO: debian10
 
 install:
   # Install test dependencies.
