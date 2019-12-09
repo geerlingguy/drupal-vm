@@ -1,10 +1,10 @@
 ---
 # Available `vagrant_box` values include:
 #   - geerlingguy/drupal-vm (pre-provisioned, based on Ubuntu 18.04)
+#   - geerlingguy/centos8
 #   - geerlingguy/centos7
-#   - geerlingguy/centos6
+#   - geerlingguy/debian10
 #   - geerlingguy/debian9
-#   - geerlingguy/debian8
 #   - geerlingguy/ubuntu1804
 #   - geerlingguy/ubuntu1604
 vagrant_box: geerlingguy/drupal-vm
