@@ -2,8 +2,10 @@
 
 - name: Installing dependencies
   apt:
-    pkg: apt-transport-https
-    update_cache: yes
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg2
     state: present
 
 - name: Adding APT key
@@ -18,7 +20,5 @@
 
 - name: Installing packages
   apt:
-    pkg: "{{ item }}"
+    pkg: newrelic-sysmond
     state: present
-  with_items:
-    - newrelic-sysmond

@@ -1,3 +1,17 @@
+<a name="1.8.0"></a>
+## 1.8.0 (2019-12-08)
+
+
+#### Features
+
+*   update role name ([5979af34](https://github.com/weareinteractive/ansible-newrelic/commit/5979af343fe2905660a3829705894ba05424cdca))
+
+#### Bug Fixes
+
+*   add gpg dependency and loop update syntax ([bd11a60b](https://github.com/weareinteractive/ansible-newrelic/commit/bd11a60b10be3bb945f87edc1a9d34d5773d5fa9))
+
+
+
 <a name="1.7.2"></a>
 ### 1.7.2 (2018-04-25)
 

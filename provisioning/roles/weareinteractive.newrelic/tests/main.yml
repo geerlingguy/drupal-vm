@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  become: yes
+  roles:
+    - weareinteractive.newrelic
+  vars:
+    newrelic_license_key: ab2fa361cd4d0d373833cad619d7bcc424d27c16
+    # not starting service in docker env
+    newrelic_service_state: stopped
+    newrelic_service_enabled: false

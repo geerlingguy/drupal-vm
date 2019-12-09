@@ -3,7 +3,7 @@
 - name: Checking for key
   fail:
     msg: "newrelic_license_key has not been defined"
-  when: newrelic_license_key|default(False) == False
+  when: newrelic_license_key is not defined
 
 - import_tasks: install.yml
   tags:

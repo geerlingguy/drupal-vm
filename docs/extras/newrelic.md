@@ -20,4 +20,4 @@ newrelic_license_key: yourkey
 
 See [New Relic for PHP](https://docs.newrelic.com/docs/agents/php-agent/getting-started/new-relic-php) for help getting started.
 
-For a list of available role variables, see the [`franklinkim.newrelic` Ansible role's README](https://github.com/weareinteractive/ansible-newrelic#readme).
+For a list of available role variables, see the [`weareinteractive.newrelic` Ansible role's README](https://github.com/weareinteractive/ansible-newrelic#readme).
