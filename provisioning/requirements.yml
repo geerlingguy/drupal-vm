@@ -74,7 +74,7 @@
 - src: geerlingguy.ruby
   version: 2.5.2
 - src: geerlingguy.security
-  version: 1.8.2
+  version: 1.8.3
 - src: geerlingguy.solr
   version: 5.0.0
 - src: geerlingguy.varnish
