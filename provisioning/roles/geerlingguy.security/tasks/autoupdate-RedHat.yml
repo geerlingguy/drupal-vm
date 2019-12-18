@@ -1,13 +1,34 @@
 ---
-- name: Install yum-cron.
-  package: name=yum-cron state=present
+- name: Set correct automatic update utility vars (RHEL 8).
+  set_fact:
+    update_utility: dnf-automatic
+    update_service: dnf-automatic-install.timer
+    update_conf_path: /etc/dnf/automatic.conf
+  when: ansible_distribution_major_version | int == 8
 
-- name: Ensure yum-cron is running and enabled on boot.
-  service: name=yum-cron state=started enabled=yes
+- name: Set correct automatic update utility vars (RHEL <= 7).
+  set_fact:
+    update_utility: yum-cron
+    update_service: yum-cron
+    update_conf_path: /etc/yum/yum-cron.conf
+  when: ansible_distribution_major_version | int <= 7
 
-- name: Configure autoupdates (RHEL 7).
+- name: Install automatic update utility.
+  package:
+    name: '{{ update_utility }}'
+    state: present
+
+- name: Ensure automatic update utility is running and enabled on boot.
+  service:
+    name: '{{ update_service }}'
+    state: started
+    enabled: true
+
+- name: Configure autoupdates.
   lineinfile:
-    dest: "/etc/yum/yum-cron.conf"
+    dest: '{{ update_conf_path }}'
     regexp: '^apply_updates = .+'
     line: 'apply_updates = yes'
-  when: security_autoupdate_enabled and ansible_distribution_major_version | int == 7
+  when:
+    - security_autoupdate_enabled
+    - ansible_distribution_major_version | int in [7, 8]
