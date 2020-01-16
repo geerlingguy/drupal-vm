@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    nodejs_version: "11.x"
+    nodejs_version: "13.x"
     nodejs_install_npm_user: root
     npm_config_prefix: /root/.npm-global
     npm_config_unsafe_perm: "true"

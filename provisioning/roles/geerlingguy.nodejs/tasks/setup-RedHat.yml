@@ -1,13 +1,7 @@
 ---
-- name: Set up the Nodesource RPM directory for Node.js > 0.10.
+- name: Set up the Nodesource RPM directory.
   set_fact:
     nodejs_rhel_rpm_dir: "pub_{{ nodejs_version }}"
-  when: nodejs_version != '0.10'
-
-- name: Set up the Nodesource RPM variable for Node.js == 0.10.
-  set_fact:
-    nodejs_rhel_rpm_dir: "pub"
-  when: nodejs_version == '0.10'
 
 - name: Import Nodesource RPM key (CentOS < 7).
   rpm_key:
@@ -15,7 +9,7 @@
     state: present
   when: ansible_distribution_major_version|int < 7
 
-- name: Import Nodesource RPM key (CentOS 7+)..
+- name: Import Nodesource RPM key (CentOS 7+).
   rpm_key:
     key: https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL
     state: present
@@ -33,5 +27,16 @@
     state: present
   when: ansible_distribution_major_version|int >= 7
 
+- name: Ensure Node.js AppStream module is disabled (CentOS 8+).
+  command: yum module disable -y nodejs
+  args:
+    warn: false
+  register: module_disable
+  changed_when: "'Nothing to do.' not in module_disable.stdout"
+  when: ansible_distribution_major_version|int >= 8
+
 - name: Ensure Node.js and npm are installed.
-  yum: "name=nodejs-{{ nodejs_version|regex_replace('x', '') }}* state=present enablerepo='nodesource'"
+  yum:
+    name: "nodejs-{{ nodejs_version|regex_replace('x', '') }}*"
+    state: present
+    enablerepo: nodesource

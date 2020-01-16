@@ -1,7 +1,7 @@
 ---
-# Set the version of Node.js to install ("6.x", "8.x", "10.x", "11.x", etc.).
+# Set the version of Node.js to install (8.x", "10.x", "12.x", "13.x", etc.).
 # Version numbers from Nodesource: https://github.com/nodesource/distributions
-nodejs_version: "10.x"
+nodejs_version: "12.x"
 
 # The user for whom the npm packages will be installed.
 # nodejs_install_npm_user: username
