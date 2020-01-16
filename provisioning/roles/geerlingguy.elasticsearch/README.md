@@ -12,7 +12,7 @@ Requires at least Java 8. See [`geerlingguy.java`](https://github.com/geerlinggu
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    elasticsearch_version: '6.x'
+    elasticsearch_version: '7.x'
 
 The major version to use when installing Elasticsearch.
 
@@ -32,6 +32,14 @@ Network host to listen for incoming connections on. By default we only listen on
     elasticsearch_http_port: 9200
 
 The port to listen for HTTP connections on.
+
+    elasticsearch_heap_size_min: 1g
+
+The minimum jvm heap size.
+
+    elasticsearch_heap_size_max: 2g
+
+The maximum jvm heap size.
 
 ## Dependencies
 

@@ -1,5 +1,5 @@
 ---
-elasticsearch_version: '6.x'
+elasticsearch_version: '7.x'
 elasticsearch_package_state: present
 
 elasticsearch_service_state: started
@@ -7,3 +7,6 @@ elasticsearch_service_enabled: true
 
 elasticsearch_network_host: localhost
 elasticsearch_http_port: 9200
+
+elasticsearch_heap_size_min: 1g
+elasticsearch_heap_size_max: 2g
