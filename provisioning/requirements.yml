@@ -26,7 +26,7 @@
 - src: geerlingguy.elasticsearch
   version: 4.1.0
 - src: geerlingguy.firewall
-  version: 2.4.2
+  version: 2.4.3
 - src: geerlingguy.git
   version: 2.1.0
 - src: geerlingguy.java

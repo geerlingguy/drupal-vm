@@ -4,7 +4,10 @@
   become: true
 
   vars:
+    # Added to prevent test failures in CI.
     firewall_enable_ipv6: false
+
+    # Added for a test.
     firewall_allowed_tcp_ports:
       - "9123"
 
