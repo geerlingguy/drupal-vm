@@ -10,7 +10,7 @@ This will connect to the default search core (`collection1`) set up by Solr. If 
 
 ## Using Different Solr versions
 
-Drupal VM installs Apache Solr 5.x by default, but you can use 6.x, 4.x, or other versions instead. To do this, [see the version-specific test examples](https://github.com/geerlingguy/ansible-role-solr/tree/master/tests) in the `geerlingguy.solr` role.
+Drupal VM installs Apache Solr 5.x by default, but you can use 6.x, 4.x, or other versions instead. To do this, [see the version-specific playbook examples](https://github.com/geerlingguy/ansible-role-solr/tree/master/molecule/default) in the `geerlingguy.solr` role.
 
 One important note: If you use Solr 6.x or later, you need to make sure your VM has Java 8+. Some older base OSes only install Java 7. To install Java 8, see the `geerlingguy.java` role examples for [installing Java 8 on RHEL/CentOS or Ubuntu < 16.04](https://github.com/geerlingguy/ansible-role-java#example-playbook-install-openjdk-8).
 
