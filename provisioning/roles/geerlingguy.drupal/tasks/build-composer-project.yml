@@ -14,6 +14,7 @@
   become: false
   environment:
     COMPOSER_PROCESS_TIMEOUT: 1200
+    COMPOSER_MEMORY_LIMIT: '-1'
 
 - name: Ensure drupal_composer_install_dir directory has proper permissions.
   file:

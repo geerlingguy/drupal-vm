@@ -3,6 +3,9 @@
   hosts: all
   become: true
 
+  environment:
+    COMPOSER_MEMORY_LIMIT: '-1'
+
   vars_files:
     - test-vars.yml
 

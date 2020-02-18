@@ -80,11 +80,11 @@
     enabled: true
   with_items: "{{ varnish_enabled_services | default([]) }}"
   when: >
-    varnish_enabled_services and
-    (ansible_os_family != 'Debian' and ansible_distribution_release != "xenial")
+    varnish_enabled_services and (ansible_os_family != 'Debian' or
+    (ansible_os_family != 'Debian' and ansible_distribution_release != "xenial"))
 
 # See: https://github.com/ansible/ansible/issues/22303
-- name: Ensure Varnish services are started enabled on startup (Xenial specific)
+- name: Ensure Varnish services are started and enabled on startup (Xenial specific)
   service:
     name: "{{ item }}"
     state: started
@@ -92,5 +92,5 @@
     use: "service"
   with_items: "{{ varnish_enabled_services | default([]) }}"
   when:
-    - varnish_enabled_services
+    - varnish_enabled_services | length > 0
     - (ansible_os_family == 'Debian' and ansible_distribution_release == "xenial")
