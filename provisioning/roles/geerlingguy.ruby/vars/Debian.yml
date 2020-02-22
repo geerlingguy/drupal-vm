@@ -1,0 +1,17 @@
+---
+__ruby_packages:
+  - ruby-full
+  - ruby-dev
+  - build-essential
+  - autogen
+  - autoconf
+  - libtool
+__ruby_build_packages:
+  - build-essential
+  - zlib1g-dev
+  - libssl-dev
+  - libyaml-dev
+  - libreadline6-dev
+  - libncurses5-dev
+  - libffi-dev
+  - libgdbm-dev

@@ -8,3 +8,5 @@ __postgresql_packages:
   - postgresql
   - postgresql-contrib
   - libpq-dev
+# Debian 10 uses Python 3 by default.
+postgresql_python_library: python3-psycopg2

@@ -1,7 +1,9 @@
 ---
-- name: Ensure APT HTTPS Transport is installed.
+- name: Ensure dependencies are present.
   apt:
-    name: apt-transport-https
+    name:
+      - apt-transport-https
+      - gnupg2
     state: present
 
 - name: Add packagecloud.io Varnish apt key.

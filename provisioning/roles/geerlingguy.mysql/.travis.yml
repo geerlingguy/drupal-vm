@@ -6,6 +6,7 @@ env:
   global:
     - ROLE_NAME: mysql
   matrix:
+    - MOLECULE_DISTRO: centos8
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: centos6
     - MOLECULE_DISTRO: ubuntu1804
@@ -14,7 +15,7 @@ env:
 
 install:
   # Install test dependencies.
-  - pip install molecule docker
+  - pip install molecule yamllint ansible-lint docker
 
 before_script:
   # Use actual Ansible Galaxy role name for the project directory.

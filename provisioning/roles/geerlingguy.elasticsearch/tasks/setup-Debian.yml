@@ -1,7 +1,9 @@
 ---
-- name: HTTPS APT transport for Elasticsearch repository.
+- name: Add required dependencies.
   apt:
-    name: apt-transport-https
+    name:
+      - apt-transport-https
+      - gnupg2
     state: present
 
 - name: Add Elasticsearch apt key.

@@ -1,71 +1,34 @@
 ---
+language: python
 services: docker
 
 env:
-  # Package install on all OSes.
-  - distro: centos7
-    playbook: test.yml
-    ruby_version: 2.0.0
-    ruby_path_prefix: /usr
-  - distro: ubuntu1804
-    playbook: test.yml
-    ruby_version: 2.5.1
-    ruby_path_prefix: /usr
-  - distro: ubuntu1604
-    playbook: test.yml
-    ruby_version: 2.3.1
-    ruby_path_prefix: /usr
-  - distro: ubuntu1404
-    playbook: test.yml
-    ruby_version: 1.9.3
-    ruby_path_prefix: /usr
-  - distro: debian9
-    playbook: test.yml
-    ruby_version: 2.3.3
-    ruby_path_prefix: /usr
+  global:
+    - ROLE_NAME: ruby
+  matrix:
+    - MOLECULE_DISTRO: centos7
+    - MOLECULE_DISTRO: ubuntu1804
+    - MOLECULE_DISTRO: ubuntu1604
+    - MOLECULE_DISTRO: debian9
 
-  # Source install on latest OSes.
-  - distro: centos7
-    playbook: test-source.yml
-    ruby_version: 2.5.1
-    ruby_path_prefix: /usr/local
-  - distro: ubuntu1804
-    playbook: test-source.yml
-    ruby_version: 2.5.1
-    ruby_path_prefix: /usr/local
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_PLAYBOOK: playbook-source.yml
+    - MOLECULE_DISTRO: ubuntu1804
+      MOLECULE_PLAYBOOK: playbook-source.yml
+
+install:
+  # Install test dependencies.
+  - pip install molecule docker
+
+before_script:
+  # Use actual Ansible Galaxy role name for the project directory.
+  - cd ../
+  - mv ansible-role-$ROLE_NAME geerlingguy.$ROLE_NAME
+  - cd geerlingguy.$ROLE_NAME
 
 script:
-  # Configure test script so we can run extra tests after playbook is run.
-  - export container_id=$(date +%s)
-  - export cleanup=false
-
-  # Download test shim.
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
-
   # Run tests.
-  - ${PWD}/tests/test.sh
-
-  # Make sure ruby is installed and at the correct version.
-  - 'docker exec --tty ${container_id} env TERM=xterm which ruby'
-  - 'docker exec --tty ${container_id} env TERM=xterm test -x ${ruby_path_prefix}/bin/ruby'
-
-  - 'docker exec --tty ${container_id} env TERM=xterm ruby --version'
-  - 'docker exec --tty ${container_id} env TERM=xterm ${ruby_path_prefix}/bin/ruby --version | grep -qF ${ruby_version}'
-
-  # Make sure bundler is installed.
-  - 'docker exec --tty ${container_id} env TERM=xterm ls -lah /usr/local/bin'
-  - 'docker exec --tty ${container_id} env TERM=xterm which bundle'
-
-  # Make sure user installed gems are available.
-  - |
-    if [ "${distro}" != "ubuntu1404" ]; then
-      docker exec --tty ${container_id} env TERM=xterm bash --login -c "which sass"
-    fi
-
-after_failure:
-  - 'docker exec --tty ${container_id} env TERM=xterm which ruby'
-  - 'docker exec --tty ${container_id} env TERM=xterm ruby --version'
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

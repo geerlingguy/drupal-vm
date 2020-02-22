@@ -1,27 +1,22 @@
 ---
-- name: Install packages required to build ruby (RedHat).
-  yum: "name={{ item }} state=present"
-  with_items:
-    - '@development'
-    - zlib-devel
-    - openssl-static
+- name: Define ruby_build_packages.
+  set_fact:
+    ruby_build_packages: "{{ __ruby_build_packages }}"
+  when: ruby_build_packages is not defined
+
+- name: Install packages required to build ruby.
+  yum:
+    name: "{{ ruby_build_packages }}"
+    state: present
   when: ansible_os_family == 'RedHat'
 
 - name: Update apt cache (Debian).
-  apt: update_cache=yes cache_valid_time=86400
+  apt: update_cache=true cache_valid_time=86400
   when: ansible_os_family == 'Debian'
 
 - name: Install packages required to build ruby (Debian).
   apt:
-    name:
-      - build-essential
-      - zlib1g-dev
-      - libssl-dev
-      - libyaml-dev
-      - libreadline6-dev
-      - libncurses5-dev
-      - libffi-dev
-      - libgdbm-dev
+    name: "{{ ruby_build_packages }}"
     state: present
   when: ansible_os_family == 'Debian'
 
@@ -34,7 +29,7 @@
   unarchive:
     src: "{{ workspace }}/ruby-{{ ruby_version }}.tar.gz"
     dest: "{{ workspace }}/"
-    copy: no
+    copy: false
 
 - name: Build ruby.
   command: >
@@ -42,7 +37,7 @@
     chdir={{ workspace }}/ruby-{{ ruby_version }}
     creates=/usr/local/bin/ruby
   with_items:
-    - ./configure --enable-shared
+    - "{{ ruby_source_configure_command }}"
     - make
     - make install
 
@@ -51,7 +46,7 @@
     src: "/usr/local/bin/{{ item }}"
     dest: "/usr/bin/{{ item }}"
     state: link
-    force: yes
+    force: true
   with_items:
     - erb
     - gem

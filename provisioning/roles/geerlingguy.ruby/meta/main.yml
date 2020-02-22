@@ -10,37 +10,37 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - all
+        - all
     - name: GenericUNIX
       versions:
-      - all
+        - all
     - name: Fedora
       versions:
-      - all
+        - all
     - name: opensuse
       versions:
-      - all
+        - all
     - name: GenericBSD
       versions:
-      - all
+        - all
     - name: FreeBSD
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - lucid
-      - trusty
-      - precise
-      - bionic
+        - lucid
+        - trusty
+        - precise
+        - bionic
     - name: SLES
       versions:
-      - all
+        - all
     - name: GenericLinux
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - all
+        - all
   galaxy_tags:
     - development
     - web

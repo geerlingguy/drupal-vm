@@ -1,4 +1,9 @@
 ---
+- name: Ensure dirmngr is installed (gnupg dependency).
+  apt:
+    name: dirmngr
+    state: present
+
 - name: Add packagecloud apt key.
   apt_key:
     url: "{{ blackfire_gpg_key_url }}"
