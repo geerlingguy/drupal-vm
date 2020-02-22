@@ -15,6 +15,7 @@ TEST_INSTALLED_EXTRAS="${TEST_INSTALLED_EXTRAS:-true}"
 CONTAINER_ID="${CONTAINER_ID:-dvm-test}"
 type="${type:-tests/defaults}"
 distro="${distro:-ubuntu1604}"
+tag="${tag:-latest}"
 cleanup="${cleanup:-true}"
 
 ## Set up vars for Docker setup.
@@ -81,7 +82,7 @@ docker run --name=$CONTAINER_ID -d \
   --add-host "$HOSTNAME  drupalvm":127.0.0.1 \
   -v $PWD:/var/www/drupalvm/:$volume_opts \
   $opts \
-  geerlingguy/docker-$distro-ansible:latest \
+  geerlingguy/docker-$distro-ansible:$tag \
   $init
 
 # Set up directories.

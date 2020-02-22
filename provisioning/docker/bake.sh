@@ -15,6 +15,7 @@ DRUPALVM_HTTP_PORT="${DRUPALVM_HTTP_PORT:-80}"
 DRUPALVM_HTTPS_PORT="${DRUPALVM_HTTPS_PORT:-443}"
 
 DISTRO="${DISTRO:-ubuntu1804}"
+TAG="${TAG:-python2}"
 OPTS="${OPTS:---privileged}"
 INIT="${INIT:-/lib/systemd/systemd}"
 
@@ -41,7 +42,7 @@ docker run --name=$DRUPALVM_MACHINE_NAME -d \
   -p $DRUPALVM_IP_ADDRESS:$DRUPALVM_HTTP_PORT:80 \
   -p $DRUPALVM_IP_ADDRESS:$DRUPALVM_HTTPS_PORT:443 \
   $OPTS \
-  geerlingguy/docker-$DISTRO-ansible:latest \
+  geerlingguy/docker-$DISTRO-ansible:$TAG \
   $INIT
 
 # Create Drupal directory.
