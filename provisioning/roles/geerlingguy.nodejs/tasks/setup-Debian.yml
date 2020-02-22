@@ -1,6 +1,10 @@
 ---
-- name: Ensure apt-transport-https is installed.
-  apt: name=apt-transport-https state=present
+- name: Ensure dependencies are present.
+  apt:
+    name:
+      - apt-transport-https
+      - gnupg2
+    state: present
 
 - name: Add Nodesource apt key.
   apt_key:

@@ -17,6 +17,12 @@
       when: ansible_os_family == 'Debian'
 
     # Ubuntu-specific tasks.
+    - name: Add dependencies for apt key (Ubuntu).
+      apt:
+        name: dirmngr
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+
     - name: Add repository for PHP 7 (Ubuntu).
       apt_repository: repo='ppa:ondrej/php'
       when: ansible_distribution == 'Ubuntu'

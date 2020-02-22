@@ -9,12 +9,10 @@
 
 - name: Install ruby and other required dependencies.
   apt:
-    name:
-      - ruby-full
-      - ruby-dev
-      - "{{ ruby_rubygems_package_name }}"
-      - build-essential
-      - autogen
-      - autoconf
-      - libtool
+    name: "{{ ruby_packages }}"
+    state: present
+
+- name: Install rubygems.
+  apt:
+    name: "{{ ruby_rubygems_package_name }}"
     state: present

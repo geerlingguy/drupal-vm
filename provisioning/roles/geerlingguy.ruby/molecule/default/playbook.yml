@@ -1,0 +1,35 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    ruby_install_gems_user: root
+    ruby_install_gems:
+      - json
+    ruby_gems_bin_path: /root/.gem/ruby/bin
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+    - name: Add rubygems bin dir to system-wide $PATH.
+      copy:
+        dest: /etc/profile.d/ruby.sh
+        content: 'PATH=$PATH:{{ ruby_gems_bin_path }}'
+
+    - name: Don't install Bundler on CentOS 7 because of old Ruby version.
+      set_fact:
+        ruby_install_bundler: false
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution_major_version == '7'
+
+  roles:
+    - role: geerlingguy.ruby
+
+  post_tasks:
+    - name: Verify Ruby is installed.
+      command: ruby --version
+      changed_when: false

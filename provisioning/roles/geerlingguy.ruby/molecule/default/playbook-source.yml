@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    ruby_install_from_source: true
+    ruby_install_gems_user: root
+    ruby_install_gems:
+      - sass
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: geerlingguy.ruby
+
+  post_tasks:
+    - name: Verify Ruby is installed.
+      command: ruby --version
+      changed_when: false

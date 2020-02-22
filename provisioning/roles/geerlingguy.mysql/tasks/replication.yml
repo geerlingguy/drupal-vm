@@ -9,7 +9,7 @@
   when:
     - mysql_replication_role == 'master'
     - mysql_replication_user.name is defined
-    - mysql_replication_master != ''
+    - mysql_replication_master | default(false)
   tags: ['skip_ansible_galaxy']
 
 - name: Check slave replication status.
@@ -21,7 +21,7 @@
   register: slave
   when:
     - mysql_replication_role == 'slave'
-    - mysql_replication_master != ''
+    - mysql_replication_master | default(false)
   tags: ['skip_ansible_galaxy']
 
 - name: Check master replication status.
@@ -31,7 +31,7 @@
   when:
     - (slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed)
     - mysql_replication_role == 'slave'
-    - mysql_replication_master != ''
+    - mysql_replication_master | default(false)
   tags: ['skip_ansible_galaxy']
 
 - name: Configure replication on the slave.
@@ -47,12 +47,12 @@
     - (slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed)
     - mysql_replication_role == 'slave'
     - mysql_replication_user.name is defined
-    - mysql_replication_master != ''
+    - mysql_replication_master | default(false)
 
 - name: Start replication.
   mysql_replication: mode=startslave
   when:
     - (slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave is failed)
     - mysql_replication_role == 'slave'
-    - mysql_replication_master != ''
+    - mysql_replication_master | default(false)
   tags: ['skip_ansible_galaxy']

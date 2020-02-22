@@ -5,9 +5,3 @@
     state: present
     enablerepo: "{{ mysql_enablerepo | default(omit, true) }}"
   register: rh_mysql_install_packages
-
-- name: Ensure MySQL Python libraries are installed.
-  yum:
-    name: MySQL-python
-    state: present
-    enablerepo: "{{ mysql_enablerepo | default(omit, true) }}"

@@ -84,6 +84,10 @@ The formats of these are the same as in the `mysql_user` module.
 
 (RedHat/CentOS only) If you have enabled any additional repositories (might I suggest geerlingguy.repo-epel or geerlingguy.repo-remi), those repositories can be listed under this variable (e.g. `remi,epel`). This can be handy, as an example, if you want to install later versions of MySQL.
 
+    mysql_python_package_debian: ''
+
+(Ubuntu/Debian only) If you need to explicitly set the MySQL Python package, you can set it here. If not set, it will default to `python-mysqldb` for Python 2 and `python3-mysqldb` for Python 3.
+
     mysql_port: "3306"
     mysql_bind_address: '0.0.0.0'
     mysql_datadir: /var/lib/mysql

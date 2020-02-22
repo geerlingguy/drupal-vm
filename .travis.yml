@@ -20,17 +20,20 @@ env:
     # Defaults - Ubuntu 18.04.
     - type: defaults
       distro: ubuntu1804
+      tag: python2
     # Defaults - Debian 9.
     - type: debian
       distro: debian9
     # Defaults - CentOS 7.
     - type: centos
       distro: centos7
+      tag: python2
       local_config: tests/centos-7.config.yml
 
     # PHP 7.3 - Ubuntu 18.04.
     - type: defaults
       distro: ubuntu1804
+      tag: python2
       local_config: tests/ubuntu-18-php73.config.yml
       DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
       TEST_INSTALLED_EXTRAS: false
@@ -51,9 +54,6 @@ env:
     #   TEST_INSTALLED_EXTRAS: false
 
 before_install:
-  # Pull container.
-  - docker pull geerlingguy/docker-${distro}-ansible:latest
-
   # Install lint tools.
   - gem install rubocop
 

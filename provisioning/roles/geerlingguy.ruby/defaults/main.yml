@@ -2,7 +2,7 @@
 workspace: /root
 
 # Whether this role should install Bundler.
-ruby_install_bundler: True
+ruby_install_bundler: true
 
 # A list of Ruby gems to install.
 ruby_install_gems: []
@@ -12,9 +12,10 @@ ruby_install_gems_user: "{{ ansible_user }}"
 
 # If set to True, ruby will be installed from source, using the version set with
 # the 'ruby_version' variable instead of using a package.
-ruby_install_from_source: False
+ruby_install_from_source: false
 ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.1.tar.gz
 ruby_version: 2.5.1
+ruby_source_configure_command: ./configure --enable-shared
 
 # Default should usually work, but this will be overridden on Ubuntu 14.04.
 ruby_rubygems_package_name: rubygems

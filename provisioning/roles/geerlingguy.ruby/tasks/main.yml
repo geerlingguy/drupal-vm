@@ -1,18 +1,26 @@
 ---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define ruby_packages.
+  set_fact:
+    ruby_packages: "{{ __ruby_packages }}"
+  when: ruby_packages is not defined
+
 # Include OS-specific installation tasks.
 - include_tasks: setup-RedHat.yml
   when:
-    - ruby_install_from_source == False
+    - not ruby_install_from_source
     - ansible_os_family == 'RedHat'
 
 - include_tasks: setup-Debian.yml
   when:
-    - ruby_install_from_source == False
+    - not ruby_install_from_source
     - ansible_os_family == 'Debian'
 
 # Install ruby from source when ruby_install_from_source is true.
 - include_tasks: install-from-source.yml
-  when: ruby_install_from_source == True
+  when: ruby_install_from_source
 
 - name: Add user installed RubyGems bin directory to global $PATH.
   copy:
@@ -29,6 +37,6 @@
   gem:
     name: "{{ item }}"
     state: present
-  become: yes
+  become: true
   become_user: "{{ ruby_install_gems_user }}"
   with_items: "{{ ruby_install_gems }}"

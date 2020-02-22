@@ -3,6 +3,11 @@
   set_fact:
     php_opcache_conf_filename: "10-opcache.ini"
 
+- name: Ensure dirmngr is installed (gnupg dependency).
+  apt:
+    name: dirmngr
+    state: present
+
 - name: Add repository for PHP versions (Ubuntu).
   apt_repository: repo='ppa:ondrej/php'
   when: ansible_distribution == "Ubuntu"
