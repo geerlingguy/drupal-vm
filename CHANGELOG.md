@@ -1,5 +1,25 @@
 # Drupal VM Changelog
 
+## 5.1.1 (2020-02-27)
+
+### Breaking Changes
+
+  - Removed 'official' support for CentOS 6 and Debian 8. These older OSes may still work, but [it would be extremely painful](https://www.youtube.com/watch?v=RZhp-Uctd-c) to keep using them.
+
+### New/changed variables in default.config.yml
+
+N/A
+
+### Improvements
+
+  * Improved CentOS 8 compatibility.
+  * Updated roles: drupal, php-xdebug, php-xhprof, php-versions, java, security, nodejs, elasticsearch, firewall, varnish, blackfire, daemonize, mysql, postgresql, ruby, php-pecl
+
+### Bugfixes
+
+  * #2011: Fix broken link in Solr documentation.
+
+
 ## 5.1.0 "Recognizer" (2019-12-03)
 
 This release adds support for PHP 7.4, and completely drops PHP 5.6 support (in the past, brave and daring souls could attempt to run 5.6—it is almost impossible to do so in Drupal VM as of this release).

@@ -27,10 +27,6 @@ if [ $distro = 'centos7' ]; then
 elif [ $distro = 'centos8' ]; then
   init="/usr/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# CentOS 6
-elif [ $distro = 'centos6' ]; then
-  init="/sbin/init"
-  opts="--privileged"
 # Ubuntu 18.04
 elif [ $distro = 'ubuntu1804' ]; then
   init="/lib/systemd/systemd"
