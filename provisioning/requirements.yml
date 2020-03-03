@@ -49,7 +49,7 @@ roles:
   - name: geerlingguy.php-mysql
     version: 2.0.2
   - name: geerlingguy.php-pecl
-    version: 1.4.2
+    version: 2.0.0
   - name: geerlingguy.php-pgsql
     version: 1.0.1
   - name: geerlingguy.php-redis

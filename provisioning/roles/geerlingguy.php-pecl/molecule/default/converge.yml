@@ -5,8 +5,8 @@
 
   vars:
     php_enable_webserver: false
-    php_enablerepo: "remi,remi-php72"
-    php_default_version_debian: "7.2"
+    php_default_version_debian: "7.3"
+    php_pecl_install_pecl: true
     php_pecl_extensions:
       - redis
 
@@ -23,15 +23,16 @@
       yum: name="@Development tools" state=present
       when: ansible_os_family == 'RedHat'
 
-    - name: Set version to 7.0 on Debian 9 and enable pecl installation
-      set_fact:
-        php_default_version_debian: '7.0'
-      when:
-        - ansible_os_family == 'Debian'
-        - ansible_distribution_major_version == '9'
-
   roles:
     - role: geerlingguy.repo-remi
       when: ansible_os_family == 'RedHat'
+    - role: geerlingguy.php-versions
     - role: geerlingguy.php
     - role: geerlingguy.php-pecl
+
+  post_tasks:
+    - name: Run test script to confirm Redis extension is available to PHP.
+      script: pecl-test.php
+      args:
+        executable: php
+      changed_when: false
