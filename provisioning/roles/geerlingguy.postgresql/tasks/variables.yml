@@ -43,3 +43,9 @@
   set_fact:
     postgresql_config_path: "{{ __postgresql_config_path }}"
   when: postgresql_config_path is not defined
+
+- name: Define postgresql_unix_socket_directories_mode.
+  set_fact:
+    postgresql_unix_socket_directories_mode: >-
+      {{ __postgresql_unix_socket_directories_mode | default('02775') }}
+  when: postgresql_unix_socket_directories_mode is not defined

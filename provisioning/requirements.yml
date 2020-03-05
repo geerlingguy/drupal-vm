@@ -67,7 +67,7 @@ roles:
   - name: geerlingguy.postfix
     version: 2.0.0
   - name: geerlingguy.postgresql
-    version: 2.0.2
+    version: 2.1.0
   - name: geerlingguy.redis
     version: 1.6.0
   - name: geerlingguy.repo-remi
