@@ -72,15 +72,6 @@
 - name: Ensure php-fpm is started and enabled at boot (if configured).
   service:
     name: "{{ php_fpm_daemon }}"
-    state: started
-    enabled: true
+    state: "{{ php_fpm_state }}"
+    enabled: "{{ php_fpm_enabled_on_boot }}"
   when: php_enable_php_fpm and ansible_distribution != "Debian"
-
-# See: https://github.com/ansible/ansible/issues/22303
-- name: Ensure php-fpm is started and enabled at boot (if configured, Debian).
-  service:
-    name: "{{ php_fpm_daemon }}"
-    state: started
-    enabled: true
-    use: service
-  when: php_enable_php_fpm and ansible_distribution == "Debian"

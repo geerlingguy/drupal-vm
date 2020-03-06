@@ -25,7 +25,7 @@
     force: true
     mode: 0644
   with_items: "{{ php_extension_conf_paths }}"
-  when: php_opcache_enable
+  when: php_opcache_enable | bool
   notify: restart webserver
 
 - name: Remove OpCache config file if OpCache is disabled.
@@ -33,5 +33,5 @@
     path: "{{ item }}/{{ php_opcache_conf_filename }}"
     state: absent
   with_items: "{{ php_extension_conf_paths }}"
-  when: not php_opcache_enable
+  when: not php_opcache_enable | bool
   notify: restart webserver

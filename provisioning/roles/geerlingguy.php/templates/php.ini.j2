@@ -6,8 +6,7 @@
 
 engine = On
 short_open_tag = {{ php_short_open_tag }}
-asp_tags = Off
-precision = 14
+precision = {{ php_precision }}
 output_buffering = {{ php_output_buffering }}
 
 zlib.output_compression = Off
@@ -64,7 +63,6 @@ auto_prepend_file =
 auto_append_file =
 
 default_mimetype = "text/html"
-always_populate_raw_post_data = -1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Paths and Directories ;
@@ -189,8 +187,6 @@ session.gc_probability = {{ php_session_gc_probability }}
 session.gc_divisor = {{ php_session_gc_divisor }}
 session.gc_maxlifetime = {{ php_session_gc_maxlifetime }}
 
-session.bug_compat_42 = Off
-session.bug_compat_warn = Off
 session.referer_check =
 
 session.cache_limiter = nocache

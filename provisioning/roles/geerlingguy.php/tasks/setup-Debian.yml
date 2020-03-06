@@ -4,7 +4,7 @@
 
 - name: Ensure PHP packages are installed.
   apt:
-    name: "{{ php_packages }}"
+    name: "{{ php_packages + php_packages_extra }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"
   register: php_package_install
@@ -23,5 +23,5 @@
     path: "{{ item }}/{{ php_opcache_conf_filename }}"
     state: absent
   with_items: "{{ php_extension_conf_paths }}"
-  when: php_opcache_enable and php_package_install.changed
+  when: php_opcache_enable | bool and php_package_install.changed
   notify: restart webserver

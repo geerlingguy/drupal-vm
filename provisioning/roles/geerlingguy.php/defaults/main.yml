@@ -3,6 +3,9 @@
 # for RHEL/CentOS.
 php_enablerepo: ""
 
+# Extra packages to install (in addition to distro-specific default lists).
+php_packages_extra: []
+
 # Default PHP version to install on Debian-based OSes.
 php_default_version_debian: "7.0"
 
@@ -18,6 +21,8 @@ php_enable_webserver: true
 
 # PHP-FPM configuration.
 php_enable_php_fpm: false
+php_fpm_state: started
+php_fpm_enabled_on_boot: true
 php_fpm_listen: "127.0.0.1:9000"
 php_fpm_listen_allowed_clients: "127.0.0.1"
 php_fpm_pm_max_children: 50
@@ -70,6 +75,7 @@ php_sendmail_path: "/usr/sbin/sendmail -t -i"
 php_output_buffering: "4096"
 php_short_open_tag: "Off"
 php_disable_functions: []
+php_precision: 14
 
 php_session_cookie_lifetime: 0
 php_session_gc_probability: 1

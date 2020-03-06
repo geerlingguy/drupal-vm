@@ -70,7 +70,7 @@
     src: "{{ php_source_install_gmp_path }}"
     dest: /usr/include/gmp.h
     state: link
-  when: gmp_file.stat.exists == false
+  when: not gmp_file.stat.exists
 
 - name: Check if PHP is installed.
   command: which php

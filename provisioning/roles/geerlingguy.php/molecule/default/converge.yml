@@ -22,6 +22,12 @@
       changed_when: false
 
     # Ubuntu-specific tasks.
+    - name: Ensure dirmngr is installed (gnupg dependency).
+      apt:
+        name: dirmngr
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+
     - name: Add repository for PHP 7.
       apt_repository: repo='ppa:ondrej/php'
       when: ansible_distribution == 'Ubuntu'

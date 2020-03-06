@@ -6,7 +6,6 @@ __php_packages:
   - php-devel
   - php-fpm
   - php-gd
-  - php-imap
   - php-ldap
   - php-mbstring
   - php-opcache

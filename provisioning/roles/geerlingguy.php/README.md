@@ -62,6 +62,11 @@ When using this role with PHP running as `php-fpm` instead of as a process insid
 
 If you're using Apache, you can easily get it configured to work with PHP-FPM using the [geerlingguy.apache-php-fpm](https://github.com/geerlingguy/ansible-role-apache-php-fpm) role.
 
+    php_fpm_state: started
+    php_fpm_enabled_on_boot: true
+
+Control over the fpm daemon's state; set these to `stopped` and `false` if you want FPM to be installed and configured, but not running (e.g. when installing in a container).
+
     php_fpm_listen: "127.0.0.1:9000"
     php_fpm_listen_allowed_clients: "127.0.0.1"
     php_fpm_pm_max_children: 50
@@ -104,6 +109,7 @@ By default, all the extra defaults below are applied through the php.ini include
     php_session_save_handler: files
     php_session_save_path: ''
     php_disable_functions: []
+    php_precision: 14
 
 Various defaults for PHP. Only used if `php_use_managed_ini` is set to `true`.
 
