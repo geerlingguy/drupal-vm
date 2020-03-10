@@ -4,6 +4,9 @@ listen.allowed_clients = 127.0.0.1
 user = {{ php_fpm_pool_user }}
 group = {{ php_fpm_pool_group }}
 
+listen.owner = {{ php_fpm_pool_user }}
+listen.group = {{ php_fpm_pool_group }}
+
 pm = dynamic
 pm.max_children = 50
 pm.start_servers = 5
