@@ -39,10 +39,10 @@ drupal_composer_install_dir: "/var/www/drupalvm"
 drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 ```
 
-If you intend to use the devel module, it must be added as a requirement to your `composer.json` file. Alternatively, if you do not intend to use it remove it from `drupal_enabled_modules` in your `config.yml` file:
+If you intend to use the devel module, it must be added as a requirement to your `composer.json` file. Alternatively, if you do not intend to use it remove it from `drupal_enable_modules` in your `config.yml` file:
 
 ```yaml
-drupal_enabled_modules: []
+drupal_enable_modules: []
 ```
 
 ### Create a delegating `Vagrantfile`
