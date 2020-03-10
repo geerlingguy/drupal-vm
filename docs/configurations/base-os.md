@@ -31,7 +31,10 @@ Everything should work out of the box with RHEL 7.
 
 ## Debian 10 Buster
 
-Everything should work out of the box with Debian 10.
+Most everything should work out of the box with Debian 10. If you are installing `java` or `solr` in the `installed_extras`, you need to override the `java_packages` in your `config.yml`:
+
+    java_packages:
+      - openjdk-11-jdk
 
 ## Debian 9 Stretch
 
