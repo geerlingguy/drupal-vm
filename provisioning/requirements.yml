@@ -37,7 +37,7 @@ roles:
   - name: geerlingguy.memcached
     version: 1.0.8
   - name: geerlingguy.mysql
-    version: 3.0.0
+    version: 3.1.0
   - name: geerlingguy.nginx
     version: 2.7.0
   - name: geerlingguy.nodejs
