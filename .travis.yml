@@ -37,13 +37,12 @@ env:
       DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
       TEST_INSTALLED_EXTRAS: false
 
-    # TODO: See https://github.com/geerlingguy/drupal-vm/issues/1675
     # PostgreSQL - Ubuntu 18.04.
-    # - type: postgresql
-    #   distro: ubuntu1804
-    #   local_config: tests/ubuntu-18-postgresql.config.yml
-    #   config_dir: /var/www/drupalvm/config
-    #   TEST_INSTALLED_EXTRAS: false
+    - type: postgresql
+      distro: ubuntu1804
+      local_config: tests/ubuntu-18-postgresql.config.yml
+      config_dir: /var/www/drupalvm/config
+      TEST_INSTALLED_EXTRAS: false
 
 before_install:
   # Install lint tools.
