@@ -23,7 +23,6 @@ env:
     # Defaults - Debian 9.
     - type: debian
       distro: debian9
-      local_config: tests/debian-9.config.yml
       ANSIBLE_PYTHON_INTERPRETER: /usr/bin/python
     # Defaults - CentOS 7.
     - type: centos

@@ -101,7 +101,9 @@ docker exec --tty $CONTAINER_ID env TERM=xterm ansible-playbook $DRUPALVM_DIR/pr
 
 # Run the setup playbook.
 printf "\n"${green}"Running the setup playbook..."${neutral}"\n"
-docker exec --tty $CONTAINER_ID env TERM=xterm ansible-playbook /var/www/drupalvm/tests/test-setup.yml
+docker exec --tty $CONTAINER_ID env TERM=xterm \
+  ansible-playbook /var/www/drupalvm/tests/test-setup.yml \
+  -e "ansible_python_interpreter=$ANSIBLE_PYTHON_INTERPRETER";
 
 # Run the Drupal VM playbook.
 printf "\n"${green}"Running the Drupal VM playbook..."${neutral}"\n"
@@ -109,11 +111,12 @@ if [ ! -z "${config_dir}" ]; then
   # Run with config_dir specified.
   docker exec $CONTAINER_ID env TERM=xterm ANSIBLE_FORCE_COLOR=true DRUPALVM_ENV=$DRUPALVM_ENV \
     ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml \
-    --extra-vars="config_dir=$config_dir";
+    -e "config_dir=$config_dir" -e "ansible_python_interpreter=$ANSIBLE_PYTHON_INTERPRETER";
 else
   # Run without config_dir specified.
   docker exec $CONTAINER_ID env TERM=xterm ANSIBLE_FORCE_COLOR=true DRUPALVM_ENV=$DRUPALVM_ENV \
-    ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml;
+    ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml \
+    -e "ansible_python_interpreter=$ANSIBLE_PYTHON_INTERPRETER";
 fi
 
 # Drupal.
