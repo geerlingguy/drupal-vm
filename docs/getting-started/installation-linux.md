@@ -10,7 +10,7 @@ Always make sure your workstation is up to date (e.g. `apt-get update && apt-get
 
 ### Ubuntu
 
-Ubuntu 15.10 for Desktop (and some other versions) doesn't include NFS support by default, so if you get a message like `It appears your machine doesn't support NFS`, then you should do the following to install NFS server: `sudo apt-get install -y nfs-server`.
+Some older Ubuntu Desktop installations don't include NFS support by default, so if you get a message like `It appears your machine doesn't support NFS`, then you should do the following to install NFS server: `sudo apt-get install -y nfs-server`.
 
 ### Fedora
 
@@ -30,14 +30,6 @@ In this case, you need to install your system's appropriate kernel module, and y
   3. `sudo /var/lib/vboxdrv.sh setup`
 
 Periodically, when you upgrade your system's Linux kernel, you might need to run steps 2 and 3 above again, or you can uninstall and reinstall VirtualBox (e.g. `sudo dnf remove VirtualBox && sudo dnf install VirtualBox`).
-
-### Arch Linux
-
-Arch Linux uses Python 3 as the default while Ansible requires Python 2. To get around parse errors you need to specify that the `python2` binary should be used instead of the default `python`. Add the following to your `config.yml`:
-
-```
-ansible_python_interpreter: "/usr/bin/env python2"
-```
 
 ## Troubleshooting Vagrant Synced Folders
 

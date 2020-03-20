@@ -15,7 +15,7 @@ DRUPALVM_HTTP_PORT="${DRUPALVM_HTTP_PORT:-80}"
 DRUPALVM_HTTPS_PORT="${DRUPALVM_HTTPS_PORT:-443}"
 
 DISTRO="${DISTRO:-ubuntu1804}"
-TAG="${TAG:-python2}"
+TAG="${TAG:-latest}"
 OPTS="${OPTS:---privileged}"
 INIT="${INIT:-/lib/systemd/systemd}"
 
