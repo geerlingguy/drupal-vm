@@ -1,3 +1,0 @@
----
-ansible_python_interpreter: /usr/bin/python
-postfix_inet_protocols: ipv4

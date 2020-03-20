@@ -109,11 +109,12 @@ if [ ! -z "${config_dir}" ]; then
   # Run with config_dir specified.
   docker exec $CONTAINER_ID env TERM=xterm ANSIBLE_FORCE_COLOR=true DRUPALVM_ENV=$DRUPALVM_ENV \
     ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml \
-    --extra-vars="config_dir=$config_dir";
+    --extra-vars="{config_dir:$config_dir,ansible_python_interpreter:$ANSIBLE_PYTHON_INTERPRETER}";
 else
   # Run without config_dir specified.
   docker exec $CONTAINER_ID env TERM=xterm ANSIBLE_FORCE_COLOR=true DRUPALVM_ENV=$DRUPALVM_ENV \
-    ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml;
+    ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml \
+    --extra-vars="{ansible_python_interpreter:$ANSIBLE_PYTHON_INTERPRETER}";;
 fi
 
 # Drupal.
