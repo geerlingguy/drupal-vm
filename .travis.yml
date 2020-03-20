@@ -41,6 +41,7 @@ env:
     - type: postgresql
       distro: ubuntu1804
       local_config: tests/ubuntu-18-postgresql.config.yml
+      DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
       config_dir: /var/www/drupalvm/config
       TEST_INSTALLED_EXTRAS: false
 
