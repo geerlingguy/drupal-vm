@@ -62,3 +62,6 @@ postgresql_users: []
 #   login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
 #   port: # defaults to not set
 #   state: # defaults to 'present'
+
+# Whether to output user data when managing users.
+postgres_users_no_log: true

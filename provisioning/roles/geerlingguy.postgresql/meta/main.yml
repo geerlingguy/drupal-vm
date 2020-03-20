@@ -6,7 +6,7 @@ galaxy_info:
   description: PostgreSQL server for Linux.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.4
+  min_ansible_version: 2.8
   platforms:
     - name: EL
       versions:
@@ -22,6 +22,7 @@ galaxy_info:
       versions:
         - xenial
         - bionic
+        - focal
     - name: Debian
       versions:
         - wheezy

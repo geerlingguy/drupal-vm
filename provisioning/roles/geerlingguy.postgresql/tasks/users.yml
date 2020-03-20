@@ -14,7 +14,7 @@
     port: "{{ item.port | default(omit) }}"
     state: "{{ item.state | default('present') }}"
   with_items: "{{ postgresql_users }}"
-  no_log: true
+  no_log: "{{ postgres_users_no_log }}"
   become: true
   become_user: "{{ postgresql_user }}"
   # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509

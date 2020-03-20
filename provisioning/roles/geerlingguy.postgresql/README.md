@@ -106,6 +106,10 @@ A list of databases to ensure exist on the server. Only the `name` is required; 
 
 A list of users to ensure exist on the server. Only the `name` is required; all other properties are optional.
 
+    postgres_users_no_log: true
+
+Whether to output user data (which may contain sensitive information, like passwords) when managing users.
+
     postgresql_version: [OS-specific]
     postgresql_data_dir: [OS-specific]
     postgresql_bin_path: [OS-specific]
