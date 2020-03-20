@@ -13,13 +13,15 @@ For certain OSes, there are a couple other caveats and tweaks you may need to pe
 
 Some other OSes should work, but are not regularly tested with Drupal VM, including Debian 8/Jessie (`debian/jessie64`).
 
-## Ubuntu 18.04 Xenial LTS
+## Ubuntu 18.04 Bionic LTS
 
-Everything should work out of the box with Ubuntu 16.04.
+Everything should work out of the box with Ubuntu 18.04.
 
 ## Ubuntu 16.04 Xenial LTS
 
-Everything should work out of the box with Ubuntu 16.04.
+Most everything should work out of the box with Ubuntu 16.04. You will need to override one variable in your `config.yml` to use an older version of Python when provisioning:
+
+    ansible_python_interpreter: /usr/bin/python
 
 ## RedHat Enterprise Linux / CentOS 8
 
@@ -27,7 +29,9 @@ Everything should work out of the box with RHEL 8.
 
 ## RedHat Enterprise Linux / CentOS 7
 
-Everything should work out of the box with RHEL 7.
+Most everything should work out of the box with CentOS 7. You will need to override one variable in your `config.yml` to use an older version of Python when provisioning:
+
+    ansible_python_interpreter: /usr/bin/python
 
 ## Debian 10 Buster
 
