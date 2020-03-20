@@ -11,11 +11,11 @@ MACHINE_NAME="${MACHINE_NAME:-drupalvm}"
 IP="${IP:-192.168.88.88}"
 DRUPALVM_DIR="${DRUPALVM_DIR:-/var/www/drupalvm}"
 DRUSH_BIN="${DRUSH_BIN:-drush}"
-ANSIBLE_PYTHON_INTERPRETER="${ANSIBLE_PYTHON_INTERPRETER}:-/usr/bin/python3}"
+ANSIBLE_PYTHON_INTERPRETER="${ANSIBLE_PYTHON_INTERPRETER:-/usr/bin/python3}"
 TEST_INSTALLED_EXTRAS="${TEST_INSTALLED_EXTRAS:-true}"
 CONTAINER_ID="${CONTAINER_ID:-dvm-test}"
 type="${type:-tests/defaults}"
-distro="${distro:-ubuntu1604}"
+distro="${distro:-ubuntu1804}"
 tag="${tag:-latest}"
 cleanup="${cleanup:-true}"
 
@@ -109,12 +109,11 @@ if [ ! -z "${config_dir}" ]; then
   # Run with config_dir specified.
   docker exec $CONTAINER_ID env TERM=xterm ANSIBLE_FORCE_COLOR=true DRUPALVM_ENV=$DRUPALVM_ENV \
     ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml \
-    --extra-vars="{'config_dir':'$config_dir','ansible_python_interpreter':'$ANSIBLE_PYTHON_INTERPRETER'}";
+    --extra-vars="config_dir=$config_dir";
 else
   # Run without config_dir specified.
   docker exec $CONTAINER_ID env TERM=xterm ANSIBLE_FORCE_COLOR=true DRUPALVM_ENV=$DRUPALVM_ENV \
-    ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml \
-    --extra-vars="{'ansible_python_interpreter':'$ANSIBLE_PYTHON_INTERPRETER'}";
+    ansible-playbook $DRUPALVM_DIR/provisioning/playbook.yml;
 fi
 
 # Drupal.
