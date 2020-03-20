@@ -1,10 +1,43 @@
 # Drupal VM Changelog
 
+## 5.2.0 "The Game Has Changed" (2020-03-20)
+
+This release defaults to Python 3 for all Ansible-related tasks, which means some older OSes require a new variable to be overridden to work correctly. For most users, no change is required, however. The release also updates the order in which Postgresql updates
+
+### Breaking Changes
+
+  * #2025: Ansible's Python interpreter now defaults to `python3` (was using default which was `python`).
+  * #2024: Postgresql database and user order of setup reversed, so users should not have 'db'/'priv' set, but database needs 'owner' set.
+  * #2025: Minimum required Ansible version is now 2.8.
+  * #2025: Minimum required Vagrant version is now 2.2.0.
+
+### New/changed variables in default.config.yml
+
+  * `ansible_python_interpreter`: defaults to `/usr/bin/python3`, override to `/usr/bin/python` if using CentOS 7, Ubuntu 16.04, or Debian 9.
+  * `drupalvm_vagrant_version_min`: was `'1.8.6'`, now `'2.2.0'`.
+  * `drupalvm_ansible_version_min`: was `'2.5'`, now `'2.8'`.
+  * `postgresql_databases`: added `owner` parameter, set to `"{{ drupal_db_user }}"`
+  * `postgresql_users`: removed `db` and `priv` parameters.
+  * `solr_version`: was `"5.5.5"`, now `"7.7.2"`.
+  * `java_packages`: new variable, set to `openjdk-8-jdk` for Debian/Ubuntu, `java-1.8.0-openjdk` for RHEL/CentOS.
+
+### Improvements
+
+  * #1960: Use latest Solr 7.x version for better install experience.
+  * #2025: Use Python 3 for Ansible on all the latest OSes.
+  * Updated roles: php-pecl, postgresql, php, mysql.
+
+### Bugfixes
+
+  * #2024: Fix chicken-and-egg ordering of postgresql database and user ownership.
+  * #1675: Get CI tests for Postgresql working again.
+
+
 ## 5.1.1 (2020-02-27)
 
 ### Breaking Changes
 
-  - Removed 'official' support for CentOS 6 and Debian 8. These older OSes may still work, but [it would be extremely painful](https://www.youtube.com/watch?v=RZhp-Uctd-c) to keep using them.
+  * Removed 'official' support for CentOS 6 and Debian 8. These older OSes may still work, but [it would be extremely painful](https://www.youtube.com/watch?v=RZhp-Uctd-c) to keep using them.
 
 ### New/changed variables in default.config.yml
 
@@ -42,7 +75,7 @@ This release adds support for PHP 7.4, and completely drops PHP 5.6 support (in 
 
 ### Bugfixes
 
-  * TODO
+N/A
 
 
 ## 5.0.2 (2019-11-04)
