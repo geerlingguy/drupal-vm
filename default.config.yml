@@ -45,9 +45,11 @@ vagrant_plugins:
   - name: vagrant-vbguest
   - name: vagrant-hostsupdater
 
+ansible_python_interpreter: /usr/bin/python3
+
 # Minimum required versions.
-drupalvm_vagrant_version_min: '1.8.6'
-drupalvm_ansible_version_min: '2.5'
+drupalvm_vagrant_version_min: '2.2.0'
+drupalvm_ansible_version_min: '2.8'
 
 # Force use of ansible_local provisioner, even if Ansible is installed on host.
 force_ansible_local: false
@@ -198,14 +200,13 @@ mysql_users:
     priv: "{{ drupal_db_name }}.*:ALL"
 
 # PostgreSQL databases and users.
-postgresql_databases:
-  - name: "{{ drupal_db_name }}"
-
 postgresql_users:
   - name: "{{ drupal_db_user }}"
     password: "{{ drupal_db_password }}"
-    db: "{{ drupal_db_name }}"
-    priv: "ALL"
+
+postgresql_databases:
+  - name: "{{ drupal_db_name }}"
+    owner: "{{ drupal_db_user }}"
 
 # Comment out any extra utilities you don't want to install. If you don't want
 # to install *any* extras, set this value to an empty set, e.g. `[]`.
