@@ -25,7 +25,7 @@ TasksMax=infinity
 # Maximum size of the corefile.
 LimitCORE=infinity
 
-ExecStart=/usr/sbin/varnishd -a :{{ varnish_listen_port }} -T {{ varnish_admin_listen_host }}:{{ varnish_admin_listen_port }}{% if varnish_pidfile %} -P {{ varnish_pidfile }}{% endif %} -f {{ varnish_config_path }}/default.vcl -S {{ varnish_config_path }}/secret -s {{ varnish_storage }} {{ varnishd_extra_options }}
+ExecStart=/usr/sbin/varnishd -a {{ varnish_listen_address }}:{{ varnish_listen_port }} -T {{ varnish_admin_listen_host }}:{{ varnish_admin_listen_port }}{% if varnish_pidfile %} -P {{ varnish_pidfile }}{% endif %} -f {{ varnish_config_path }}/default.vcl -S {{ varnish_config_path }}/secret -s {{ varnish_storage }} {{ varnishd_extra_options }}
 ExecReload=/usr/sbin/varnishreload
 
 Restart=on-failure

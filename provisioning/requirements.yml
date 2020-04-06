@@ -79,4 +79,4 @@ roles:
   - name: geerlingguy.solr
     version: 5.0.0
   - name: geerlingguy.varnish
-    version: 3.0.3
+    version: 3.1.0
