@@ -7,6 +7,7 @@
       - sudo
     state: present
 
+# We add '-n' to Solr versions beyond 6.3.0 to prevent autostart on install.
 - name: Run Solr installation script.
   command: >
     {{ solr_workspace }}/{{ solr_filename }}/bin/install_solr_service.sh
@@ -16,6 +17,7 @@
     -u {{ solr_user }}
     -s {{ solr_service_name }}
     -p {{ solr_port }}
+    {{ (solr_version is version('6.3.0', '>=')) | ternary('-n','') }}
     creates={{ solr_install_path }}/bin/solr
   register: solr_install_script_result
 
