@@ -41,6 +41,16 @@ The minimum jvm heap size.
 
 The maximum jvm heap size.
 
+    elasticsearch_extra_options: ''
+
+A placeholder for arbitrary configuration options not exposed by the role. This will be appended as-is to the end of the `elasticsearch.yml` file, as long as your variable preserves formatting with a `|`. For example:
+
+```yaml
+elasticsearch_extra_options: |  # Dont forget the pipe!
+  some.option: true
+  another.option: false
+```
+
 ## Dependencies
 
   - geerlingguy.java
