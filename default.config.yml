@@ -45,7 +45,7 @@ vagrant_plugins:
   - name: vagrant-vbguest
   - name: vagrant-hostsupdater
 
-ansible_python_interpreter: /usr/bin/python3
+ansible_python_interpreter: python3
 
 # Minimum required versions.
 drupalvm_vagrant_version_min: '2.2.0'
