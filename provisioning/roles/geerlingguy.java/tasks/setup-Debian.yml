@@ -8,7 +8,7 @@
     recurse: true
   when:
     - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version == '18.04'
+    - ansible_distribution_major_version | int >= 18
 
 - name: Ensure Java is installed.
   apt:

@@ -29,6 +29,7 @@ galaxy_info:
         - trusty
         - xenial
         - bionic
+        - focal
     - name: FreeBSD
       versions:
         - 10.2
