@@ -6,20 +6,28 @@ galaxy_info:
   description: Memcached for Linux
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
+        - 8
     - name: Ubuntu
       versions:
-      - precise
-      - trusty
-      - xenial
+        - precise
+        - trusty
+        - xenial
+        - bionic
     - name: Debian
       versions:
-      - all
+        - all
   galaxy_tags:
     - web
     - database
+    - memcached
+    - keyvalue
+    - kv
+    - cache
+    - caching
+    - performance

@@ -22,9 +22,10 @@ The user under which the Memcached daemon will run.
 The port and IP address (127.0.0.1 for localhost) on which Memcached will listen for requests.
 
     memcached_memory_limit: 64
+    memcached_max_item_size: 1m
     memcached_connections: 1024
 
-Memcached limits. The maximum amount of RAM `memcached` will consume (64MB is the default), and the maximum number of simultaneous connections memcached will handle.
+Memcached limits. The maximum amount of RAM `memcached` will consume (64MB is the default), the memory-limit of a single item and the maximum number of simultaneous connections memcached will handle.
 
     memcached_log_file: /var/log/memcached.log
 
