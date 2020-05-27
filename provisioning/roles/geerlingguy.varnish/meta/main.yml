@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: varnish
   author: geerlingguy
   description: Varnish for Linux.
   company: "Midwestern Mac, LLC"
@@ -12,6 +13,7 @@ galaxy_info:
       versions:
         - 6
         - 7
+        # - 8
     - name: Ubuntu
       versions:
         - precise
