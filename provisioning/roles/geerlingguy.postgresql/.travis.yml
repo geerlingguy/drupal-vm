@@ -8,7 +8,7 @@ env:
   matrix:
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: centos8
-    - MOLECULE_DISTRO: fedora31
+    - MOLECULE_DISTRO: fedora32
     - MOLECULE_DISTRO: ubuntu2004
     - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: debian10
