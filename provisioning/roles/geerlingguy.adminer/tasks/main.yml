@@ -4,14 +4,29 @@
   file:
     path: "{{ adminer_install_dir }}"
     state: directory
-    recurse: yes
+    recurse: true
+
+- name: Testing if adminer is older then 1 day
+  find:
+    paths: "{{ adminer_install_dir }}"
+    patterns: "{{ adminer_install_filename }}"
+    age: "1d"
+  register: adminer_is_old
 
 - name: Download Adminer to configured directory.
   get_url:
     url: https://www.adminer.org/latest.php
     dest: "{{ adminer_install_dir }}/{{ adminer_install_filename }}"
+    force: "{{ (adminer_is_old.matched == 1) | ternary('yes','no') }}"
     mode: 0644
     timeout: 60
+
+- name: Ensure paths to place symlinks exist
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items:
+    - "{{ adminer_symlink_dirs }}"
 
 - name: Symlink Adminer into configured directories.
   file:
@@ -20,10 +35,29 @@
     state: link
   with_items: "{{ adminer_symlink_dirs }}"
 
+# Install Adminer theme.
+- name: Download Adminer theme
+  get_url:
+    url: https://raw.githubusercontent.com/vrana/adminer/master/designs/{{ adminer_theme }}/adminer.css
+    dest: "{{ adminer_install_dir }}"
+    force: "{{ (adminer_is_old.matched == 1) | adminer_force_download }}"
+    mode: 0644
+    timeout: 60
+  when: adminer_theme is defined and adminer_theme != null
+
+- name: Symlink Adminer theme into configured directories.
+  file:
+    src: "{{ adminer_install_dir }}/adminer.css"
+    dest: "{{ item }}/adminer.css"
+    state: link
+  with_items: "{{ adminer_symlink_dirs }}"
+  when: adminer_theme is defined and adminer_theme != null
+
 # Add Apache configuration (if configured).
 - name: Set the proper Apache configuration directory (Debian).
   set_fact:
-    apache_extra_conf_dir: "{{ 'conf-enabled' if apache_vhosts_version == '2.4' else 'conf.d' }}"
+    apache_extra_conf_dir: >-
+      {{ 'conf-enabled' if apache_vhosts_version == '2.4' else 'conf.d' }}
   when: adminer_add_apache_config and ansible_os_family == 'Debian'
 
 - name: Add Apache configuration file for Adminer (Debian).

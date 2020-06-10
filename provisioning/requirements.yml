@@ -7,7 +7,7 @@ roles:
   - name: weareinteractive.newrelic
     version: 1.8.0
   - name: geerlingguy.adminer
-    version: 1.2.0
+    version: 1.3.0
   - name: geerlingguy.apache
     version: 3.1.0
   - name: geerlingguy.apache-php-fpm

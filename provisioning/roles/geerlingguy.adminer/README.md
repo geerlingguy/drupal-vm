@@ -28,6 +28,10 @@ Directories inside which you would like `adminer.php` symlinked. Can be useful i
 
 Set this to `true` to tell Adminer to add a config file to Apache so you can access it at `hostname/adminer` on any configured virtualhost, using an Apache `Alias` directive. The role will also restart Apache so this configuration takes effect immediately.
 
+    adminer_theme: ''
+
+You can use any theme from adminer library (for example `pappu687`). You can find the full list [here](https://www.adminer.org/en/#extras).
+
 ## Dependencies
 
 None. If `adminer_add_apache_config` is set to `true`, it will use some variables and handlers defined by the `geerlingguy.apache` role, so there's a soft dependency on that role.
