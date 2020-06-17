@@ -9,7 +9,7 @@
 - name: restart php-fpm
   service:
     name: "{{ php_fpm_daemon }}"
-    state: restarted
+    state: "{{ php_fpm_handler_state }}"
   when:
     - php_enable_php_fpm
     - php_fpm_state == 'started'

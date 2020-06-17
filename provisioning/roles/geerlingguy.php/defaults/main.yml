@@ -22,6 +22,7 @@ php_enable_webserver: true
 # PHP-FPM configuration.
 php_enable_php_fpm: false
 php_fpm_state: started
+php_fpm_handler_state: restarted
 php_fpm_enabled_on_boot: true
 php_fpm_listen: "127.0.0.1:9000"
 php_fpm_listen_allowed_clients: "127.0.0.1"

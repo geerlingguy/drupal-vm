@@ -67,6 +67,10 @@ If you're using Apache, you can easily get it configured to work with PHP-FPM us
 
 Control over the fpm daemon's state; set these to `stopped` and `false` if you want FPM to be installed and configured, but not running (e.g. when installing in a container).
 
+    php_fpm_handler_state: restarted
+
+The handler restarts PHP-FPM by default. Setting the value to `reloaded` will reload the service, intead of restarting it.
+
     php_fpm_listen: "127.0.0.1:9000"
     php_fpm_listen_allowed_clients: "127.0.0.1"
     php_fpm_pm_max_children: 50
