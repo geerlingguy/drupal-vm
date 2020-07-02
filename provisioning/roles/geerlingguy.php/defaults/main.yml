@@ -77,6 +77,7 @@ php_output_buffering: "4096"
 php_short_open_tag: "Off"
 php_disable_functions: []
 php_precision: 14
+php_serialize_precision: "-1"
 
 php_session_cookie_lifetime: 0
 php_session_gc_probability: 1
