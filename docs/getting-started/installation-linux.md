@@ -12,6 +12,12 @@ Always make sure your workstation is up to date (e.g. `apt-get update && apt-get
 
 Some older Ubuntu Desktop installations don't include NFS support by default, so if you get a message like `It appears your machine doesn't support NFS`, then you should do the following to install NFS server: `sudo apt-get install -y nfs-server`.
 
+### Debian
+
+A regular desktop install of Debian 10 doesn't include NFS. You'll see a message, `It appers your machine doesn't support nfs, or there is not an adapter to enable NFS on this machine for Vagrant. Please verify that `nfsd`is installed on your machine, and try again.`. You need to install `sudo apt install -y nfs-common nfs-kernel-server`. After that, you should be able to restart the machine
+
+If you see `drupalvm: Warning: Connection reset. Retrying...` and it ends with it timing out. You should be able to create a `Vagrantfile.local` and add `config.vm.boot_timeout = 600`. The default value is 300, so we are just doubling it. If it still comes back, you can increase it as needed.
+
 ### Fedora
 
 Under Fedora, you might encounter a message like the following upon the first time you use VirtualBox or Vagrant:
