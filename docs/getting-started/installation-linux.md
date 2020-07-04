@@ -14,9 +14,13 @@ Some older Ubuntu Desktop installations don't include NFS support by default, so
 
 ### Debian
 
-A regular desktop install of Debian 10 doesn't include NFS. You'll see a message, `It appers your machine doesn't support nfs, or there is not an adapter to enable NFS on this machine for Vagrant. Please verify that `nfsd`is installed on your machine, and try again.`. You need to install `sudo apt install -y nfs-common nfs-kernel-server`. After that, you should be able to restart the machine
+A regular desktop install of Debian 10 doesn't include NFS. You'll see a message,
 
-If you see `drupalvm: Warning: Connection reset. Retrying...` and it ends with it timing out. You should be able to create a `Vagrantfile.local` and add `config.vm.boot_timeout = 600`. The default value is 300, so we are just doubling it. If it still comes back, you can increase it as needed.
+> It appers your machine doesn't support NFS, or there is not an adapter to enable NFS on this machine for Vagrant. Please verify that `nfsd`is installed on your machine, and try again. If you're on Windows, NFS isn't supported. If the problem persists, please contact Vagrant suppport.
+
+You need to install `sudo apt install -y nfs-common nfs-kernel-server`. After that, restart the Debian machine. 
+
+If you see `drupalvm: Warning: Connection reset. Retrying...` and it ends with it timing out. You need to create a `Vagrantfile.local` and add `config.vm.boot_timeout = 600`. The default value is 300, so we are just doubling it. If it still comes back, you can increase it as needed.
 
 ### Fedora
 
