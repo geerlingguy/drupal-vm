@@ -15,6 +15,7 @@
 vagrant_ansible_inventory_default
 
 # Drupal VM specific files.
+drupal.composer.json
 local.config.yml
 Vagrantfile.local
 /config.yml
