@@ -1,19 +1,21 @@
 ---
 - name: Install required dependencies.
-  yum: "name={{ item }} state=present"
-  with_items:
-    - curl
-    - python-pycurl
-    - unzip
-    - make
-    - gcc
+  yum:
+    name:
+      - curl
+      - python3-pycurl
+      - unzip
+      - make
+      - gcc
+    state: present
 
 - name: Enable remi repo for MySQL.
-  set_fact: mysql_enablerepo="remi"
+  set_fact:
+    mysql_enablerepo: remi
   when: mysql_enablerepo is not defined or mysql_enablerepo == ""
 
 - name: Define php_xhprof_html_dir.
   set_fact:
-    php_xhprof_html_dir: "/usr/share/pear/xhprof_html"
+    php_xhprof_html_dir: /usr/share/pear/xhprof_html
   when: php_xhprof_html_dir is not defined
   tags: ['webserver']
