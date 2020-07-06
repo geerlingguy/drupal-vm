@@ -20,28 +20,16 @@ tag="${tag:-latest}"
 cleanup="${cleanup:-true}"
 
 ## Set up vars for Docker setup.
-# CentOS 7
-if [ $distro = 'centos7' ]; then
-  init="/usr/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # CentOS 8
-elif [ $distro = 'centos8' ]; then
+if [ $distro = 'centos8' ]; then
   init="/usr/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Ubuntu 18.04
 elif [ $distro = 'ubuntu1804' ]; then
   init="/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# Ubuntu 16.04
-elif [ $distro = 'ubuntu1604' ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 # Debian 10
 elif [ $distro = 'debian10' ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# Debian 9
-elif [ $distro = 'debian9' ]; then
   init="/lib/systemd/systemd"
   opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 fi

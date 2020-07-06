@@ -80,7 +80,7 @@ Notes:
 
   - **For faster provisioning** (macOS/Linux only): *[Install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
   - **For stability**: Because every version of VirtualBox introduces changes to networking, for the best stability, you should install Vagrant's `vbguest` plugin: `vagrant plugin install vagrant-vbguest`.
-  - **NFS on Linux**: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
+  - **NFS on Linux**: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See [nfs instructions for Linux](http://docs.drupalvm.com/en/latest/getting-started/installation-linux/#mounting-nfs-shared-folders-hangs)*
   - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of 2020, Drupal VM recommends: Vagrant 2.2.x, VirtualBox 6.1.x, and Ansible 2.9.x*
 
 ### 2 - Build the Virtual Machine

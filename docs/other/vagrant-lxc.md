@@ -27,12 +27,6 @@ Read more about how to configure the container in [`vagrant-lxc`'s README.md](ht
 
 The following boxes have been tested only minimally, choose which one you want.
 
-    # Centos 7
-    vagrant_box: frensjan/centos-7-64-lxc
-
-    # Ubuntu 16.04
-    vagrant_box: nhinds/xenial64
-
     # Do not interact with the UFW service on Ubuntu.
     drupalvm_disable_ufw_firewall: false
 

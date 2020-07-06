@@ -8,11 +8,11 @@ If you're using Apache with `mod_php` you should also add `libapache2-mod-php{{ 
 
 _Note: XHProf does currently not work with PHP 7.1+, make sure you don't have it listed in `installed_extras`._
 
-## RedHat/CentOS 7 or 8
+## RedHat/CentOS 8
 
 Remi's RPM repository is included with Drupal VM, and you can make the following changes to use it to install a different version of PHP than 7.4:
 
-  1. Make sure you've followed the directions for switching to CentOS 7 in the [use a different base OS](base-os.md) guide.
+  1. Make sure you've followed the directions for switching to CentOS 8 in the [use a different base OS](base-os.md) guide.
   2. Change `php_version` inside `config.yml` to `"7.2"` or `"7.3"`.
 
 ## PHP 5.6 EOL

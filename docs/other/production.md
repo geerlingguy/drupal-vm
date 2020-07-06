@@ -162,6 +162,6 @@ After a few minutes, your Drupal-VM-in-the-cloud Droplet should be fully configu
 
 ### Go Further
 
-You can use Ubuntu Ubuntu 18.04, Ubuntu 16.04, Debian 9, or CentOS 7 when you build the DigitalOcean Droplet. Just like with Drupal VM running locally, you can customize almost every aspect of the server!
+You can use Ubuntu Ubuntu 18.04, Debian 10, or CentOS 8 when you build the DigitalOcean Droplet. Just like with Drupal VM running locally, you can customize almost every aspect of the server!
 
 You may want to customize your configuration even further, to make sure Drupal VM is tuned for your specific Drupal site's needs, or you may want to change things and make the server configuration more flexible, etc. For all that, the book [Ansible for DevOps](http://ansiblefordevops.com/) will give you a great introduction to using Ansible to make Drupal VM and the included Ansible configuration do exactly what you need!

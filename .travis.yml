@@ -20,14 +20,14 @@ env:
     # Defaults - Ubuntu 18.04.
     - type: defaults
       distro: ubuntu1804
-    # Defaults - Debian 9.
+    # Defaults - Debian 10.
     - type: debian
-      distro: debian9
+      distro: debian10
       ANSIBLE_PYTHON_INTERPRETER: /usr/bin/python
-    # Defaults - CentOS 7.
+    # Defaults - CentOS 8.
     - type: centos
-      distro: centos7
-      local_config: tests/centos-7.config.yml
+      distro: centos8
+      local_config: tests/centos-8.config.yml
       ANSIBLE_PYTHON_INTERPRETER: /usr/bin/python
 
     # PHP 7.3 - Ubuntu 18.04.
