@@ -35,3 +35,6 @@
     working_dir: "{{ drupal_composer_install_dir }}"
   with_items: "{{ drupal_composer_dependencies|default([]) }}"
   become: false
+  environment:
+    COMPOSER_PROCESS_TIMEOUT: 1200
+    COMPOSER_MEMORY_LIMIT: '-1'
