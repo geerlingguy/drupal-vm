@@ -37,7 +37,7 @@ This will disable the `mod_deflate` module for any requests inside that director
 
 If you want to switch Apache to use `mod_php` instead of proxying requests through PHP-FPM, you can make the following changes in `config.yml`:
 
-  1. Add `libapache2-mod-php7.2` to `extra_packages` in `config.yml`.
+  1. Add `libapache2-mod-php7.4` to `extra_packages` in `config.yml`.
   2. Delete the `extra_parameters` under any Drupal site in the list of `apache_vhosts` (so there is no `SetHandler` rule).
 
 You can also disable PHP-FPM and remove the two `proxy` entries from `apache_mods_enabled` if you don't want to use PHP-FPM with Apache at all, but that's optional; it won't break anything to run Apache with `mod_php` and `mod_proxy_fastcgi` at the same time.
