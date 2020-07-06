@@ -9,7 +9,7 @@ If you want to build a Drupal site using a [Drush make file](http://www.drush.or
 ```yaml
 drush_launcher_install: no
 drush_install_from_source: yes
-drush_source_install_version: "8.1.15"
+drush_source_install_version: "8.9.1"
 ```
 
 Have a look at the defaults in `default.config.yml` and tweak the settings as you'd like in your `config.yml`, then run `vagrant up` as in the Quick Start Guide. Within a few minutes, you should have your site running and available at the `drupal_domain` configured in `config.yml`, falling back to the default `http://drupalvm.test` set in `default.config.yml`.

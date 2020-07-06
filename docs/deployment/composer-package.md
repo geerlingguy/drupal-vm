@@ -1,4 +1,4 @@
-Out of the box Drupal VM is configured to use `composer create-project` to build a Drupal 8 codebase.
+Out of the box Drupal VM is configured to use `composer create-project` to build a Drupal codebase.
 
 This is set up with the following variables in `config.yml`:
 
@@ -10,7 +10,7 @@ This is set up with the following variables in `config.yml`:
 With [acquia/lightning-project](https://github.com/acquia/lightning-project) as an example your `config.yml` settings would be:
 
 ```yaml
-drupal_composer_project_package: "acquia/lightning-project:^8.1.0"
+drupal_composer_project_package: "acquia/lightning-project:^8.8.1"
 drupal_composer_project_options: "--prefer-dist --stability rc --no-interaction"
 drupal_core_path: "{{ drupal_composer_install_dir }}/docroot"
 ```

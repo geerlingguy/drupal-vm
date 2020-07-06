@@ -2,7 +2,7 @@
 
 To enable Varnish, make sure `varnish` is in the list of your `installed_extras` in `config.yml`, and run `vagrant provision`.
 
-There are a few varnish configuration variables further down in `default.config.yml` that you may wish to configure. You can use your own `.vcl` file template (instead of the generic Drupal 7-focused generic one) by editing the `varnish_default_vcl_template_path`, and you can use a different port for Varnish by changing `varnish_listen_port`.
+There are a few varnish configuration variables further down in `default.config.yml` that you may wish to configure. You can use your own `.vcl` file template (instead of the default generic Drupal-focused one) by editing the `varnish_default_vcl_template_path`, and you can use a different port for Varnish by changing `varnish_listen_port`.
 
 If you'd like to use Varnish on port 80, and switch Apache to a different backend port, you can do so pretty easily; just make sure you have the following values set in your `config.yml` file, and run `vagrant provision` to have Ansible make the necessary changes:
 

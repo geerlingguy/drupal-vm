@@ -13,8 +13,8 @@ Drupal VM's default configurations which you should not edit directly.
 The main configuration file of a project. Commonly this is a copy of `default.config.yml` with the values tweaked to your own project. For an easier upgrade path you would only set the values you are actually overriding.
 
 ```yaml
-vagrant_box: geerlingguy/centos7
-vagrant_hostname: my-custom-site.dev
+vagrant_box: geerlingguy/centos8
+vagrant_hostname: my-custom-site.test
 vagrant_machine_name: my_custom_site
 
 php_version: "7.2"

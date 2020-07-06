@@ -18,7 +18,7 @@ Drupal VM installs the following on an Ubuntu 18.04 (by default) linux VM:
   - Apache (or Nginx)
   - PHP (configurable version)
   - MySQL (or MariaDB, or PostgreSQL)
-  - Drupal 7 or 8
+  - Drupal 7, 8, or 9
   - Optional:
     - Drupal Console
     - Drush
@@ -52,7 +52,7 @@ There are a couple places where you can customize the VM for your needs:
   - `config.yml`: Override any of the default VM configuration from `default.config.yml`; customize almost any aspect of any software installed in the VM (more about [configuring Drupal VM](http://docs.drupalvm.com/en/latest/getting-started/configure-drupalvm/).
   - `drupal.composer.json` or `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (you can build using Composer, Drush make, or your own codebase).
 
-If you want to switch from Drupal 8 (default) to Drupal 7 on the initial install, do the following:
+If you want to use Drupal 7 on the initial install, do the following:
 
   1. Switch to using a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/).
   1. Update the Drupal `version` and `core` inside your `drupal.make.yml` file.
@@ -60,9 +60,9 @@ If you want to switch from Drupal 8 (default) to Drupal 7 on the initial install
 
 ## Quick Start Guide
 
-This Quick Start Guide will help you quickly build a Drupal 8 site on the Drupal VM using Composer with `drupal-project`. You can also use Drupal VM with [Composer](http://docs.drupalvm.com/en/latest/deployment/composer/), a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/), with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/), or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
+This Quick Start Guide will help you quickly build a Drupal 9 site on the Drupal VM creating a new Composer project. You can also use Drupal VM with [Composer](http://docs.drupalvm.com/en/latest/deployment/composer/), a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/), with a [Local Drupal codebase](http://docs.drupalvm.com/en/latest/deployment/local-codebase/), or even a [Drupal multisite installation](http://docs.drupalvm.com/en/latest/deployment/multisite/).
 
-If you want to install a Drupal 8 site locally with minimal fuss, just:
+If you want to install a Drupal site locally with minimal fuss, just:
 
   1. Install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
   2. Download or clone this project to your workstation.
@@ -81,7 +81,7 @@ Notes:
   - **For faster provisioning** (macOS/Linux only): *[Install Ansible](http://docs.ansible.com/intro_installation.html) on your host machine, so Drupal VM can run the provisioning steps locally instead of inside the VM.*
   - **For stability**: Because every version of VirtualBox introduces changes to networking, for the best stability, you should install Vagrant's `vbguest` plugin: `vagrant plugin install vagrant-vbguest`.
   - **NFS on Linux**: *If NFS is not already installed on your host, you will need to install it to use the default NFS synced folder configuration. See guides for [Debian/Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04), [Arch](https://wiki.archlinux.org/index.php/NFS#Installation), and [RHEL/CentOS](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-centos-6).*
-  - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of early 2019, Drupal VM recommends: Vagrant 2.2.x, VirtualBox 6.0.x, and Ansible 2.7.x*
+  - **Versions**: *Make sure you're running the latest releases of Vagrant, VirtualBox, and Ansible—as of 2020, Drupal VM recommends: Vagrant 2.2.x, VirtualBox 6.1.x, and Ansible 2.9.x*
 
 ### 2 - Build the Virtual Machine
 
@@ -141,7 +141,7 @@ Drupal VM follows semantic versioning, which means your configuration should con
   2. Do a diff of your `config.yml` with the updated `default.config.yml` (e.g. `curl https://raw.githubusercontent.com/geerlingguy/drupal-vm/master/default.config.yml | git diff --no-index config.yml -`).
   3. Run `vagrant provision` to provision the VM, incorporating all the latest changes.
 
-For major version upgrades (e.g. 3.x.x to 4.x.x), it may be simpler to destroy the VM (`vagrant destroy`) then build a fresh new VM (`vagrant up`) using the new version of Drupal VM.
+For major version upgrades (e.g. 4.x.x to 5.x.x), it may be simpler to destroy the VM (`vagrant destroy`) then build a fresh new VM (`vagrant up`) using the new version of Drupal VM.
 
 ## System Requirements
 

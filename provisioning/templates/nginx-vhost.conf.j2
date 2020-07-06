@@ -49,7 +49,7 @@ server {
     {% endblock %}
 
     {% block location_drupal_legacy -%}
-    {% if drupal_major_version == 8 -%}
+    {% if drupal_major_version >= 8 -%}
     # Redirect common PHP files to their new locations.
     location ~ ^((?!.*(?:core)).*)/(install.php|rebuild.php) {
          return 301 $scheme://$host$1/core/$2$is_args$args;

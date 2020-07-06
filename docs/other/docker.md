@@ -28,7 +28,7 @@ You can also add other subdomains if you're using other built-in services, e.g. 
 If you just want a quick, easy Drupal site for testing, you can run an instance of Drupal VM and install Drupal inside using the provided script.
 
   1. Run an instance of Drupal VM: `docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 80:80 -p 443:443 --name=drupalvm --privileged geerlingguy/drupal-vm`
-  2. Install Drupal on this instance: `docker exec drupalvm install-drupal` (you can choose a version using `install-drupal [version]`, using versions like `8.x-dev` or `7.x-dev`).
+  2. Install Drupal on this instance: `docker exec drupalvm install-drupal` (you can choose a version using `install-drupal [version]`, using versions like `9.x-dev` or `8.x-dev`).
 
 You should be able to access the Drupal site at `http://localhost`. If you need to share a host directory into the VM, you can do so by adding another `-v` parameter, like `-v /path/on/host:/path/in/container.
 
@@ -122,7 +122,7 @@ After you've configured your Drupal VM settings in `config.yml` and other config
 
 This will bake a Docker images using Drupal VM's default settings for distro, IP address, hostname, etc. You can override these options (all are listed in the `provisioning/docker/bake.sh` file) by prepending them to the `composer` command:
 
-    DRUPALVM_IP_ADDRESS='192.168.89.89' DISTRO='debian9' composer docker-bake
+    DRUPALVM_IP_ADDRESS='192.168.89.89' DISTRO='debian10' composer docker-bake
 
 This process can take some time (it should take a similar amount of time as it takes to build Drupal VM normally, using Vagrant and VirtualBox), and at the end, you should see a message like:
 

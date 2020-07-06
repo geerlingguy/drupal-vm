@@ -1,4 +1,4 @@
-FROM geerlingguy/docker-debian9-ansible:latest
+FROM geerlingguy/docker-debian10-ansible:latest
 LABEL maintainer="Jeff Geerling"
 
 # Copy provisioning directory, variable overrides, and scripts into container.
@@ -8,7 +8,7 @@ COPY ./provisioning/docker/bin/* /usr/local/bin
 
 # Provision Drupal VM inside Docker.
 RUN ansible-playbook /etc/ansible/drupal-vm/provisioning/playbook.yml \
-  -e "ansible_python_interpreter=/usr/bin/python" \
+  -e "ansible_python_interpreter=/usr/bin/python3" \
   # Enable FPM. See https://github.com/geerlingguy/drupal-vm/issues/1366.
   && systemctl enable php7.2-fpm.service
 

@@ -42,4 +42,4 @@ Most everything should work out of the box with Debian 10. If you are installing
 
 ## Debian 9 Stretch
 
-Everything should work out of the box with Debian 10.
+Everything should work out of the box with Debian 9.
