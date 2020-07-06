@@ -23,12 +23,10 @@ env:
     # Defaults - Debian 10.
     - type: debian
       distro: debian10
-      ANSIBLE_PYTHON_INTERPRETER: /usr/bin/python
     # Defaults - CentOS 8.
     - type: centos
       distro: centos8
       local_config: tests/centos-8.config.yml
-      ANSIBLE_PYTHON_INTERPRETER: /usr/bin/python
 
     # PHP 7.3 - Ubuntu 18.04.
     - type: defaults
