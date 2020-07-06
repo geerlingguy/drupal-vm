@@ -14,7 +14,7 @@
 
   roles:
     - name: geerlingguy.repo-remi
-      when: ansible_os_family == "RedHat"
+      when: ansible_os_family == 'RedHat'
     - role: geerlingguy.repo-dotdeb
       when: ansible_distribution == 'Debian'
     - role: geerlingguy.apache

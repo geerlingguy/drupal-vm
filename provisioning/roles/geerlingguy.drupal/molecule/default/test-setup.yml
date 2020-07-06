@@ -1,11 +1,11 @@
 ---
 - name: Update apt cache.
-  apt: update_cache=yes cache_valid_time=86400
+  apt: update_cache=yes cache_valid_time=600
   when: ansible_os_family == 'Debian'
 
 - name: Install dependencies.
-  package: name={{ item }}
-  with_items:
-    - curl
-    - unzip
-    - sendmail
+  package:
+    name:
+      - curl
+      - unzip
+      - sendmail

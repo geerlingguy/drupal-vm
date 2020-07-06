@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: drupal
   author: geerlingguy
   description: Deploy or install Drupal on your servers.
   company: "Midwestern Mac, LLC"

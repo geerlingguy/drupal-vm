@@ -31,7 +31,7 @@ drupal_composer_dependencies:
 # 'false' if you are using Composer's create-project as a site deployment
 # strategy.
 drupal_build_composer_project: true
-drupal_composer_project_package: "drupal/recommended-project:^8@dev"
+drupal_composer_project_package: "drupal/recommended-project:^9@dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 # Required Drupal settings.

@@ -21,6 +21,7 @@ apache_vhosts:
             SetHandler "proxy:fcgi://{{ php_fpm_listen }}"
           </FilesMatch>
 
+mysql_python_package_debian: python3-mysqldb
 mysql_enablerepo: "remi"
 mysql_databases:
   - name: "{{ drupal_db_name }}"

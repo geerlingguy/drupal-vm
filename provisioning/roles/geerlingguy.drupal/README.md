@@ -67,7 +67,7 @@ If you set the `bin-dir` in your project's `composer.json` file to a value other
 ### Create a new project using `composer create-project` (Composer)
 
     drupal_build_composer_project: true
-    drupal_composer_project_package: "drupal/recommended-project:^8@dev"
+    drupal_composer_project_package: "drupal/recommended-project:^9@dev"
     drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 Set this to `true` and `drupal_build_makefile`, `drupal_build_composer` to `false` if you are using Composer's `create-project` as a site deployment strategy.
