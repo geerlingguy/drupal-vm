@@ -13,7 +13,7 @@ galaxy_info:
       versions:
         - 6
         - 7
-        # - 8
+        - 8
     - name: Ubuntu
       versions:
         - precise

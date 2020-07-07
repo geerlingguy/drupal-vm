@@ -16,9 +16,9 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Varnish package name you want to install. See `apt-cache policy varnish` or `yum list varnish` for a listing of available candidates.
 
-    varnish_version: "6.1"
+    varnish_version: "6.4"
 
-Varnish version that should be installed. See the [Varnish Cache packagecloud.io repositories](https://packagecloud.io/varnishcache) for a listing of available versions. Some examples include: `6.1`, `6.0`, `5.1`, `4.1`, `3.0`, and `2.1`.
+Varnish version that should be installed. See the [Varnish Cache packagecloud.io repositories](https://packagecloud.io/varnishcache) for a listing of available versions. Some examples include: `6.4`, `6.3`, `6.1`, `4.1`, `3.0`, and `2.1`.
 
     varnish_config_path: /etc/varnish
 

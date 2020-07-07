@@ -6,7 +6,7 @@ env:
   global:
     - ROLE_NAME: varnish
   matrix:
-    # - MOLECULE_DISTRO: centos8
+    - MOLECULE_DISTRO: centos8
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: ubuntu1604

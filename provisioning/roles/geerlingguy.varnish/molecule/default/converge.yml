@@ -6,14 +6,6 @@
   pre_tasks:
     - import_tasks: playbook-setup.yml
 
-    - name: Set older Varnish version for older OSes.
-      set_fact:
-        varnish_version: "5.1"
-      when: >
-        (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7) or
-        (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 16) or
-        (ansible_distribution == 'Debian' and ansible_distribution_major_version|int < 9)
-
   roles:
     - role: geerlingguy.varnish
 
