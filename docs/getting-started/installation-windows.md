@@ -2,7 +2,7 @@ Please read through the [Quick Start Guide in the README](https://github.com/gee
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mNio_aXMLos" frameborder="0" allowfullscreen></iframe>
 
-_In this video, Jeff Geerling walks through setting up a Drupal 8 website on Windows 10 using Drupal VM 3._
+_In this video, Jeff Geerling walks through setting up a Drupal 8 website on Windows 10 using Drupal VM 3. Note that Drupal VM has changed a bit in versions 4+, and one major change is the default URL for Drupal VM is now **drupalvm.test** (not **drupalvm.dev** as mentioned in the video)._
 
 There are a few caveats when using Drupal VM on Windows, and this page will try to identify the main gotchas or optimization tips for those wishing to use Drupal VM on a Windows host.
 
