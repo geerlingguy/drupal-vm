@@ -1,5 +1,45 @@
 # Drupal VM Changelog
 
+## 6.0.0 "Rectifier" (2020-07-14)
+
+Drupal VM 6 drops support for some older OS distributions, to increase stability under the latest versions of Ubuntu, CentOS, and Debian, and to finally drop all support for the now-unsupported Python 2.
+
+The Drupal VM Docker container image is now based on Debian 10 Buster, though the default Drupal VM box when running as a VirtualBox VM is still based on Ubuntu 18.04.
+
+The default PHP version is now PHP 7.4, which works great with all the latest versions of Drupal 7, 8, and 9.
+
+### Breaking Changes
+
+  * #2065: Drop official support for Debian 9, CentOS 7, and Ubuntu 16.04 and Python 2.
+  * #2061: Default to PHP 7.4.
+  * Drupal VM Docker container now based on Debian 10 Buster.
+
+### New/changed variables in default.config.yml
+
+  * Removed `centos7`, `debian9`, and `ubuntu1604` from `vagrant_box` options.
+  * `ansible_python_interpreter` now defaults to `python3` (was `/usr/bin/python3`).
+  * `drupal_composer_dependencies` now includes both `"drush/drush:^10"` and `"drupal/devel:^4.0"`.
+  * `drupal_composer_project_package` now defaults to the recommended Drupal project: `"drupal/recommended-project:^9@dev"`.
+  * `drupal_major_version` is now `9` (was `8`).
+  * `php_version` is now `"7.4"` (was `"7.2"`).
+  * Added `php_xdebug_version: 2.9.5`.
+
+### Improvements
+
+  * #2050: Default to Drupal 9.
+  * #1997: Include `php_xdebug_version` in default config for visibility.
+  * Updated roles: varnish, solr, elasticsearch, java, memcached, postgresql, adminer, php, drupal.
+
+### Bugfixes
+
+  * #2041: Point to Python 3 interpreter in `$PATH`.
+  * #2062: Allow Composer to use more memory since it runs out at 1.5 GB.
+  * #2063: Update Devel version to work with Drupal 9.
+  * #2064: Explicitly require Drush on new sites to work with Drupal 9.
+  * #2066: Fix postfix service failure on CentOS 8 test container.
+  * #2059: Improve docs for Windows usage.
+
+
 ## 5.2.0 "The Game Has Changed" (2020-03-20)
 
 This release defaults to Python 3 for all Ansible-related tasks, which means some older OSes require a new variable to be overridden to work correctly. For most users, no change is required, however. The release also updates the order in which Postgresql updates
