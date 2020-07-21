@@ -44,6 +44,10 @@ The port through which you'd like SSH to be accessible. The default is port 22, 
 
 Security settings for SSH authentication. It's best to leave these set to `"no"`, but there are times (especially during initial server configuration or when you don't have key-based authentication in place) when one or all may be safely set to `'yes'`. **NOTE: It is _very_ important that you quote the 'yes' or 'no' values. Failure to do so may lock you out of your server.**
 
+    security_sshd_state: started
+
+The state of the SSH daemon. Typically this should remain `started`.
+
     security_ssh_restart_handler_state: restarted
 
 The state of the `restart ssh` handler. Typically this should remain `restarted`.
@@ -76,7 +80,11 @@ Whether to install/enable `yum-cron` (RedHat-based systems) or `unattended-upgra
 
     security_fail2ban_enabled: true
 
-Wether to install/enable `fail2ban`. You might not want to use fail2ban if you're already using some other service for login and intrusion detection (e.g. [ConfigServer](http://configserver.com/cp/csf.html)).
+Whether to install/enable `fail2ban`. You might not want to use fail2ban if you're already using some other service for login and intrusion detection (e.g. [ConfigServer](http://configserver.com/cp/csf.html)).
+
+    security_fail2ban_custom_configuration_template: "jail.local.j2"
+
+The name of the template file used to generate `fail2ban`'s configuration.
 
 ## Dependencies
 

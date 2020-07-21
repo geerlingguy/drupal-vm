@@ -7,6 +7,7 @@ security_ssh_permit_empty_password: "no"
 security_ssh_challenge_response_auth: "no"
 security_ssh_gss_api_authentication: "no"
 security_ssh_x11_forwarding: "no"
+security_sshd_state: started
 security_ssh_restart_handler_state: restarted
 
 security_sudoers_passwordless: []
@@ -22,3 +23,4 @@ security_autoupdate_mail_to: ""
 security_autoupdate_mail_on_error: true
 
 security_fail2ban_enabled: true
+security_fail2ban_custom_configuration_template: "jail.local.j2"

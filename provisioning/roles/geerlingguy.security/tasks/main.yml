@@ -3,18 +3,7 @@
   include_vars: "{{ ansible_os_family }}.yml"
 
 # Fail2Ban
-- include_tasks: fail2ban-RedHat.yml
-  when:
-    - ansible_os_family == 'RedHat'
-    - security_fail2ban_enabled | bool
-
-- include_tasks: fail2ban-Debian.yml
-  when:
-    - ansible_os_family == 'Debian'
-    - security_fail2ban_enabled | bool
-
-- name: Ensure fail2ban is running and enabled on boot.
-  service: name=fail2ban state=started enabled=yes
+- include_tasks: fail2ban.yml
   when: security_fail2ban_enabled | bool
 
 # SSH

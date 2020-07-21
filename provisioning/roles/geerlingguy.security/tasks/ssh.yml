@@ -1,10 +1,16 @@
 ---
+- name: Ensure SSH daemon is running.
+  service:
+    name: "{{ security_sshd_name }}"
+    state: "{{ security_sshd_state }}"
+
 - name: Update SSH configuration to be more secure.
   lineinfile:
     dest: "{{ security_ssh_config_path }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
+    validate: 'sshd -T -f %s'
   with_items:
     - regexp: "^PasswordAuthentication"
       line: "PasswordAuthentication {{ security_ssh_password_authentication }}"

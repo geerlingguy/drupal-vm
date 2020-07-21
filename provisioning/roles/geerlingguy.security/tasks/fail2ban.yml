@@ -1,0 +1,27 @@
+---
+- name: Install fail2ban (RedHat).
+  package:
+    name: fail2ban
+    state: present
+    enablerepo: epel
+  when: ansible_os_family == 'RedHat'
+
+- name: Install fail2ban (Debian).
+  package:
+    name: fail2ban
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Copy fail2ban custom configuration file into place.
+  template:
+    src: "{{ security_fail2ban_custom_configuration_template }}"
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Ensure fail2ban is running and enabled on boot.
+  service:
+    name: fail2ban
+    state: started
+    enabled: true

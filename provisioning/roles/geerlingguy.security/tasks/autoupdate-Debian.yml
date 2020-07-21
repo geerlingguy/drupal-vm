@@ -1,6 +1,8 @@
 ---
 - name: Install unattended upgrades package.
-  package: name=unattended-upgrades state=present
+  package:
+    name: unattended-upgrades
+    state: present
 
 - name: Copy unattended-upgrades configuration files in place.
   template:
