@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: nginx
   author: geerlingguy
   description: Nginx installation for Linux, FreeBSD and OpenBSD.
   company: "Midwestern Mac, LLC"
@@ -12,6 +13,7 @@ galaxy_info:
       versions:
         - 6
         - 7
+        - 8
     - name: Debian
       versions:
         - all
@@ -19,6 +21,7 @@ galaxy_info:
       versions:
         - trusty
         - xenial
+        - focal
     - name: Archlinux
       versions:
         - all

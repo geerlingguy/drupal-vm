@@ -1,4 +1,9 @@
 ---
+- name: Ensure dirmngr is installed (gnupg dependency).
+  apt:
+    name: dirmngr
+    state: present
+
 - name: Add PPA for Nginx.
   apt_repository:
     repo: 'ppa:nginx/{{ nginx_ppa_version }}'
@@ -11,5 +16,5 @@
   apt:
     name: nginx
     state: absent
-  when: nginx_ppa_added.changed
+  when: nginx_ppa_added is changed
   tags: ['skip_ansible_lint']
