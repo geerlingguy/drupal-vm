@@ -3,9 +3,6 @@
   hosts: all
   become: true
 
-  vars:
-    mysql_python_package_debian: python3-mysqldb
-
   roles:
     - role: geerlingguy.mysql
 
