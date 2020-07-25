@@ -6,8 +6,8 @@ php_enablerepo: ""
 # Extra packages to install (in addition to distro-specific default lists).
 php_packages_extra: []
 
-# Default PHP version to install on Debian-based OSes.
-php_default_version_debian: "7.0"
+# Default PHP version to install on Debian-based OSes (OS-specific).
+# php_default_version_debian: ""
 
 # PHP package state; use 'present' to make sure it's installed, or 'latest' if
 # you want to upgrade or switch versions using a new repo.

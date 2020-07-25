@@ -1,5 +1,16 @@
 ---
 # Variable setup.
+- name: Include distribution and version-specific vars.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+      skip: true
+- name: Set the default PHP version for Debian-based OSes.
+  set_fact:
+    php_default_version_debian: "{{ __php_default_version_debian }}"
+  when: ansible_os_family == 'Debian'
+
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 

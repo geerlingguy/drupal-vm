@@ -43,11 +43,11 @@ roles:
   - name: geerlingguy.nodejs
     version: 5.1.1
   - name: geerlingguy.php
-    version: 4.3.1
+    version: 4.4.0
   - name: geerlingguy.php-memcached
     version: 2.0.2
   - name: geerlingguy.php-mysql
-    version: 2.0.2
+    version: 2.1.0
   - name: geerlingguy.php-pecl
     version: 2.0.0
   - name: geerlingguy.php-pgsql

@@ -26,7 +26,7 @@
       apt:
         name: dirmngr
         state: present
-      when: ansible_distribution == 'Ubuntu'
+      when: ansible_os_family == 'Debian'
 
     - name: Add repository for PHP 7.
       apt_repository: repo='ppa:ondrej/php'
@@ -38,6 +38,7 @@
         name:
           - apt-transport-https
           - ca-certificates
+          - gnupg2
         state: present
       when: ansible_distribution == "Debian"
 

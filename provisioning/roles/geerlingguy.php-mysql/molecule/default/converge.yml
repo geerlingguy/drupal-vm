@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    php_enablerepo: "remi,remi-php70"
+    php_enablerepo: "remi,remi-php72"
 
   pre_tasks:
     - name: Update apt cache.

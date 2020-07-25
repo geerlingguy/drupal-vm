@@ -1,4 +1,6 @@
 ---
+__php_default_version_debian: "7.0"
+
 __php_packages:
   - php{{ php_default_version_debian }}-common
   - php{{ php_default_version_debian }}-cli
