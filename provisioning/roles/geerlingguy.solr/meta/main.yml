@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: solr
   author: geerlingguy
   description: Apache Solr for Linux.
   company: "Midwestern Mac, LLC"

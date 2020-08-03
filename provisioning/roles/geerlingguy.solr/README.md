@@ -23,7 +23,7 @@ Files will be downloaded to this path on the remote server before being moved in
 
 Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user.
 
-    solr_version: "8.4.1"
+    solr_version: "8.6.0"
 
 The Apache Solr version to install. For a full list, see [available Apache Solr versions](http://archive.apache.org/dist/lucene/solr/).
 

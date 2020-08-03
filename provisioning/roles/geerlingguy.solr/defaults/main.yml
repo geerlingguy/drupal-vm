@@ -4,7 +4,7 @@ solr_workspace: /root
 solr_create_user: true
 solr_user: solr
 
-solr_version: "8.4.1"
+solr_version: "8.6.0"
 solr_mirror: "https://archive.apache.org/dist"
 solr_remove_cruft: false
 

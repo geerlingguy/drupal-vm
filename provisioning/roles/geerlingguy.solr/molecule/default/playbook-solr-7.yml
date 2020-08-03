@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    solr_version: "7.7.2"
+    solr_version: "7.7.3"
 
   pre_tasks:
     - name: Set Java 8 package for RedHat.

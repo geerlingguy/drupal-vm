@@ -77,6 +77,6 @@ roles:
   - name: geerlingguy.security
     version: 2.0.0
   - name: geerlingguy.solr
-    version: 5.1.0
+    version: 5.1.1
   - name: geerlingguy.varnish
     version: 3.3.0
