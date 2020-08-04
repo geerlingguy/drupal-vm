@@ -7,6 +7,9 @@
       - libtool
       - bison
       - make
+      - re2c
+      - sqlite-devel
+      - oniguruma-devel
       - curl-devel
       - recode-devel
       - aspell-devel
@@ -40,6 +43,8 @@
       - bison
       - pkg-config
       - re2c
+      - sqlite-dev
+      - libonig2
       - libxml2-dev
       - libcurl4-openssl-dev
       - libbz2-dev

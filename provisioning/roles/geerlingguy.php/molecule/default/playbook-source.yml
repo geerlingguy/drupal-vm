@@ -8,7 +8,7 @@
     php_install_from_source: true
     php_source_clone_dir: /root/php-src
     php_source_make_command: "make --jobs=2"
-    php_version: "7.1.17"
+    php_version: "7.4.8"
     php_source_version: "php-{{ php_version }}"
     php_memory_limit: "192M"
 
