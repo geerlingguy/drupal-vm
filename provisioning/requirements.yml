@@ -20,8 +20,6 @@ roles:
     version: 1.2.1
   - name: geerlingguy.drupal
     version: 4.1.0
-  - name: geerlingguy.drupal-console
-    version: 1.1.1
   - name: geerlingguy.drush
     version: 3.1.2
   - name: geerlingguy.elasticsearch

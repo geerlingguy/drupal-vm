@@ -50,7 +50,6 @@
     - { role: geerlingguy.php-pgsql, when: drupal_db_backend == 'pgsql', tags: ['php', 'database'] }
 
     # Conditionally-installed roles.
-    - { role: geerlingguy.drupal-console, when: 'drupal_major_version > 7 and "drupalconsole" in installed_extras' }
     - { role: geerlingguy.drush, when: '"drush" in installed_extras' }
     - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
     - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras', tags: ['php'] }

@@ -34,7 +34,7 @@ drupal_build_composer_project: false
 drupal_install_site: false
 configure_drush_aliases: false
 
-# Remove some Drupal extras such as `drupalconsole` and `drush`
+# Remove some Drupal extras such as `drush`
 installed_extras:
   - adminer
   - mailhog

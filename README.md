@@ -20,7 +20,6 @@ Drupal VM installs the following on an Ubuntu 18.04 (by default) linux VM:
   - MySQL (or MariaDB, or PostgreSQL)
   - Drupal 7, 8, or 9
   - Optional:
-    - Drupal Console
     - Drush
     - Varnish
     - Apache Solr
@@ -108,7 +107,6 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
     installed_extras:
       - adminer
       # - blackfire
-      # - drupalconsole
       - drush
       # - elasticsearch
       # - java

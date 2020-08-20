@@ -211,7 +211,6 @@ postgresql_databases:
 installed_extras:
   - adminer
   # - blackfire
-  # - drupalconsole
   - drush
   # - elasticsearch
   # - java
