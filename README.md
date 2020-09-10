@@ -52,6 +52,12 @@ There are a couple places where you can customize the VM for your needs:
   - `config.yml`: Override any of the default VM configuration from `default.config.yml`; customize almost any aspect of any software installed in the VM (more about [configuring Drupal VM](http://docs.drupalvm.com/en/latest/getting-started/configure-drupalvm/).
   - `drupal.composer.json` or `drupal.make.yml`: Contains configuration for the Drupal core version, modules, and patches that will be downloaded on Drupal's initial installation (you can build using Composer, Drush make, or your own codebase).
 
+If you want to use Drupal 8 on the initial install, do the following:
+
+  1. Set `drupal_major_version: 8` inside `config.yml`.
+  2. Set `drupal_composer_project_package: "drupal/recommended-project:^8@dev" inside `config.yml`.
+  
+  
 If you want to use Drupal 7 on the initial install, do the following:
 
   1. Switch to using a [Drush Make file](http://docs.drupalvm.com/en/latest/deployment/drush-make/).
