@@ -9,7 +9,7 @@
   when: not solr_war_file.stat.exists
 
 - name: Ensure Solr install files are owned by the solr_user.
-  file:
+  file:  # noqa 208
     path: "{{ solr_install_path }}"
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
@@ -39,10 +39,11 @@
     dest: "{{ solr_home }}/collection1/conf/solrconfig.xml"
     regexp: ^.+solr\.install\.dir.+$
     replace: ""
+    mode: 0644
   when: "not solr_example.stat.exists and solr_version.split('.')[0] == '4'"
 
 - name: Ensure Solr home files are owned by the solr_user.
-  file:
+  file:  # noqa 208
     path: "{{ solr_home }}"
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"

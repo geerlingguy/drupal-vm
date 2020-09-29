@@ -1,8 +1,8 @@
 ---
-dependencies:
-  - geerlingguy.java
+dependencies: []
 
 galaxy_info:
+  role_name: elasticsearch
   author: geerlingguy
   description: Elasticsearch for Linux.
   company: "Midwestern Mac, LLC"

@@ -43,11 +43,14 @@
   when: composer_keep_updated | bool
 
 - name: Ensure composer directory exists.
+  become: true
+  become_user: "{{ composer_home_owner }}"
   file:
     path: "{{ composer_home_path }}"
     owner: "{{ composer_home_owner }}"
     group: "{{ composer_home_group }}"
     state: directory
+    mode: 0755
 
 - name: Add GitHub OAuth token for Composer (if configured).
   become: true
@@ -57,6 +60,7 @@
     dest: "{{ composer_home_path }}/auth.json"
     owner: "{{ composer_home_owner }}"
     group: "{{ composer_home_group }}"
+    mode: 0644
   when: composer_github_oauth_token | length > 0
 
 - include_tasks: global-require.yml

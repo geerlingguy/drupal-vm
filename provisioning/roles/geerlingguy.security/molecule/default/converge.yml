@@ -37,6 +37,7 @@
         dest: /var/log/auth.log
         content: ""
         force: false
+        mode: 0644
       when: ansible_distribution == 'Debian'
 
   roles:

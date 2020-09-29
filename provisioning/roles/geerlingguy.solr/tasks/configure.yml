@@ -12,6 +12,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
+    mode: 0644
   with_items:
     - regexp: "^.?SOLR_JAVA_MEM="
       line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'

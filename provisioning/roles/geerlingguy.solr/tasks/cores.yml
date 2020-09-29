@@ -13,6 +13,7 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: true
+    mode: 0755
   when: "item not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
 

@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: composer
   author: geerlingguy
   description: Composer PHP Dependency Manager
   company: "Midwestern Mac, LLC"

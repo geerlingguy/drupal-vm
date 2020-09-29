@@ -29,6 +29,7 @@
     dest: '{{ update_conf_path }}'
     regexp: '^apply_updates = .+'
     line: 'apply_updates = yes'
+    mode: 0644
   when:
     - security_autoupdate_enabled
     - ansible_distribution_major_version | int in [7, 8]
