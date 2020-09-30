@@ -2,6 +2,10 @@
 
 ## 6.0.1 (2020-09-29)
 
+### Breaking Changes
+
+N/A
+
 ### New/changed variables in default.config.yml
 
 N/A
