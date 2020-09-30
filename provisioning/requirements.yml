@@ -70,8 +70,10 @@ roles:
     version: 2.2.1
   - name: geerlingguy.redis
     version: 1.6.0
+  - name: geerlingguy.repo-epel
+    version: 3.0.0
   - name: geerlingguy.repo-remi
-    version: 1.2.0
+    version: 2.0.1
   - name: geerlingguy.ruby
     version: 2.6.0
   - name: geerlingguy.security
