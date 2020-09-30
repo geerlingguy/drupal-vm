@@ -55,7 +55,7 @@ There are a couple places where you can customize the VM for your needs:
 If you want to use Drupal 8 on the initial install, do the following:
 
   1. Set `drupal_major_version: 8` inside `config.yml`.
-  2. Set `drupal_composer_project_package: "drupal/recommended-project:^8@dev" inside `config.yml`.
+  2. Set `drupal_composer_project_package: "drupal/recommended-project:^8@dev"` inside `config.yml`.
   
   
 If you want to use Drupal 7 on the initial install, do the following:
