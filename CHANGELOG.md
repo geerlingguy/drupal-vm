@@ -1,5 +1,21 @@
 # Drupal VM Changelog
 
+## 6.0.1 (2020-09-29)
+
+### New/changed variables in default.config.yml
+
+N/A
+
+### Improvements
+
+  * #2083: Improve README guide for installing Drupal 8 instead of default Drupal 9.
+  * Updated roles: security, nginx, mysql, php, php-mysql, solr, elasticsearch, repo-remi, composer.
+
+### Bugfixes
+
+  * #2076: Fix bug when switching PHP versions to/from PHP 7.4.
+
+
 ## 6.0.0 "Rectifier" (2020-07-14)
 
 Drupal VM 6 drops support for some older OS distributions, to increase stability under the latest versions of Ubuntu, CentOS, and Debian, and to finally drop all support for the now-unsupported Python 2.
