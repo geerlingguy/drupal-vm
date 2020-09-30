@@ -3,6 +3,10 @@ language: php
 php: 7.4
 services: docker
 
+branches:
+  only:
+    - master
+
 env:
   global:
     - CONFIG: tests/config.yml
