@@ -57,7 +57,7 @@ roles:
   - name: geerlingguy.php-tideways
     version: 2.2.0
   - name: geerlingguy.php-versions
-    version: 4.0.3
+    version: 4.0.4
   - name: geerlingguy.php-xdebug
     version: 3.0.0
   - name: geerlingguy.php-xhprof
