@@ -49,6 +49,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
+    mode: 0644
   with_items:
     - regexp: "^user.?=.+$"
       line: "user = {{ php_fpm_pool_user }}"

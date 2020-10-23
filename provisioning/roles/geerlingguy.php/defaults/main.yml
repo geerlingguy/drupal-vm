@@ -98,6 +98,7 @@ php_source_clone_dir: "~/php-src"
 php_source_clone_depth: 1
 php_source_install_path: "/opt/php"
 php_source_install_gmp_path: "/usr/include/x86_64-linux-gnu/gmp.h"
+php_source_mysql_config: "/usr/bin/mysql_config"
 # For faster compile time: "make --jobs=X" where X is # of cores present.
 php_source_make_command: "make"
 php_source_configure_command: >
@@ -136,4 +137,4 @@ php_source_configure_command: >
   --with-zlib=/usr
   --with-bz2=/usr
   --with-recode=/usr
-  --with-mysqli=/usr/bin/mysql_config
+  --with-mysqli={{ php_source_mysql_config }}
