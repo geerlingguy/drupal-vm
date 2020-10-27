@@ -42,7 +42,6 @@ installed_extras:
 
 # Add wp-cli
 composer_global_packages:
-  - { name: hirak/prestissimo, release: '^0.3' }
   - { name: wp-cli/wp-cli, release: '^1.0.0' }
 ```
 

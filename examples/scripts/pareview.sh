@@ -9,7 +9,6 @@
 #       - "../examples/scripts/pareview.sh"
 #
 #     composer_global_packages:
-#       - { name: hirak/prestissimo, release: '^0.3' }
 #       - { name: drupal/coder, release: '^' }
 #
 #     nodejs_version: "6.x"
