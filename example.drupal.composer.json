@@ -20,7 +20,7 @@
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-project-message": "^9",
         "drupal/core-recommended": "^9",
-        "drush/drush:^10"
+        "drush/drush": "^10"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -58,7 +58,7 @@
             "web/themes/custom/{$name}": [
                 "type:drupal-custom-theme"
             ]
-        },
+        }
     },
     "config": {
         "process-timeout": 1200
