@@ -1,5 +1,25 @@
 # Drupal VM Changelog
 
+## 6.0.2 (2020-10-27)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+The `hirak/prestissimo` package was removed from `composer_global_packages` (and that variable is now empty).
+
+### Improvements
+
+  * N/A
+
+### Bugfixes
+
+  * #2100: Remove hirak/prestissimo, for Composer v2 compatibility.
+  * #2095: Fix syntax errors in example drupal.composer.json file.
+
+
 ## 6.0.1 (2020-09-29)
 
 ### Breaking Changes
