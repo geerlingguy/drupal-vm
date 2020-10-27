@@ -278,8 +278,7 @@ composer_path: /usr/bin/composer
 composer_home_path: "/home/{{ drupalvm_user }}/.composer"
 composer_home_owner: "{{ drupalvm_user }}"
 composer_home_group: "{{ drupalvm_user }}"
-composer_global_packages:
-  - { name: hirak/prestissimo, release: '^0.3' }
+composer_global_packages: []
 
 # Run specified scripts before or after VM is provisioned. Use {{ playbook_dir }}
 # to reference the provisioning/ folder in Drupal VM or {{ config_dir }} to
