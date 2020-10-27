@@ -1,6 +1,6 @@
 # Ansible Role: Drush
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-drush.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-drush)
+[![Build Status](https://travis-ci.com/geerlingguy/ansible-role-drush.svg?branch=master)](https://travis-ci.com/geerlingguy/ansible-role-drush)
 
 Installs [Drush](http://www.drush.org), a command line shell and scripting interface for Drupal, on any Linux or UNIX system.
 
@@ -54,9 +54,10 @@ The version constraint for the global Drush installation.
 
 Whether to run `composer update drush/drush` to ensure the version of Drush installed globally is the latest version.
 
+    drush_composer_global_bin_path: ~/.config/composer/vendor/bin
     drush_composer_path: /usr/local/bin/drush
 
-The path in which a symlink to the Drush binary installed via Composer should be placed.
+The global path where Composer installs global binaries, and the path in which you'd like the `drush` binary to be placed.
 
 > NOTE: Composer 'global' installation is global _to the user under which Drush is installed_—e.g. if you install globally using the root user, `drush` will only work properly as `root` or when using `sudo`.
 

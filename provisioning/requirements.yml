@@ -23,7 +23,7 @@ roles:
   - name: geerlingguy.drupal-console
     version: 1.1.1
   - name: geerlingguy.drush
-    version: 3.1.2
+    version: 3.2.0
   - name: geerlingguy.elasticsearch
     version: 4.2.0
   - name: geerlingguy.firewall

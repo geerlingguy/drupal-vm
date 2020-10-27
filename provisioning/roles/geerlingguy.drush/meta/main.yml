@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: drush
   author: geerlingguy
   description: Drush - command line shell for Drupal
   company: "Midwestern Mac, LLC"

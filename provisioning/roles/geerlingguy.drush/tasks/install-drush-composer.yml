@@ -14,9 +14,10 @@
   when:
     - drush_composer_update
     - not drush_composer_require.changed
+  tags: ['skip_ansible_lint']
 
 - name: Ensure globally-installed Drush is symlinked into bin dir.
-  file:
-    src: "~/.composer/vendor/bin/drush"
+  file:  # noqa 208
+    src: "{{ drush_composer_global_bin_path }}/drush"
     dest: "{{ drush_composer_path }}"
     state: link

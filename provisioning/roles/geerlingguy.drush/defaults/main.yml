@@ -10,6 +10,7 @@ drush_launcher_path: /usr/local/bin/drush
 drush_composer_global_install: false
 drush_composer_version: "~9.0"
 drush_composer_update: false
+drush_composer_global_bin_path: ~/.config/composer/vendor/bin
 drush_composer_path: /usr/local/bin/drush
 
 # Install from source (git clone + composer-based install).
