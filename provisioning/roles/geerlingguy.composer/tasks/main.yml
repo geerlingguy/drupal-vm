@@ -25,7 +25,7 @@
 
 - name: Run Composer installer.
   command: >
-    {{ php_executable }} composer-installer.php {% if composer_version %} --version={{ composer_version }}{% endif %}
+    {{ php_executable }} composer-installer.php {% if composer_version_branch %} {{ composer_version_branch }}{% elif composer_version %} --version={{ composer_version }}{% endif %}
     chdir=/tmp
   when: not composer_bin.stat.exists
 
@@ -37,7 +37,7 @@
 
 - name: Update Composer to latest version (if configured).
   command: >
-    {{ php_executable }} {{ composer_path }} self-update
+    {{ php_executable }} {{ composer_path }} self-update {{ composer_version_branch }}
   register: composer_update
   changed_when: "'Updating to version' in composer_update.stdout"
   when: composer_keep_updated | bool
