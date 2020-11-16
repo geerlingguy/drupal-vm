@@ -5,6 +5,7 @@
     regexp: "^#?{{ item.option }}.+$"
     line: "{{ item.option }} = '{{ item.value }}'"
     state: "{{ item.state | default('present') }}"
+    mode: 0644
   with_items: "{{ postgresql_global_config_options }}"
   notify: restart postgresql
 
