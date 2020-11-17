@@ -69,7 +69,7 @@ roles:
   - name: geerlingguy.postgresql
     version: 3.0.0
   - name: geerlingguy.redis
-    version: 1.6.0
+    version: 1.7.0
   - name: geerlingguy.repo-epel
     version: 3.0.0
   - name: geerlingguy.repo-remi

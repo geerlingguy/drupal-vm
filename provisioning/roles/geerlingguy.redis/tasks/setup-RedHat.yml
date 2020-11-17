@@ -3,4 +3,4 @@
   package:
     name: "{{ redis_package }}"
     state: present
-    enablerepo: "{{ redis_enablerepo }}"
+    enablerepo: "{{ redis_enablerepo | default(omit, true) }}"

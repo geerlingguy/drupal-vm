@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: redis
   author: geerlingguy
   description: Redis for Linux
   company: "Midwestern Mac, LLC"
@@ -10,20 +11,21 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-      - 6
-      - 7
+        - 6
+        - 7
+        - 8
     - name: Fedora
       versions:
-      - all
+        - all
     - name: Debian
       versions:
-      - all
+        - all
     - name: Ubuntu
       versions:
-      - all
+        - all
     - name: Archlinux
       versions:
-      - all
+        - all
   galaxy_tags:
     - database
     - development
