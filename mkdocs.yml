@@ -40,7 +40,6 @@ pages:
   - Installed extras:
     - 'adminer (Database UI)': 'extras/adminer.md'
     - 'blackfire (Profiling tool)': 'extras/blackfire.md'
-    - 'drupalconsole (Drupal CLI)': 'extras/drupal-console.md'
     - 'drush (Drupal CLI)': 'extras/drush.md'
     - 'elasticsearch (Search engine)': 'extras/elasticsearch.md'
     - 'java': 'extras/java.md'
