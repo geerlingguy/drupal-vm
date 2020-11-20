@@ -163,6 +163,7 @@ Vagrant.configure('2') do |config|
     config.cache.enable :generic, cache_dir: '/home/vagrant/.composer/cache'
     config.cache.synced_folder_opts = {
       type: vconfig['vagrant_synced_folder_default_type'],
+      nfs_export: vconfig['vagrant_synced_folder_default_nfs_export'],
       nfs_udp: false
     }
   end

@@ -12,7 +12,7 @@ The `hirak/prestissimo` package was removed from `composer_global_packages` (and
 
 ### Improvements
 
-  * N/A
+  * #2108: Default synced folder nfs_export to `vagrant_synced_folder_default_nfs_export` if unset.
 
 ### Bugfixes
 

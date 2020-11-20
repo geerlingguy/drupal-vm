@@ -8,6 +8,7 @@ vagrant_box: geerlingguy/drupal-vm
 
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
+vagrant_synced_folder_default_nfs_export: true
 vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
