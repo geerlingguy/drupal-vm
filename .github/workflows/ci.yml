@@ -24,13 +24,21 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Set up Ruby.
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+
       - name: Install test dependencies.
-        run: pip3 install yamllint ansible-lint
+        run: |
+          pip3 install yamllint
+          gem install rubocop
 
       - name: Lint code.
         run: |
           yamllint .
-          ansible-lint
+          rubocop ./Vagrantfile ./lib/drupalvm \
+            --except Metrics/LineLength,Security/Eval,Style/MutableConstant,Metrics/BlockLength,Metrics/MethodLength,Style/ConditionalAssignment,Style/IfUnlessModifier,Style/CaseLikeIf
 
   molecule:
     name: Molecule
@@ -44,18 +52,21 @@ jobs:
             playbook: converge.yml
           - distro: centos8
             playbook: converge.yml
-          # TODO:
-          #
-          # PHP 7.3
-          # local_config: tests/ubuntu-18-php73.config.yml
-          # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
-          # TEST_INSTALLED_EXTRAS: false
-          #
-          # Postgresql
-          # local_config: tests/ubuntu-18-postgresql.config.yml
-          # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
-          # config_dir: /var/www/drupalvm/config
-          # TEST_INSTALLED_EXTRAS: false
+
+            # PHP 7.3
+            # local_config: tests/ubuntu-18-php73.config.yml
+            # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
+            # TEST_INSTALLED_EXTRAS: false
+            # - distro: ubuntu1804
+            #   playbook: php-7.3.yml
+
+            # Postgresql
+            # local_config: tests/ubuntu-18-postgresql.config.yml
+            # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
+            # config_dir: /var/www/drupalvm/config
+            # TEST_INSTALLED_EXTRAS: false
+            # - distro: ubunt1804
+            #   playbook: postgresql.yml
 
     steps:
       - name: Check out the codebase.
