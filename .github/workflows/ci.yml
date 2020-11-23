@@ -81,7 +81,6 @@ jobs:
 
       - name: Copy test scaffold files into place.
         run: |
-          cp tests/config.yml ./config.yml
           cp example.drupal.make.yml drupal.make.yml
           cp example.drupal.composer.json drupal.composer.json
 

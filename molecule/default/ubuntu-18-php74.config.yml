@@ -1,0 +1,4 @@
+---
+php_version: "7.4"
+php_sendmail_path: "/usr/sbin/sendmail -t -i"
+installed_extras: []
