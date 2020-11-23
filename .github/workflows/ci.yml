@@ -1,0 +1,83 @@
+---
+name: CI
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "20 3 * * 0"
+
+jobs:
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: 'geerlingguy.apache'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install yamllint ansible-lint
+
+      - name: Lint code.
+        run: |
+          yamllint .
+          ansible-lint
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - distro: ubuntu1804
+            playbook: converge.yml
+          - distro: debian10
+            playbook: converge.yml
+          - distro: centos8
+            playbook: converge.yml
+          # TODO:
+          #
+          # PHP 7.3
+          # local_config: tests/ubuntu-18-php73.config.yml
+          # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
+          # TEST_INSTALLED_EXTRAS: false
+          #
+          # Postgresql
+          # local_config: tests/ubuntu-18-postgresql.config.yml
+          # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
+          # config_dir: /var/www/drupalvm/config
+          # TEST_INSTALLED_EXTRAS: false
+
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule[docker] docker
+
+      - name: Copy test scaffold files into place.
+        run: |
+          cp tests/config.yml ./config.yml
+          cp example.drupal.make.yml drupal.make.yml
+          cp example.drupal.composer.json drupal.composer.json
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
