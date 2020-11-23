@@ -1,4 +1,0 @@
----
-drupal_db_backend: pgsql
-php_sendmail_path: "/usr/sbin/sendmail -t -i"
-installed_extras: []

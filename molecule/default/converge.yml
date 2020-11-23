@@ -13,6 +13,7 @@
 
     # Added to prevent test failures in CI.
     firewall_enable_ipv6: false
+    hostname_fqdn: ''
 
   tasks:
     - name: Update apt cache.

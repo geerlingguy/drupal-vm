@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
-        with:
-          path: 'geerlingguy.apache'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
@@ -46,6 +44,7 @@ jobs:
     strategy:
       matrix:
         include:
+          # Defaults.
           - distro: ubuntu1804
             playbook: converge.yml
           - distro: debian10
