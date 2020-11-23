@@ -3,18 +3,6 @@
   hosts: all
   become: true
 
-  vars:
-    # Update the composer_home_path for global installs.
-    composer_home_path: "/{{ drupalvm_user }}/.composer"
-
-    # Don't run the 'disable firewall' tasks in tests.
-    firewall_disable_firewalld: false
-    firewall_disable_ufw: false
-
-    # Added to prevent test failures in CI.
-    firewall_enable_ipv6: false
-    hostname_configure: false
-
   tasks:
     - name: Update apt cache.
       apt:
@@ -27,6 +15,19 @@
         name: logrotate
         state: present
       when: ansible_os_family == 'RedHat'
+
+    - name: Configure override vars (all).
+      set_fact:
+        # Update the composer_home_path for global installs.
+        composer_home_path: "/{{ drupalvm_user }}/.composer"
+
+        # Don't run the 'disable firewall' tasks in tests.
+        firewall_disable_firewalld: false
+        firewall_disable_ufw: false
+
+        # Added to prevent test failures in CI.
+        firewall_enable_ipv6: false
+        hostname_configure: false
 
     - name: Configure test vars (RedHat).
       set_fact:
