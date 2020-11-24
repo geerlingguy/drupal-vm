@@ -54,18 +54,16 @@ jobs:
 
             # PHP 7.3
             # local_config: tests/ubuntu-18-php73.config.yml
-            # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
             # TEST_INSTALLED_EXTRAS: false
             # - distro: ubuntu1804
-            #   playbook: php-7.3.yml
+            #   playbook: TODO
 
             # Postgresql
             # local_config: tests/ubuntu-18-postgresql.config.yml
-            # DRUSH_BIN: "${DRUPALVM_DIR}/drupal/vendor/bin/drush"
             # config_dir: /var/www/drupalvm/config
             # TEST_INSTALLED_EXTRAS: false
             # - distro: ubunt1804
-            #   playbook: postgresql.yml
+            #   playbook: TODO
 
     steps:
       - name: Check out the codebase.
@@ -78,6 +76,15 @@ jobs:
 
       - name: Install test dependencies.
         run: pip3 install ansible molecule[docker] docker
+
+      # See: https://github.com/geerlingguy/ansible-role-mysql/issues/422
+      - name: Disable AppArmor on Debian.
+        run: |
+            set -x
+            sudo apt-get install apparmor-profiles
+            sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+            sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+        if: ${{ startsWith(matrix.distro, 'debian') }}
 
       - name: Copy test scaffold files into place.
         run: |
