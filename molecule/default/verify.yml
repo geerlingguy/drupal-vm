@@ -5,11 +5,12 @@
 
   vars:
     drupal_vm_hostname: drupalvm.test
+    drupal_composer_install_dir: /var/www/drupalvm/drupal
 
   tasks:
     - name: Validate web services are up and running.
       uri:
-        url: localhost{{ item.port | default(omit) }}
+        url: http://localhost{{ item.port | default('') }}
         headers:
           Host: "{{ item.host_prefix }}{{ drupal_vm_hostname }}"
         return_content: true
@@ -30,21 +31,21 @@
           expected_content: "<title>Pimp my Log"
         - name: MailHog
           host_prefix: ""
-          port: "8025"
+          port: ":8025"
           expected_content: "<title>MailHog"
 
-# TODO: Varnish
-# if [ $TEST_INSTALLED_EXTRAS = true ]; then
-#   docker exec $CONTAINER_ID curl -sSI --header Host:$HOSTNAME localhost:81 \
-#     | tee /tmp/dvm-test \
-#     | grep -q 'Via: .* varnish' \
-#     && (echo 'Varnish install pass' && exit 0) \
-#     || (echo 'Varnish install fail' && cat /tmp/dvm-test && exit 1)
-# fi
+    - name: Validate Varnish is up and running.
+      uri:
+        url: http://localhost:81
+        headers:
+          Host: "{{ drupal_vm_hostname }}"
+      register: varnish_response
+      failed_when: "'varnish' not in varnish_response.via"
 
-# TODO: Drush
-# docker exec $CONTAINER_ID bash -c "cd $DRUPALVM_DIR/drupal && $DRUSH_BIN status" \
-#   | tee /tmp/dvm-test \
-#   | grep -q 'Drush' \
-#   && (echo 'Drush install pass' && exit 0) \
-#   || (echo 'Drush install fail' && cat /tmp/dvm-test && exit 1)
+    - name: Validate Drush is working with Drupal.
+      command: >
+        vendor/bin/drush status
+        chdir={{ drupal_composer_install_dir }}
+      register: drush_result
+      changed_when: false
+      failed_when: "'Drupal bootstrap : Successful' in drush_result.stdout"
