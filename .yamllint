@@ -15,5 +15,4 @@ rules:
 
 ignore: |
   */stale.yml
-  */.travis.yml
   provisioning/roles/
