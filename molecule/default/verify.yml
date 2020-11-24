@@ -48,4 +48,4 @@
         chdir={{ drupal_composer_install_dir }}
       register: drush_result
       changed_when: false
-      failed_when: "'Drupal bootstrap : Successful' in drush_result.stdout"
+      failed_when: "'Successful' in drush_result.stdout"
