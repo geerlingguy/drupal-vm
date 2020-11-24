@@ -1,20 +1,36 @@
 ---
+# Use manual composer tasks until Ansible 2.10.4 is released.
 - name: Ensure Drush is installed globally via Composer.
-  composer:
-    command: require
-    global_command: true
-    arguments: "drush/drush:{{ drush_composer_version }}"
+  command: "{{ composer_path }} global require drush/drush:{{ drush_composer_version }}"
   register: drush_composer_require
+  changed_when: "'Nothing to install' not in drush_composer_require.stderr"
 
 - name: Update global Drush install if configured.
-  composer:
-    command: update
-    global_command: true
-    arguments: "drush/drush --with-dependencies"
+  command: "{{ composer_path }} global update drush/drush --with-dependencies"
+  changed_when: "'Nothing to install' not in drush_composer_require.stderr"
+  register: tasky
   when:
     - drush_composer_update
     - not drush_composer_require.changed
   tags: ['skip_ansible_lint']
+
+# Switch back to these tasks after Ansible 2.10.4 is released.
+# - name: Ensure Drush is installed globally via Composer.
+#   composer:
+#     command: require
+#     global_command: true
+#     arguments: "drush/drush:{{ drush_composer_version }}"
+#   register: drush_composer_require
+#
+# - name: Update global Drush install if configured.
+#   composer:
+#     command: update
+#     global_command: true
+#     arguments: "drush/drush --with-dependencies"
+#   when:
+#     - drush_composer_update
+#     - not drush_composer_require.changed
+#   tags: ['skip_ansible_lint']
 
 - name: Ensure globally-installed Drush is symlinked into bin dir.
   file:  # noqa 208

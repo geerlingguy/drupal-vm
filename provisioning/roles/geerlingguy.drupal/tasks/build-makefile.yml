@@ -3,6 +3,7 @@
   copy:
     src: "{{ drush_makefile_path }}"
     dest: /tmp/drupal.make.yml
+    mode: 0644
   when: not drupal_site_exists
 
 - name: Ensure drupal_core_path directory exists.

@@ -25,13 +25,25 @@
   stat: "path={{ drupal_deploy_dir }}/composer.json"
   register: drupal_deploy_composer_file
 
+# Use manual composer require tasks until Ansible 2.10.4 is released.
 - name: Run composer install if composer.json is present.
-  composer:
-    command: install
-    working_dir: "{{ drupal_deploy_dir }}"
-    no_dev: "{{ drupal_composer_no_dev }}"
+  command: "composer install -d {{ drupal_deploy_dir }}{% if drupal_composer_no_dev %} --no-dev{% endif %}"
+  register: composer_install_result
+  changed_when: "'Nothing to install' not in composer_install_result.stderr"
   when:
     - drupal_deploy_composer_file.stat.exists
     - drupal_deploy_composer_install
   become: "{{ drupal_core_owner_become }}"
   become_user: "{{ drupal_core_owner }}"
+
+# Switch back to this task after Ansible 2.10.4 is released.
+# - name: Run composer install if composer.json is present.
+#   composer:
+#     command: install
+#     working_dir: "{{ drupal_deploy_dir }}"
+#     no_dev: "{{ drupal_composer_no_dev }}"
+#   when:
+#     - drupal_deploy_composer_file.stat.exists
+#     - drupal_deploy_composer_install
+#   become: "{{ drupal_core_owner_become }}"
+#   become_user: "{{ drupal_core_owner }}"
