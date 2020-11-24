@@ -95,7 +95,7 @@ drupal_major_version: 9
 drupal_domain: "{{ vagrant_hostname }}"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
-drupal_enable_modules: [ 'devel' ]
+drupal_enable_modules: ['devel']
 drupal_account_name: admin
 drupal_account_pass: admin
 
@@ -285,7 +285,7 @@ composer_global_packages: []
 # reference the directory where your `config.yml` is.
 pre_provision_scripts: []
 post_provision_scripts: []
-  # - "{{ playbook_dir }}/../examples/scripts/configure-solr.sh"
+# - "{{ playbook_dir }}/../examples/scripts/configure-solr.sh"
 
 # MySQL Configuration.
 mysql_root_password: root

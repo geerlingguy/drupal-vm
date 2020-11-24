@@ -7,11 +7,11 @@
     - test-vars.yml
 
   vars:
-    # Deploy from the Drupal VM Prod example project.
+    # Deploy from the Drupal for Kubernetes example project.
     drupal_deploy: true
-    drupal_deploy_repo: "https://github.com/geerlingguy/drupalvm-live.git"
+    drupal_deploy_repo: "https://github.com/geerlingguy/drupal-for-kubernetes.git"
     drupal_deploy_dir: /var/www/drupal
-    drupal_domain: "prod.drupalvm.com"
+    drupal_domain: "test.pidramble.com"
 
     # Disable Composer-based codebase setup.
     drupal_build_composer_project: false

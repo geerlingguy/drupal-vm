@@ -25,7 +25,7 @@
         "process-timeout": 1800
     },
     "scripts": {
-        "run-tests": "./tests/run-tests.sh",
+        "run-tests": "molecule test",
         "docker-bake": "./provisioning/docker/bake.sh",
         "docker-save-image": "./provisioning/docker/save-image.sh",
         "docker-load-image": "./provisioning/docker/load-image.sh"

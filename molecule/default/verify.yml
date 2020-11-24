@@ -1,0 +1,51 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  vars:
+    drupal_vm_hostname: drupalvm.test
+    drupal_composer_install_dir: /var/www/drupalvm/drupal
+
+  tasks:
+    - name: Validate web services are up and running.
+      uri:
+        url: http://localhost{{ item.port | default('') }}
+        headers:
+          Host: "{{ item.host_prefix }}{{ drupal_vm_hostname }}"
+        return_content: true
+      register: response
+      failed_when: item.expected_content not in response.content
+      with_items:
+        - name: Drupal
+          host_prefix: ""
+          expected_content: "<title>Welcome to Drupal"
+        - name: Dashboard
+          host_prefix: "dashboard."
+          expected_content: "Vagrant + Ansible"
+        - name: Adminer
+          host_prefix: "adminer."
+          expected_content: "<title>Login - Adminer"
+        - name: Pimp My Log
+          host_prefix: "pimpmylog."
+          expected_content: "<title>Pimp my Log"
+        - name: MailHog
+          host_prefix: ""
+          port: ":8025"
+          expected_content: "<title>MailHog"
+
+    - name: Validate Varnish is up and running.
+      uri:
+        url: http://localhost:81
+        headers:
+          Host: "{{ drupal_vm_hostname }}"
+      register: varnish_response
+      failed_when: "'varnish' not in varnish_response.via"
+
+    - name: Validate Drush is working with Drupal.
+      command: >
+        vendor/bin/drush status
+        chdir={{ drupal_composer_install_dir }}
+      register: drush_result
+      changed_when: false
+      failed_when: "'Drupal bootstrap : Successful' not in drush_result.stdout"

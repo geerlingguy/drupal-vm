@@ -1,0 +1,99 @@
+---
+name: CI
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "20 3 * * 0"
+
+jobs:
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Set up Ruby.
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+
+      - name: Install test dependencies.
+        run: |
+          pip3 install yamllint
+          gem install rubocop
+
+      - name: Lint code.
+        run: |
+          yamllint .
+          rubocop ./Vagrantfile ./lib/drupalvm \
+            --except Metrics/LineLength,Security/Eval,Style/MutableConstant,Metrics/BlockLength,Metrics/MethodLength,Style/ConditionalAssignment,Style/IfUnlessModifier,Style/CaseLikeIf
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Defaults.
+          - distro: ubuntu1804
+            playbook: converge.yml
+          - distro: debian10
+            playbook: converge.yml
+          - distro: centos8
+            playbook: converge.yml
+
+            # TODO: Add PHP 7.4 test.
+            # local_config: tests/ubuntu1804-php74.config.yml
+            # test_extras: false
+            # - distro: ubuntu1804
+            #   playbook: TODO
+
+            # TODO: Add Postgresql test.
+            # local_config: tests/ubuntu1804-postgresql.config.yml
+            # config_dir: /var/www/drupalvm/config
+            # test_extras: false
+            # - distro: ubunt1804
+            #   playbook: TODO
+
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule[docker] docker
+
+      # See: https://github.com/geerlingguy/ansible-role-mysql/issues/422
+      - name: Disable AppArmor on Debian.
+        run: |
+            set -x
+            sudo apt-get install apparmor-profiles
+            sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+            sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+        if: ${{ startsWith(matrix.distro, 'debian') }}
+
+      - name: Copy test scaffold files into place.
+        run: |
+          cp example.drupal.make.yml drupal.make.yml
+          cp example.drupal.composer.json drupal.composer.json
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}

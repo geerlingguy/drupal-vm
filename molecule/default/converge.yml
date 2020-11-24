@@ -1,0 +1,37 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt cache.
+      apt:
+        update_cache: true
+        cache_valid_time: 1200
+      when: ansible_os_family == 'Debian'
+
+    - name: Install test dependencies (RedHat).
+      package:
+        name: logrotate
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Configure override vars (all).
+      set_fact:
+        # Update the composer_home_path for global installs.
+        composer_home_path: "/root/.composer"
+
+        # Don't run the 'disable firewall' tasks in tests.
+        firewall_disable_firewalld: false
+        firewall_disable_ufw: false
+
+        # Added to prevent test failures in CI.
+        firewall_enable_ipv6: false
+        hostname_configure: false
+
+    - name: Configure test vars (RedHat).
+      set_fact:
+        postfix_inet_protocols: ipv4
+      when: ansible_os_family == 'RedHat'
+
+- import_playbook: ../../provisioning/playbook.yml

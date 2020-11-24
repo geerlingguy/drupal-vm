@@ -1,6 +1,6 @@
 ![Drupal VM Logo](https://raw.githubusercontent.com/geerlingguy/drupal-vm/master/docs/images/drupal-vm-logo.png)
 
-[![Build Status](https://travis-ci.com/geerlingguy/drupal-vm.svg?branch=master)](https://travis-ci.com/geerlingguy/drupal-vm) [![Documentation Status](https://readthedocs.org/projects/drupal-vm/badge/?version=latest)](http://docs.drupalvm.com) [![Packagist](https://img.shields.io/packagist/v/geerlingguy/drupal-vm.svg)](https://packagist.org/packages/geerlingguy/drupal-vm) [![Docker Automated build](https://img.shields.io/docker/automated/geerlingguy/drupal-vm.svg?maxAge=2592000)](https://hub.docker.com/r/geerlingguy/drupal-vm/) [![](https://images.microbadger.com/badges/image/geerlingguy/drupal-vm.svg)](https://microbadger.com/images/geerlingguy/drupal-vm "Get your own image badge on microbadger.com") [![irc://irc.freenode.net/drupal-vm](https://img.shields.io/badge/irc.freenode.net-%23drupal--vm-brightgreen.svg)](https://riot.im/app/#/room/#drupal-vm:matrix.org)
+[![CI](https://github.com/geerlingguy/drupal-vm/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/drupal-vm/actions?query=workflow%3ACI) [![Documentation Status](https://readthedocs.org/projects/drupal-vm/badge/?version=latest)](http://docs.drupalvm.com) [![Packagist](https://img.shields.io/packagist/v/geerlingguy/drupal-vm.svg)](https://packagist.org/packages/geerlingguy/drupal-vm) [![Docker Automated build](https://img.shields.io/docker/automated/geerlingguy/drupal-vm.svg?maxAge=2592000)](https://hub.docker.com/r/geerlingguy/drupal-vm/) [![](https://images.microbadger.com/badges/image/geerlingguy/drupal-vm.svg)](https://microbadger.com/images/geerlingguy/drupal-vm "Get your own image badge on microbadger.com") [![irc://irc.freenode.net/drupal-vm](https://img.shields.io/badge/irc.freenode.net-%23drupal--vm-brightgreen.svg)](https://riot.im/app/#/room/#drupal-vm:matrix.org)
 
 [Drupal VM](https://www.drupalvm.com/) is a VM for Drupal, built with Ansible.
 
@@ -168,14 +168,13 @@ Drupal VM runs on almost any modern computer that can run VirtualBox and Vagrant
 
 ## Tests
 
-To run basic integration tests using Docker:
+To run basic integration tests using Docker and Molecule:
 
   1. [Install Docker](https://docs.docker.com/engine/installation/).
+  2. Install Molecule: `pip3 install ansible molecule[docker]`
   2. In this project directory, run: `composer run-tests`
 
-> Note: If you're on a Mac, you need to use [Docker's Edge release](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac), at least until [this issue](https://github.com/docker/for-mac/issues/77) is resolved.
-
-The project's automated tests are run via Travis CI, and the more comprehensive test suite covers multiple Linux distributions and many different Drupal VM use cases and deployment techniques.
+The project's automated tests are run via GitHub Actions, and the more comprehensive test suite covers multiple Linux distributions and many different Drupal VM use cases and deployment techniques.
 
 ## License
 
