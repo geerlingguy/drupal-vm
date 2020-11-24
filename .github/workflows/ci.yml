@@ -52,16 +52,16 @@ jobs:
           - distro: centos8
             playbook: converge.yml
 
-            # PHP 7.3
-            # local_config: tests/ubuntu-18-php73.config.yml
-            # TEST_INSTALLED_EXTRAS: false
+            # TODO: Add PHP 7.4 test.
+            # local_config: tests/ubuntu1804-php74.config.yml
+            # test_extras: false
             # - distro: ubuntu1804
             #   playbook: TODO
 
-            # Postgresql
-            # local_config: tests/ubuntu-18-postgresql.config.yml
+            # TODO: Add Postgresql test.
+            # local_config: tests/ubuntu1804-postgresql.config.yml
             # config_dir: /var/www/drupalvm/config
-            # TEST_INSTALLED_EXTRAS: false
+            # test_extras: false
             # - distro: ubunt1804
             #   playbook: TODO
 
