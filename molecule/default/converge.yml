@@ -19,7 +19,7 @@
     - name: Configure override vars (all).
       set_fact:
         # Update the composer_home_path for global installs.
-        composer_home_path: "/{{ drupalvm_user }}/.composer"
+        composer_home_path: "/root/.composer"
 
         # Don't run the 'disable firewall' tasks in tests.
         firewall_disable_firewalld: false
