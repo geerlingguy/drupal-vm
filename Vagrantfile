@@ -111,6 +111,7 @@ Vagrant.configure('2') do |config|
   config.vm.provision 'drupalvm', type: provisioner do |ansible|
     ansible.compatibility_mode = '2.0'
     ansible.playbook = playbook
+    ansible.install_mode = 'pip3'
     ansible.extra_vars = {
       config_dir: config_dir,
       drupalvm_env: drupalvm_env,
@@ -119,7 +120,7 @@ Vagrant.configure('2') do |config|
     ansible.raw_arguments = Shellwords.shellsplit(ENV['DRUPALVM_ANSIBLE_ARGS']) if ENV['DRUPALVM_ANSIBLE_ARGS']
     ansible.tags = ENV['DRUPALVM_ANSIBLE_TAGS']
     # Use pip to get the latest Ansible version when using ansible_local.
-    provisioner == :ansible_local && ansible.install_mode = 'pip'
+    provisioner == :ansible_local && ansible.install_mode = 'pip3'
   end
 
   # VMware Fusion.
