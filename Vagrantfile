@@ -111,7 +111,6 @@ Vagrant.configure('2') do |config|
   config.vm.provision 'drupalvm', type: provisioner do |ansible|
     ansible.compatibility_mode = '2.0'
     ansible.playbook = playbook
-    ansible.install_mode = 'pip3'
     ansible.extra_vars = {
       config_dir: config_dir,
       drupalvm_env: drupalvm_env,
