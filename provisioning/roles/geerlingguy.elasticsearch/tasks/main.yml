@@ -19,7 +19,6 @@
     mode: 0660
   with_items:
     - /etc/elasticsearch/elasticsearch.yml
-    - /etc/elasticsearch/jvm.options.d/heap.options
   notify: restart elasticsearch
 
 - name: Force a restart if configuration has changed.
