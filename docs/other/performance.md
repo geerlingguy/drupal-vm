@@ -59,7 +59,7 @@ vagrant_synced_folders:
   # Use a slower but two-way sync for configuration sync directory.
   - local_path: config/drupal
     destination: /var/www/drupal/config/drupal
-    type: "" # Or smb/nfs if available
+    type: virtualbox # Or smb/nfs if available
     create: true
 ```
 
@@ -82,7 +82,7 @@ Another option for the more adventurous is to manually install and configure Win
 
 GuyPaddock's [fork of `vagrant-winnfsd`](https://github.com/GuyPaddock/vagrant-winnfsd) adds logging and debug messages. You can replace the vagrant-winnfsd gem inside `.vagrant.d\gems\gems` to use it instead. For further caveats, please read through [vagrant-winnfsd issue #12](https://github.com/winnfsd/vagrant-winnfsd/issues/12#issuecomment-78195957), and make the following changes to `config.yml`:
 
-    vagrant_synced_folder_default_type: ""
+    vagrant_synced_folder_default_type: virtualbox
 
 Add `mount_options` to your synced folder to avoid an error:
 
