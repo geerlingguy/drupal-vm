@@ -45,13 +45,13 @@ There are a number of issues people encounter with synced folders from time to t
 
 ### Using Native Synced Folders
 
-You can use a native synced folder, which should work pretty flawlessly on any platform, but with a potential serious performance downside (compared to other synced folder methods). Just set `type` to `""`.
+You can use a native synced folder, which should work pretty flawlessly on any platform, but with a potential serious performance downside (compared to other synced folder methods). Just set `type` to `virtualbox`.
 
 ```yaml
 vagrant_synced_folders:
   - local_path: .
     destination: /var/www/docroot
-    type: ""
+    type: virtualbox
     create: true
 ```
 
@@ -65,7 +65,7 @@ If you're encountering errors where Drupal or some other software inside the VM 
 vagrant_synced_folders:
   - local_path: .
     destination: /var/www/drupalvm
-    type: ""
+    type: virtualbox
     create: true
     mount_options: ["dmode=775", "fmode=664"]
     options_override:
