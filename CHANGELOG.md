@@ -1,5 +1,29 @@
 # Drupal VM Changelog
 
+## 6.0.3 (2021-02-13)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * Replaced obsolete variable `php_opcache_enabled_in_ini` with `php_opcache_enable`.
+
+### Improvements
+
+  * #2109: Switch CI test environment from homegrown script and Travis CI to Molecule and GitHub Actions.
+  * Updated Postgres role to latest version.
+  * Updated Composer role to latest version to allow switching between Composer major versions.
+
+### Bugfixes
+
+  * #2137: Use pip3 inside VM if using ansible_local provisioner.
+  * #2144: Update docs for native synced folder usage due to changed typing of the variable in Vagrant.
+  * #2121: Replace php_opcache_enabled_in_ini with php_opcache_enable.
+  * Updated Drush role for better Composer v2 compatibility.
+
+
 ## 6.0.2 (2020-10-27)
 
 ### Breaking Changes
