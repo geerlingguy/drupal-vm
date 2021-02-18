@@ -21,7 +21,7 @@
 
   - name: Enable DNF module for CentOS 8+.
     shell: |
-      dnf config-manager --set-enabled PowerTools
+      dnf config-manager --set-enabled powertools
       dnf module enable -y php:remi-{{ php_version }}
     args:
       warn: false
