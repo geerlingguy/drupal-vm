@@ -8,8 +8,8 @@
 - name: Define PHP variables.
   set_fact: "{{ item.key }}={{ lookup('vars', item.value) }}"
   when:
-    - hostvars[inventory_hostname][item.key] is undefined
-    - hostvars[inventory_hostname][item.value] is defined
+    - vars[item.key] is undefined
+    - vars[item.value] is defined
   with_dict:
     php_conf_paths: __php_conf_paths
     php_extension_conf_paths: __php_extension_conf_paths

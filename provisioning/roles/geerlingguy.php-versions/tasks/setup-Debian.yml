@@ -24,6 +24,7 @@
 - name: Add Ondrej Sury's apt key (Debian).
   apt_key:
     url: https://packages.sury.org/php/apt.gpg
+    id: 15058500A0235D97F5D10063B188E2B695BD4743
     state: present
   when: ansible_distribution == "Debian"
 
