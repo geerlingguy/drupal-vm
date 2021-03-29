@@ -18,6 +18,7 @@
     -s {{ solr_service_name }}
     -p {{ solr_port }}
     {{ (solr_version is version('6.3.0', '>=')) | ternary('-n','') }}
+    {{ (solr_version is version('5.4.0', '>=')) | ternary('-f','') }}
     creates={{ solr_install_path }}/bin/solr
   register: solr_install_script_result
 

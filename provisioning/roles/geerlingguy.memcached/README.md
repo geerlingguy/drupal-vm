@@ -1,6 +1,6 @@
 # Ansible Role: Memcached
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-memcached.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-memcached)
+[![CI](https://github.com/geerlingguy/ansible-role-memcached/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-memcached/actions?query=workflow%3ACI)
 
 An Ansible Role that installs Memcached on RedHat/CentOS or Debian/Ubuntu Linux.
 

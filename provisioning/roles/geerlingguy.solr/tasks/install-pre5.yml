@@ -12,7 +12,7 @@
   file:  # noqa 208
     path: "{{ solr_install_path }}"
     owner: "{{ solr_user }}"
-    group: "{{ solr_user }}"
+    group: "{{ solr_group }}"
     recurse: true
   when: not solr_war_file.stat.exists
 
@@ -26,7 +26,7 @@
     path: "{{ solr_home }}"
     state: directory
     owner: "{{ solr_user }}"
-    group: "{{ solr_user }}"
+    group: "{{ solr_group }}"
     mode: 0755
   when: not solr_example.stat.exists
 
@@ -46,7 +46,7 @@
   file:  # noqa 208
     path: "{{ solr_home }}"
     owner: "{{ solr_user }}"
-    group: "{{ solr_user }}"
+    group: "{{ solr_group }}"
     recurse: true
   when: not solr_example.stat.exists
 

@@ -1,6 +1,6 @@
 # Ansible Role: Apache Solr
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-solr.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-solr)
+[![CI](https://github.com/geerlingguy/ansible-role-solr/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-solr/actions?query=workflow%3ACI)
 
 Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
@@ -20,8 +20,9 @@ Files will be downloaded to this path on the remote server before being moved in
 
     solr_create_user: true
     solr_user: solr
+    solr_group: "{{ solr_user }}"
 
-Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user.
+Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user. By default, `solr_group` equals `solr_user`, but it can be overwritten to fit your own configuration.
 
     solr_version: "8.6.0"
 
