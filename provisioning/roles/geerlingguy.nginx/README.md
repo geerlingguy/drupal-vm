@@ -1,6 +1,6 @@
 # Ansible Role: Nginx
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-nginx)
+[![CI](https://github.com/geerlingguy/ansible-role-nginx/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-nginx/actions?query=workflow%3ACI)
 
 **Note:** Please consider using the official [NGINX Ansible role](https://github.com/nginxinc/ansible-role-nginx) from NGINX, Inc.
 
@@ -15,6 +15,11 @@ None.
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
+
+
+    nginx_listen_ipv6: true
+
+Whether or not to listen on IPv6 (applied to all vhosts managed by this role).
 
     nginx_vhosts: []
 

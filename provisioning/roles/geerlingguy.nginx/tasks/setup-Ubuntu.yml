@@ -4,7 +4,7 @@
     name: dirmngr
     state: present
 
-- name: Add PPA for Nginx.
+- name: Add PPA for Nginx (if configured).
   apt_repository:
     repo: 'ppa:nginx/{{ nginx_ppa_version }}'
     state: present
