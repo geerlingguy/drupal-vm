@@ -35,7 +35,7 @@ roles:
   - name: geerlingguy.mailhog
     version: 2.2.0
   - name: geerlingguy.memcached
-    version: 2.0.0
+    version: 2.1.0
   - name: geerlingguy.mysql
     version: 3.3.0
   - name: geerlingguy.nginx
