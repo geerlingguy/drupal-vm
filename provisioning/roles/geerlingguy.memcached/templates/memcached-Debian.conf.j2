@@ -9,6 +9,9 @@
 # information.
 -d
 
+# Threads count
+-t {{ memcached_threads }}
+
 # Log memcached's output to /var/log/memcached
 logfile {{ memcached_log_file }}
 {{ memcached_log_verbosity }}

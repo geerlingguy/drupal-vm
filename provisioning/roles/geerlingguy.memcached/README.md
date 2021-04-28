@@ -21,6 +21,10 @@ The user under which the Memcached daemon will run.
 
 The port and IP address (127.0.0.1 for localhost) on which Memcached will listen for requests.
 
+    memcached_threads: 4
+
+Number of threads to run.
+
     memcached_memory_limit: 64
     memcached_max_item_size: 1m
     memcached_connections: 1024
