@@ -1,0 +1,2 @@
+---
+vagrant_nfs_fix_keepalive_file: "/vagrant/.vagrant-nfs-fix-keepalive.tmp"

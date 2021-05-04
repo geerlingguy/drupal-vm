@@ -1,0 +1,55 @@
+#! /bin/sh
+# /etc/init.d/vagrant-nfs-fix
+
+### BEGIN INIT INFO
+# Provides:          vagrant-nfs-fix
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start vagrant-nfs-fix at boot time
+# Description:       Continuously touch a file within an NFS mount to avoid timeout problems on macOS.
+### END INIT INFO
+
+PID_FILE="/var/run/vagrant-nfs-fix.pid"
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting vagrant-nfs-fix."
+    /usr/sbin/vagrant-nfs-fix &
+    echo $! > $PID_FILE
+    ;;
+  stop)
+    echo "Stopping vagrant-nfs-fix."
+    kill `cat $PID_FILE`
+    rm $PID_FILE
+    ;;
+  restart)
+    echo "Restarting firewall."
+    kill `cat $PID_FILE`
+    rm $PID_FILE
+
+    /usr/sbin/vagrant-nfs-fix &
+    echo $! > $PID_FILE
+    ;;
+  status)
+    EXIT=4 # program or service status is unknown
+    if [ -e $PID_FILE ]; then
+        if ps -p `cat $PID_FILE` > /dev/null 2>&1; then
+            EXIT=0 # program is running or service is OK
+        else
+            EXIT=3 # program is not running
+        fi
+    else
+        EXIT=3 # program is not running
+    fi
+    exit $EXIT
+    ;;
+  *)
+    echo "Usage: /etc/init.d/vagrant-nfs-fix {start|stop|status|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
