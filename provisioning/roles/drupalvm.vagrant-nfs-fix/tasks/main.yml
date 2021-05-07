@@ -7,23 +7,13 @@
     group: root
     mode: 0755
 
-- name: Copy Vagrant NFS fix init script into place.
-  template:
-    src: vagrant-nfs-fix.init.j2
-    dest: /etc/init.d/vagrant-nfs-fix
-    owner: root
-    group: root
-    mode: 0755
-  when: ansible_service_mgr != 'systemd'
-
-- name: Copy Vagrant NFS fix systemd unit file into place (for systemd systems).
+- name: Copy Vagrant NFS fix systemd unit file into place.
   template:
     src: vagrant-nfs-fix.unit.j2
     dest: /etc/systemd/system/vagrant-nfs-fix.service
     owner: root
     group: root
     mode: 0644
-  when: ansible_service_mgr == 'systemd'
 
 - name: Configure the NFS fix service.
   service:
