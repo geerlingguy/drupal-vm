@@ -1,0 +1,12 @@
+[Unit]
+Description=Workaround for vagrant NFS inactivity bug
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/sbin/vagrant-nfs-fix
+
+[Install]
+WantedBy=multi-user.target

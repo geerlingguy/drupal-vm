@@ -1,0 +1,8 @@
+#!/bin/sh
+
+while true; do
+  touch {{ vagrant_nfs_fix_keepalive_file }}
+  sleep 1
+  rm {{ vagrant_nfs_fix_keepalive_file }}
+  sleep 30
+done

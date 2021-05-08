@@ -1,0 +1,22 @@
+---
+- name: Copy Vagrant NFS fix script into place.
+  template:
+    src: vagrant-nfs-fix.j2
+    dest: /usr/sbin/vagrant-nfs-fix
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy Vagrant NFS fix systemd unit file into place.
+  template:
+    src: vagrant-nfs-fix.unit.j2
+    dest: /etc/systemd/system/vagrant-nfs-fix.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Configure the NFS fix service.
+  service:
+    name: vagrant-nfs-fix
+    state: started
+    enabled: true

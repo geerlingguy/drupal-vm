@@ -42,6 +42,10 @@ vagrant_plugins:
   - name: vagrant-vbguest
   - name: vagrant-hostsupdater
 
+# Automatically fix timeout issues with NFS on macOS. See
+# https://github.com/geerlingguy/drupal-vm/issues/2154
+vagrant_nfs_fix_enabled: false
+
 ansible_python_interpreter: python3
 
 # Minimum required versions.
