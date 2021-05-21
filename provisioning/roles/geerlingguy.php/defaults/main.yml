@@ -30,6 +30,20 @@ php_fpm_pm_max_children: 50
 php_fpm_pm_start_servers: 5
 php_fpm_pm_min_spare_servers: 5
 php_fpm_pm_max_spare_servers: 5
+php_fpm_pm_max_requests: 0
+
+# PHP-FPM pool configuration.
+php_fpm_pools:
+  - pool_name: www
+    pool_template: www.conf.j2
+    pool_listen: "{{ php_fpm_listen }}"
+    pool_listen_allowed_clients: "{{ php_fpm_listen_allowed_clients }}"
+    pool_pm: dynamic
+    pool_pm_max_children: "{{ php_fpm_pm_max_children }}"
+    pool_pm_start_servers: "{{ php_fpm_pm_start_servers }}"
+    pool_pm_min_spare_servers: "{{ php_fpm_pm_min_spare_servers }}"
+    pool_pm_max_spare_servers: "{{ php_fpm_pm_max_spare_servers }}"
+    pool_php_fpm_pm_max_requests: "{{ php_fpm_pm_max_requests }}"
 
 # The executable to run when calling PHP from the command line.
 php_executable: "php"
