@@ -1,5 +1,25 @@
 # Drupal VM Changelog
 
+## 6.0.4 (2021-05-28)
+
+### Breaking Changes
+
+N/A
+
+### New/changed variables in default.config.yml
+
+  * Added variable `vagrant_nfs_fix_enabled: false` - See #2154. If you are having trouble with NFS going away on macOS Big Sur, override this variable and set it to `true` to overcome a Vagrant bug in the latest version of macOS.
+
+### Improvements
+
+  * Upgraded php-versions, solr, memcached, nginx, and mysql roles to latest versions.
+
+### Bugfixes
+
+  * #2154: Add new `vagrant-nfs-fix` role to solve NFS issues on macOS Big Sur.
+  * #2166: Fix ansible version output regex matching for new core/community version output.
+
+
 ## 6.0.3 (2021-02-13)
 
 ### Breaking Changes
