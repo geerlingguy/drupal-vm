@@ -1,6 +1,6 @@
 # Ansible Role: Adminer
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-adminer.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-adminer)
+[![CI](https://github.com/geerlingguy/ansible-role-adminer/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-adminer/actions?query=workflow%3ACI)
 
 An Ansible Role that installs [Adminer](http://www.adminer.org/) on almost any computer.
 
@@ -11,6 +11,10 @@ You need to have PHP and MySQL for Adminer to do anything useful. If you have Ap
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
+
+    adminer_download_url: https://www.adminer.org/latest.php
+
+The URL from which Adminer should be downloaded.
 
     adminer_install_dir: /opt/adminer
 

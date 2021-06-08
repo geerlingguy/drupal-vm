@@ -1,4 +1,5 @@
 ---
+adminer_download_url: https://www.adminer.org/latest.php
 adminer_install_dir: /opt/adminer
 adminer_install_filename: adminer.php
 adminer_symlink_dirs: []
