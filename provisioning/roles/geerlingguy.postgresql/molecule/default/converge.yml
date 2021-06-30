@@ -26,16 +26,6 @@
       changed_when: false
       when: ansible_os_family == 'Debian'
 
-    - name: Set custom variables for old CentOS 6 PostgreSQL install.
-      set_fact:
-        postgresql_hba_entries: []
-        postgresql_global_config_options:
-          - option: unix_socket_directory
-            value: '{{ postgresql_unix_socket_directories[0] }}'
-      when:
-        - ansible_os_family == 'RedHat'
-        - ansible_distribution_version.split('.')[0] == '6'
-
   roles:
     - role: geerlingguy.postgresql
 

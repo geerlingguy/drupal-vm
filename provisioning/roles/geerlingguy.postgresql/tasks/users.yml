@@ -2,6 +2,12 @@
 - name: Ensure PostgreSQL users are present.
   postgresql_user:
     name: "{{ item.name }}"
+    password: "{{ item.password | default(omit) }}"
+    login_host: "{{ item.login_host | default('localhost') }}"
+    login_password: "{{ item.login_password | default(omit) }}"
+    login_user: "{{ item.login_user | default(postgresql_user) }}"
+    login_unix_socket: "{{ item.login_unix_socket | default(postgresql_unix_socket_directories[0]) }}"
+    port: "{{ item.port | default(omit) }}"
   with_items: "{{ postgresql_users }}"
   no_log: "{{ postgres_users_no_log }}"
   become: true
@@ -9,3 +15,5 @@
   # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
   vars:
     ansible_ssh_pipelining: true
+  environment:
+    PGOPTIONS: "{{ (postgresql_auth_method == 'scram-sha-256') | ternary('-c password_encryption=scram-sha-256', '') }}"

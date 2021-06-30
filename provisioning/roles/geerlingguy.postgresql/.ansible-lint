@@ -1,4 +1,4 @@
 skip_list:
-  - '405'
-  - '503'
-  - '106'
+  - 'yaml'
+  - 'no-handler'
+  - 'role-name'

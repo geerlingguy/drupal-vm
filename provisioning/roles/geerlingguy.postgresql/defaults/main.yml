@@ -10,6 +10,9 @@ postgresql_python_library: python-psycopg2
 postgresql_user: postgres
 postgresql_group: postgres
 
+# `md5` or `scram-sha-256` (https://www.postgresql.org/docs/10/auth-methods.html)
+postgresql_auth_method: "{{ ansible_fips  | ternary('scram-sha-256', 'md5') }}"
+
 postgresql_unix_socket_directories:
   - /var/run/postgresql
 
@@ -26,8 +29,8 @@ postgresql_global_config_options:
 postgresql_hba_entries:
   - {type: local, database: all, user: postgres, auth_method: peer}
   - {type: local, database: all, user: all, auth_method: peer}
-  - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5}
-  - {type: host, database: all, user: all, address: '::1/128', auth_method: md5}
+  - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: "{{ postgresql_auth_method }}"}
+  - {type: host, database: all, user: all, address: '::1/128', auth_method: "{{ postgresql_auth_method }}"}
 
 # Debian only. Used to generate the locales used by PostgreSQL databases.
 postgresql_locales:
