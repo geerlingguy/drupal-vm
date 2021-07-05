@@ -42,6 +42,7 @@ jobs:
       matrix:
         distro:
           - centos8
+          - rockylinux8
           - ubuntu2004
           - ubuntu1804
           - debian10
