@@ -142,10 +142,6 @@ apache_vhosts:
     documentroot: "{{ php_xhprof_html_dir }}"
     extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
 
-  - servername: "pimpmylog.{{ vagrant_hostname }}"
-    documentroot: "{{ pimpmylog_install_dir }}"
-    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
-
   - servername: "{{ vagrant_ip }}"
     serveralias: "dashboard.{{ vagrant_hostname }}"
     documentroot: "{{ dashboard_install_dir }}"
@@ -175,10 +171,6 @@ nginx_hosts:
 
   - server_name: "xhprof.{{ vagrant_hostname }}"
     root: "{{ php_xhprof_html_dir }}"
-    is_php: true
-
-  - server_name: "pimpmylog.{{ vagrant_hostname }}"
-    root: "{{ pimpmylog_install_dir }}"
     is_php: true
 
   - server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"
@@ -223,7 +215,6 @@ installed_extras:
   # - memcached
   # - newrelic
   # - nodejs
-  - pimpmylog
   # - redis
   # - ruby
   # - selenium
@@ -315,10 +306,6 @@ varnish_listen_port: "81"
 varnish_default_vcl_template_path: templates/drupalvm.vcl.j2
 varnish_default_backend_host: "127.0.0.1"
 varnish_default_backend_port: "80"
-
-# Pimp my Log settings.
-pimpmylog_install_dir: /usr/share/php/pimpmylog
-pimpmylog_grant_all_privs: true
 
 # XDebug configuration. XDebug is disabled by default for better performance.
 php_xdebug_version: 2.9.5

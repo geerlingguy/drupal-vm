@@ -34,7 +34,6 @@ Drupal VM installs the following on an Ubuntu 18.04 (by default) linux VM:
     - Blackfire, XHProf, or Tideways for profiling your code
     - XDebug, for debugging your code
     - Adminer, for accessing databases directly
-    - Pimp my Log, for easy viewing of log files
     - MailHog, for catching and debugging email
 
 It should take 5-10 minutes to build or rebuild the VM from scratch on a decent broadband connection.
@@ -109,7 +108,7 @@ Note: *By default Drupal VM is configured to use `192.168.88.88` as its IP, if y
 
 ## Extra software/utilities
 
-By default, this VM includes the extras listed in the `config.yml` option `installed_extras`:
+By default, this VM includes the extras listed in the `config.yml` option `installed_extras`, for example:
 
     installed_extras:
       - adminer
@@ -119,19 +118,7 @@ By default, this VM includes the extras listed in the `config.yml` option `insta
       # - elasticsearch
       # - java
       - mailhog
-      # - memcached
-      # - newrelic
-      # - nodejs
-      - pimpmylog
-      # - redis
-      # - ruby
-      # - selenium
-      # - solr
-      # - tideways
-      # - upload-progress
-      - varnish
-      # - xdebug
-      # - xhprof
+      [...]
 
 If you don't want or need one or more of these extras, just delete them or comment them from the list. This is helpful if you want to reduce PHP memory usage or otherwise conserve system resources.
 

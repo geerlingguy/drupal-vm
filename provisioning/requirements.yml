@@ -62,8 +62,6 @@ roles:
     version: 3.0.0
   - name: geerlingguy.php-xhprof
     version: 3.0.0
-  - name: geerlingguy.pimpmylog
-    version: 1.0.2
   - name: geerlingguy.postfix
     version: 2.0.0
   - name: geerlingguy.postgresql

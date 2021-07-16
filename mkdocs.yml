@@ -49,7 +49,6 @@ pages:
       - 'memcached (In-memory cache)': 'extras/memcached.md'
       - 'newrelic (Performance monitoring)': 'extras/newrelic.md'
       - 'nodejs': 'extras/nodejs.md'
-      - 'pimpmylog (Log viewer)': 'extras/pimpmylog.md'
       - 'redis (In-memory database)': 'extras/redis.md'
       - 'ruby': 'extras/ruby.md'
       - 'selenium (BDD with Behat)': 'extras/selenium.md'

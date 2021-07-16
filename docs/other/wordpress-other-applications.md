@@ -38,7 +38,6 @@ configure_drush_aliases: false
 installed_extras:
   - adminer
   - mailhog
-  - pimpmylog
 
 # Add wp-cli
 composer_global_packages:

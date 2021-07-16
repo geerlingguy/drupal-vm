@@ -45,7 +45,7 @@ By default the domain of your site will be `drupalvm.test` but you can change it
 drupal_domain: "local.my-drupal-site.com"
 ```
 
-If you prefer using your domain as the root of all extra packages installed, ie. `adminer`, `xhprof` and `pimpmylog`, set it as the value of `vagrant_hostname` instead.
+If you prefer using your domain as the root of all extra packages installed, ie. `adminer` and `xhprof`, set it as the value of `vagrant_hostname` instead.
 
 ```yaml
 vagrant_hostname: "my-drupal-site.com"

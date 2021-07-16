@@ -5,7 +5,6 @@ installed_extras:
   - adminer
   - drush
   - mailhog
-  - pimpmylog
   # - varnish
 
 # Don't build or install Drupal inside the container.

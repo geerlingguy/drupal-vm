@@ -102,7 +102,7 @@ Your DigitalOcean Droplet is booted and ready to have Drupal VM installed on it.
 
 Copy [`examples/prod/prod.config.yml`](https://github.com/geerlingguy/drupal-vm/blob/4.9.1/examples/prod/prod.config.yml) to `config.yml`, and by looking at `default.config.yml` add any other overrides you'd like. Whatever variables you have set in `config.yml` will override the defaults set by `default.config.yml`.
 
-The changes outlined in the [example `prod.config.yml`](https://github.com/geerlingguy/drupal-vm/blob/4.9.1/examples/prod/prod.config.yml) disable development-environment tools (like Pimp My Log and Adminer) and add extra security hardening configuration (via the `extra_security_enabled` variable).
+The changes outlined in the [example `prod.config.yml`](https://github.com/geerlingguy/drupal-vm/blob/4.9.1/examples/prod/prod.config.yml) disable development-environment tools (like Adminer) and add extra security hardening configuration (via the `extra_security_enabled` variable).
 
 You now have Drupal VM configured for production by default. This is the recommended and safest way, so that you can't accidentally provision a production server with development tools. If desired you can also use the [environment variable `DRUPALVM_ENV`](#production-specific-overrides) to load an additional `<ENV>.config.yml` with production specific overrides. In most cases this is not needed though.
 

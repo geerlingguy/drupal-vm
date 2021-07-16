@@ -26,9 +26,6 @@
         - name: Adminer
           host_prefix: "adminer."
           expected_content: "<title>Login - Adminer"
-        - name: Pimp My Log
-          host_prefix: "pimpmylog."
-          expected_content: "<title>Pimp my Log"
         - name: MailHog
           host_prefix: ""
           port: ":8025"

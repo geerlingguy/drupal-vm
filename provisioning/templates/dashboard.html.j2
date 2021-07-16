@@ -157,19 +157,6 @@
             </tr>
           {%- endif -%}
         {%- endif %}
-        {% if 'pimpmylog' in installed_extras -%}
-          {% macro servername() %}{{ getServernameFromDocroot(pimpmylog_install_dir) }}{% endmacro %}
-          {%- if servername() -%}
-            <tr>
-              <th>PimpMyLog</th>
-              <td><a href="http://{{ servername() }}">{{ servername() }}</a>
-              </br>
-              <a href="http://{{ servername() }}" class="btn btn-success btn-xs" role="button">Open</a>
-                <a href="http://docs.drupalvm.com/en/latest/extras/pimpmylog/" target="_blank" class="btn btn-info btn-xs" role="button">Documentation</a>
-              </td>
-            </tr>
-          {%- endif -%}
-        {%- endif %}
         {% if 'solr' in installed_extras -%}
           {% macro servername() %}{{ vagrant_hostname }}:{{ solr_port }}/solr/{% endmacro %}
           <tr>
