@@ -16,12 +16,14 @@
     owner: "{{ nodejs_install_npm_user }}"
     group: "{{ nodejs_install_npm_user }}"
     state: directory
+    mode: 0755
 
 - name: Add npm_config_prefix bin directory to global $PATH.
   template:
     src: npm.sh.j2
     dest: /etc/profile.d/npm.sh
     mode: 0644
+  when: nodejs_generate_etc_profile
 
 - name: Ensure npm global packages are installed.
   npm:

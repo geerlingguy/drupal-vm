@@ -1,7 +1,7 @@
 ---
-# Set the version of Node.js to install (8.x", "10.x", "12.x", "13.x", etc.).
+# Set the version of Node.js to install ("12.x", "13.x", "14.x", "15.x", etc.).
 # Version numbers from Nodesource: https://github.com/nodesource/distributions
-nodejs_version: "12.x"
+nodejs_version: "14.x"
 
 # The user for whom the npm packages will be installed.
 # nodejs_install_npm_user: username
@@ -25,3 +25,7 @@ nodejs_npm_global_packages: []
 
 # The path of a package.json file used to install packages globally.
 nodejs_package_json_path: ""
+
+# Whether or not /etc/profile.d/npm.sh (globa) must be generated.
+# Set to false if you need to handle this manually with a per-user install.
+nodejs_generate_etc_profile: "true"

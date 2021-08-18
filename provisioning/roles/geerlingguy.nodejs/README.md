@@ -1,6 +1,6 @@
 # Ansible Role: Node.js
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-nodejs.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-nodejs)
+[![CI](https://github.com/geerlingguy/ansible-role-nodejs/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-nodejs/actions?query=workflow%3ACI)
 
 Installs Node.js on RHEL/CentOS or Debian/Ubuntu.
 
@@ -12,9 +12,9 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    nodejs_version: "12.x"
+    nodejs_version: "14.x"
 
-The Node.js version to install. "12.x" is the default and works on most supported OSes. Other versions such as "8.x", "10.x", "13.x", etc. should work on the latest versions of Debian/Ubuntu and RHEL/CentOS.
+The Node.js version to install. "14.x" is the default and works on most supported OSes. Other versions such as "8.x", "10.x", "13.x", etc. should work on the latest versions of Debian/Ubuntu and RHEL/CentOS.
 
     nodejs_install_npm_user: "{{ ansible_ssh_user }}"
 
@@ -45,6 +45,10 @@ A list of npm packages with a `name` and (optional) `version` to be installed gl
     nodejs_package_json_path: ""
 
 Set a path pointing to a particular `package.json` (e.g. `"/var/www/app/package.json"`). This will install all of the defined packages globally using Ansible's `npm` module.
+
+    nodejs_generate_etc_profile: "true"
+    
+By default the role will create `/etc/profile.d/npm.sh` with exported variables (`PATH`, `NPM_CONFIG_PREFIX`, `NODE_PATH`). If you prefer to avoid generating that file (e.g. you want to set the variables yourself for a non-global install), set it to "false".
 
 ## Dependencies
 

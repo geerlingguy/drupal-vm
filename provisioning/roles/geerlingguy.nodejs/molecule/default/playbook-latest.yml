@@ -9,7 +9,7 @@
     npm_config_prefix: /root/.npm-global
     npm_config_unsafe_perm: "true"
     nodejs_npm_global_packages:
-      - node-sass
+      - slugify
       - name: jslint
         version: 0.12.0
       - name: yo
