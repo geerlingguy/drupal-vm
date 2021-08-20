@@ -21,6 +21,10 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Controls the state of the firewall service; whether it should be running (`firewall_state`) and/or enabled on system boot (`firewall_enabled_at_boot`).
 
+    firewall_flush_rules_and_chains: true
+
+Whether to flush all rules and chains whenever the firewall is restarted. Set this to `false` if there are other processes managing iptables (e.g. Docker).
+
     firewall_allowed_tcp_ports:
       - "22"
       - "80"

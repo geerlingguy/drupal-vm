@@ -1,4 +1,6 @@
 ---
+# TODO: PHP 7.2 support will be removed soon. This is only being left in here as
+# a convenience for legacy PHP 7.2 users.
 - name: Enable remi repo for PHP 7.2.
   set_fact: php_enablerepo="remi,remi-php72"
   when: php_version == "7.2"
@@ -10,6 +12,10 @@
 - name: Enable remi repo for PHP 7.4.
   set_fact: php_enablerepo="remi,remi-php74"
   when: php_version == "7.4"
+
+- name: Enable remi repo for PHP 8.0.
+  set_fact: php_enablerepo="remi,remi-php80"
+  when: php_version == "8.0"
 
 # See: https://github.com/ansible/ansible/issues/64852
 - block:

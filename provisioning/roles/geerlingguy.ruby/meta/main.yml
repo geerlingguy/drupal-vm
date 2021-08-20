@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: ruby
   author: geerlingguy
   description: Ruby installation for Linux.
   company: "Midwestern Mac, LLC"

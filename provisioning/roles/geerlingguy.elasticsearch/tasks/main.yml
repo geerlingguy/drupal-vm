@@ -10,7 +10,20 @@
     name: elasticsearch
     state: "{{ elasticsearch_package_state }}"
 
-- name: Configure Elasticsearch.
+- name: Configure Elasticsearch 6 or below.
+  template:
+    src: "{{ item | basename }}.j2"
+    dest: "{{ item }}"
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  with_items:
+    - /etc/elasticsearch/elasticsearch.yml
+    - /etc/elasticsearch/jvm.options
+  notify: restart elasticsearch
+  when: elasticsearch_version[0] | int < 7
+
+- name: Configure Elasticsearch 7+.
   template:
     src: "{{ item | basename }}.j2"
     dest: "{{ item }}"
@@ -21,6 +34,7 @@
     - /etc/elasticsearch/elasticsearch.yml
     - /etc/elasticsearch/jvm.options.d/heap.options
   notify: restart elasticsearch
+  when: elasticsearch_version[0] | int >= 7
 
 - name: Force a restart if configuration has changed.
   meta: flush_handlers

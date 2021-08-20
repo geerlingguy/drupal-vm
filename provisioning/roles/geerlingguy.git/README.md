@@ -22,13 +22,12 @@ This variable, a well as `git_packages`, will be used to install git via a parti
 
     git_packages:
       - git
-      - git-svn
 
-The specific Git packages that will be installed. By default, `git-svn` is included, but you can easily add this variable to your playbook's variables and remove `git-svn` if desired.
+The specific Git packages that will be installed. By default, only `git` is installed, but you could add additional git-related packages like `git-svn` if desired.
 
     git_install_from_source: false
     git_install_path: "/usr"
-    git_version: "2.16.2"
+    git_version: "2.26.0"
 
 Whether to install Git from source; if set to `true`, `git_version` is required and will be used to install a particular version of git (see all available versions here: https://www.kernel.org/pub/software/scm/git/), and `git_install_path` defines where git should be installed.
 

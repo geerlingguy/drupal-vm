@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
+  become: true
 
   pre_tasks:
     - name: Ensure build dependencies are installed (RedHat).
@@ -25,4 +27,4 @@
       when: ansible_os_family == 'Debian'
 
   roles:
-    - role_under_test
+    - role: geerlingguy.daemonize

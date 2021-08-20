@@ -1,6 +1,6 @@
 # Ansible Role: Ruby
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-ruby.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-ruby)
+[![CI](https://github.com/geerlingguy/ansible-role-ruby/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-ruby/actions?query=workflow%3ACI)
 
 Installs Ruby and bundler gem on Linux.
 
@@ -32,11 +32,11 @@ The user account under which Ruby gems will be installed. Defaults to the `ansib
 
 By default, this role will install whatever version of ruby is available through your system's package manager (`apt` or `yum`). You can install whatever version you like (including the latest release) by setting this to `true` and/or updating the `ruby_download_url` and `ruby_version`.
 
-    ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.4.4.tar.gz
+    ruby_download_url: http://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.0.tar.gz
 
 The URL from which Ruby will be downloaded (only used if `ruby_install_from_source` is `true`).
 
-    ruby_version: 2.5.1
+    ruby_version: 3.0.0
 
 The version of ruby that will be installed (only used if `ruby_install_from_source` is `true`).
 

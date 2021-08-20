@@ -2,6 +2,8 @@
 firewall_state: started
 firewall_enabled_at_boot: true
 
+firewall_flush_rules_and_chains: true
+
 firewall_allowed_tcp_ports:
   - "22"
   - "25"

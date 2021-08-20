@@ -18,6 +18,7 @@
       copy:
         dest: /etc/profile.d/ruby.sh
         content: 'PATH=$PATH:{{ ruby_gems_bin_path }}'
+        mode: 0644
 
     - name: Don't install Bundler on CentOS 7 because of old Ruby version.
       set_fact:

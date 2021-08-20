@@ -14,7 +14,7 @@ pid-file = {{ mysql_pid_file }}
 {% if mysql_skip_name_resolve %}
 skip-name-resolve
 {% endif %}
-{% if mysql_sql_mode %}
+{% if mysql_sql_mode is not none %}
 sql_mode = {{ mysql_sql_mode }}
 {% endif %}
 

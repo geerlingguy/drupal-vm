@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: apache
   author: geerlingguy
   description: Apache 2.x for Linux.
   company: "Midwestern Mac, LLC"

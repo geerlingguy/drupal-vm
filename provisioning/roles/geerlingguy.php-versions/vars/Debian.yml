@@ -39,6 +39,9 @@ __php_packages:
   - "php{{ php_version }}-yaml"
 
 php_versions_debian:
+  # TODO: PHP 7.2 support will be removed soon. This is only being left in here as
+  # a convenience for legacy PHP 7.2 users.
   - php7.2-common
   - php7.3-common
   - php7.4-common
+  - php8.0-common

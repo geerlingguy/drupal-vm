@@ -6,7 +6,7 @@ Installs [Remi's RPM repository](http://rpms.famillecollet.com/) for RHEL/CentOS
 
 ## Requirements
 
-None.
+On RHEL 8 or newer, you should make sure to install or enable the EPEL repository. I recommend using the `geerlingguy.repo-epel` repository.
 
 ## Role Variables
 

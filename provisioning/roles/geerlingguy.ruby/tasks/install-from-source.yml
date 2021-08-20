@@ -30,6 +30,7 @@
     src: "{{ workspace }}/ruby-{{ ruby_version }}.tar.gz"
     dest: "{{ workspace }}/"
     copy: false
+    mode: 0755
 
 - name: Build ruby.
   command: >
@@ -42,7 +43,7 @@
     - make install
 
 - name: Add ruby symlinks.
-  file:
+  file:  # noqa 208
     src: "/usr/local/bin/{{ item }}"
     dest: "/usr/bin/{{ item }}"
     state: link

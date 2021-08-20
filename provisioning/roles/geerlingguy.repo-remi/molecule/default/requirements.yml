@@ -1,0 +1,2 @@
+---
+- role: geerlingguy.repo-epel

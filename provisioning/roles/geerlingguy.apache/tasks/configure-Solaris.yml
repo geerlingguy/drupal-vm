@@ -5,6 +5,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
+    mode: 0644
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 

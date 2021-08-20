@@ -29,12 +29,11 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install yamllint ansible-lint
+        run: pip3 install yamllint
 
       - name: Lint code.
         run: |
           yamllint .
-          ansible-lint
 
   molecule:
     name: Molecule
@@ -42,7 +41,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # Default PHP version (7.3).
+          # Default PHP version (7.4).
           - distro: centos8
             playbook: converge.yml
           - distro: centos7
@@ -52,19 +51,21 @@ jobs:
           - distro: debian10
             playbook: converge.yml
 
-          # PHP 7.4.
+          # PHP 8.0.
           - distro: centos8
-            playbook: 7.4.yml
+            playbook: 8.0.yml
           - distro: ubuntu1804
-            playbook: 7.4.yml
+            playbook: 8.0.yml
           - distro: debian10
-            playbook: 7.4.yml
+            playbook: 8.0.yml
 
-          # PHP 7.2.
+          # PHP 7.3.
           - distro: centos8
-            playbook: 7.2.yml
+            playbook: 7.3.yml
           - distro: ubuntu1804
-            playbook: 7.2.yml
+            playbook: 7.3.yml
+          - distro: debian10
+            playbook: 7.3.yml
 
     steps:
       - name: Check out the codebase.

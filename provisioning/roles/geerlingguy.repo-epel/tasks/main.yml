@@ -30,6 +30,5 @@
     path: "/etc/yum.repos.d/epel.repo"
     section: epel
     option: enabled
-    value: 0
+    value: "{{ epel_repo_disable | ternary(0, 1) }}"
     mode: 0644
-  when: epel_repo_disable
