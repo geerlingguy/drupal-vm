@@ -49,6 +49,8 @@ jobs:
             playbook: converge.yml
           - distro: ubuntu1804
             playbook: converge.yml
+          - distro: debian11
+            playbook: converge.yml
           - distro: debian10
             playbook: converge.yml
           - distro: debian9
