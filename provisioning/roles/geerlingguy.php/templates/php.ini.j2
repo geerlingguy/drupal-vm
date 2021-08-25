@@ -88,7 +88,10 @@ max_file_uploads = {{ php_max_file_uploads }}
 ;;;;;;;;;;;;;;;;;;
 
 allow_url_fopen = {{ php_allow_url_fopen }}
-allow_url_include = Off
+
+# Comment this due to PHP 7.4 Deprecated
+# Ref: https://www.php.net/manual/en/migration74.deprecated.php
+# allow_url_include = Off
 
 default_socket_timeout = 60
 
