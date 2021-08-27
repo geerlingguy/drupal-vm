@@ -1,4 +1,5 @@
 ---
+
 - include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
@@ -7,7 +8,7 @@
 
 - name: Install Elasticsearch.
   package:
-    name: elasticsearch
+    name: "{{ elasticsearch_package }}"
     state: "{{ elasticsearch_package_state }}"
 
 - name: Configure Elasticsearch 6 or below.

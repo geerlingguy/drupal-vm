@@ -27,7 +27,7 @@
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
-  {{ vhost.extra_parameters }}
+{{ vhost.extra_parameters | indent(width=2, first=True, indentfirst=True) }}
 {% endif %}
 </VirtualHost>
 
@@ -74,7 +74,7 @@
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
-  {{ vhost.extra_parameters }}
+{{ vhost.extra_parameters | indent(width=2, first=True, indentfirst=True) }}
 {% endif %}
 </VirtualHost>
 
