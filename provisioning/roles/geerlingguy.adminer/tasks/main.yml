@@ -21,7 +21,7 @@
     mode: 0644
     timeout: 60
 
-- name: Ensure paths to place symlinks exist
+- name: Determine paths to place existing symlinks.
   file:
     state: directory
     path: "{{ item }}"
