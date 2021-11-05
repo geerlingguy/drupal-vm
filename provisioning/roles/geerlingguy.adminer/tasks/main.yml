@@ -6,7 +6,7 @@
     state: directory
     recurse: true
 
-- name: Testing if adminer is older then 1 day
+- name: Testing if adminer is older than 1 day
   find:
     paths: "{{ adminer_install_dir }}"
     patterns: "{{ adminer_install_filename }}"
