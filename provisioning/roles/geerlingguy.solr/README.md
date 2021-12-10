@@ -24,7 +24,7 @@ Files will be downloaded to this path on the remote server before being moved in
 
 Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user. By default, `solr_group` equals `solr_user`, but it can be overwritten to fit your own configuration.
 
-    solr_version: "8.6.0"
+    solr_version: "8.11.0"
 
 The Apache Solr version to install. For a full list, see [available Apache Solr versions](http://archive.apache.org/dist/lucene/solr/).
 
@@ -63,6 +63,10 @@ Memory settings for the JVM. These should be set as high as you can allow for be
     solr_timezone: "UTC"
 
 Default timezone of JVM running solr. You can override this if needed when using dataimport and delta imports (ex: comparing against a MySQL external data source). Read through Apache Solr's [Working with Dates](https://cwiki.apache.org/confluence/display/solr/Working+with+Dates) documentation for more background.
+
+    solr_opts: "$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"
+
+Solr options. This option was added to the role in part to mitigate [CVE-2021-44228](https://solr.apache.org/security.html#apache-solr-affected-by-apache-log4j-cve-2021-44228).
 
     solr_cores:
       - collection1
