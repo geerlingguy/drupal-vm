@@ -1,5 +1,13 @@
 # Drupal VM Changelog
 
+
+## 7.0.0 (2023-02-12)
+
+This version shall never be released :'-(
+
+Drupal VM is no longer maintained. See #2164 for details.
+
+
 ## 6.0.4 (2021-05-28)
 
 ### Breaking Changes
